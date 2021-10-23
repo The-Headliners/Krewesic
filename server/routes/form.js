@@ -17,8 +17,8 @@ form.put('/setType/:type', async (req, res) => {
 
 form.get('/user', async (req, res) => {
   try {
-    const {id, name, picture, type, bio, favGenre, favArtist, artistBio, artistName, myGenre, city, pic, setPic, influences, setInfluence } = req.user;
-    res.status(201).send({id, name, picture, type, bio, favGenre, favArtist, artistBio, artistName, myGenre, city, pic, setPic, influences, setInfluence });
+    const {id, name, picture, type, bio, favGenre, favArtist, artistBio, artistName, myGenre, city, pic, setPic, influences, setInfluence, posts, setMyPosts } = req.user;
+    res.status(201).send({id, name, picture, type, bio, favGenre, favArtist, artistBio, artistName, myGenre, city, pic, setPic, influences, setInfluence, posts, setMyPosts });
 
   } catch (err) {
     console.log('get err', err);

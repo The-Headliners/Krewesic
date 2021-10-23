@@ -13,8 +13,9 @@ import FormListener from './FormListener.jsx';
 
 const Profile = () => {
 
-  //const [ posts, setMyPost ] = useState('');
+  //const [ posts, setMyPosts ] = useState('');
   const [description, setDescription] = useState('');
+  const [ genreDesc, setGenreDesc ] = useState('');
 
   const {name, setName, picture, setPicture, type, setType, city, setCity, bio, setBio, favArtist, setArtist, favGenre, setGenre, artistBio, setMyBio, artistName, setMyName, myGenre, setMyGenre, pic, setPic, influences, setInfluence } = useContext(GlobalContext);
 
@@ -46,8 +47,17 @@ const Profile = () => {
     }
   };
 
+  const genreDescription = () => {
+    if (favGenre) {
+      setGenreDesc('FAVORITE GENRE:');
+    } else {
+      setGenreDesc('MY GENRE:');
+    }
+  };
+
   useEffect(() => {
     artDescription();
+    genreDescription();
   });
 
   return (
@@ -85,6 +95,7 @@ const Profile = () => {
             width="150"
           />
           <br/>
+          <br/>
          BIO: { bio || artistBio }
         </Box>
         <br/>
@@ -97,7 +108,7 @@ const Profile = () => {
         <Box
           align='center'
         >
-         GENRE: { favGenre || myGenre }
+          {genreDesc} { favGenre || myGenre }
         </Box>
         <br/>
         <Box

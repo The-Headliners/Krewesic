@@ -33,6 +33,7 @@ const App = (props) => {
   const [ artistBio, setMyBio ] = useState('');
   const [ influences, setInfluence ] = useState('');
   const [ artistName, setMyName ] = useState('');
+  const [ posts, setMyPosts ] = useState('');
   const [ myGenre, setMyGenre ] = useState('');
   const [ pic, setPic ] = useState('');
   const [ favArtist, setArtist ] = useState('');
@@ -43,7 +44,7 @@ const App = (props) => {
   const [picture, setPicture] = useState('');
   const [type, setType] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
-  const value = {name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn, city, setCity, bio, setBio, favArtist, setArtist, favGenre, setGenre, artistBio, setMyBio, artistName, setMyName, pic, setPic, myGenre, setMyGenre, influences, setInfluence };
+  const value = {name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn, city, setCity, bio, setBio, favArtist, setArtist, favGenre, setGenre, artistBio, setMyBio, artistName, setMyName, pic, setPic, myGenre, setMyGenre, influences, setInfluence, posts, setMyPosts };
 
   return (
     <AppStyles>

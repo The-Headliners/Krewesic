@@ -56,6 +56,10 @@ const dbUser = (sequelize, DataTypes) => {
       type: Sequelize.STRING,
       defaultValue: null
     },
+    posts: {
+      type: Sequelize.ARRAY(Sequelize.STRING),
+      defaultValue: null
+    },
   });
 };
 
