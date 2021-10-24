@@ -46,9 +46,7 @@ const KrewesicEvents = () => {
         {events.map((event, i) => <EventPreview 
           key={i} 
           eventDetails={event}
-          onClick={() => {
-            history.push(`/kreweEventLandingPage/${event.id}`);
-          }}
+         
         />)}
       </div>
       <div>
