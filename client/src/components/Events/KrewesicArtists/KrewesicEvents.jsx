@@ -2,6 +2,16 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import EventPreview from './EventPreview.jsx';
 import {useHistory} from 'react-router-dom'; 
+import styled from 'styled-components';
+
+const KEStyled = styled.div`
+ .wrapper {
+  background-color: #a47ec4; 
+  padding: 30px; 
+ }
+ 
+`;
+
 
 
 
@@ -40,25 +50,27 @@ const KrewesicEvents = () => {
   }, []);
 
   return (
-    <div> 
-      <div>
-        <h3>all events</h3>
-        {events.map((event, i) => <EventPreview 
-          key={i} 
-          eventDetails={event}
+    <KEStyled>
+      <div className='wrapper'> 
+        <div>
+          <h3>all events</h3>
+          {events.map((event, i) => <EventPreview 
+            key={i} 
+            eventDetails={event}
          
-        />)}
-      </div>
-      <div>
-        <h3>live events</h3>
-        {liveEvents.map((event, i) => <EventPreview key={i} eventDetails={event} />)}
-      </div>
-      <div>
-        <h3>virtual events</h3>
-        {virtualEvents.map((event, i) => <EventPreview key={i} eventDetails={event} />)}
-      </div>
+          />)}
+        </div>
+        <div>
+          <h3>live events</h3>
+          {liveEvents.map((event, i) => <EventPreview key={i} eventDetails={event} />)}
+        </div>
+        <div>
+          <h3>virtual events</h3>
+          {virtualEvents.map((event, i) => <EventPreview key={i} eventDetails={event} />)}
+        </div>
 
-    </div>
+      </div>
+    </KEStyled>
   );
 };
 

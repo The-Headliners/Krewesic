@@ -2,6 +2,24 @@ import React, {useState, useEffect} from 'react';
 import {TextField, Button} from '@material-ui/core/';
 import axios from 'axios';
 import Map from './Map.jsx';
+import styled from 'styled-components';
+
+const StyledMapEvents = styled.div`
+  .wrapper {
+    background-color: #7749a1;
+    padding: 20px;
+    width: 80vw;
+    margin: auto;
+  }
+  .inputField {
+    background-color: white;
+    border-radius: 3px;
+    margin: 10px;
+  }
+  .showButton {
+    background-color: #fce97e;
+  }
+`;
 
 
 //import './sample.json';
@@ -52,12 +70,12 @@ const MapEvents = () => {
   };
   
   return (
-    
-    <div>
-      <TextField variant="outlined" placeholder='YYYY-MM-DD' onChange={(e)=>setDate1(e.target.value)} value={date1} />
-      <TextField variant="outlined" placeholder='YYYY-MM-DD' onChange={(e)=>setDate2(e.target.value)} value={date2} />
-      <TextField variant="outlined" placeholder='city' onChange={(e)=>setCity(e.target.value)} value={city} />
-      <Button onClick={findLocalShows}>find local shows</Button>
+    <StyledMapEvents>
+    <div className='wrapper'>
+      <TextField variant="outlined" className='inputField' placeholder='YYYY-MM-DD' onChange={(e)=>setDate1(e.target.value)} value={date1} />
+      <TextField variant="outlined" className='inputField' placeholder='YYYY-MM-DD' onChange={(e)=>setDate2(e.target.value)} value={date2} />
+      <TextField variant="outlined" className='inputField' placeholder='city' onChange={(e)=>setCity(e.target.value)} value={city} />
+      <Button className='showButton' onClick={findLocalShows}>find local shows</Button>
   
     
      
@@ -67,6 +85,7 @@ const MapEvents = () => {
 
       <Map events={events} />
     </div>
+    </StyledMapEvents>
   );
 };
 

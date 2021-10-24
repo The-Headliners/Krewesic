@@ -7,6 +7,7 @@ const EventPreview = ({eventDetails}) => {
   const {name} = User;
   return (
     <div  
+      className='clickableDark'
       onClick={() => {
         history.push(`/kreweEventLandingPage/${id}`);
       }}>
