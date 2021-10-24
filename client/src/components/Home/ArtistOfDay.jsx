@@ -16,10 +16,15 @@ import keys from '../Events/keys.js';
 //   margin-top: 30px;
 // `;
 
+
+
 const ArtistOfDay = () => {
 
+  const {name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn} = useContext(GlobalContext)
   const [ artistOfTheDay, setArtistOfTheDay ] = useState(dummyData.artists[0]);
   const [ artistList, setArtistList ] = useState([]);
+
+
 
 
   const list = [
@@ -44,44 +49,52 @@ const ArtistOfDay = () => {
     console.log(artistList);
   };
 
-  useEffect(() => {
+  useEffect(async() => {
+    const {data} = await axios.get('/form/user');
+    console.log(data);
+    setName(data.name);
+    setPicture(data.picture);
+    setType(data.type);
+    setLoggedIn(true);
+    //renderArtistOfTheDay();
+    console.log('picture', picture, 'type', type);
 
-    renderArtistOfTheDay();
-      
   }, []);
 
 
   return (
     <div className='dayHeader'>
 
-      <h1>Today's Featured Artist:</h1> 
+      <h1>Today's Featured Artist:</h1>
       <Box display='flex' marginX='10vh' paddingX='10vh'>
         <div>
           <h1>
-            {artistOfTheDay.strArtist} 
+            {/*artistOfTheDay.strArtist*/}
           </h1>
-          <div marginY="4vh">
-            {artistOfTheDay.strBiographyEN}
-          </div>
+         
         </div>
         <div>
-          <img src={artistOfTheDay.strArtistThumb} width="200" height="200" alt='' />
+
         </div>
       </Box>
       <ul>
         <h2>Friends</h2>
         <ul>
-          {list.map(item => (
+          {/*list.map(item => (
             <li key={item.id}>
               <div>{item.id}</div>
               <div>{item.firstname} {item.lastname}</div>
             </li>
-          ))}
+          ))*/}
         </ul>
       </ul>
     </div>
-    
+
   );
 };
 
 export default ArtistOfDay;
+//<img src={/*artistOfTheDay.strArtistThumb*/} width="200" height="200" alt='' />
+// <div marginY="4vh">
+           // {/*artistOfTheDay.strBiographyEN*/}
+           // </div>
