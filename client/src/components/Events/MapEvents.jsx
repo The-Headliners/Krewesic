@@ -71,20 +71,20 @@ const MapEvents = () => {
   
   return (
     <StyledMapEvents>
-    <div className='wrapper'>
-      <TextField variant="outlined" className='inputField' placeholder='YYYY-MM-DD' onChange={(e)=>setDate1(e.target.value)} value={date1} />
-      <TextField variant="outlined" className='inputField' placeholder='YYYY-MM-DD' onChange={(e)=>setDate2(e.target.value)} value={date2} />
-      <TextField variant="outlined" className='inputField' placeholder='city' onChange={(e)=>setCity(e.target.value)} value={city} />
-      <Button className='showButton' onClick={findLocalShows}>find local shows</Button>
+      <div className='wrapper'>
+        <TextField variant="outlined" className='inputField' placeholder='YYYY-MM-DD' onChange={(e)=>setDate1(e.target.value)} value={date1} />
+        <TextField variant="outlined" className='inputField' placeholder='YYYY-MM-DD' onChange={(e)=>setDate2(e.target.value)} value={date2} />
+        <TextField variant="outlined" className='inputField' placeholder='city' onChange={(e)=>setCity(e.target.value)} value={city} />
+        <Button className='showButton' onClick={findLocalShows}>find local shows</Button>
   
     
      
      
      
-      <Button onClick={searchDate}>search nolaween</Button>
+        <Button onClick={searchDate}>search nolaween</Button>
 
-      <Map events={events} />
-    </div>
+        <Map events={events} />
+      </div>
     </StyledMapEvents>
   );
 };

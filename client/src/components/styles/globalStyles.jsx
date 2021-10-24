@@ -20,6 +20,10 @@ const GlobalStyle = createGlobalStyle`
     padding: 15px;
   }
 
+  .backgroundColorLight {
+    background-color: #caa8f7;
+  }
+
   .clickable {
     :hover {
       cursor: pointer;
