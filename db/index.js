@@ -46,7 +46,6 @@ const Posts = dbProfilePosts(db);
 User.hasMany(Posts);
 Posts.belongsTo(User, {foreignKey: 'senderId'});
 
-
 //sync the db
 db.sync()
   .then(() => {

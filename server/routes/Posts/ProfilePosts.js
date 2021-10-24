@@ -5,15 +5,25 @@ const { Posts, User } = require('../../../db/index.js');
 
 
 
-post.put('/profilePost', (req, res) => {
+post.put('/profilePost', async(req, res) => {
+  try {
+    console.log(req.body, 'howdy ho');
+    console.log(Posts, 'userino');
+    console.log(req.params, 'hello');
+    res.sendStatus(500);
+    //const {id} = req.user;
+    const senderId = 1 || 2;
+    const { comment } = req.body;
+    const myPost = Posts.findByPk(senderId);
 
-  console.log(req.body, 'howdy ho');
-  console.log(Posts, 'userino');
-  console.log(req.params, 'hello');
-  res.sendStatus(500);
-  //const {id} = req.user;
-  const id = 1;
-
+    await Post.update({
+      text: comment,
+    });
+    res.sendStatus(200);
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(500);
+  }
 });
 
 
