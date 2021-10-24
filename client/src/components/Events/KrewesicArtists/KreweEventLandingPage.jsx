@@ -15,7 +15,7 @@ const KreweEventLandingPage = () => {
   return (
     <div>
       k e l p {eventId}
-      <button>get event info</button>
+      <button onClick={getEventDeetz}>get event info</button>
     </div>
   );
 };
