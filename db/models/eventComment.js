@@ -14,6 +14,12 @@ const dbEventComment = (sequelize) => {
     eventId: {
       type: Sequelize.INTEGER, 
       //foreign key
+    },
+    text: {
+      type: Sequelize.STRING
+    },
+    type: {
+      type: Sequelize.STRING
     }
 
   });

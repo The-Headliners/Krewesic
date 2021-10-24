@@ -4,7 +4,7 @@ const pg = require('pg');
 const {dbUser} = require('./models/users.js');
 const { dbMessages } = require('./models/messages.js');
 const { dbRooms} = require('./models/chatRooms.js');
-
+const {dbEventComment} = require('./models/eventComment.js');
 const {dbSGEvent} = require('./models/SGEvent.js');
 const { dbSGEventComment} = require('./models/SGEventComment.js');
 const dbEvent = require('./models/events.js');
@@ -21,12 +21,17 @@ const Messages = dbMessages(db);
 const Rooms = dbRooms(db);
 
 const Event = dbEvent(db);
+const EventComment = dbEventComment(db);
 
 
 const SGEvent = dbSGEvent(db);
 const SGEventComment = dbSGEventComment(db);
 
+
 Event.belongsTo(User, {foreignKey: 'artistId'});
+
+EventComment.belongsTo(User, {foreignKey: 'userId'});
+EventComment.belongsTo(Event, {foreignKey: 'eventId'});
 
 
 User.hasMany(Messages);
@@ -49,5 +54,6 @@ module.exports = {
   Rooms,
   SGEvent, 
   SGEventComment,
-  Event
+  Event,
+  EventComment
 };
