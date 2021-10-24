@@ -7,25 +7,28 @@ const { dbRooms} = require('./models/chatRooms.js');
 const {dbConversation} = require('./models/conversation.js');
 const {dbSGEvent} = require('./models/SGEvent.js');
 const { dbSGEventComment} = require('./models/SGEventComment.js');
+const dbEvent = require('./models/events.js');
 const db = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, { 
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
 });
 
-//to use mysql, comment out hte previous db ^, and uncomment the below db.
 
-// const db = new Sequelize('krewesic', 'root', '', {
-//   host: 'localhost',
-//   dialect: 'mysql',
-// });
 
 
 User = dbUser(db);
 Messages = dbMessages(db);
 Rooms = dbRooms(db);
 Conversations = dbConversation(db);
+
+
+const Event = dbEvent(db);
+
+
 const SGEvent = dbSGEvent(db);
 const SGEventComment = dbSGEventComment(db);
+
+Event.belongsTo(User, {foreignKey: 'artistId'});
 
 
 User.hasMany(Messages);
@@ -48,5 +51,6 @@ module.exports = {
   Rooms,
   Conversations,
   SGEvent, 
-  SGEventComment
+  SGEventComment,
+  Event
 };

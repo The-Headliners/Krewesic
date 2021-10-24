@@ -6,7 +6,6 @@ const {User, Messages} = require('../../../db/index.js');
 
 //Create a message 
 Message.post('/sendMessage', async (req, res) => {
-  //const { id } = req.user; //
   const { conversationId, sender, text} = req.body;
   try {
 

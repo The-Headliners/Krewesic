@@ -9,6 +9,7 @@ import 'regenerator-runtime/runtime';
 const StyledHeader = styled.div`
   .bar {
     background-color: #190331;
+    padding: 5px;
   }
  .wrapper {
   display: flex;
@@ -18,7 +19,8 @@ const StyledHeader = styled.div`
 
  .btn {
    margin-left: 10px;
-   background-color: gold;
+   background-color: #cec387; 
+ 
  }
  .flexChild {
    

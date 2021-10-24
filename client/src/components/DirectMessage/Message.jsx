@@ -10,6 +10,7 @@ const Message = ({message, owner}) => {
   return (
     <div className='message'>
       <div className='message-card'>
+        <div className='username'>{message.name}</div> 
         <p className="messageText">{message.text} </p>
       </div>
       <div className="messageDate">{message.createdAt}</div>

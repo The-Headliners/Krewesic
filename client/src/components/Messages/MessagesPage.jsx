@@ -15,9 +15,7 @@ const MessagesPage = () => {
   // //for live chat practice, create a chat array in state to hold the chat messages
   const [chat, setChat] = useState([]);
 
-  //hold messages in state
-  const [messages, setMessages] = useState([{name: 'jack', text: 'hey guys'}, {name: 'kyle', text: 'whats up!'}]);
-
+  
   //get the current user's name, hold the user in the state
   const [user, setUser] = useState('');
 

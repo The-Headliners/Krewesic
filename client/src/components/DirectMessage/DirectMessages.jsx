@@ -7,14 +7,14 @@ import Conversation from './Conversation.jsx';
 import { async } from 'regenerator-runtime';
 
 //need the socket to connect to the server, which is the local host
-// const socket = io('ws://localhost:1337');
+const socket = io.connect('http://localhost:1337');
 //use socket.emit, to send event to server
 //use socket.on, to take event from server
 
 
 
 const DirectMessages = () => {
-  const socket = useRef();
+  //const socket = useRef();
 
   //get the current user's name, hold the user in the state
   const [currentUser, setUser] = useState('');
@@ -35,11 +35,16 @@ const DirectMessages = () => {
   //take event from the socket server
   //checking to see who is on the server, who is online!
   useEffect(() => {
-    socket.current = io('ws://localhost:1337');
-    socket.current.emit('addUser', currentUser.googleId);
-    socket.current.on('getUsers', users => {
+    //socket.current = io('ws://localhost:1337');
+    socket.emit('addUser', currentUser.googleId);
+    socket.on('getUsers', users => {
       console.log('Socket Users:!!', users);
     });
+
+    // socket.current.on('getMessage', ({senderId, text}) => {
+    //   console.log('This is senderId:', senderId, 'This is the text:', text);
+    //   setMessages([...messages, {sender: senderId, text: text}]);
+    // });
   }, [currentUser]);
 
 
@@ -81,6 +86,7 @@ const DirectMessages = () => {
   // console.log(currentUser);
   //console.log('current chat!!:', currentChat);
   
+  
   //Doing another useEffect
   useEffect(() => {
     const getMessages = async () => {
@@ -93,54 +99,78 @@ const DirectMessages = () => {
         console.log(err);
       }
     };
+
     getMessages();
   }, [currentChat]);
 
   //Handle submmit function to send a message
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setValue('');
     const message = { sender: currentUser.googleId, text: value, conversationId: currentChat.id};
 
     let receiver;
     currentChat.senderId === currentUser.googleId ? receiver = currentChat.receiverId : receiver = currentChat.senderId;
     console.log('CHECK WHO IS RECEIVER', receiver);
     //send message to the Socket server
-    socket.current.emit('sendMessage', {
+    await socket.emit('sendMessage', {
       senderId: currentUser.googleId,
       receiverId: receiver,
       text: value
     });
+    
+    setMessages(messages => [...messages, message]);
+     
+
+    // socket.on('getMessage', ({senderId, text}) => {
+    //   console.log('This is senderId:', senderId, 'This is the text:', text);
+    //   // let name;
+    //   // senderId === currentUser.googleId ? name = currentUser.name : name;
+    //   // setMessages([...messages, {sender: senderId, text: text, name: name}]);
+    // });
 
     try {
       const res = await axios.post('/messages/sendMessage', message);
-      // console.log('MESSAGES', res);
-      setMessages([...messages], res.data);
-      setValue('');
+      console.log('MESSAGES', res);
+      
+      //setMessages([...messages], res.data);
+      //setValue('');
     } catch (err) {
       console.log(err);
     }
   };
 
   //get message from socket server
-  useEffect(() => {
-    socket.current.on('getMessage', data => {
-      console.log('Message back from socket?', data);
-      setArrivalMessage({
-        sender: data.senderId,
-        text: data.text,
-        createdAt: Date.now()
-      });
-    });
-  }, []);
+  // useEffect(() => {
+  //   // socket.current.on('getMessage', ({senderId, text}) => {
+  //   //   console.log('This is senderId:', senderId, 'This is the text:', text);
+  //   // setArrivalMessage({
+  //   //   sender: data.senderId,
+  //   //   text: data.text,
+  //   //   createdAt: Date.now()
+  //   // });
+  //   // });
+  // }, []);
 
-  console.log('the upcoming', arrivalMessage);
+  //console.log('the upcoming', arrivalMessage);
   //***Go back to this if you run into trouble
-  useEffect(() => {
-    arrivalMessage && (currentChat?.senderId || currentChat?.receiverId) === arrivalMessage.sender && setMessages((prev) => [...prev, arrivalMessage]);
-  }, [arrivalMessage, currentChat]);
+  // useEffect(() => {
+  //   arrivalMessage && (currentChat?.senderId || currentChat?.receiverId) === arrivalMessage.sender && setMessages((prev) => [...prev, arrivalMessage]);
+  // }, [arrivalMessage, currentChat]);
+
+  
+  //***For incoming messages from another user, coming back from the Socket Server ***/
+  socket.on('getMessage', ({senderId, text}) => {
+    console.log('This is senderId:', senderId, 'This is the text:', text);
+    let name;
+    senderId === currentUser.googleId ? name = currentUser.name : name;
+    setMessages([...messages, {sender: senderId, text: text, name: name}]);
+  });
+  console.log('NEW MESSAGE', messages);
+
 
   return (
-    <div className='directPage'>
+    <div className='directPage backgroundColorLight'>
       <div className='search-feature'>
         <Search />
       </div>

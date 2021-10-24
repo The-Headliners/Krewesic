@@ -3,8 +3,6 @@ import {useHistory} from 'react-router-dom';
 import axios from 'axios';
 import FormListener from './FormListener.jsx';
 import FormArtist from './FormArtist.jsx';
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 // import Item from '@material-ui/core/Item'
@@ -48,7 +46,7 @@ const Form = (props) => {
     axios.put(`/form/setType/${type}`);
   };
   return (
-    <div>
+    <div className='backgroundColorLight'>
 
       <div>
         <Typography

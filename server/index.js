@@ -17,10 +17,12 @@ const {Conversation} = require('./routes/message/converations.js');
 const {db} = require('../db');
 const auth = require('./routes/authenticate');
 const {form} = require('./routes/form.js');
-const events = require('./routes/events.js');
+const events = require('./routes/events/events.js');
+const artist = require('./routes/artist.js');
+const mailingList = require('./routes/mailingList.js');
+const kEvents = require('./routes/events/krewesicEvents.js');
 const cookieParser = require('cookie-parser');
-//const graphql = require('graphql');
-//const { graphqlHTTP } = require('express-graphql');
+
 
 
 
@@ -87,8 +89,11 @@ io.on('connection', socket => {
   //socket.on, take from the client
   socket.on('sendMessage', ({senderId, receiverId, text}) => {
     //find specific user to send message
-    const user = getUser(receiverId + '');
+    const user = getUser(receiverId);
     console.log('NEW USER', user);
+    //NEW USER { userId: '111517188885714793529', socketId: 'VThniWVYBFzbdiQTAAAd' }
+    //This is sender: 116854415860903718619 this is text: what it do
+    console.log('This is sender:', senderId, 'this is text:', text);
     //send data back to certain user send to client
     io.to(user.socketId).emit('getMessage', {
       senderId, 
@@ -122,6 +127,9 @@ app.use('/roomChat', Room);
 app.use('/directMessage', Users);
 app.use('/chat', Conversation);
 app.use('/events', events);
+app.use('/artist', artist);
+app.use('mailingList', mailingList); 
+app.use('/krewesicevents', kEvents);
 
 
 

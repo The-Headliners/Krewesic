@@ -2,14 +2,15 @@ const {Router} = require('express');
 const events = Router();
 require('dotenv').config();
 const axios = require('axios');
+
 //const sampleData = require('./sampleData/sample.json');
 //const citySample = require('./sampleData/citySample.json');
-//const nolaweenSample = require('./sampleData/datesamplenolahalloweenwknd.json');
-const {SGEvent, SGEventComment, User} = require('../../db');
+// const nolaweenSample = require('./sampleData/datesamplenolahalloweenwknd.json');
+const {SGEvent, SGEventComment, User, Event} = require('../../../db/index.js');
 
 const fs = require('fs');
-const { dbSGEvent } = require('../../db/models/SGEvent');
-const { dbSGEventComment } = require('../../db/models/SGEventComment');
+const { dbSGEvent } = require('../../../db/models/SGEvent');
+const { dbSGEventComment } = require('../../../db/models/SGEventComment');
 
 
 const baseUri = 'https://api.seatgeek.com/2';
@@ -17,8 +18,6 @@ const baseUri = 'https://api.seatgeek.com/2';
 events.get('/bandSearch/:bandName', async (req, res) => {
   try {
     const {bandName} = req.params;
-  
-    //console.log('clientID!!!' , process.env.SEATGEEK_CLIENT_ID)
 
     const {data} = await axios.get(`${baseUri}/events?client_id=${process.env.SEATGEEK_CLIENT_ID}&client_secret=${process.env.SEATGEEK_SECRET}&performers.slug=${bandName}`);
     //const jdata = JSON.stringify(data);
@@ -147,7 +146,21 @@ events.get('/interestedUsersSG/:sgId', async (req, res) => {
 events.post('/SGcomment', async(req, res) => {
   try {
     const {comment, SGEventId} = req.body;
+    console.log(SGEventId);
     const {id} = req.user;
+    const event = await SGEvent.findByPk(SGEventId);
+    if (!event) { //if the event does not exist, create the event
+      await SGEvent.create({
+        id: SGEventId,
+        type: type, 
+        performers: performers,
+        venue: venue,
+        city: city,
+        lat: lat,
+        lng: lng,
+        when: when
+      });
+    }
     await SGEventComment.create({
       userId: id,
       text: comment,
@@ -155,6 +168,7 @@ events.post('/SGcomment', async(req, res) => {
       SGEventId
 
     });
+    res.sendStatus(200);
   } catch (err) {
     console.log(err);
     res.sendStatus(500);
@@ -175,8 +189,6 @@ events.get('/SGcomments/:eventId', async (req, res) => {
         attributes: ['id', 'name']
       }]
     });
-    console.log(comments);
-
     res.status(201).send(comments);
 
   } catch (err) {
@@ -185,28 +197,33 @@ events.get('/SGcomments/:eventId', async (req, res) => {
   }
 });
 
-// //for requests that dont use the api call too much
-// events.get('/sampleData', async(req, res) => {
-//   try {
-//     res.status(201).json(sampleData);
+events.post('/createEvent', async(req, res) => {
+  try {
 
-//   } catch (err) {
-//     console.log(err);
-//     res.sendStatus(500);
-//   }
-// });
+    const {performers, when, type, medium, address, city, venue, state} = req.body;
+    //console.log(req.body);
+    const {id} = req.user;
+    const coordinates = {};
+    //const id = 1 //hardcoded for testing --> change this back
+    if (medium === 'venue') {
+      const {data} = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address},
+      +${city},+${state}&key=${process.env.GEOCODE_KEY}`);
+      const {lat, lng} = data.results[0].geometry.location;
+      coordinates.lat = lat, 
+      coordinates.lng = lng;
+    }
+    
+    await Event.create({
+      performers, when, type, medium, lat: coordinates.lat, lng: coordinates.lng, address, city, state, venue, artistId: id
 
-// events.get('/sampleCity', async(req, res) => {
-//   try {
-//     console.log(citySample.venues[0]);
-
-//     res.status(201).json(citySample);
-
-//   } catch (err) {
-//     console.log(err);
-//     res.sendStatus(500);
-//   }
-// });
+    });
+   
+    res.sendStatus(200);
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(500);
+  }
+});
 
 events.get('/sampleLocalWeekend', async(req, res) => {
   try {
