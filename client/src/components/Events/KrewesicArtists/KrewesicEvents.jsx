@@ -26,19 +26,16 @@ const KrewesicEvents = () => {
 
   const getEvents = async () => {
     const {data} = await axios.get('/krewesicevents/allevents');
-    console.log('data', data);
     setEvents(data);
   };
 
   const getVirtualEvents = async() => {
     const {data} = await axios.get('/krewesicevents/virtualevents');
-    console.log('data', data);
     setVirtualEvents(data);
   };
 
   const getLiveEvents = async() => {
     const {data} = await axios.get('/krewesicevents/liveevents');
-    console.log('data', data);
     setLiveEvents(data);
   };
 

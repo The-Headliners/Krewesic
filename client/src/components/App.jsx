@@ -28,6 +28,7 @@ import KreweEventLandingPage from './Events/KrewesicArtists/KreweEventLandingPag
 
 
 
+
 const AppStyles = styled.div`
 
 `;
@@ -63,6 +64,8 @@ const App = (props) => {
             <Link className='clickableLight' to='/createevent'>create event</Link>
             {/* <Link to ='/mailingList'>Join Our Mailing List</Link> */}
             <Link className='clickableLight' to='/events'>events link</Link>
+            <Link className='clickableLight' to='/testingKrewesicEventLanding'>testing landing page</Link>
+
           </nav>
 
           <Switch>
@@ -100,6 +103,9 @@ const App = (props) => {
             </Route>
             <Route path='/createevent' >
               <CreateEvent />
+            </Route>
+            <Route path='/testingKrewesicEventLanding' >
+              <KreweEventLandingPage />
             </Route>
             <Route path='/messages' component={MessagesPage}>
             </Route>
