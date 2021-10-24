@@ -56,14 +56,14 @@ const App = (props) => {
         <Router>
           <Header />
           <nav>
-            <Link to='/artistofday'>artist of day </Link>
-            <Link to='/bands'>bands</Link>
-            <Link to='/mapevents'>map events</Link>
-            <Link to='/messages'>Messages</Link>
-            <Link to='/profile'>Profile</Link>
-            <Link to='/createevent'>create event</Link>
+            <Link className='clickableLight' to='/artistofday'>artist of day </Link>
+            <Link className='clickableLight' to='/bands'>bands</Link>
+            <Link className='clickableLight' to='/mapevents'>map events</Link>
+            <Link className='clickableLight' to='/messages'>Messages</Link>
+            <Link className='clickableLight' to='/profile'>Profile</Link>
+            <Link className='clickableLight' to='/createevent'>create event</Link>
             {/* <Link to ='/mailingList'>Join Our Mailing List</Link> */}
-            <Link to='/events'>events link</Link>
+            <Link className='clickableLight' to='/events'>events link</Link>
           </nav>
 
           <Switch>

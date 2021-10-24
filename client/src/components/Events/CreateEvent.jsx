@@ -3,7 +3,15 @@ import React, {useState, useEffect, useContext} from 'react';
 import { TextField, MenuItem, Button } from '@material-ui/core';
 import { FormControl, InputLabel, Select } from '@mui/material';
 import axios from 'axios';
-import key from './keys.js';
+import styled from 'styled-components';
+
+const CreateEventStyled = styled.div`
+  .wrapper {
+    background-color: #c3a2e9;
+    padding: 30px;
+  }
+`;
+
 
 const CreateEvent = () => {
 
@@ -39,48 +47,50 @@ const CreateEvent = () => {
 
 
   return (
-    <div>
-      <TextField
-        onChange={e => setWhen(e.target.value)}
-     
-        label="when"
-        variant="outlined"
-        value={when}
-        placeholder='YYYY-MM-DD HH:MM:SS'
-      />
-      <br/><br/>  
-      <TextField
-        onChange={e => setType(e.target.value)}
-     
-        label="type"
-        variant="outlined"
-        value={type}
-        placeholder='ex: music performance, discussion..'
-      />
-      <br/><br/>
-      <FormControl fullWidth>
-        <InputLabel >at a venue or virtual?</InputLabel>
-        <Select
-          onChange={e => setMedium(e.target.value)}
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          label="medium"
-          value={medium}
-        >
-          <MenuItem value={'virtual'}>Virtual</MenuItem>
-          <MenuItem value={'venue'}>At a venue</MenuItem>
+    <CreateEventStyled>
+      <div className='wrapper'>
+        <TextField
+          onChange={e => setWhen(e.target.value)}
+          className='inputBackground'
+          label="when"
+          variant="outlined"
+          value={when}
+          placeholder='YYYY-MM-DD HH:MM:SS'
+        />
+        <br/><br/>  
+        <TextField
+          onChange={e => setType(e.target.value)}
+          className='inputBackground'
+          label="type"
+          variant="outlined"
+          value={type}
+          placeholder='ex: music performance, discussion..'
+        />
+        <br/><br/>
+        <FormControl fullWidth>
+          <InputLabel >at a venue or virtual?</InputLabel>
+          <Select
+            onChange={e => setMedium(e.target.value)}
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            label="medium"
+            value={medium}
+            className='inputBackground'
+          >
+            <MenuItem value={'virtual'}>Virtual</MenuItem>
+            <MenuItem value={'venue'}>At a venue</MenuItem>
           
           
-        </Select>
-        <br/>
-      </FormControl>
-      <br/><br/>
-      {medium === 'venue' &&
+          </Select>
+          <br/>
+        </FormControl>
+        <br/><br/>
+        {medium === 'venue' &&
       <div>
          
         <TextField
           onChange={e => setAddress(e.target.value)}
-     
+          className='inputBackground'
           label="address"
           variant="outlined"
           value={address}
@@ -88,7 +98,7 @@ const CreateEvent = () => {
         />
         <TextField
           onChange={e => setCity(e.target.value)}
-      
+          className='inputBackground'
           label="city"
           variant="outlined"
           value={city}
@@ -97,7 +107,7 @@ const CreateEvent = () => {
        
         <TextField
           onChange={e => setState(e.target.value)}
-     
+          className='inputBackground'
           label="state"
           variant="outlined"
           value={state}
@@ -109,7 +119,7 @@ const CreateEvent = () => {
         <br />
         <TextField
           onChange={e => setVenue(e.target.value)}
- 
+          className='inputBackground'
           label="venue"
           variant="outlined"
           value={venue}
@@ -117,9 +127,10 @@ const CreateEvent = () => {
         />
         <br />
       </div>
-      }
-      <Button onClick={createEvent}>create event!</Button>
-    </div>
+        }
+        <Button onClick={createEvent}>create event!</Button>
+      </div>
+    </CreateEventStyled>
   );
 };
 

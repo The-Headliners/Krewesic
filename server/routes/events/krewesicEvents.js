@@ -41,4 +41,17 @@ kEvents.get('/liveevents', async(req, res) => {
   }
 });
 
+kEvents.get('/event/:eventId', async(req, res) => {
+  try {
+    
+    const {eventId} = req.params;
+    console.log('event eventid', eventId);
+    const event = await Event.findOne({where: {id: eventId}, include: [{model: User}]});
+    res.status(201).send(event);
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(500);
+  }
+});
+
 module.exports = kEvents;
