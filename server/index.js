@@ -16,6 +16,7 @@ const {Users} = require('./routes/message/directMessage.js');
 const {db} = require('../db');
 const auth = require('./routes/authenticate');
 const {form} = require('./routes/form.js');
+const post = require('./routes/Posts/ProfilePosts');
 const events = require('./routes/events/events.js');
 const artist = require('./routes/artist.js');
 const mailingList = require('./routes/mailingList.js');
@@ -40,9 +41,9 @@ io.on('connection', socket => {
   //when a message is sent
   socket.on('message', ({ name, message}) => {
     io.emit('message', {name, message});
-  
+
   });
-  
+
 });
 
 
@@ -62,9 +63,9 @@ app.use('/roomChat', Room);
 app.use('/directMessage', Users);
 app.use('/events', events);
 app.use('/artist', artist);
-app.use('mailingList', mailingList); 
+app.use('/mailingList', mailingList);
 app.use('/krewesicevents', kEvents);
-
+app.use('/ProfilePosts', post);
 
 
 

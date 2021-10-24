@@ -4,11 +4,11 @@ const pg = require('pg');
 const {dbUser} = require('./models/users.js');
 const { dbMessages } = require('./models/messages.js');
 const { dbRooms} = require('./models/chatRooms.js');
-
+const { dbProfilePosts } = require('./models/ProfilePost');
 const {dbSGEvent} = require('./models/SGEvent.js');
 const { dbSGEventComment} = require('./models/SGEventComment.js');
 const dbEvent = require('./models/events.js');
-const db = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, { 
+const db = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
 });
@@ -26,6 +26,8 @@ const Event = dbEvent(db);
 const SGEvent = dbSGEvent(db);
 const SGEventComment = dbSGEventComment(db);
 
+
+
 Event.belongsTo(User, {foreignKey: 'artistId'});
 
 
@@ -33,6 +35,12 @@ User.hasMany(Messages);
 Messages.belongsTo(User);
 SGEventComment.belongsTo(SGEvent, {foreignKey: 'SGEventId'});
 SGEventComment.belongsTo(User, {foreignKey: 'userId'});
+
+
+const Posts = dbProfilePosts(db);
+//userId foreignKey cause we want both types of users to be able to post
+User.hasMany(Posts);
+Posts.belongsTo(User, {foreignKey: 'userId'});
 
 
 //sync the db
@@ -44,10 +52,11 @@ db.sync()
 
 module.exports = {
   db,
-  User, 
+  User,
   Messages,
   Rooms,
-  SGEvent, 
+  SGEvent,
   SGEventComment,
-  Event
+  Event,
+  Posts
 };
