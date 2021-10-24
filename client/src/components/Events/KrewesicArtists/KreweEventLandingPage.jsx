@@ -5,8 +5,8 @@ import { TextField } from '@material-ui/core';
 import CommentComponent from '../CommentComponent.jsx';
 
 const KreweEventLandingPage = () => {
-  //const {eventId} = useParams();
-  const eventId = 1; //hardcoded for testing
+  const {eventId} = useParams();
+  //const eventId = 1; //hardcoded for testing
 
   const [artist, setArtist] = useState('');
   const [dateTime, setDateTime] = useState('');
