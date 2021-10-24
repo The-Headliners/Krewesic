@@ -73,7 +73,7 @@ const MessagesPage = () => {
 
     axios.get('/auth/cookie')
       .then(({data}) => {
-        setUser(data);
+        setUser(data[0].name);
       });
   }, []);
 

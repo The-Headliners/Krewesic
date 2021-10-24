@@ -10,19 +10,19 @@ const Sidebar = () => {
   //hold the state of the chat rooms
   const [rooms, setRooms] = useState([]);
 
-  const getRooms = () => {
-    axios.get('/roomChat/rooms')
-      .then((results) => {
-        setRooms(results.data[0]);
-        console.log('ROOMS:', results.data[0]);
-      })
-      .catch(err => {
-        console.log('ERROR:', err);
-      });
-  };
+  // const getRooms = () => {
+  //   axios.get('/roomChat/rooms')
+  //     .then((results) => {
+  //       setRooms(results.data[0]);
+  //       console.log('ROOMS:', results.data[0]);
+  //     })
+  //     .catch(err => {
+  //       console.log('ERROR:', err);
+  //     });
+  // };
 
   useEffect(() => {
-    getRooms();
+    // getRooms();
   }, []);
 
   //STYLE//

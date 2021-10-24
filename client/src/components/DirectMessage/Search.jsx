@@ -31,7 +31,7 @@ const Search = () => {
       </div>
 
       <div className='user-preview'>
-        {
+        {//conversations can be displayed under search
           //map over the userSearched, to render the user that was searched
           userSearched.map(user => {
             return (

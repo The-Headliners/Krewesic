@@ -1,7 +1,7 @@
 const {Router} = require('express');
 const auth = Router();
 const passport = require('passport');
-
+const {User} = require('../../db/index.js');
 
 
 auth.get('/google', passport.authenticate('google', {scope: ['profile', 'email']}) );
@@ -34,7 +34,7 @@ auth.get('/logout', (req, res) => {
 });
 
 //get request to get the cookie and user's name
-auth.get('/cookie', (req, res) => {
+auth.get('/cookie', async (req, res) => {
   const arr = req.headers.cookie.split('; ');
   
   let user = null;
@@ -42,8 +42,22 @@ auth.get('/cookie', (req, res) => {
     const cookie = arr[i].split('=');
     if (cookie[0] === 'user') {
       user = cookie[1];
+      user = user.replace('%20', ' ');
     } 
   }
-  res.json(user);
+  
+  try {
+    const userInfo = await User.findAll({
+      where: {
+        name: user,
+      }
+    });
+    res.json(userInfo);
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(500);
+  }
 });
+
+
 module.exports = auth;

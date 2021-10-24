@@ -1,25 +1,23 @@
 const Sequelize = require('sequelize');
-const { User } = require('../index.js');
+// const { User } = require('../index.js');
 
 
-const dbMessages = (sequelize,
+const dbConversation = (sequelize,
 ) => {
 
 
-  return sequelize.define('Messages', {
+  return sequelize.define('Conversation', {
     id: {
       type: Sequelize.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },
-    text: {
-      type: Sequelize.STRING
-    },
-    conversationId: {
-      type: Sequelize.INTEGER,
-    },
-    sender: {
-      type: Sequelize.STRING
+    senderId: {
+      type: Sequelize.STRING(255)
+      
+    }, 
+    receiverId: {
+      type: Sequelize.STRING(255),
     }
   });
 
@@ -36,4 +34,4 @@ const dbMessages = (sequelize,
   // });
 };
 
-module.exports = { dbMessages };
+module.exports = { dbConversation };

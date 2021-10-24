@@ -23,7 +23,7 @@ const SidebarRooms = ({rooms}) => {
       <Avatar src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsu7JeOKBlgBvTEAFwdaG4259Cxzrm21Oqfg&usqp=CAU'/>
 
       <div className="sidebar-chat-info" style={sidebarInfo}>
-        <h2 style={infoHeader}>{rooms.name} </h2>
+        <h2 style={infoHeader}>Music Chat Room </h2>
         <p>Last message...</p>
       </div>
     </div>
