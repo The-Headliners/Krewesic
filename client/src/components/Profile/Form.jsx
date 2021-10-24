@@ -46,7 +46,7 @@ const Form = (props) => {
     axios.put(`/form/setType/${type}`);
   };
   return (
-    <div>
+    <div className='backgroundColorLight'>
 
       <div>
         <Typography
