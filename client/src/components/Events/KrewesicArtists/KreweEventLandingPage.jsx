@@ -1,12 +1,23 @@
 import React, {useState, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import axios from 'axios';
-import { TextField } from '@material-ui/core';
+import { TextField, Button } from '@material-ui/core';
 import CommentComponent from '../CommentComponent.jsx';
+import styled from 'styled-components';
+
+const StyledLanding = styled.div`
+  .landingButton {
+    background-color: #b3a970; 
+  }
+  .commentInput {
+    width: 600px;
+    margin-bottom: 20px;
+  }
+`;
 
 const KreweEventLandingPage = () => {
-  const {eventId} = useParams();
-  //const eventId = 1; //hardcoded for testing
+  //const {eventId} = useParams();
+  const eventId = 1; //hardcoded for testing
 
   const [artist, setArtist] = useState('');
   const [dateTime, setDateTime] = useState('');
@@ -33,6 +44,16 @@ const KreweEventLandingPage = () => {
 
   };
 
+  const postInterest = async () => {
+    await axios.post('/krewesicevents/interestedUser', {eventId})
+  }
+
+  const getInterestedUsers = async () => {
+    const {data} = await axios.get(`/krewesicevents/interestedUsers/${eventId}`)
+    console.log(data)
+    setInterestedUsers(data)
+  }
+
 
   const getCommentWall = async() => {
     
@@ -50,10 +71,12 @@ const KreweEventLandingPage = () => {
   useEffect(() => {
     getEventDeetz();
     getCommentWall();
+    getInterestedUsers()
   }, []);
 
 
   return (
+    <StyledLanding>
     <div>
    
       <h1>{artist}</h1>
@@ -63,20 +86,23 @@ const KreweEventLandingPage = () => {
       <div>{venue}</div>
 
       <div>
-        <button>interested</button>
+        <Button className='landingButton' onClick={postInterest}>interested</Button>
       </div>
-      
+      <div>
+        <h3>interested users</h3>
+        {interestedUsers.map((user, i) => <div>{user.User.name}</div>)}
+      </div>
 
       <div>
         <h3>comment wall</h3>
         <TextField
           placeholder='insightful and witty commentary'
-          className='inputBackground'
+          className='inputBackground commentInput'
           variant="outlined"
           onChange={(e) => setCommentText(e.target.value)}
           value={commentText}
         />
-        <button onClick={postComment}>send comment</button>
+        <Button className='landingButton' onClick={postComment}>send comment</Button>
 
         <div>
           {commentWall.map((comment, i) => <CommentComponent key={i} comment={comment} />)}
@@ -85,6 +111,7 @@ const KreweEventLandingPage = () => {
       </div>
 
     </div>
+    </StyledLanding>
   );
 };
 
