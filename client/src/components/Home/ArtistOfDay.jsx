@@ -2,7 +2,7 @@
 import React, { reactDOM, useContext, useState, useEffect} from 'react';
 import {Router, Route, Link, RouteHandler} from 'react-router';
 import { Redirect } from 'react-router';
-
+import { Box } from '@mui/system';
 import GlobalContext from '../Contexts/GlobalContext.jsx';
 import axios from 'axios';
 import 'core-js/stable';
@@ -53,8 +53,21 @@ const ArtistOfDay = () => {
 
   return (
     <div className='dayHeader'>
-      Today's Featured Artist: {artistOfTheDay.strArtist} {artistOfTheDay.strBiographyEN}
-      <img src={artistOfTheDay.strArtistThumb} width="200" height="200" alt='' />
+
+      <h1>Today's Featured Artist:</h1> 
+      <Box display='flex' marginX='10vh' paddingX='10vh'>
+        <div>
+          <h1>
+            {artistOfTheDay.strArtist} 
+          </h1>
+          <div marginY="4vh">
+            {artistOfTheDay.strBiographyEN}
+          </div>
+        </div>
+        <div>
+          <img src={artistOfTheDay.strArtistThumb} width="200" height="200" alt='' />
+        </div>
+      </Box>
       <ul>
         <h2>Friends</h2>
         <ul>
