@@ -42,9 +42,9 @@ SGEventComment.belongsTo(User, {foreignKey: 'userId'});
 
 
 const Posts = dbProfilePosts(db);
-//userId foreignKey cause we want both types of users to be able to post
+//senderId foreignKey cause we want both types of users to be able to post
 User.hasMany(Posts);
-Posts.belongsTo(User, {foreignKey: 'userId'});
+Posts.belongsTo(User, {foreignKey: 'senderId'});
 
 
 //sync the db

@@ -6,23 +6,14 @@ const { Posts, User } = require('../../../db/index.js');
 
 
 post.put('/profilePost', (req, res) => {
-  console.log('hello');
+
   console.log(req.body, 'howdy ho');
-  // const {id} = 1;
-  // Posts.findByPk(id)
-  //   .then(post => {
-  //     post.update({
-  //       text: text
-  //     })
-  //       .then(() => {
-  //         console.log('hello');
-  //         res.sendStatus(201);
-  //       });
-  //   })
-  //   .catch(err => {
-  //     console.error(err);
-  //     res.sendStatus(500);
-  //   });
+  console.log(Posts, 'userino');
+  console.log(req.params, 'hello');
+  res.sendStatus(500);
+  //const {id} = req.user;
+  const id = 1;
+
 });
 
 

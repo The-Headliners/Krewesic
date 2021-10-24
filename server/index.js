@@ -65,7 +65,7 @@ app.use('/events', events);
 app.use('/artist', artist);
 app.use('/mailingList', mailingList);
 app.use('/krewesicevents', kEvents);
-app.use('/ProfilePosts', post);
+app.use('/post', post);
 
 
 
