@@ -51,7 +51,7 @@ const CreateEvent = () => {
       <div className='wrapper'>
         <TextField
           onChange={e => setWhen(e.target.value)}
-     
+          className='inputBackground'
           label="when"
           variant="outlined"
           value={when}
@@ -60,7 +60,7 @@ const CreateEvent = () => {
         <br/><br/>  
         <TextField
           onChange={e => setType(e.target.value)}
-     
+          className='inputBackground'
           label="type"
           variant="outlined"
           value={type}
@@ -75,6 +75,7 @@ const CreateEvent = () => {
             id="demo-simple-select"
             label="medium"
             value={medium}
+            className='inputBackground'
           >
             <MenuItem value={'virtual'}>Virtual</MenuItem>
             <MenuItem value={'venue'}>At a venue</MenuItem>
@@ -89,7 +90,7 @@ const CreateEvent = () => {
          
         <TextField
           onChange={e => setAddress(e.target.value)}
-     
+          className='inputBackground'
           label="address"
           variant="outlined"
           value={address}
@@ -97,7 +98,7 @@ const CreateEvent = () => {
         />
         <TextField
           onChange={e => setCity(e.target.value)}
-      
+          className='inputBackground'
           label="city"
           variant="outlined"
           value={city}
@@ -106,7 +107,7 @@ const CreateEvent = () => {
        
         <TextField
           onChange={e => setState(e.target.value)}
-     
+          className='inputBackground'
           label="state"
           variant="outlined"
           value={state}
@@ -118,7 +119,7 @@ const CreateEvent = () => {
         <br />
         <TextField
           onChange={e => setVenue(e.target.value)}
- 
+          className='inputBackground'
           label="venue"
           variant="outlined"
           value={venue}

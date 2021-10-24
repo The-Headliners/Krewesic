@@ -19,6 +19,11 @@ const GlobalStyle = createGlobalStyle`
     background-color: #fdf0a6; 
     padding: 15px;
   }
+  a {
+    margin-left: 15px;
+    margin-right: 15px;
+    text-decoration: none;
+  }
 
   .backgroundColorLight {
     background-color: #caa8f7;
@@ -30,6 +35,7 @@ const GlobalStyle = createGlobalStyle`
 
     }
   }
+
   .clickableDark {
     :hover {
       cursor: pointer;
@@ -44,10 +50,11 @@ const GlobalStyle = createGlobalStyle`
 
     }
   }
-  a {
-    margin-left: 15px;
-    margin-right: 15px;
-    text-decoration: none;
+ 
+
+  .inputBackground {
+    background-color: white;
+    border-radius: 3px;
   }
 
   .btn1 {

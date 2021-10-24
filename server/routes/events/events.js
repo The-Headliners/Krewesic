@@ -146,7 +146,21 @@ events.get('/interestedUsersSG/:sgId', async (req, res) => {
 events.post('/SGcomment', async(req, res) => {
   try {
     const {comment, SGEventId} = req.body;
+    console.log(SGEventId);
     const {id} = req.user;
+    const event = await SGEvent.findByPk(SGEventId);
+    if (!event) { //if the event does not exist, create the event
+      await SGEvent.create({
+        id: SGEventId,
+        type: type, 
+        performers: performers,
+        venue: venue,
+        city: city,
+        lat: lat,
+        lng: lng,
+        when: when
+      });
+    }
     await SGEventComment.create({
       userId: id,
       text: comment,
@@ -154,6 +168,7 @@ events.post('/SGcomment', async(req, res) => {
       SGEventId
 
     });
+    res.sendStatus(200);
   } catch (err) {
     console.log(err);
     res.sendStatus(500);

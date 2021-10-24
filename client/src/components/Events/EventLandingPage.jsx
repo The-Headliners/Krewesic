@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import CommentComponent from './CommentComponent.jsx';
+import { TextField, MenuItem, Button } from '@material-ui/core';
 
 const EventLandingPage = () => {
   
@@ -35,12 +36,13 @@ const EventLandingPage = () => {
   const comment = async () => {
     await axios.post('/events/SGcomment', {comment: commentText, SGEventId: eventId});
     setCommentText('');
+    getComments();
   };
 
   const getComments = async () => {
     const {data} = await axios.get(`/events/SGcomments/${eventId}`);
     console.log('get comments', data);
-    setCommentWall(data);
+    setCommentWall(data.reverse());
   };
 
   const disinterest = async () => {
@@ -73,8 +75,10 @@ const EventLandingPage = () => {
 
       <div>
         <h3>comment wall</h3>
-        <input 
+        <TextField
           placeholder='insightful and witty commentary'
+          className='inputBackground'
+          variant="outlined"
           onChange={(e) => setCommentText(e.target.value)}
           value={commentText}
         />
