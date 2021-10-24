@@ -106,6 +106,48 @@ kEvents.get('/commentWall/:eventId', async(req, res) => {
   }
 });
 
+//when user clicks interested
+kEvents.post('/interestedUser', async (req, res) => {
+  try {
+    const {eventId} = req.body;
+    const {id} = req.user;
+    //const id = 1 //hardcoded for testing change this!!
+
+    const newInterst = await EventComment.create({
+      type: 'interest',
+      userId: id,
+      eventId: eventId
+    })
+    res.sendStatus(200);
+
+  } catch (err) {
+    console.log(err) 
+    res.sendStatus(500);
+  }
+})
+
+//get interested users in a specified event
+kEvents.get('/interestedUsers/:eventId', async (req, res) => {
+  try {
+    const {eventId} = req.params;
+    console.log('get interested', eventId )
+    const interestedUsers = await EventComment.findAll({
+      where: {
+        eventId: eventId,
+        type: 'interest'
+      },
+      include: [{
+        model: User,
+        attributes: ['id', 'name']
+      }]
+    })
+    res.status(201).send(interestedUsers)
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(500);
+  }
+})
+
 
 
 module.exports = kEvents;
