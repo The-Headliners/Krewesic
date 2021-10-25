@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import PublishIcon from '@mui/icons-material/Publish';
+import { DataRowMessage } from 'pg-protocol/dist/messages';
 
 
 
@@ -56,10 +57,7 @@ const Profile = (props) => {
     }
   };
 
-  useEffect(() => {
-    artDescription();
-    genreDescription();
-  });
+
 
 
 
@@ -69,23 +67,43 @@ const Profile = (props) => {
   const [ profileId, setMyProfId ] = useState(null);
   const [ data, setData ] = useState(null);
 
+  const [ post, setMyPost ] = useState([]);
+
   const handlePost = () => {
     const data = {
       text: text,
       senderId: senderId,
       profileId: profileId,
     };
-    console.log(profileId, 'hello');
     axios.post(`/post/profilePost/${profileId}`, data).then(res => {
       setData(res.data);
       setMyTexts('');
       setMySend('');
       setMyProfId('');
-    }).catch(err => {
-      console.log('oh man', err);
-    });
+    }).then(() => getAllPosts())
+      .catch(err => {
+        console.log('oh man', err);
+      });
   };
 
+  const getAllPosts = () => {
+    const arr = [];
+    axios.get('/post/getProfilePost')
+      .then(({ data }) => {
+        const myPostArr = data.map(post => {
+          return post.text;
+        });
+        console.log(myPostArr);
+        setMyPost(myPostArr);
+      });
+  };
+
+
+
+  useEffect(() => {
+    artDescription();
+    genreDescription();
+  });
 
   return (
     <Box
@@ -169,7 +187,11 @@ const Profile = (props) => {
         component="div"
         sx={{ visibility: 'visible' }}>
         <h4>My Posts</h4>
-        { text || null }
+        { post.map((posty, i) => {
+          return <p
+            key={i}
+          >{posty}</p>;
+        }) }
       </Box>
     </Box>
   );
