@@ -50,7 +50,7 @@ const App = (props) => {
   const [type, setType] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
 
-  const value = {id, setId, name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn, city, setCity, bio, setBio, favArtist, setArtist, favGenre, setGenre, artistBio, setMyBio, artistName, setMyName, pic, setPic, myGenre, setMyGenre, influences, setInfluence, posts, setMyPosts };
+  const value = {id, setId, name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn, city, setCity, bio, setBio, favArtist, setArtist, favGenre, setGenre, artistBio, setMyBio, artistName, setMyName, pic, setPic, myGenre, setMyGenre, influences, setInfluence, };
 
   return (
     <AppStyles>
