@@ -38,9 +38,9 @@ app.use(cookieParser());
 const io = require('socket.io')(server);
 
 //Socket server
-//update this array
+//holds alll users that are online 
 let users = [];
-console.log(users);
+
 //function to add user to the array
 const addUser = (userId, socketId) => {
   //check inside users array, if the same user is already inside users
@@ -53,19 +53,9 @@ const removeUser = (socketId) => {
 };
 
 const getUser = (userId) => {
-  // let user;
   return users.find((user) => user.userId === userId);
-  // users.forEach(u => {
-  //   console.log('check for users', u);
-  //   // if (u.userId === userId) {
-  //   //   user = u;
-  //   // }
-  //   // return user;
-  // });
 };
 io.on('connection', socket => {
-  //console.log('Is this what we want?', getUser('116854415860903718619'));
-
   //when connect
 
   //***FOR LIVE CHAT FOR ALL USERS*** when a message is sent
@@ -75,7 +65,6 @@ io.on('connection', socket => {
 
   //if you want to send one client
   //use: io.to(socketID).emit
-  // io.to().emit('welcome', 'hello this is socket server!');
   
   //after every connection, take userId and socketId from user
   //take from the client socket
@@ -90,10 +79,7 @@ io.on('connection', socket => {
   socket.on('sendMessage', ({senderId, receiverId, text, name}) => {
     //find specific user to send message
     const user = getUser(receiverId);
-    console.log('NEW USER', user);
-    //NEW USER { userId: '111517188885714793529', socketId: 'VThniWVYBFzbdiQTAAAd' }
-    //This is sender: 116854415860903718619 this is text: what it do
-    console.log('This is sender:', senderId, 'this is text:', text);
+    
     //send data back to certain user send to client
     io.to(user.socketId).emit('getMessage', {
       senderId, 

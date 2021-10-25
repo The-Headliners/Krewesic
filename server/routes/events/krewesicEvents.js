@@ -117,20 +117,20 @@ kEvents.post('/interestedUser', async (req, res) => {
       type: 'interest',
       userId: id,
       eventId: eventId
-    })
+    });
     res.sendStatus(200);
 
   } catch (err) {
-    console.log(err) 
+    console.log(err); 
     res.sendStatus(500);
   }
-})
+});
 
 //get interested users in a specified event
 kEvents.get('/interestedUsers/:eventId', async (req, res) => {
   try {
     const {eventId} = req.params;
-    console.log('get interested', eventId )
+    console.log('get interested', eventId );
     const interestedUsers = await EventComment.findAll({
       where: {
         eventId: eventId,
@@ -140,13 +140,13 @@ kEvents.get('/interestedUsers/:eventId', async (req, res) => {
         model: User,
         attributes: ['id', 'name']
       }]
-    })
-    res.status(201).send(interestedUsers)
+    });
+    res.status(201).send(interestedUsers);
   } catch (err) {
     console.log(err);
     res.sendStatus(500);
   }
-})
+});
 
 
 

@@ -6,7 +6,7 @@ import { async } from 'regenerator-runtime';
 const Conversation = ({conversation, currentUser}) => {
 
   //hold state of user dealing with the conversation involved
-  const [user, setUser] = useState('ben');
+  const [user, setUser] = useState('');
 
 
 
