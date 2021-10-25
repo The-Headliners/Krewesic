@@ -2,7 +2,8 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 
 /**
- * This is a custom hook to return the user object for any krewesic user.
+ * This is a custom hook to return the user object for any krewesic user.   Will return that user when the component mounts.  
+ * 
  * @param {number} id  --this is the id of the user whose information you want
  * @returns the user object 
  * to use the hook, in your component where you want to grab a users information, import this hook at the top just call the hook and set a variable equal to the return value..
