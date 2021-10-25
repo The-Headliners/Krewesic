@@ -10,7 +10,7 @@ const MessagesView = ({chat, handleChange, sendMessage, value}) => {
   //Style for MessagesView//
   const boxStyle = {
     flex: '0.65',
-    backgroundColor: 'lightgray'
+    backgroundColor: 'lightgray',
   };
   const chatHeader = {
     padding: '20px',
@@ -26,7 +26,8 @@ const MessagesView = ({chat, handleChange, sendMessage, value}) => {
     borderRadius: '10px',
     width: 'fit-content',
     marginBottom: '30px',
-    marginLeft: 'auto'
+    marginLeft: 'auto',
+    color: 'black'
   };
   // const chatMessageRecipient = {
   //   position: 'relative',
@@ -60,9 +61,9 @@ const MessagesView = ({chat, handleChange, sendMessage, value}) => {
       <div className="chat-header" style={chatHeader}>
         <Avatar src='https://www.uidownload.com/files/790/68/996/free-set-of-material-design-avatars.png'/>
 
-        <div className="chat-header-info">
-          <h3>Recipient name</h3>
-          <p>Last seen at ...</p>
+        <div className="chat-header-info" style={{color: 'black'}}>
+          <h3>Krewesic Chat Room</h3>
+          <p>Chat along...</p>
         </div>
       </div>
 
@@ -71,7 +72,7 @@ const MessagesView = ({chat, handleChange, sendMessage, value}) => {
           chat.map(message => {
             return (
               <div>
-                <h2 style={{position: 'relative', marginLeft: 'auto', width: 'fit-content', }}>{message.name}</h2>
+                <h2 style={{position: 'relative', marginLeft: 'auto', width: 'fit-content', color: 'black'}}>{message.name}</h2>
                 <p className="chat-message" style={chatMessageSender}>
                   {message.message}
 
