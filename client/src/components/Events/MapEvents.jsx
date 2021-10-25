@@ -34,6 +34,8 @@ const MapEvents = () => {
   const [date1, setDate1] = useState('2021-10-29');
   const [date2, setDate2] = useState('2021-10-31');
 
+  const [krewesicEvents, setKrewesicEvents] = useState([]);
+
   const searchBand = async() => {
     console.log('click search');
     //send bandName to the back end
@@ -67,7 +69,10 @@ const MapEvents = () => {
     const {data} = await axios.get(`/events/dateSearch/${date1}/${date2}/${city}`);
     console.log('fls data', data);
     setEvents(data);
+    
+
   };
+
   
   return (
     <StyledMapEvents>
