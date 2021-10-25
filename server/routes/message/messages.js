@@ -3,12 +3,15 @@ const { async } = require('regenerator-runtime');
 const Message = express.Router();
 const {User, Messages} = require('../../../db/index.js');
 
-Message.post('/sendMessage', async (req, res) => {
-  const { id } = req.user; //
-  const { text } = req.body;
+
+//Create a message 
+Message.post('/sendMessage/:id', async (req, res) => {
+  //current user id
+  const {id} = req.params;
+  const { conversationId, sender, text, name} = req.body;
   try {
 
-    Messages.create({ text: text, UserId: id});
+    Messages.create({ conversationId: conversationId, sender: sender, text: text, name: name, UserId: id});
     res.sendStatus(200);
   } catch (err) {
     console.log(err);
@@ -16,11 +19,11 @@ Message.post('/sendMessage', async (req, res) => {
   }
 });
 
-//get all messages from current user
-Message.get('/sendMessage', async (req, res) => {
-  const {id} = req.user;
+//get all messages from a certain conversation
+Message.get('/allMessages/:conversationId', async (req, res) => {
+  const {conversationId} = req.params;
   try {
-    const messages = await Messages.findAll({where: { UserId: id }, include: [{model: User }]});
+    const messages = await Messages.findAll({where: { conversationId: conversationId }, include: [{model: User }]});
     res.status(200).send(messages);
   } catch (err) {
     console.log(err);

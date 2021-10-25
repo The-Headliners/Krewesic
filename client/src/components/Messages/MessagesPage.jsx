@@ -15,9 +15,7 @@ const MessagesPage = () => {
   // //for live chat practice, create a chat array in state to hold the chat messages
   const [chat, setChat] = useState([]);
 
-  //hold messages in state
-  const [messages, setMessages] = useState([{name: 'jack', text: 'hey guys'}, {name: 'kyle', text: 'whats up!'}]);
-
+  
   //get the current user's name, hold the user in the state
   const [user, setUser] = useState('');
 
@@ -73,7 +71,7 @@ const MessagesPage = () => {
 
     axios.get('/auth/cookie')
       .then(({data}) => {
-        setUser(data);
+        setUser(data[0].name);
       });
   }, []);
 
@@ -95,7 +93,7 @@ const MessagesPage = () => {
   return (
     <div className='message-page' style={page}>
       <Link to='/DirectMessage'>Direct Messaging </Link>
-      <h1>{user}</h1>
+      <h1 style={{color: 'black'}}>{user}</h1>
       <div className='message-body' style={body}>
         <Sidebar />
         <MessagesView chat={chat} handleChange={handleChange} sendMessage={sendMessage} value={value}/>

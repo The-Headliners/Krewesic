@@ -4,6 +4,7 @@ const pg = require('pg');
 const {dbUser} = require('./models/users.js');
 const { dbMessages } = require('./models/messages.js');
 const { dbRooms} = require('./models/chatRooms.js');
+const {dbConversation} = require('./models/conversation.js');
 const {dbEventComment} = require('./models/eventComment.js');
 const {dbSGEvent} = require('./models/SGEvent.js');
 const { dbSGEventComment} = require('./models/SGEventComment.js');
@@ -16,9 +17,11 @@ const db = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 
 
 
-const User = dbUser(db);
-const Messages = dbMessages(db);
-const Rooms = dbRooms(db);
+User = dbUser(db);
+Messages = dbMessages(db);
+Rooms = dbRooms(db);
+Conversations = dbConversation(db);
+
 
 const Event = dbEvent(db);
 const EventComment = dbEventComment(db);
@@ -52,6 +55,7 @@ module.exports = {
   User, 
   Messages,
   Rooms,
+  Conversations,
   SGEvent, 
   SGEventComment,
   Event,

@@ -26,12 +26,12 @@ const Search = () => {
 
       <div className='search-section'>
         <h5>Find a user </h5>
-        <input type="text" className="search-bar"placeholder="Find a Player..." value={value} onChange={(e) => changeInput(e.target.value)}/>
+        <input type="text" className="search-bar"placeholder="Find a user..." value={value} onChange={(e) => changeInput(e.target.value)}/>
         <button className="search-button" onClick={() => searchUser(value)}> Search </button>
       </div>
 
       <div className='user-preview'>
-        {
+        {//conversations can be displayed under search
           //map over the userSearched, to render the user that was searched
           userSearched.map(user => {
             return (
