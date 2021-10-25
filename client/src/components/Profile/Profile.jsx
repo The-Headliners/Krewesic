@@ -8,12 +8,15 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import PublishIcon from '@mui/icons-material/Publish';
-import FormArtist from './FormArtist.jsx';
-import FormListener from './FormListener.jsx';
 
-const Profile = () => {
 
-  //const [ posts, setMyPosts ] = useState('');
+
+const Profile = (props) => {
+
+  const [ input, setInput ] = useState(null);
+  const [ post, setPost ] = useState(false);
+
+
   const [description, setDescription] = useState('');
   const [ genreDesc, setGenreDesc ] = useState('');
 
@@ -37,7 +40,6 @@ const Profile = () => {
     console.log('picture', picture);
   }, []);
 
-  //const handlePost
 
   const artDescription = () => {
     if (favArtist) {
@@ -54,6 +56,29 @@ const Profile = () => {
       setGenreDesc('My Genre:');
     }
   };
+
+
+  // const handleSubmit = e => {
+  //   e.preventDefault();
+
+  //   props.onSubmit({
+  //     id: Math.floor(Math.random() * 10000),
+  //     text: input
+  //   });
+  //   setInput('');
+  // };
+
+
+  const getData = (val) => {
+    setInput(val.target.value);
+    setPost(false);
+
+  };
+
+  const submit = () => {
+    setPost(true);
+  };
+
 
   useEffect(() => {
     artDescription();
@@ -123,7 +148,7 @@ const Profile = () => {
         marginLeft="100px"
       >
         <TextField
-        // onChange={e => setMyPosts(e.target.value)}
+          onChange={getData}
           multiline
           label="Post"
           size="small"
@@ -131,7 +156,7 @@ const Profile = () => {
         />
         <Button
           startIcon={<PublishIcon />}
-          //onClick={handlePost}
+          onClick={submit}
         >
           Post
         </Button>
@@ -141,10 +166,19 @@ const Profile = () => {
         marginRight='50px'
         component="div"
         sx={{ visibility: 'visible' }}>
-        posts
+        <h4>My Posts</h4>
+        {
+          post ?
+            <p>{input}</p> :
+            null
+        }
       </Box>
     </Box>
   );
 };
 
 export default Profile;
+
+
+
+

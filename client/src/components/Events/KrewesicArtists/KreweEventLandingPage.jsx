@@ -7,7 +7,7 @@ import styled from 'styled-components';
 
 const StyledLanding = styled.div`
   .landingButton {
-    background-color: #b3a970; 
+    background-color: #b3a970;
   }
   .commentInput {
     width: 600px;
@@ -56,7 +56,7 @@ const KreweEventLandingPage = () => {
 
 
   const getCommentWall = async() => {
-    
+
     const {data} = await axios.get(`/krewesicevents/commentWall/${eventId}`);
     setCommentWall(data);
   };
@@ -78,7 +78,7 @@ const KreweEventLandingPage = () => {
   return (
     <StyledLanding>
       <div>
-   
+
         <h1>{artist}</h1>
         <div>{dateTime}</div>
         <div>{address}</div>
