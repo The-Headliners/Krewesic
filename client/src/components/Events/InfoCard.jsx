@@ -26,14 +26,14 @@ const InfoCard = ({event}) => {
 
   return (
     <StyledCard>
-    <div>
-      <div className='clickableLight bandName' onClick={() => { history.push(`/eventLandingPage/${id}/${venue.name}/${venue.city}/${performersString}/${lat}/${lng}/${type}/${datetime_local}`); }}>
-        {performers.map((performer, i) => <h3 key={i}>{performer.name}</h3>)}
-      </div>
-      <h4>{venue.name}</h4>
-      <p>{datetime_local}</p>
+      <div>
+        <div className='clickableLight bandName' onClick={() => { history.push(`/eventLandingPage/${id}/${venue.name}/${venue.city}/${performersString}/${lat}/${lng}/${type}/${datetime_local}`); }}>
+          {performers.map((performer, i) => <h3 key={i}>{performer.name}</h3>)}
+        </div>
+        <h4>{venue.name}</h4>
+        <p>{datetime_local}</p>
 
-    </div>
+      </div>
     </StyledCard>
   );
 };

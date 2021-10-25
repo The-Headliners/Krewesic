@@ -69,9 +69,14 @@ const MapEvents = () => {
     const {data} = await axios.get(`/events/dateSearch/${date1}/${date2}/${city}`);
     console.log('fls data', data);
     setEvents(data);
-    
 
+    const kEvents = await axios.get('/krewesicevents/liveevents');
+    console.log('keventsdata', kEvents.data);
+    setKrewesicEvents(kEvents.data);
+    
   };
+
+  
 
   
   return (
@@ -88,7 +93,7 @@ const MapEvents = () => {
      
         <Button onClick={searchDate}>search nolaween</Button>
 
-        <Map events={events} />
+        <Map events={events} kEvents={krewesicEvents} />
       </div>
     </StyledMapEvents>
   );
