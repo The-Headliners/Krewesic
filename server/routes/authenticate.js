@@ -50,7 +50,8 @@ auth.get('/cookie', async (req, res) => {
     const userInfo = await User.findAll({
       where: {
         name: user,
-      }
+      },
+      include: [{model: Messages}]
     });
     res.json(userInfo);
   } catch (err) {

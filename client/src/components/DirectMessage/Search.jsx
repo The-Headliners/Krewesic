@@ -26,7 +26,7 @@ const Search = () => {
 
       <div className='search-section'>
         <h5>Find a user </h5>
-        <input type="text" className="search-bar"placeholder="Find a Player..." value={value} onChange={(e) => changeInput(e.target.value)}/>
+        <input type="text" className="search-bar"placeholder="Find a user..." value={value} onChange={(e) => changeInput(e.target.value)}/>
         <button className="search-button" onClick={() => searchUser(value)}> Search </button>
       </div>
 

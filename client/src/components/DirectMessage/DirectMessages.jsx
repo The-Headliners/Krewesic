@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 import Search from './Search.jsx';
 import Message from './Message.jsx';
 import Conversation from './Conversation.jsx';
+import Users from './Users.jsx';
 import { async } from 'regenerator-runtime';
 
 //need the socket to connect to the server, which is the local host
@@ -107,7 +108,7 @@ const DirectMessages = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setValue('');
-    const message = { sender: currentUser.googleId, text: value, conversationId: currentChat.id};
+    const message = { sender: currentUser.googleId, text: value, conversationId: currentChat.id, name: currentUser.name};
 
     let receiver;
     currentChat.senderId === currentUser.googleId ? receiver = currentChat.receiverId : receiver = currentChat.senderId;
@@ -116,7 +117,8 @@ const DirectMessages = () => {
     await socket.emit('sendMessage', {
       senderId: currentUser.googleId,
       receiverId: receiver,
-      text: value
+      text: value,
+      name: currentUser.name
     });
     
     setMessages(messages => [...messages, message]);
@@ -130,7 +132,7 @@ const DirectMessages = () => {
     // });
 
     try {
-      const res = await axios.post('/messages/sendMessage', message);
+      const res = await axios.post(`/messages/sendMessage/${currentUser.id}`, message);
       console.log('MESSAGES', res);
       
       //setMessages([...messages], res.data);
@@ -158,24 +160,26 @@ const DirectMessages = () => {
   //   arrivalMessage && (currentChat?.senderId || currentChat?.receiverId) === arrivalMessage.sender && setMessages((prev) => [...prev, arrivalMessage]);
   // }, [arrivalMessage, currentChat]);
 
-  
+
   //***For incoming messages from another user, coming back from the Socket Server ***/
-  socket.on('getMessage', ({senderId, text}) => {
+  socket.on('getMessage', ({senderId, text, name}) => {
     console.log('This is senderId:', senderId, 'This is the text:', text);
-    let name;
-    senderId === currentUser.googleId ? name = currentUser.name : name;
+    // let name;
+    // senderId === currentUser.googleId ? name = currentUser.name : name;
     setMessages([...messages, {sender: senderId, text: text, name: name}]);
   });
-  console.log('NEW MESSAGE', messages);
-
+  //console.log('NEW MESSAGE', messages);
+  console.log(currentUser);
 
   return (
     <div className='directPage backgroundColorLight'>
+      {/* <Users currentUser={currentUser}/> */}
       <div className='search-feature'>
         <Search />
       </div>
       <div className='chatOnline'>
         <div className='chatWrapper'>
+        Conversations:
           {
             conversations.map(convo => (
               <div onClick={() => setCurrentChat(convo)}>
@@ -194,11 +198,11 @@ const DirectMessages = () => {
               <>
                 {messages.map(message => (
 
-                  <Message message={message} owner={message.sender === currentUser.googleId}/>
+                  <Message message={message} owner={message.sender === currentUser.googleId} currentUser={currentUser}/>
                 ))}
         
 
-                <div className='writeMessage'> 
+                <div className='writeMessage' style={{position: 'relative', marginLeft: '500px' }}> 
                   <textarea className='messageInput' placeholder='write something...' value={value} onChange={(e) => setValue(e.target.value)}> </textarea>
                   <button className='sendMessageButton' onClick={handleSubmit}>Send</button>
                 </div> </> ) : (<span className="noConversation"> Open a Conversation to start a Chat.</span>

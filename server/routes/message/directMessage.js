@@ -37,7 +37,7 @@ Users.get('/users/:user', async (req, res) => {
 Users.get('/users', async (req, res) => {
 
   try {
-    const users = await User.findAll();
+    const users = await User.findAll({include: [{model: Messages}]});
     res.status(200).send(users);
   } catch (err) {
     console.log(err);

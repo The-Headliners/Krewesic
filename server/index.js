@@ -87,7 +87,7 @@ io.on('connection', socket => {
 
   //***PRIVATE MESSAGE****send and get a message
   //socket.on, take from the client
-  socket.on('sendMessage', ({senderId, receiverId, text}) => {
+  socket.on('sendMessage', ({senderId, receiverId, text, name}) => {
     //find specific user to send message
     const user = getUser(receiverId);
     console.log('NEW USER', user);
@@ -97,7 +97,8 @@ io.on('connection', socket => {
     //send data back to certain user send to client
     io.to(user.socketId).emit('getMessage', {
       senderId, 
-      text
+      text,
+      name
     });
   });  
 

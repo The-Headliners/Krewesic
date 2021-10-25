@@ -20,6 +20,9 @@ const dbMessages = (sequelize,
     },
     sender: {
       type: Sequelize.STRING
+    },
+    name: {
+      type: Sequelize.STRING
     }
   });
 
