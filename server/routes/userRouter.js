@@ -8,8 +8,8 @@ userRouter.get('/user/:userId', async (req, res) => {
   try {
     const {userId} = req.params;
 
-    const userProf = User.findByPk(userId)
-    res.status(201).send(userProf)
+    const userProf = User.findByPk(userId);
+    res.status(201).send(userProf);
 
 
     // const {id, name, picture, type, bio, favGenre, favArtist, artistBio, artistName, myGenre, city, pic, setPic, influences, setInfluence, posts, setMyPosts } = req.user;
