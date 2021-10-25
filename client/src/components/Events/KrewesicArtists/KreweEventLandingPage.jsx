@@ -5,6 +5,8 @@ import { TextField, Button } from '@material-ui/core';
 import CommentComponent from '../CommentComponent.jsx';
 import styled from 'styled-components';
 import GlobalContext from '../../Contexts/GlobalContext.jsx';
+import {useHistory} from 'react-router-dom';
+import VisitProfile from '../../Profile/VisitProfile.jsx';
 
 
 const StyledLanding = styled.div`
@@ -22,6 +24,7 @@ const KreweEventLandingPage = () => {
   // const eventId = 1; //hardcoded for testing
 
   const {id} = useContext(GlobalContext);
+  const history = useHistory();
   
 
   const [artist, setArtist] = useState('');
@@ -95,6 +98,10 @@ const KreweEventLandingPage = () => {
     setAlreadyInterested(false);
   };
 
+  const visitProfile = (id) => {
+    history.push(`/visitProfile/${id}`);
+  };
+
 
   return (
     <StyledLanding>
@@ -111,7 +118,7 @@ const KreweEventLandingPage = () => {
         </div>
         <div>
           <h3>interested users</h3>
-          {interestedUsers.map((user, i) => <div key={i}>{user.User.name}</div>)}
+          {interestedUsers.map((user, i) => <div onClick={() => visitProfile(user.User.id)} key={i}>{user.User.name}</div>)}
         </div>
 
         <div>

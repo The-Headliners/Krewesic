@@ -6,9 +6,10 @@ const {SGEvent, SGEventComment, User, Event} = require('../../db/index.js');
 
 userRouter.get('/user/:userId', async (req, res) => {
   try {
+    console.log('user router');
     const {userId} = req.params;
 
-    const userProf = User.findByPk(userId);
+    const userProf = await User.findByPk(userId);
     res.status(201).send(userProf);
 
 

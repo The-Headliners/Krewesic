@@ -24,6 +24,7 @@ import CreateEvent from './Events/CreateEvent.jsx';
 // import MailingList from './Home/mailing list/MailingList.jsx';
 import Events from './Events/Events.jsx';
 import KreweEventLandingPage from './Events/KrewesicArtists/KreweEventLandingPage.jsx';
+import VisitProfile from './Profile/VisitProfile.jsx';
 
 
 
@@ -66,7 +67,7 @@ const App = (props) => {
             <Link className='clickableLight' to='/createevent'>create event</Link>
             {/* <Link to ='/mailingList'>Join Our Mailing List</Link> */}
             <Link className='clickableLight' to='/events'>events link</Link>
-            <Link className='clickableLight' to='/testingKrewesicEventLanding'>testing landing page</Link>
+         
 
           </nav>
 
@@ -106,8 +107,8 @@ const App = (props) => {
             <Route path='/createevent' >
               <CreateEvent />
             </Route>
-            <Route path='/testingKrewesicEventLanding' >
-              <KreweEventLandingPage />
+            <Route path='/visitProfile/:id' >
+              <VisitProfile />
             </Route>
             <Route path='/messages' component={MessagesPage}>
             </Route>

@@ -43,26 +43,10 @@ const VisitProfile = () => {
 
   //const handlePost
 
-  const artDescription = () => {
-    if (favArtist) {
-      setDescription('Favorite Artist:');
-    } else {
-      setDescription('Influence:');
-    }
+  const getParams = () => {
+    console.log(id, name);
   };
 
-  const genreDescription = () => {
-    if (favGenre) {
-      setGenreDesc('Favorite Genre:');
-    } else {
-      setGenreDesc('My Genre:');
-    }
-  };
-
-  useEffect(() => {
-    artDescription();
-    genreDescription();
-  });
 
   return (
     <Box
@@ -72,6 +56,7 @@ const VisitProfile = () => {
       alignItems="stretch"
     >
       <br/>
+      <button onClick={getParams}></button>
       <Box>
         <Typography
           align='left'
@@ -87,7 +72,7 @@ const VisitProfile = () => {
           align='center'
           variant='h4'
         >
-          { artistName || name }
+          { name }
         </Typography>
         <br/>
         <Box
@@ -109,17 +94,9 @@ const VisitProfile = () => {
         City: { city }
         </Box>
         <br/>
-        <Box
-          align='center'
-        >
-          {genreDesc} { favGenre || myGenre }
-        </Box>
+       
         <br/>
-        <Box
-          align='center'
-        >
-          {description}  { favArtist || influences }
-        </Box>
+      
       </Box>
       <br/>
       <Box
