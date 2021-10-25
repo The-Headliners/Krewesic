@@ -19,6 +19,7 @@ import Header from './Header.jsx';
 import GlobalContext from './Contexts/GlobalContext.jsx';
 import MessagesPage from './Messages/MessagesPage.jsx';
 import DirectMessages from './DirectMessage/DirectMessages.jsx';
+import MusicUpload from './UploadMusic/MusicUpload.jsx';
 import EventLandingPage from './Events/EventLandingPage.jsx';
 import CreateEvent from './Events/CreateEvent.jsx';
 // import MailingList from './Home/mailing list/MailingList.jsx';
