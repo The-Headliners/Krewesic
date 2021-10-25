@@ -14,7 +14,6 @@ import PublishIcon from '@mui/icons-material/Publish';
 const Profile = (props) => {
 
 
-  const [ post, setMyPosts ] = useState('');
 
 
   const [description, setDescription] = useState('');
@@ -65,17 +64,25 @@ const Profile = (props) => {
 
 
   //AXIOS AREA NEED THE POST TO SEED THEN GET REQUEST TO YA KNOW GET IT AND DISPLAY
+  const [ text, setMyTexts ] = useState('');
+  const [ senderId, setMySend] = useState(null);
+  const [ profileId, setMyProfId ] = useState(null);
+  const [ data, setData ] = useState(null);
+
   const handlePost = () => {
     const data = {
       text: text,
-      senderId, senderId,
-      profileId, id,
+      senderId: senderId,
+      profileId: profileId,
     };
-    axios.post(`/post/profilePost/${id}`, data).then(res => {
+    console.log(profileId, 'hello');
+    axios.post(`/post/profilePost/${profileId}`, data).then(res => {
       setData(res.data);
-      setMyPosts('');
+      setMyTexts('');
+      setMySend('');
+      setMyProfId('');
     }).catch(err => {
-      console.log('darn', err);
+      console.log('oh man', err);
     });
   };
 
@@ -143,7 +150,7 @@ const Profile = (props) => {
         marginLeft="100px"
       >
         <TextField
-          onChange={e => setMyPosts(e.target.value)}
+          onChange={e => setMyTexts(e.target.value)}
           multiline
           label="Post"
           size="small"
@@ -162,7 +169,7 @@ const Profile = (props) => {
         component="div"
         sx={{ visibility: 'visible' }}>
         <h4>My Posts</h4>
-
+        { text || null }
       </Box>
     </Box>
   );

@@ -9,8 +9,8 @@ post.post('/profilePost/:profileId', async(req, res) => {
   try {
     const { text } = req.body;
     const { profileId, senderId } = req.params;
-    //const {id} = req.user;
-    const id = 1;
+    const {id} = req.user;
+    //const id = 1;
 
     await Posts.create({
       text: text,
@@ -27,8 +27,8 @@ post.post('/profilePost/:profileId', async(req, res) => {
 post.get('/getProfilePost', async (req, res) => {
   try {
     //change when done testing and doing frontend
-    //const {id} = req.user;
-    const id = 1;
+    const {id} = req.user;
+    //const id = 1;
     const posties = await Posts.findAll({
       where: {profileId: id},
       include: [{model: User, attributes: ['name']}]
