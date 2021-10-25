@@ -10,11 +10,7 @@ post.post('/profilePost/:profileId', async(req, res) => {
     const { text } = req.body;
     const { profileId, senderId } = req.params;
     //const {id} = req.user;
-    // console.log(req.body, 'howdy ho');
-    // console.log(Posts, 'userino');
-    // console.log(req.params, 'hello');
     const id = 1;
-    //const senderId = 1 || 2;
 
     await Posts.create({
       text: text,
@@ -30,10 +26,11 @@ post.post('/profilePost/:profileId', async(req, res) => {
 
 post.get('/getProfilePost', async (req, res) => {
   try {
+    //change when done testing and doing frontend
+    //const {id} = req.user;
     const id = 1;
     const posties = await Posts.findAll({
-      where: {profileId: id}, //fix this
-      //need to have it grab the foreign key related to the prson sending it
+      where: {profileId: id},
       include: [{model: User, attributes: ['name']}]
 
     });
@@ -46,24 +43,6 @@ post.get('/getProfilePost', async (req, res) => {
   }
 });
 
-
-// Messages.post('/sendMessage/:recipientId', async (req, res) => {
-//   try {
-//     const {subject, message} = req.body;
-//     const {recipientId} = req.params;
-//     const {id} = req.user;
-//     await Message.create({
-//       subject: subject,
-//       text: message,
-//       userFromId: id,
-//       userToId: recipientId
-//     });
-//     res.sendStatus(200);
-//   } catch (err) {
-//     console.log(err);
-//     res.sendStatus(500);
-//   }
-// });
 
 
 module.exports = post;

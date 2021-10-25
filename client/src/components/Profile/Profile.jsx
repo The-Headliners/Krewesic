@@ -13,8 +13,8 @@ import PublishIcon from '@mui/icons-material/Publish';
 
 const Profile = (props) => {
 
-  const [ input, setInput ] = useState(null);
-  const [ post, setPost ] = useState(false);
+
+  const [ post, setMyPosts ] = useState('');
 
 
   const [description, setDescription] = useState('');
@@ -57,33 +57,28 @@ const Profile = (props) => {
     }
   };
 
-
-  // const handleSubmit = e => {
-  //   e.preventDefault();
-
-  //   props.onSubmit({
-  //     id: Math.floor(Math.random() * 10000),
-  //     text: input
-  //   });
-  //   setInput('');
-  // };
-
-
-  const getData = (val) => {
-    setInput(val.target.value);
-    setPost(false);
-
-  };
-
-  const submit = () => {
-    setPost(true);
-  };
-
-
   useEffect(() => {
     artDescription();
     genreDescription();
   });
+
+
+
+  //AXIOS AREA NEED THE POST TO SEED THEN GET REQUEST TO YA KNOW GET IT AND DISPLAY
+  const handlePost = () => {
+    const data = {
+      text: text,
+      senderId, senderId,
+      profileId, id,
+    };
+    axios.post(`/post/profilePost/${id}`, data).then(res => {
+      setData(res.data);
+      setMyPosts('');
+    }).catch(err => {
+      console.log('darn', err);
+    });
+  };
+
 
   return (
     <Box
@@ -148,7 +143,7 @@ const Profile = (props) => {
         marginLeft="100px"
       >
         <TextField
-          onChange={getData}
+          onChange={e => setMyPosts(e.target.value)}
           multiline
           label="Post"
           size="small"
@@ -156,7 +151,7 @@ const Profile = (props) => {
         />
         <Button
           startIcon={<PublishIcon />}
-          onClick={submit}
+          onClick={handlePost}
         >
           Post
         </Button>
@@ -167,11 +162,7 @@ const Profile = (props) => {
         component="div"
         sx={{ visibility: 'visible' }}>
         <h4>My Posts</h4>
-        {
-          post ?
-            <p>{input}</p> :
-            null
-        }
+
       </Box>
     </Box>
   );
