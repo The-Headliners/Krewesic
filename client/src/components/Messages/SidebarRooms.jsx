@@ -11,7 +11,8 @@ const SidebarRooms = ({rooms}) => {
 
   const infoHeader = {
     fontSize: '16px',
-    marginBottom: '8px'
+    marginBottom: '8px',
+    color: 'black'
   };
   const sidebarInfo = {
     marginLeft: '15px',
@@ -24,7 +25,7 @@ const SidebarRooms = ({rooms}) => {
 
       <div className="sidebar-chat-info" style={sidebarInfo}>
         <h2 style={infoHeader}>Music Chat Room </h2>
-        <p>Last message...</p>
+        <p style={infoHeader}>Last message...</p>
       </div>
     </div>
   );

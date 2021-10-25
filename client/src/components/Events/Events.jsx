@@ -5,7 +5,6 @@ const Events = () => {
   return (
     <div>
       <KrewesicEvents />
-
     </div>
   );
 };

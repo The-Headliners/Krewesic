@@ -129,7 +129,7 @@ app.use('/directMessage', Users);
 app.use('/chat', Conversation);
 app.use('/events', events);
 app.use('/artist', artist);
-app.use('mailingList', mailingList); 
+app.use('/mailingList', mailingList); 
 app.use('/krewesicevents', kEvents);
 
 

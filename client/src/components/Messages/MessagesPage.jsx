@@ -93,7 +93,7 @@ const MessagesPage = () => {
   return (
     <div className='message-page' style={page}>
       <Link to='/DirectMessage'>Direct Messaging </Link>
-      <h1>{user}</h1>
+      <h1 style={{color: 'black'}}>{user}</h1>
       <div className='message-body' style={body}>
         <Sidebar />
         <MessagesView chat={chat} handleChange={handleChange} sendMessage={sendMessage} value={value}/>

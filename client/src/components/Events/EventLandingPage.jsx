@@ -41,7 +41,6 @@ const EventLandingPage = () => {
 
   const getComments = async () => {
     const {data} = await axios.get(`/events/SGcomments/${eventId}`);
-    console.log('get comments', data);
     setCommentWall(data.reverse());
   };
 
