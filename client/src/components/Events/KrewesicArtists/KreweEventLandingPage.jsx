@@ -11,7 +11,7 @@ import VisitProfile from '../../Profile/VisitProfile.jsx';
 
 const StyledLanding = styled.div`
   .landingButton {
-    background-color: #b3a970; 
+    background-color: #b3a970;
   }
   .commentInput {
     width: 600px;
@@ -70,8 +70,8 @@ const KreweEventLandingPage = () => {
     getInterestedUsers();
   };
 
+  const getCommentWall = async() => {
 
-  const getCommentWall = async() => { 
     const {data} = await axios.get(`/krewesicevents/commentWall/${eventId}`);
     setCommentWall(data);
   };

@@ -17,6 +17,7 @@ const {Conversation} = require('./routes/message/converations.js');
 const {db} = require('../db');
 const auth = require('./routes/authenticate');
 const {form} = require('./routes/form.js');
+const post = require('./routes/Posts/ProfilePosts');
 const events = require('./routes/events/events.js');
 const artist = require('./routes/artist.js');
 const mailingList = require('./routes/mailingList.js');
@@ -38,7 +39,7 @@ app.use(cookieParser());
 const io = require('socket.io')(server);
 
 //Socket server
-//holds alll users that are online 
+//holds alll users that are online
 let users = [];
 
 //function to add user to the array
@@ -65,7 +66,7 @@ io.on('connection', socket => {
 
   //if you want to send one client
   //use: io.to(socketID).emit
-  
+
   //after every connection, take userId and socketId from user
   //take from the client socket
   socket.on('addUser', userId => {
@@ -79,14 +80,14 @@ io.on('connection', socket => {
   socket.on('sendMessage', ({senderId, receiverId, text, name}) => {
     //find specific user to send message
     const user = getUser(receiverId);
-    
+
     //send data back to certain user send to client
     io.to(user.socketId).emit('getMessage', {
-      senderId, 
+      senderId,
       text,
       name
     });
-  });  
+  });
 
   //When disconnect
   socket.on('disconnect', () => {
@@ -114,10 +115,11 @@ app.use('/directMessage', Users);
 app.use('/chat', Conversation);
 app.use('/events', events);
 app.use('/artist', artist);
-app.use('/mailingList', mailingList); 
+app.use('/mailingList', mailingList);
 app.use('/krewesicevents', kEvents);
 app.use('/userProf', userRouter);
 
+app.use('/post', post);
 
 
 

@@ -38,7 +38,6 @@ const App = (props) => {
   const [id, setId] = useState(0);
   const [ artistBio, setMyBio ] = useState('');
   const [ influences, setInfluence ] = useState('');
-  const [ posts, setMyPosts ] = useState('');
   const [ artistName, setMyName ] = useState('');
   const [ myGenre, setMyGenre ] = useState('');
   const [ pic, setPic ] = useState('');
@@ -50,11 +49,11 @@ const App = (props) => {
   const [picture, setPicture] = useState('');
   const [type, setType] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
+
   const value = {id, setId, name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn, city, setCity, bio, setBio, favArtist, setArtist, favGenre, setGenre, artistBio, setMyBio, artistName, setMyName, pic, setPic, myGenre, setMyGenre, influences, setInfluence, posts, setMyPosts };
 
   return (
     <AppStyles>
-
       <GlobalContext.Provider value={value}>
         <Router>
           <Header />
