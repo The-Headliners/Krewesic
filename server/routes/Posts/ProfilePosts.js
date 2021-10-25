@@ -5,19 +5,21 @@ const { Posts, User } = require('../../../db/index.js');
 
 
 
-post.put('/profilePost', async(req, res) => {
+post.post('/profilePost/:profileId', async(req, res) => {
   try {
-    console.log(req.body, 'howdy ho');
-    console.log(Posts, 'userino');
-    console.log(req.params, 'hello');
-    res.sendStatus(500);
+    const { text } = req.body;
+    const { profileId, senderId } = req.params;
     //const {id} = req.user;
-    const senderId = 1 || 2;
-    const { comment } = req.body;
-    const myPost = Posts.findByPk(senderId);
+    // console.log(req.body, 'howdy ho');
+    // console.log(Posts, 'userino');
+    // console.log(req.params, 'hello');
+    const id = 1;
+    //const senderId = 1 || 2;
 
-    await Post.update({
-      text: comment,
+    await Posts.create({
+      text: text,
+      senderId: id,
+      profileId: id,
     });
     res.sendStatus(200);
   } catch (err) {
@@ -28,26 +30,22 @@ post.put('/profilePost', async(req, res) => {
 
 
 
-// form.put('/createListener', (req, res) => {
-//   const {id} = req.user;
-//   User.findByPk(id)
-//     .then(user => {
-//       user.update({
-//         bio: bio,
-//         favGenre: favGenre,
-//         favArtist: favArtist,
-//         city: city,
-//         pic: pic
-//       })
-//         .then(() => {
-//           console.log('hello');
-//           res.sendStatus(201);
-//         });
-//     })
-//     .catch(err => {
-//       console.error(err);
-//       res.sendStatus(500);
+// Messages.post('/sendMessage/:recipientId', async (req, res) => {
+//   try {
+//     const {subject, message} = req.body;
+//     const {recipientId} = req.params;
+//     const {id} = req.user;
+//     await Message.create({
+//       subject: subject,
+//       text: message,
+//       userFromId: id,
+//       userToId: recipientId
 //     });
+//     res.sendStatus(200);
+//   } catch (err) {
+//     console.log(err);
+//     res.sendStatus(500);
+//   }
 // });
 
 
