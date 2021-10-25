@@ -28,6 +28,23 @@ post.post('/profilePost/:profileId', async(req, res) => {
   }
 });
 
+post.get('/getProfilePost', async (req, res) => {
+  try {
+    const id = 1;
+    const posties = await Posts.findAll({
+      where: {profileId: id}, //fix this
+      //need to have it grab the foreign key related to the prson sending it
+      include: [{model: User, attributes: ['name']}]
+
+    });
+
+    res.status(201).send(posties);
+
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(500);
+  }
+});
 
 
 // Messages.post('/sendMessage/:recipientId', async (req, res) => {
