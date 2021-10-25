@@ -20,7 +20,7 @@ import keys from '../Events/keys.js';
 
 const ArtistOfDay = () => {
 
-  const {name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn} = useContext(GlobalContext);
+  const {name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn, id, setId} = useContext(GlobalContext);
   const [ artistOfTheDay, setArtistOfTheDay ] = useState(dummyData.artists[0]);
   const [ artistList, setArtistList ] = useState([]);
 
@@ -56,6 +56,7 @@ const ArtistOfDay = () => {
     setPicture(data.picture);
     setType(data.type);
     setLoggedIn(true);
+    setId(data.id);
     //renderArtistOfTheDay();
     console.log('picture', picture, 'type', type);
 

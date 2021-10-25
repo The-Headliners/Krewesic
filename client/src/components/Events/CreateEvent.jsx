@@ -19,30 +19,28 @@ const CreateEvent = () => {
   const [when, setWhen] = useState('');
   const [type, setType] = useState(''); //type will be musical performance, sports, meet and greet etc
   const [medium, setMedium] = useState('virtual'); //this will be the type of show: i.e. live or virtual.  
-
   //these are only to be displayed if live
-
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const [venue, setVenue] = useState('');
 
-  
-
   //link or code only if virtual, this is de-prioritized option
   //const [link, setLink] = useState('')
   //const [code, setCode] = useState('')
-
-  //-- have instead of entering lat , long, they enter an address and use google geocoding api to get lat long in the db
-
-
-
  
   const createEvent = async() => {
     //await getGeocode() 
     //right now the getGeocode fn runs on mouse over then this one on click.  need a better way to handle the asynchronous aspect of setting the state .  
  
-    axios.post('/events/createEvent', {performers, when, type, medium, address, city, state, venue});
+    await axios.post('/events/createEvent', {performers, when, type, medium, address, city, state, venue});
+    setWhen('');
+    setType('');
+    setMedium('virtual');
+    setAddress('');
+    setCity('');
+    setState('');
+    setVenue('');
   };
 
 

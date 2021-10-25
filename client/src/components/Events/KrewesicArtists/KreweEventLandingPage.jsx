@@ -1,9 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {useParams} from 'react-router-dom';
 import axios from 'axios';
 import { TextField, Button } from '@material-ui/core';
 import CommentComponent from '../CommentComponent.jsx';
 import styled from 'styled-components';
+import GlobalContext from '../../Contexts/GlobalContext.jsx';
+
 
 const StyledLanding = styled.div`
   .landingButton {
@@ -16,8 +18,11 @@ const StyledLanding = styled.div`
 `;
 
 const KreweEventLandingPage = () => {
-  //const {eventId} = useParams();
-  const eventId = 1; //hardcoded for testing
+  const {eventId} = useParams();
+  // const eventId = 1; //hardcoded for testing
+
+  const {id} = useContext(GlobalContext);
+  
 
   const [artist, setArtist] = useState('');
   const [dateTime, setDateTime] = useState('');
@@ -31,6 +36,8 @@ const KreweEventLandingPage = () => {
   const [commentText, setCommentText] = useState('');
   const [commentWall, setCommentWall] = useState([]);
 
+
+  //const user = useGetUser();
   //do get request for the event info
   const getEventDeetz = async () => {
     const {data} = await axios.get(`/krewesicevents/event/${eventId}`);
@@ -44,19 +51,23 @@ const KreweEventLandingPage = () => {
 
   };
 
-  const postInterest = async () => {
-    await axios.post('/krewesicevents/interestedUser', {eventId});
-  };
 
   const getInterestedUsers = async () => {
     const {data} = await axios.get(`/krewesicevents/interestedUsers/${eventId}`);
     console.log(data);
     setInterestedUsers(data);
+    const iU = data.filter(x => x.User.id === id);
+    console.log( 'iU', iU);
+    iU.length && setAlreadyInterested(true);
+  };
+
+  const postInterest = async () => {
+    await axios.post('/krewesicevents/interestedUser', {eventId});
+    getInterestedUsers();
   };
 
 
-  const getCommentWall = async() => {
-    
+  const getCommentWall = async() => { 
     const {data} = await axios.get(`/krewesicevents/commentWall/${eventId}`);
     setCommentWall(data);
   };
@@ -68,11 +79,21 @@ const KreweEventLandingPage = () => {
     setCommentText('');
   };
 
-  useEffect(() => {
+
+  useEffect(async () => {
     getEventDeetz();
     getCommentWall();
     getInterestedUsers();
+    const interested = await getInterestedUsers();
   }, []);
+
+ 
+
+  const disinterest = async () => {
+    await axios.delete(`/krewesicevents/removeInterest/${eventId}`);
+    getInterestedUsers();
+    setAlreadyInterested(false);
+  };
 
 
   return (

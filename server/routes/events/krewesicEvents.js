@@ -148,6 +148,25 @@ kEvents.get('/interestedUsers/:eventId', async (req, res) => {
   }
 });
 
+kEvents.delete('/removeInterest/:eventId', async (req, res) => {
+  try {
+    const {eventId} = req.params;
+    const {id} = req.user;
+    console.log('rm interested', eventId);
+    await EventComment.destroy({
+      where: {
+        eventId: eventId,
+        type: 'interest',
+        userId: id
+      }
+    });
+    res.sendStatus(203);
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(500);
+  }
+});
+
 
 
 module.exports = kEvents;
