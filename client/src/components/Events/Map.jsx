@@ -19,7 +19,7 @@ const containerStyle = {
 
 const libraries = ['places'];
 
-const Map = ({events}) => {
+const Map = ({events, kEvents}) => {
   
   const center = { lat: 30, lng: -90 };
  
@@ -31,12 +31,22 @@ const Map = ({events}) => {
   const [venues, setVenues] = useState([]);
   const [selected, setSelected] = useState(null);
 
+  const [kVenues, setKVenues] = useState([]);
+
   const showVenues = useCallback((e) => {
     setVenues(current => [...current, {
       lat: e.latLng.lat(),
       lng: e.latLng.lng()
     }]);
     console.log(venues);
+  }, []);
+
+  const showKVenues = useCallback((e) => {
+    setKVenues(current => [...current, {
+      lat: e.latLng.lat(),
+      lng: e.latLng.lng()
+    }]);
+    console.log(kVenues);
   }, []);
 
 
@@ -53,7 +63,19 @@ const Map = ({events}) => {
     //   return latLng
     // })
     setVenues(events);
+
   }, [events]);
+
+  useEffect(() => {
+    // const locations = events.map(event => {
+    //   const latLng = {};
+    //   latLng.lat = event.location.lat;
+    //   latLng.lng = event.location.lon;
+    //   return latLng
+    // })
+    setKVenues(kEvents);
+    
+  }, [kEvents]);
 
 
   //return the map component
@@ -69,25 +91,36 @@ const Map = ({events}) => {
           onLoad={onMapLoad}
             
         >
-          
-          {venues.map((venue, i) => (
-            <Marker 
-              key={i} 
-              position={{lat: venue.lat, lng: venue.lng}} 
-              onClick={() => {
-                console.log(venue.type);
-                setSelected(venue);
-              }}
-            />
-          ))}
-          {selected && (<InfoWindow 
-            position={{lat: selected.lat, lng: selected.lng}}
-            onCloseClick={() => setSelected(null)}
-          >
-            <div>info window {selected.type} 
-              <InfoCard event={selected} />
-            </div>
-          </InfoWindow>)}
+          <div>
+            {venues.map((venue, i) => (
+              <Marker 
+                key={i} 
+                position={{lat: venue.lat, lng: venue.lng}} 
+                onClick={() => {
+                  console.log(venue.type);
+                  setSelected(venue);
+                }}
+              />
+            ))}
+            {kVenues.map((kVenue, i) => (
+              <Marker 
+                key={i} 
+                position={{lat: kVenue.lat, lng: kVenue.lng}} 
+                onClick={() => {
+                  console.log(kVenue.type);
+                  setSelected(kVenue);
+                }}
+              />
+            ))}
+            {selected && (<InfoWindow 
+              position={{lat: selected.lat, lng: selected.lng}}
+              onCloseClick={() => setSelected(null)}
+            >
+              <div>info window {selected.type} 
+                <InfoCard event={selected} />
+              </div>
+            </InfoWindow>)}
+          </div>
         </GoogleMap>
     
       </div>

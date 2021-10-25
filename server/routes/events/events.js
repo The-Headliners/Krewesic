@@ -11,6 +11,7 @@ const {SGEvent, SGEventComment, User, Event} = require('../../../db/index.js');
 const fs = require('fs');
 const { dbSGEvent } = require('../../../db/models/SGEvent');
 const { dbSGEventComment } = require('../../../db/models/SGEventComment');
+const kEvents = require('./krewesicEvents.js');
 
 
 const baseUri = 'https://api.seatgeek.com/2';
@@ -237,6 +238,25 @@ events.get('/sampleLocalWeekend', async(req, res) => {
       return {datetime_local, type, performers, id, venue, lat, lng, sgId};
     });
     res.status(201).json(releventInfo);
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(500);
+  }
+});
+
+events.delete('/removeInterest/:eventId', async(req, res) => {
+  try {
+    const {id} = req.user;
+    const {eventId} = req.params;
+    await SGEventComment.destroy({
+      where: {
+        SGEventId: eventId,
+        type: 'interest',
+        userId: id
+      }
+    });
+    res.sendStatus(203);
+
   } catch (err) {
     console.log(err);
     res.sendStatus(500);

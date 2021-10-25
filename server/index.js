@@ -9,7 +9,7 @@ const session = require('express-session');
 const passport = require('passport');
 
 const passportSetup = require('../config/passport-setup');
-
+const userRouter = require('./routes/userRouter.js');
 const {Message} = require('./routes/message/messages.js');
 const {Room} = require('./routes/message/rooms.js');
 const {Users} = require('./routes/message/directMessage.js');
@@ -117,6 +117,8 @@ app.use('/events', events);
 app.use('/artist', artist);
 app.use('/mailingList', mailingList);
 app.use('/krewesicevents', kEvents);
+app.use('/userProf', userRouter);
+
 app.use('/post', post);
 
 

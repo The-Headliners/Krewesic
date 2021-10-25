@@ -24,6 +24,7 @@ import CreateEvent from './Events/CreateEvent.jsx';
 // import MailingList from './Home/mailing list/MailingList.jsx';
 import Events from './Events/Events.jsx';
 import KreweEventLandingPage from './Events/KrewesicArtists/KreweEventLandingPage.jsx';
+import VisitProfile from './Profile/VisitProfile.jsx';
 
 
 
@@ -34,6 +35,7 @@ const AppStyles = styled.div`
 `;
 
 const App = (props) => {
+  const [id, setId] = useState(0);
   const [ artistBio, setMyBio ] = useState('');
   const [ influences, setInfluence ] = useState('');
   const [ artistName, setMyName ] = useState('');
@@ -47,11 +49,11 @@ const App = (props) => {
   const [picture, setPicture] = useState('');
   const [type, setType] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
-  const value = {name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn, city, setCity, bio, setBio, favArtist, setArtist, favGenre, setGenre, artistBio, setMyBio, artistName, setMyName, pic, setPic, myGenre, setMyGenre, influences, setInfluence };
+
+  const value = {id, setId, name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn, city, setCity, bio, setBio, favArtist, setArtist, favGenre, setGenre, artistBio, setMyBio, artistName, setMyName, pic, setPic, myGenre, setMyGenre, influences, setInfluence, };
 
   return (
     <AppStyles>
-
       <GlobalContext.Provider value={value}>
         <Router>
           <Header />
@@ -64,7 +66,7 @@ const App = (props) => {
             <Link className='clickableLight' to='/createevent'>create event</Link>
             {/* <Link to ='/mailingList'>Join Our Mailing List</Link> */}
             <Link className='clickableLight' to='/events'>events link</Link>
-            <Link className='clickableLight' to='/testingKrewesicEventLanding'>testing landing page</Link>
+         
 
           </nav>
 
@@ -104,8 +106,8 @@ const App = (props) => {
             <Route path='/createevent' >
               <CreateEvent />
             </Route>
-            <Route path='/testingKrewesicEventLanding' >
-              <KreweEventLandingPage />
+            <Route path='/visitProfile/:id' >
+              <VisitProfile />
             </Route>
             <Route path='/messages' component={MessagesPage}>
             </Route>

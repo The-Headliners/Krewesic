@@ -5,7 +5,8 @@ const StyledComment = styled.div`
   .wrapper {
     display: flex;
     flex-direction: row;
-    background-color: #181027;
+    justify-content: space-around;
+    background-color: #2e1e4b;
     width: 600px;
     padding: 20px;
     border: 1px solid black;
@@ -16,6 +17,7 @@ const StyledComment = styled.div`
   }
   .posterName {
     font-size: 10px;
+
   }
 `;
 

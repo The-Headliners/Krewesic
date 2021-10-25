@@ -1,9 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {useParams} from 'react-router-dom';
 import axios from 'axios';
 import { TextField, Button } from '@material-ui/core';
 import CommentComponent from '../CommentComponent.jsx';
 import styled from 'styled-components';
+import GlobalContext from '../../Contexts/GlobalContext.jsx';
+import {useHistory} from 'react-router-dom';
+import VisitProfile from '../../Profile/VisitProfile.jsx';
+
 
 const StyledLanding = styled.div`
   .landingButton {
@@ -16,8 +20,12 @@ const StyledLanding = styled.div`
 `;
 
 const KreweEventLandingPage = () => {
-  //const {eventId} = useParams();
-  const eventId = 1; //hardcoded for testing
+  const {eventId} = useParams();
+  // const eventId = 1; //hardcoded for testing
+
+  const {id} = useContext(GlobalContext);
+  const history = useHistory();
+  
 
   const [artist, setArtist] = useState('');
   const [dateTime, setDateTime] = useState('');
@@ -31,6 +39,8 @@ const KreweEventLandingPage = () => {
   const [commentText, setCommentText] = useState('');
   const [commentWall, setCommentWall] = useState([]);
 
+
+  //const user = useGetUser();
   //do get request for the event info
   const getEventDeetz = async () => {
     const {data} = await axios.get(`/krewesicevents/event/${eventId}`);
@@ -44,16 +54,21 @@ const KreweEventLandingPage = () => {
 
   };
 
-  const postInterest = async () => {
-    await axios.post('/krewesicevents/interestedUser', {eventId});
-  };
+
 
   const getInterestedUsers = async () => {
     const {data} = await axios.get(`/krewesicevents/interestedUsers/${eventId}`);
     console.log(data);
     setInterestedUsers(data);
+    const iU = data.filter(x => x.User.id === id);
+    console.log( 'iU', iU);
+    iU.length && setAlreadyInterested(true);
   };
 
+  const postInterest = async () => {
+    await axios.post('/krewesicevents/interestedUser', {eventId});
+    getInterestedUsers();
+  };
 
   const getCommentWall = async() => {
 
@@ -68,11 +83,24 @@ const KreweEventLandingPage = () => {
     setCommentText('');
   };
 
-  useEffect(() => {
+
+  useEffect(async () => {
     getEventDeetz();
     getCommentWall();
-    getInterestedUsers();
+    const interested = await getInterestedUsers();
   }, []);
+
+ 
+
+  const disinterest = async () => {
+    await axios.delete(`/krewesicevents/removeInterest/${eventId}`);
+    getInterestedUsers();
+    setAlreadyInterested(false);
+  };
+
+  const visitProfile = (id) => {
+    history.push(`/visitProfile/${id}`);
+  };
 
 
   return (
@@ -86,11 +114,11 @@ const KreweEventLandingPage = () => {
         <div>{venue}</div>
 
         <div>
-          <Button className='landingButton' onClick={postInterest}>interested</Button>
+          { alreadyInterested ? <Button className='landingButton' onClick={disinterest}>disinterest </Button> : <Button className='landingButton' onClick={postInterest}>interested</Button>}
         </div>
         <div>
           <h3>interested users</h3>
-          {interestedUsers.map((user, i) => <div>{user.User.name}</div>)}
+          {interestedUsers.map((user, i) => <div onClick={() => visitProfile(user.User.id)} key={i}>{user.User.name}</div>)}
         </div>
 
         <div>
