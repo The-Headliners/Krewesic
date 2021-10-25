@@ -52,6 +52,7 @@ const KreweEventLandingPage = () => {
   };
 
 
+
   const getInterestedUsers = async () => {
     const {data} = await axios.get(`/krewesicevents/interestedUsers/${eventId}`);
     console.log(data);
@@ -83,7 +84,6 @@ const KreweEventLandingPage = () => {
   useEffect(async () => {
     getEventDeetz();
     getCommentWall();
-    getInterestedUsers();
     const interested = await getInterestedUsers();
   }, []);
 
@@ -99,7 +99,7 @@ const KreweEventLandingPage = () => {
   return (
     <StyledLanding>
       <div>
-   
+
         <h1>{artist}</h1>
         <div>{dateTime}</div>
         <div>{address}</div>
@@ -107,11 +107,11 @@ const KreweEventLandingPage = () => {
         <div>{venue}</div>
 
         <div>
-          <Button className='landingButton' onClick={postInterest}>interested</Button>
+          { alreadyInterested ? <Button className='landingButton' onClick={disinterest}>disinterest </Button> : <Button className='landingButton' onClick={postInterest}>interested</Button>}
         </div>
         <div>
           <h3>interested users</h3>
-          {interestedUsers.map((user, i) => <div>{user.User.name}</div>)}
+          {interestedUsers.map((user, i) => <div key={i}>{user.User.name}</div>)}
         </div>
 
         <div>
