@@ -5,7 +5,7 @@ const useGetUser = () => {
   const [currentUser, setCurrentUser] = useState({});
   
   useEffect(async () => {
-    const {data} = await axios.get('/form/user');
+    const {data} = await axios.get('/form/user/:id');
     console.log('data from custom hook;', data);
     setCurrentUser(data);
   }, []);
