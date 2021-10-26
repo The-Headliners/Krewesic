@@ -26,7 +26,7 @@ const StyledMapEvents = styled.div`
 
 
 const MapEvents = () => {
-  
+
   const [bandName, setBandName] = useState('');
   const [city, setCity] = useState('');
   const [events, setEvents] = useState([]);
@@ -37,19 +37,17 @@ const MapEvents = () => {
   const [krewesicEvents, setKrewesicEvents] = useState([]);
 
   const searchBand = async() => {
-    console.log('click search');
     //send bandName to the back end
     const {data} = await axios.get(`/events/bandSearch/${bandName}`);
 
     //right now hard coded to receive sample data so not use api key too much
     // const {data} = await axios.get('/events/sampleData');
-    console.log(data);
+
 
     //clear the input text
   };
 
   const searchCity = async() => {
-    console.log('search city');
 
     //const {data} = await axios.get(`/events/citySearch/`${city});
 
@@ -64,7 +62,7 @@ const MapEvents = () => {
     console.log('daate data', data);
     setEvents(data);
   };
-  
+
   const findLocalShows = async() => {
     const {data} = await axios.get(`/events/dateSearch/${date1}/${date2}/${city}`);
     console.log('fls data', data);
@@ -73,12 +71,12 @@ const MapEvents = () => {
     const kEvents = await axios.get('/krewesicevents/liveevents');
     console.log('keventsdata', kEvents.data);
     setKrewesicEvents(kEvents.data);
-    
+
   };
 
-  
 
-  
+
+
   return (
     <StyledMapEvents>
       <div className='wrapper'>
@@ -86,11 +84,11 @@ const MapEvents = () => {
         <TextField variant="outlined" className='inputField' placeholder='YYYY-MM-DD' onChange={(e)=>setDate2(e.target.value)} value={date2} />
         <TextField variant="outlined" className='inputField' placeholder='city' onChange={(e)=>setCity(e.target.value)} value={city} />
         <Button className='showButton' onClick={findLocalShows}>find local shows</Button>
-  
-    
-     
-     
-     
+
+
+
+
+
         <Button onClick={searchDate}>search nolaween</Button>
 
         <Map events={events} kEvents={krewesicEvents} />

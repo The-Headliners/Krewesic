@@ -20,9 +20,9 @@ const containerStyle = {
 const libraries = ['places'];
 
 const Map = ({events, kEvents}) => {
-  
+
   const center = { lat: 30, lng: -90 };
- 
+
   const {isLoaded, loadError} = useLoadScript({
     googleMapsApiKey: keys.GOOGLE_MAPS_KEY,
     libraries
@@ -38,7 +38,6 @@ const Map = ({events, kEvents}) => {
       lat: e.latLng.lat(),
       lng: e.latLng.lng()
     }]);
-    console.log(venues);
   }, []);
 
   const showKVenues = useCallback((e) => {
@@ -46,7 +45,6 @@ const Map = ({events, kEvents}) => {
       lat: e.latLng.lat(),
       lng: e.latLng.lng()
     }]);
-    console.log(kVenues);
   }, []);
 
 
@@ -54,7 +52,7 @@ const Map = ({events, kEvents}) => {
   const onMapLoad = useCallback(map => {
     mapRef.current = map;
   }, []);
-  
+
   useEffect(() => {
     // const locations = events.map(event => {
     //   const latLng = {};
@@ -74,7 +72,7 @@ const Map = ({events, kEvents}) => {
     //   return latLng
     // })
     setKVenues(kEvents);
-    
+
   }, [kEvents]);
 
 
@@ -82,60 +80,59 @@ const Map = ({events, kEvents}) => {
   if (isLoaded) {
     return (
       <div>
-      
+
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}
           zoom={10}
           onClick={showVenues}
           onLoad={onMapLoad}
-            
+
         >
           <div>
             {venues.map((venue, i) => (
-              <Marker 
-                key={i} 
-                position={{lat: venue.lat, lng: venue.lng}} 
+              <Marker
+                key={i}
+                position={{lat: venue.lat, lng: venue.lng}}
                 onClick={() => {
-                  console.log(venue.type);
                   setSelected(venue);
                 }}
               />
             ))}
             {kVenues.map((kVenue, i) => (
-              <Marker 
-                key={i} 
-                position={{lat: kVenue.lat, lng: kVenue.lng}} 
+              <Marker
+                key={i}
+                position={{lat: kVenue.lat, lng: kVenue.lng}}
                 onClick={() => {
                   console.log(kVenue.type);
                   setSelected(kVenue);
                 }}
               />
             ))}
-            {selected && (<InfoWindow 
+            {selected && (<InfoWindow
               position={{lat: selected.lat, lng: selected.lng}}
               onCloseClick={() => setSelected(null)}
             >
-              <div>info window {selected.type} 
+              <div>info window {selected.type}
                 <InfoCard event={selected} />
               </div>
             </InfoWindow>)}
           </div>
         </GoogleMap>
-    
+
       </div>
-    ); 
+    );
 
   } else {
     return <div>else</div>;
   }
-  
+
 };
 
 export default memo(Map);
 
 
-// if(loadError) return 'Error loadng maps'; 
+// if(loadError) return 'Error loadng maps';
 // if(!loadError) {
 //   console.log('cool')
 //   return <h1>"Loading Maps"</h1>;}

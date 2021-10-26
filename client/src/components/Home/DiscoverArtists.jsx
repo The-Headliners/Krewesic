@@ -13,6 +13,7 @@ import keys from '../Events/keys.js';
 import Artist from './Artist.jsx';
 
 
+
 // const StyledArtistOfDay = styled.div`
 //   margin-top: 30px;
 // `;
@@ -53,7 +54,6 @@ const discoverArtists = () => {
     setType(data.type);
     setLoggedIn(true);
     setId(data.id);
-    //renderArtistOfTheDay();
     console.log('picture', picture, 'type', type);
     renderUsers();
   }, []);

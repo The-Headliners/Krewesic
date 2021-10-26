@@ -2,6 +2,7 @@ module.exports = {
   env: {
     'es6': true
   },
+  'no-console': ['error', { allow: ['info', 'warn'] }],
   parserOptions: {
     sourceType: 'module',
     ecmaVersion: 12,

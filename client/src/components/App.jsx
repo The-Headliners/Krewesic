@@ -59,6 +59,7 @@ const App = (props) => {
           <Header />
           <nav>
             <Link className='clickableLight' to='/DiscoverArtists'> Discover Artists </Link>
+            <Link className='clickableLight' to='/Prof'> Artist </Link>
             <Link className='clickableLight' to='/bands'>bands</Link>
             <Link className='clickableLight' to='/mapevents'>map events</Link>
             <Link className='clickableLight' to='/messages'>Messages</Link>
