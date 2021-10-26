@@ -129,7 +129,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(frontEnd, 'index.html'));
 
 });
-
+/* eslint-disable */
 server.listen(PORT, ()=> {
   console.log(`listening on port ${PORT}`);
 });

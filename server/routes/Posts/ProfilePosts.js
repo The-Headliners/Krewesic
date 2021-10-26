@@ -19,7 +19,7 @@ post.post('/profilePost/:profileId', async(req, res) => {
     });
     res.sendStatus(200);
   } catch (err) {
-    console.log(err);
+    console.warn(err);
     res.sendStatus(500);
   }
 });
@@ -38,7 +38,7 @@ post.get('/getProfilePost', async (req, res) => {
     res.status(201).send(posties);
 
   } catch (err) {
-    console.log(err);
+    console.warn(err);
     res.sendStatus(500);
   }
 });

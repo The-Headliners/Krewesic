@@ -10,7 +10,7 @@ kEvents.get('/allevents', async(req, res) => {
     res.status(201).send(events);
 
   } catch (err) {
-    console.log(err);
+    console.warn(err);
     res.sendStatus(500);
   }
 });
@@ -18,14 +18,14 @@ kEvents.get('/allevents', async(req, res) => {
 kEvents.get('/virtualevents', async(req, res) => {
   try {
     //retrieve the virtual events of krewesic users
-    const events = await Event.findAll({where: {medium: 'virtual'}, 
+    const events = await Event.findAll({where: {medium: 'virtual'},
       limit: 10,
       include: [{model: User, }]
     });
     res.status(201).send(events);
-    
+
   } catch (err) {
-    console.log(err);
+    console.warn(err);
     res.sendStatus(500);
   }
 });
@@ -36,21 +36,20 @@ kEvents.get('/liveevents', async(req, res) => {
     const events = await Event.findAll({where: {medium: 'venue'}, limit: 10, include: [{model: User, }]});
     res.status(201).send(events);
   } catch (err) {
-    console.log(err);
+    console.warn(err);
     res.sendStatus(500);
   }
 });
 
 kEvents.get('/event/:eventId', async(req, res) => {
   try {
-    
+
     const {eventId} = req.params;
     //const eventId = 1; //hard coded jsut for testing.  CHANGE THIS!
-    console.log('event eventid', eventId);
     const event = await Event.findOne({where: {id: eventId}, include: [{model: User}]});
     res.status(201).send(event);
   } catch (err) {
-    console.log(err);
+    console.warn(err);
     res.sendStatus(500);
   }
 });
@@ -58,8 +57,7 @@ kEvents.get('/event/:eventId', async(req, res) => {
 //post req for comments on the event landing page
 kEvents.post('/postcomment', async(req, res) => {
   try {
-    console.log('post event comment req');
-    
+
     //const eventId = 1; //hardcoded for testing, change this
     const {id} = req.user;
     const {comment, eventId} = req.body;
@@ -75,7 +73,7 @@ kEvents.post('/postcomment', async(req, res) => {
     res.sendStatus(200);
 
   } catch (err) {
-    console.error(err);
+    console.warn(err);
     res.sendStatus(500);
   }
 
@@ -85,7 +83,6 @@ kEvents.post('/postcomment', async(req, res) => {
 kEvents.get('/commentWall/:eventId', async(req, res) => {
   try {
     const {eventId} = req.params;
-    console.log(eventId);
 
     const comments = await EventComment.findAll({
       where: {
@@ -101,7 +98,7 @@ kEvents.get('/commentWall/:eventId', async(req, res) => {
     res.status(201).send(comments);
 
   } catch (err) {
-    console.log(err);
+    console.warn(err);
     res.sendStatus(500);
   }
 });
@@ -121,7 +118,7 @@ kEvents.post('/interestedUser', async (req, res) => {
     res.sendStatus(200);
 
   } catch (err) {
-    console.log(err); 
+    console.warn(err);
     res.sendStatus(500);
   }
 });
@@ -130,7 +127,6 @@ kEvents.post('/interestedUser', async (req, res) => {
 kEvents.get('/interestedUsers/:eventId', async (req, res) => {
   try {
     const {eventId} = req.params;
-    console.log('get interested', eventId );
     const interestedUsers = await EventComment.findAll({
       where: {
         eventId: eventId,
@@ -143,7 +139,7 @@ kEvents.get('/interestedUsers/:eventId', async (req, res) => {
     });
     res.status(201).send(interestedUsers);
   } catch (err) {
-    console.log(err);
+    console.warn(err);
     res.sendStatus(500);
   }
 });
@@ -152,7 +148,6 @@ kEvents.delete('/removeInterest/:eventId', async (req, res) => {
   try {
     const {eventId} = req.params;
     const {id} = req.user;
-    console.log('rm interested', eventId);
     await EventComment.destroy({
       where: {
         eventId: eventId,
@@ -162,7 +157,7 @@ kEvents.delete('/removeInterest/:eventId', async (req, res) => {
     });
     res.sendStatus(203);
   } catch (err) {
-    console.log(err);
+    console.warn(err);
     res.sendStatus(500);
   }
 });

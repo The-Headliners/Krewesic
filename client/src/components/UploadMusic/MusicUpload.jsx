@@ -7,22 +7,21 @@ const MusicUpload = () => {
   const [currentUser, setUser] = useState('');
   //Create a state that will hold the files that is being uploaded
   const [fileSelected, setFileSelected] = useState('');
-   
+
   const showWidget = () => {
-    
-    const widget = window.cloudinary.createUploadWidget({ 
+
+    const widget = window.cloudinary.createUploadWidget({
       cloudName: 'dbylrb5vl',
-      uploadPreset: 'udl2nhbw'}, 
+      uploadPreset: 'udl2nhbw'},
     (error, result) => {
-      if (!error && result && result.event === 'success') { 
-        console.log('Widget:', result); 
+      if (!error && result && result.event === 'success') {
         const file = { fileUrl: result.info.url };
         axios.post(`/upload/musicUpload/${currentUser.id}`, file)
           .then(results => {
-            console.log('Upload File:', results);
+            console.info('Upload File:', results);
           })
           .catch(err => {
-            console.log(err);
+            console.warn(err);
           });
 
       }
@@ -37,7 +36,7 @@ const MusicUpload = () => {
       });
 
   }, []);
-  return ( 
+  return (
     <div className='upload-page'>
       Hello Welcome!
 
