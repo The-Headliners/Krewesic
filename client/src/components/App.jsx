@@ -67,7 +67,7 @@ const App = (props) => {
             <Link className='clickableLight' to='/createevent'>create event</Link>
             {/* <Link to ='/mailingList'>Join Our Mailing List</Link> */}
             <Link className='clickableLight' to='/events'>events link</Link>
-         
+            <Link className='upload' to='/uploadMusic'>Upload Music</Link>
 
           </nav>
 
@@ -113,6 +113,7 @@ const App = (props) => {
             <Route path='/messages' component={MessagesPage}>
             </Route>
             <Route exact path='/DirectMessage' component={DirectMessages} />
+            <Route exact path='/uploadMusic' component={MusicUpload} />
             <Route>
               <div>404 page not available</div>
             </Route>

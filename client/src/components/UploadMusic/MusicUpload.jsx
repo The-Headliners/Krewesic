@@ -1,37 +1,47 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import UploadForm from './UploadForm.jsx';
 
 const MusicUpload = () => {
 
+  const [currentUser, setUser] = useState('');
   //Create a state that will hold the files that is being uploaded
-  const [fileSelected, setFileSelected] = useState(''); 
-
-
-  const upCloud = () => {
-    //create an instance object of a Form data which will hold all the data coming from the input form
-    const formData = new FormData();
-    
-
-    //Here, we will construct the formData using the append method
-    formData.append('file', fileSelected);
-    formData.append('upload_preset', 'udl2nhbw');
+  const [fileSelected, setFileSelected] = useState('');
    
+  const showWidget = () => {
+    
+    const widget = window.cloudinary.createUploadWidget({ 
+      cloudName: 'dbylrb5vl',
+      uploadPreset: 'udl2nhbw'}, 
+    (error, result) => {
+      if (!error && result && result.event === 'success') { 
+        console.log('Widget:', result); 
+        const file = { fileUrl: result.info.url };
+        axios.post(`/upload/musicUpload/${currentUser.id}`, file)
+          .then(results => {
+            console.log('Upload File:', results);
+          })
+          .catch(err => {
+            console.log(err);
+          });
 
-    //Send a post request to cloudinary's api.
-    axios.post('https://api.cloudinary.com/v1_1/dbylrb5vl/image/upload', formData)
-      .then((result) => {
-
-        console.log('CLOUDINARY!:', result);
-      });
-      
+      }
+    });
+    widget.open();
   };
 
+  useEffect(() => {
+    axios.get('/auth/cookie')
+      .then(({data}) => {
+        setUser(data[0]);
+      });
+
+  }, []);
   return ( 
     <div className='upload-page'>
       Hello Welcome!
 
-      <UploadForm setFileSelected={setFileSelected} upCloud={upCloud}/>
+      <UploadForm setFileSelected={setFileSelected} showWidget={showWidget}/>
     </div>
   );
 };
