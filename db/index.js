@@ -4,12 +4,14 @@ const pg = require('pg');
 const {dbUser} = require('./models/users.js');
 const { dbMessages } = require('./models/messages.js');
 const { dbRooms} = require('./models/chatRooms.js');
+const { dbmusicUpload} = require('./models/uploadMusic.js');
 const { dbProfilePosts } = require('./models/ProfilePost');
 const {dbConversation} = require('./models/conversation.js');
 const {dbEventComment} = require('./models/eventComment.js');
 const {dbSGEvent} = require('./models/SGEvent.js');
 const { dbSGEventComment} = require('./models/SGEventComment.js');
 const dbEvent = require('./models/events.js');
+
 const db = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
@@ -22,6 +24,7 @@ User = dbUser(db);
 Messages = dbMessages(db);
 Rooms = dbRooms(db);
 Conversations = dbConversation(db);
+MusicUpload = dbmusicUpload(db);
 
 
 const Event = dbEvent(db);
@@ -40,6 +43,8 @@ EventComment.belongsTo(Event, {foreignKey: 'eventId'});
 
 User.hasMany(Messages);
 Messages.belongsTo(User);
+User.hasMany(MusicUpload);
+MusicUpload.belongsTo(User);
 SGEventComment.belongsTo(SGEvent, {foreignKey: 'SGEventId'});
 SGEventComment.belongsTo(User, {foreignKey: 'userId'});
 
@@ -62,6 +67,7 @@ module.exports = {
   Messages,
   Rooms,
   Conversations,
+  MusicUpload,
   SGEvent,
   SGEventComment,
   Event,
