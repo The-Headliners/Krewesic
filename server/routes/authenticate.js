@@ -25,7 +25,6 @@ auth.get('/google/redirect', passport.authenticate('google'), (req, res) => {
 
 //auth logout
 auth.get('/logout', (req, res) => {
-  console.log('logout');
   res.clearCookie('user');
   req.logout();
   res.redirect('/');
@@ -53,7 +52,7 @@ auth.get('/cookie', async (req, res) => {
     });
     res.json(userInfo);
   } catch (err) {
-    console.log(err);
+    console.warn(err);
     res.sendStatus(500);
   }
 });

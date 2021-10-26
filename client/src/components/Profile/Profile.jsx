@@ -24,7 +24,6 @@ const Profile = (props) => {
 
   useEffect(async()=>{
     const {data} = await axios.get('/form/user');
-    console.log(data);
     setName(data.name);
     setPicture(data.picture);
     setType(data.type);
@@ -37,7 +36,6 @@ const Profile = (props) => {
     setMyBio(data.artistBio);
     setPic(data.pic);
     setInfluence(data.influences);
-    console.log('picture', picture);
   }, []);
 
 
@@ -82,7 +80,7 @@ const Profile = (props) => {
       setMyProfId('');
     }).then(() => getAllPosts())
       .catch(err => {
-        console.log('oh man', err);
+        console.warn(err);
       });
   };
 
@@ -92,7 +90,6 @@ const Profile = (props) => {
         const myPostArr = data.map(post => {
           return post.text;
         });
-        console.log(myPostArr);
         setMyPost(myPostArr);
       });
   };

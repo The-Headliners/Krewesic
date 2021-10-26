@@ -25,7 +25,7 @@ const KreweEventLandingPage = () => {
 
   const {id} = useContext(GlobalContext);
   const history = useHistory();
-  
+
 
   const [artist, setArtist] = useState('');
   const [dateTime, setDateTime] = useState('');
@@ -44,7 +44,6 @@ const KreweEventLandingPage = () => {
   //do get request for the event info
   const getEventDeetz = async () => {
     const {data} = await axios.get(`/krewesicevents/event/${eventId}`);
-    //console.log(data);
     setArtist(data.User.name);
     setDateTime(data.when);
     setVenue(data.venue);
@@ -58,10 +57,8 @@ const KreweEventLandingPage = () => {
 
   const getInterestedUsers = async () => {
     const {data} = await axios.get(`/krewesicevents/interestedUsers/${eventId}`);
-    console.log(data);
     setInterestedUsers(data);
     const iU = data.filter(x => x.User.id === id);
-    console.log( 'iU', iU);
     iU.length && setAlreadyInterested(true);
   };
 
@@ -90,7 +87,7 @@ const KreweEventLandingPage = () => {
     const interested = await getInterestedUsers();
   }, []);
 
- 
+
 
   const disinterest = async () => {
     await axios.delete(`/krewesicevents/removeInterest/${eventId}`);

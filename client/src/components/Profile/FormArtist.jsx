@@ -46,7 +46,7 @@ const FormArtist = () => {
       setPic('');
       setInfluence('');
     }).catch(err => {
-      console.log('darn', err);
+      console.warn(err);
     });
   };
 

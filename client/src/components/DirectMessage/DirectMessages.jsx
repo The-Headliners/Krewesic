@@ -129,23 +129,9 @@ const DirectMessages = () => {
     }
   };
 
-  //get message from socket server
-  // useEffect(() => {
-  //   // socket.current.on('getMessage', ({senderId, text}) => {
-  //   //   console.log('This is senderId:', senderId, 'This is the text:', text);
-  //   // setArrivalMessage({
-  //   //   sender: data.senderId,
-  //   //   text: data.text,
-  //   //   createdAt: Date.now()
-  //   // });
-  //   // });
-  // }, []);
 
-  //console.log('the upcoming', arrivalMessage);
-  //***Go back to this if you run into trouble
-  // useEffect(() => {
-  //   arrivalMessage && (currentChat?.senderId || currentChat?.receiverId) === arrivalMessage.sender && setMessages((prev) => [...prev, arrivalMessage]);
-  // }, [arrivalMessage, currentChat]);
+
+
 
 
   //***For incoming messages from another user, coming back from the Socket Server ***/

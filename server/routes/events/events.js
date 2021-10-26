@@ -21,15 +21,10 @@ events.get('/bandSearch/:bandName', async (req, res) => {
     const {bandName} = req.params;
 
     const {data} = await axios.get(`${baseUri}/events?client_id=${process.env.SEATGEEK_CLIENT_ID}&client_secret=${process.env.SEATGEEK_SECRET}&performers.slug=${bandName}`);
-    //const jdata = JSON.stringify(data);
-    // console.log(data)
 
-    // fs.writeFile('sample.txt', jdata, (err) => {
-    //   console.log('err', err)
-    // })
     res.status(201).send(data);
   } catch (err) {
-    console.log(err);
+    console.warn(err);
     res.sendStatus(500);
   }
 });
@@ -53,7 +48,7 @@ events.get('/citySearch/:city', async(req, res) => {
 
 
   } catch (err) {
-    console.log(err);
+    console.warn(err);
     res.sendStatus(500);
   }
 });
@@ -62,11 +57,11 @@ events.get('/citySearch/:city', async(req, res) => {
 events.get('/dateSearch/:date1/:date2/:city', async (req, res) => {
   try {
     const {date1, date2, city} = req.params;
-  
+
 
     const {data} = await axios.get(`${baseUri}/events?client_id=${process.env.SEATGEEK_CLIENT_ID}&client_secret=${process.env.SEATGEEK_SECRET}&datetime_local.gte=${date1}&datetime_local.lte=${date2}&venue.city=${city}`);
 
- 
+
     const releventInfo = data.events.map(event => {
       const {datetime_local, type, performers, venue, id} = event;
       const lat = venue.location.lat;
@@ -76,7 +71,7 @@ events.get('/dateSearch/:date1/:date2/:city', async (req, res) => {
     });
     res.status(201).send(releventInfo);
   } catch (err) {
-    console.log(err);
+    console.warn(err);
     res.sendStatus(500);
   }
 });
@@ -88,12 +83,12 @@ events.post('/interestedInSG', async (req, res) => {
     const {eventId, when, performers, type, venue, city, lat, lng} = req.body;
     const {id} = req.user;
 
-    //console.log(req.body);
+
     const event = await SGEvent.findByPk(eventId);
     if (!event) { //if the event does not exist, create the event
       await SGEvent.create({
         id: eventId,
-        type: type, 
+        type: type,
         performers: performers,
         venue: venue,
         city: city,
@@ -102,17 +97,17 @@ events.post('/interestedInSG', async (req, res) => {
         when: when
       });
     }
-    //create the interest comment 
+    //create the interest comment
     const newInterest = await SGEventComment.create({
       type: 'interest',
-      userId: id, 
+      userId: id,
       SGEventId: eventId
     });
 
 
     res.sendStatus(200);
   } catch (err) {
-    console.log(err);
+    console.warn(err);
     res.sendStatus(500);
   }
 });
@@ -134,12 +129,12 @@ events.get('/interestedUsersSG/:sgId', async (req, res) => {
     });
 
     res.status(201).send(interestedUsers);
-    
-    //get 
+
+    //get
 
 
   } catch (err) {
-    console.log(err);
+    console.warn(err);
     res.sendStatus(500);
   }
 });
@@ -147,13 +142,12 @@ events.get('/interestedUsersSG/:sgId', async (req, res) => {
 events.post('/SGcomment', async(req, res) => {
   try {
     const {comment, SGEventId} = req.body;
-    console.log(SGEventId);
     const {id} = req.user;
     const event = await SGEvent.findByPk(SGEventId);
     if (!event) { //if the event does not exist, create the event
       await SGEvent.create({
         id: SGEventId,
-        type: type, 
+        type: type,
         performers: performers,
         venue: venue,
         city: city,
@@ -171,7 +165,7 @@ events.post('/SGcomment', async(req, res) => {
     });
     res.sendStatus(200);
   } catch (err) {
-    console.log(err);
+    console.warn(err);
     res.sendStatus(500);
   }
 });
@@ -193,7 +187,7 @@ events.get('/SGcomments/:eventId', async (req, res) => {
     res.status(201).send(comments);
 
   } catch (err) {
-    console.log(err);
+    console.warn(err);
     res.sendStatus(500);
   }
 });
@@ -210,18 +204,18 @@ events.post('/createEvent', async(req, res) => {
       const {data} = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address},
       +${city},+${state}&key=${process.env.GEOCODE_KEY}`);
       const {lat, lng} = data.results[0].geometry.location;
-      coordinates.lat = lat, 
+      coordinates.lat = lat,
       coordinates.lng = lng;
     }
-    
+
     await Event.create({
       performers, when, type, medium, lat: coordinates.lat, lng: coordinates.lng, address, city, state, venue, artistId: id
 
     });
-   
+
     res.sendStatus(200);
   } catch (err) {
-    console.log(err);
+    console.warn(err);
     res.sendStatus(500);
   }
 });
@@ -239,7 +233,7 @@ events.get('/sampleLocalWeekend', async(req, res) => {
     });
     res.status(201).json(releventInfo);
   } catch (err) {
-    console.log(err);
+    console.warn(err);
     res.sendStatus(500);
   }
 });
@@ -258,7 +252,7 @@ events.delete('/removeInterest/:eventId', async(req, res) => {
     res.sendStatus(203);
 
   } catch (err) {
-    console.log(err);
+    console.warn(err);
     res.sendStatus(500);
   }
 });

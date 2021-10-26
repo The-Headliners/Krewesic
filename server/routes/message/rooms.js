@@ -10,7 +10,7 @@ Room.get('/rooms', async (req, res) => {
     const rooms = await Rooms.findAll();
     res.status(200).send(rooms);
   } catch (err) {
-    console.log(err);
+    console.warn(err);
     res.sendStatus(500);
   }
 

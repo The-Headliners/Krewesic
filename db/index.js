@@ -48,7 +48,7 @@ MusicUpload.belongsTo(User);
 SGEventComment.belongsTo(SGEvent, {foreignKey: 'SGEventId'});
 SGEventComment.belongsTo(User, {foreignKey: 'userId'});
 
-
+/* eslint-disable */
 const Posts = dbProfilePosts(db);
 //senderId foreignKey cause we want both types of users to be able to post
 User.hasMany(Posts);
@@ -59,7 +59,7 @@ db.sync()
   .then(() => {
     console.log('db synced');
   })
-  .catch((err) => console.error('err', err));
+  .catch((err) => console.warn(err));
 
 module.exports = {
   db,

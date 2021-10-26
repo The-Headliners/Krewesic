@@ -44,7 +44,7 @@ const VisitProfile = () => {
   //const handlePost
 
   const getParams = () => {
-    console.log(id, name);
+    console.info(id, name);
   };
 
 
@@ -94,9 +94,9 @@ const VisitProfile = () => {
         City: { city }
         </Box>
         <br/>
-       
+
         <br/>
-      
+
       </Box>
       <br/>
       <Box

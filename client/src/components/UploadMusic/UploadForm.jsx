@@ -3,11 +3,10 @@ import axios from 'axios';
 
 const UploadForm = ({setFileSelected, showWidget}) => {
 
-  
-  return ( 
+
+  return (
     <div>
       <input type='file' onChange={(e) => {
-        console.log(e.target.files[0]);
         setFileSelected(e.target.files[0]);
       }}/>
       <button type='submit' onClick={() => showWidget()}>Upload</button>

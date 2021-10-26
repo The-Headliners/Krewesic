@@ -15,7 +15,7 @@ const Artist = ({user, key}) => {
   const getArtist = () => {
     axios.get(`/form/oneUser/${user.id}`)
       .then(({data}) => {
-        console.log(data);
+        console.info(data);
 
       });
   };

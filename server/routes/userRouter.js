@@ -6,7 +6,6 @@ const {SGEvent, SGEventComment, User, Event} = require('../../db/index.js');
 
 userRouter.get('/user/:userId', async (req, res) => {
   try {
-    console.log('user router');
     const {userId} = req.params;
 
     const userProf = await User.findByPk(userId);
@@ -17,7 +16,7 @@ userRouter.get('/user/:userId', async (req, res) => {
     // res.status(201).send({id, name, picture, type, bio, favGenre, favArtist, artistBio, artistName, myGenre, city, pic, setPic, influences, setInfluence, posts, setMyPosts });
 
   } catch (err) {
-    console.log('get err', err);
+    console.warn(err);
   }
 });
 

@@ -53,23 +53,19 @@ const MapEvents = () => {
 
     //right now hard coded to retreive sample data so not use api key too much
     const {data} = await axios.get('/events/sampleCity');
-    console.log('data', data);
   };
 
   const searchDate = async() => {
     //const {data} = await axios.get('/events/dateSearch') <-- include start date, fin date, city
     const {data} = await axios.get('/events/sampleLocalWeekend');
-    console.log('daate data', data);
     setEvents(data);
   };
 
   const findLocalShows = async() => {
     const {data} = await axios.get(`/events/dateSearch/${date1}/${date2}/${city}`);
-    console.log('fls data', data);
     setEvents(data);
 
     const kEvents = await axios.get('/krewesicevents/liveevents');
-    console.log('keventsdata', kEvents.data);
     setKrewesicEvents(kEvents.data);
 
   };

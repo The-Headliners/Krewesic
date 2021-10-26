@@ -6,14 +6,14 @@ const {User, Messages} = require('../../../db/index.js');
 
 
 
-//get a user by google id 
+//get a user by google id
 Users.get('/usersId/:googleId', async (req, res) => {
   const {googleId} = req.params;
   try {
     const users = await User.findAll({where: {googleId: googleId}});
     res.status(200).send(users);
   } catch (err) {
-    console.log(err);
+    console.warn(err);
     res.sendStatus(500);
 
   }
@@ -28,7 +28,7 @@ Users.get('/users/:user', async (req, res) => {
     const users = await User.findAll({where: {name: user}});
     res.status(200).send(users);
   } catch (err) {
-    console.log(err);
+    console.warn(err);
     res.sendStatus(500);
 
   }
@@ -40,7 +40,7 @@ Users.get('/users', async (req, res) => {
     const users = await User.findAll({include: [{model: Messages}]});
     res.status(200).send(users);
   } catch (err) {
-    console.log(err);
+    console.warn(err);
     res.sendStatus(500);
 
   }

@@ -104,7 +104,6 @@ const Map = ({events, kEvents}) => {
                 key={i}
                 position={{lat: kVenue.lat, lng: kVenue.lng}}
                 onClick={() => {
-                  console.log(kVenue.type);
                   setSelected(kVenue);
                 }}
               />
@@ -132,10 +131,7 @@ const Map = ({events, kEvents}) => {
 export default memo(Map);
 
 
-// if(loadError) return 'Error loadng maps';
-// if(!loadError) {
-//   console.log('cool')
-//   return <h1>"Loading Maps"</h1>;}
+
 
 /**
    *  <LoadScript

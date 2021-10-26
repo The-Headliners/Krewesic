@@ -37,24 +37,22 @@ const discoverArtists = () => {
   const renderUsers = async () => {
     await axios.get('/form/allUsers')
       .then(({data}) => {
-        console.log('dataaa: ', data);
+        console.info('dataaa: ', data);
 
 
 
         setUserBase(data);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.warn(err));
   };
 
   useEffect(async() => {
     const {data} = await axios.get('/form/user');
-    console.log(data);
     setName(data.name);
     setPicture(data.picture);
     setType(data.type);
     setLoggedIn(true);
     setId(data.id);
-    console.log('picture', picture, 'type', type);
     renderUsers();
   }, []);
 

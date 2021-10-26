@@ -11,7 +11,7 @@ form.put('/setType/:type', async (req, res) => {
 
 
   } catch (err) {
-    console.log('put err', err);
+    console.warn(err);
   }
 });
 
@@ -21,7 +21,7 @@ form.get('/user', async (req, res) => {
     res.status(201).send({id, name, picture, type, bio, favGenre, favArtist, artistBio, artistName, myGenre, city, pic, setPic, influences, setInfluence });
 
   } catch (err) {
-    console.log('get err', err);
+    console.warn(err);
   }
 });
 
@@ -39,12 +39,11 @@ form.put('/createListener', (req, res) => {
         pic: pic
       })
         .then(() => {
-          console.log('hello');
           res.sendStatus(201);
         });
     })
     .catch(err => {
-      console.error(err);
+      console.warn(err);
       res.sendStatus(500);
     });
 });
@@ -63,12 +62,11 @@ form.put('/createArtist', (req, res) => {
         influences: influences
       })
         .then(() => {
-          console.log('hello');
           res.sendStatus(201);
         });
     })
     .catch(err => {
-      console.error(err);
+      console.warn(err);
       res.sendStatus(500);
     });
 });
@@ -79,7 +77,7 @@ form.get('/allUsers', (req, res) => {
   User.findAll()
     .then(users => res.status(200).send(users))
     .catch(err => {
-      console.log(err);
+      console.warn(err);
       res.sendStatus(500);
     });
 });
@@ -87,12 +85,10 @@ form.get('/allUsers', (req, res) => {
 form.get('/oneUser/:id', (req, res) => {
   //const id = 2;
   const {id} = req.params;
-  console.log(req.user);
-  console.log('hello');
   User.findByPk(id)
     .then(user => res.status(201).send(user))
     .catch(err => {
-      console.log(err);
+      console.warn(err);
       res.sendStatus(500);
     });
 });
