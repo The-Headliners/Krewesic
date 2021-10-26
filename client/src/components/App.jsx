@@ -19,6 +19,7 @@ import Header from './Header.jsx';
 import GlobalContext from './Contexts/GlobalContext.jsx';
 import MessagesPage from './Messages/MessagesPage.jsx';
 import DirectMessages from './DirectMessage/DirectMessages.jsx';
+import MusicUpload from './UploadMusic/MusicUpload.jsx';
 import EventLandingPage from './Events/EventLandingPage.jsx';
 import CreateEvent from './Events/CreateEvent.jsx';
 // import MailingList from './Home/mailing list/MailingList.jsx';
@@ -67,6 +68,7 @@ const App = (props) => {
             <Link className='clickableLight' to='/createevent'>create event</Link>
             {/* <Link to ='/mailingList'>Join Our Mailing List</Link> */}
             <Link className='clickableLight' to='/events'>events link</Link>
+            <Link className='upload' to='/uploadMusic'>Upload Music</Link>
 
 
           </nav>
@@ -113,6 +115,7 @@ const App = (props) => {
             <Route path='/messages' component={MessagesPage}>
             </Route>
             <Route exact path='/DirectMessage' component={DirectMessages} />
+            <Route exact path='/uploadMusic' component={MusicUpload} />
             <Route>
               <div>404 page not available</div>
             </Route>
