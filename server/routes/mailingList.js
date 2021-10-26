@@ -10,10 +10,9 @@ const postUrl = `https://gmail.us5.list-manage.com/subscribe/post?u=${process.en
 mailingList.get('/mailingList', async(req, res) => {
   try {
     const { data } = await axios.get(postUrl);
-    console.log(data);
     res.status(201).send(data);
   } catch (err) {
-    console.error(err);
+    console.warn(err);
     res.sendStatus(500);
   }
 });

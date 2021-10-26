@@ -9,7 +9,7 @@ const Users = ({currentUser}) => {
 
   const getUser = async () => {
     const res = await axios.get('/directMessage/users');
-    
+
     try {
       setUsers(res.data);
     } catch (err) {

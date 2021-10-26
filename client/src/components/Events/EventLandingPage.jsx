@@ -8,7 +8,7 @@ import styled from 'styled-components';
 
 const StyledLanding = styled.div`
   .landingButton {
-    background-color: #b3a970; 
+    background-color: #b3a970;
   }
   .commentInput {
     width: 600px;
@@ -17,7 +17,7 @@ const StyledLanding = styled.div`
 `;
 
 const EventLandingPage = () => {
-  
+
   const {eventId, venue, city, performers, datetime, lat, lng, type: type } = useParams();
   const {id} = useContext(GlobalContext);
 
@@ -33,11 +33,8 @@ const EventLandingPage = () => {
   const getInterestedUsers = async (sgId) => {
     const {data} = await axios.get(`/events/interestedUsersSG/${sgId}`);
     setInterestedUsers(data);
-    console.log('data', data);
     const iU = data.filter(x => x.User.id === id);
-    console.log( 'interestedUsersU', iU);
     iU.length && setAlreadyInterested(true);
-    console.log('interested users', interestedUsers);
   };
 
   const interest = async () => {
@@ -46,7 +43,7 @@ const EventLandingPage = () => {
     getInterestedUsers(eventId);
   };
 
-  
+
 
   const comment = async () => {
     await axios.post('/events/SGcomment', {comment: commentText, SGEventId: eventId});
@@ -86,7 +83,7 @@ const EventLandingPage = () => {
           <h3>interested users</h3>
           <div>
             {interestedUsers.map((user, i) => <div key={i} >{user.User.name}</div>)}
-          
+
           </div>
         </div>
 

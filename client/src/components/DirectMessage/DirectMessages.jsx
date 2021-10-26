@@ -29,9 +29,9 @@ const DirectMessages = () => {
   const [value, setValue] = useState('');
 
   //hold the arrival message in the state
-  const [arrivalMessage, setArrivalMessage] = useState(null); 
+  const [arrivalMessage, setArrivalMessage] = useState(null);
 
-  // console.log('SOCKET ID??', socket);
+
 
   //take event from the socket server
   //checking to see who is on the server, who is online!
@@ -40,10 +40,11 @@ const DirectMessages = () => {
     socket.emit('addUser', currentUser.googleId);
     socket.on('getUsers', users => {
       
+
     });
 
     // socket.current.on('getMessage', ({senderId, text}) => {
-    //   console.log('This is senderId:', senderId, 'This is the text:', text);
+
     //   setMessages([...messages, {sender: senderId, text: text}]);
     // });
   }, [currentUser]);
@@ -55,13 +56,9 @@ const DirectMessages = () => {
   // const getConversations = async () => {
   //   try {
   //     const conversations = await axios.get(`/chat/${currentUser.googleId}`);
-  //     console.log('CONVOS:', conversations);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-  
- 
+
+
+
   //Get the logged in user here!
   useEffect(() => {
     // getMessages();
@@ -75,7 +72,7 @@ const DirectMessages = () => {
     const getConversations = async () => {
       try {
         const conversations = await axios.get(`/chat/${currentUser.googleId}`);
-        //console.log('CONVOS:', conversations);
+
         setConversations(conversations.data);
       } catch (err) {
         console.warn(err);
@@ -84,18 +81,16 @@ const DirectMessages = () => {
     getConversations();
   }, [currentUser.googleId]);
 
-  // console.log(currentUser);
-  //console.log('current chat!!:', currentChat);
-  
-  
+
+
+
   //Doing another useEffect
   useEffect(() => {
     const getMessages = async () => {
       try {
         const messages = await axios.get(`/messages/allMessages/${currentChat?.id}`);
-        //console.log('Messages from convo', messages);
         setMessages(messages.data);
-        
+
       } catch (err) {
         console.warn(err);
       }
@@ -120,20 +115,16 @@ const DirectMessages = () => {
       text: value,
       name: currentUser.name
     });
-    
-    setMessages(messages => [...messages, message]);
-     
 
-    // socket.on('getMessage', ({senderId, text}) => {
-    //   console.log('This is senderId:', senderId, 'This is the text:', text);
-    //   // let name;
-    //   // senderId === currentUser.googleId ? name = currentUser.name : name;
-    //   // setMessages([...messages, {sender: senderId, text: text, name: name}]);
-    // });
+    setMessages(messages => [...messages, message]);
+
+
+
 
     try {
       const res = await axios.post(`/messages/sendMessage/${currentUser.id}`, message);
       
+
       //setMessages([...messages], res.data);
       //setValue('');
     } catch (err) {
@@ -141,23 +132,9 @@ const DirectMessages = () => {
     }
   };
 
-  //get message from socket server
-  // useEffect(() => {
-  //   // socket.current.on('getMessage', ({senderId, text}) => {
-  //   //   console.log('This is senderId:', senderId, 'This is the text:', text);
-  //   // setArrivalMessage({
-  //   //   sender: data.senderId,
-  //   //   text: data.text,
-  //   //   createdAt: Date.now()
-  //   // });
-  //   // });
-  // }, []);
 
-  //console.log('the upcoming', arrivalMessage);
-  //***Go back to this if you run into trouble
-  // useEffect(() => {
-  //   arrivalMessage && (currentChat?.senderId || currentChat?.receiverId) === arrivalMessage.sender && setMessages((prev) => [...prev, arrivalMessage]);
-  // }, [arrivalMessage, currentChat]);
+
+
 
 
   //***For incoming messages from another user, coming back from the Socket Server ***/
@@ -168,6 +145,7 @@ const DirectMessages = () => {
     setMessages([...messages, {sender: senderId, text: text, name: name}]);
   });
   //console.log('NEW MESSAGE', messages);
+
 
   return (
     <div className='directPage backgroundColorLight'>
@@ -188,7 +166,7 @@ const DirectMessages = () => {
           }
         </div>
       </div>
-      
+
       <div className='chatBox'>
         <div className='chatBoxCover'>
           {
@@ -198,9 +176,9 @@ const DirectMessages = () => {
 
                   <Message message={message} owner={message.sender === currentUser.googleId} currentUser={currentUser}/>
                 ))}
-        
 
-                <div className='writeMessage' style={{position: 'relative', marginLeft: '500px' }}> 
+
+                <div className='writeMessage' style={{position: 'relative', marginLeft: '500px' }}>
                   <textarea className='messageInput' placeholder='write something...' value={value} onChange={(e) => setValue(e.target.value)}> </textarea>
                   <button className='sendMessageButton' onClick={handleSubmit}>Send</button>
                 </div> </> ) : (<span className="noConversation"> Open a Conversation to start a Chat.</span>

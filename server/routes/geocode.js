@@ -5,7 +5,7 @@ geocode.get('/address', async (req, res) => {
   try {
 
   } catch (err) {
-    console.log(err);
-    
+    console.warn(err);
+
   }
 });

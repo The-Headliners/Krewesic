@@ -3,8 +3,8 @@ import axios from 'axios';
 
 const UploadForm = ({setFileSelected, showWidget}) => {
 
-  
-  return ( 
+
+  return (
     <div>
       <input type='file' onChange={(e) => {
         setFileSelected(e.target.files[0]);

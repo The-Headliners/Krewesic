@@ -4,7 +4,7 @@ const Message = express.Router();
 const {User, Messages} = require('../../../db/index.js');
 
 
-//Create a message 
+//Create a message
 Message.post('/sendMessage/:id', async (req, res) => {
   //current user id
   const {id} = req.params;

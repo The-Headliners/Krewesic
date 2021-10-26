@@ -11,6 +11,7 @@ Upload.post('/musicUpload/:id', async (req, res) => {
     const music = MusicUpload.create({fileUrl: fileUrl, UserId: id});
     res.status(200).send(music);
   } catch (err) {
+    console.warn(err);
     res.sendStatus(500);
   }
 

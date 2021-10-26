@@ -11,6 +11,7 @@ module.exports = {
   },
   rules: {
     /* Indentation */
+    'no-console': ['error', { allow: ['info', 'warn'] }],
     'no-mixed-spaces-and-tabs': 2,
     'indent': [2, 2],
     /* Variable cames */

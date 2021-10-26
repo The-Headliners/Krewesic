@@ -10,6 +10,8 @@ import 'regenerator-runtime/runtime';
 import styled from 'styled-components';
 import dummyData from './dummyData.js';
 import keys from '../Events/keys.js';
+import Artist from './Artist.jsx';
+
 
 
 // const StyledArtistOfDay = styled.div`
@@ -18,50 +20,39 @@ import keys from '../Events/keys.js';
 
 
 
-const ArtistOfDay = () => {
+const discoverArtists = () => {
   const [ userBase, setUserBase ] = useState([]);
+
+  //IMPORTANT
   const {name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn, id, setId} = useContext(GlobalContext);
-  const [ artistOfTheDay, setArtistOfTheDay ] = useState(dummyData.artists[0]);
-  const [ artistList, setArtistList ] = useState([]);
+  //IMPORTANT
 
 
 
 
-  const list = [
-    {
-      firstname: 'First Name',
-      lastname: 'Last Name',
-    },
-    {
-      firstname: 'First Name',
-      lastname: 'Last Name',
-    },
-  ];
+
+
 
 
   const renderUsers = async () => {
     await axios.get('/form/allUsers')
       .then(({data}) => {
-        console.log('dataaa: ', data);
+        console.info('dataaa: ', data);
 
 
 
         setUserBase(data);
       })
-      .catch((err) => console.error(err));
-    console.log(artistList);
+      .catch((err) => console.warn(err));
   };
 
   useEffect(async() => {
     const {data} = await axios.get('/form/user');
-    console.log(data);
     setName(data.name);
     setPicture(data.picture);
     setType(data.type);
     setLoggedIn(true);
     setId(data.id);
-    //renderArtistOfTheDay();
-    console.log('picture', picture, 'type', type);
     renderUsers();
   }, []);
 
@@ -71,21 +62,14 @@ const ArtistOfDay = () => {
   return (
     <div className='dayHeader'>
       <h1>OUR ARTISTS</h1>
+      <hr/>
       { userBase.map((user, i) => {
         if (user.type === 'artist') {
-          return <div
-            key={i}
-          > <p>{user.name}</p>
-            <img
-              height={100}
-              width={100}
-              src={user.pic}></img>
-            <p>{user.type}</p>
-            <p>{user.bio}</p>
-            <p>{user.city}</p>
-          </div>;
+          return <Artist
+            key={user.id}
+            user={user}
+          />;
         }
-
       }) }
 
     </div>
@@ -93,7 +77,7 @@ const ArtistOfDay = () => {
   );
 };
 
-export default ArtistOfDay;
+export default discoverArtists;
 //<img src={/*artistOfTheDay.strArtistThumb*/} width="200" height="200" alt='' />
 // <div marginY="4vh">
 // {/*artistOfTheDay.strBiographyEN*/}

@@ -15,11 +15,12 @@ const ChatOnline = ({conversation, currentUser}) => {
   useEffect(() => {
     let receiver;
     conversation.senderId === currentUser.googleId ? receiver = conversation.receiverId : receiver = conversation.senderId;
-    //console.log('MY NEW FRIEND', receiver);
-    
+
+
     const getUser = async() => {
       try {
         const res = await axios(`/directMessage//usersId/${receiver}`);
+
         setUser(res.data[0]);
       } catch (err) {
         console.warn(err);

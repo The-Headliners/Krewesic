@@ -6,7 +6,7 @@ const {User, Messages} = require('../../../db/index.js');
 
 
 
-//get a user by google id 
+//get a user by google id
 Users.get('/usersId/:googleId', async (req, res) => {
   const {googleId} = req.params;
   try {
