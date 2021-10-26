@@ -20,10 +20,9 @@ const Conversation = ({conversation, currentUser}) => {
     const getUser = async() => {
       try {
         const res = await axios(`/directMessage//usersId/${receiver}`);
-        console.log('MY NEW FRIEND', res.data[0].name);
         setUser(res.data[0]);
       } catch (err) {
-        console.log(err);
+        console.warn(err);
       }
     };
 

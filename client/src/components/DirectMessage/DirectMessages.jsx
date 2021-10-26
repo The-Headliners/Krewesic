@@ -39,7 +39,7 @@ const DirectMessages = () => {
     //socket.current = io('ws://localhost:1337');
     socket.emit('addUser', currentUser.googleId);
     socket.on('getUsers', users => {
-      console.log('Socket Users:!!', users);
+      
     });
 
     // socket.current.on('getMessage', ({senderId, text}) => {
@@ -78,7 +78,7 @@ const DirectMessages = () => {
         //console.log('CONVOS:', conversations);
         setConversations(conversations.data);
       } catch (err) {
-        console.log(err);
+        console.warn(err);
       }
     };
     getConversations();
@@ -97,7 +97,7 @@ const DirectMessages = () => {
         setMessages(messages.data);
         
       } catch (err) {
-        console.log(err);
+        console.warn(err);
       }
     };
 
@@ -112,7 +112,7 @@ const DirectMessages = () => {
 
     let receiver;
     currentChat.senderId === currentUser.googleId ? receiver = currentChat.receiverId : receiver = currentChat.senderId;
-    console.log('CHECK WHO IS RECEIVER', receiver);
+    
     //send message to the Socket server
     await socket.emit('sendMessage', {
       senderId: currentUser.googleId,
@@ -133,12 +133,11 @@ const DirectMessages = () => {
 
     try {
       const res = await axios.post(`/messages/sendMessage/${currentUser.id}`, message);
-      console.log('MESSAGES', res);
       
       //setMessages([...messages], res.data);
       //setValue('');
     } catch (err) {
-      console.log(err);
+      console.warn(err);
     }
   };
 
@@ -163,13 +162,12 @@ const DirectMessages = () => {
 
   //***For incoming messages from another user, coming back from the Socket Server ***/
   socket.on('getMessage', ({senderId, text, name}) => {
-    console.log('This is senderId:', senderId, 'This is the text:', text);
+   
     // let name;
     // senderId === currentUser.googleId ? name = currentUser.name : name;
     setMessages([...messages, {sender: senderId, text: text, name: name}]);
   });
   //console.log('NEW MESSAGE', messages);
-  console.log(currentUser);
 
   return (
     <div className='directPage backgroundColorLight'>

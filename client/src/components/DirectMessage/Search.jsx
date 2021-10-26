@@ -14,7 +14,7 @@ const Search = () => {
   const searchUser = (user) => {
     return axios.get(`/directMessage/users/${user}`)
       .then(user => {
-        console.log('USERS:', user);
+        
         setUserSearched(user.data);
         
       });

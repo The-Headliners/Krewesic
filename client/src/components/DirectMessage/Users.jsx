@@ -11,10 +11,9 @@ const Users = ({currentUser}) => {
     const res = await axios.get('/directMessage/users');
     
     try {
-      console.log('Users:', res);
       setUsers(res.data);
     } catch (err) {
-      console.log(err);
+      console.warn(err);
     }
 
   };

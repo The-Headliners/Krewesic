@@ -15,14 +15,14 @@ const MusicUpload = () => {
       uploadPreset: 'udl2nhbw'}, 
     (error, result) => {
       if (!error && result && result.event === 'success') { 
-        console.log('Widget:', result); 
+        //console.log('Widget:', result); 
         const file = { fileUrl: result.info.url };
         axios.post(`/upload/musicUpload/${currentUser.id}`, file)
           .then(results => {
-            console.log('Upload File:', results);
+            //console.log('Upload File:', results);
           })
           .catch(err => {
-            console.log(err);
+            console.warn(err);
           });
 
       }
