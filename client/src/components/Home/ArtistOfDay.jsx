@@ -43,10 +43,10 @@ const ArtistOfDay = () => {
     await axios.get('/form/allUsers')
       .then(({data}) => {
         console.log('dataaa: ', data);
-        const myUsers = data.map(user => {
-          return user.name;
-        });
-        setUserBase(myUsers);
+
+
+
+        setUserBase(data);
       })
       .catch((err) => console.error(err));
     console.log(artistList);
@@ -70,8 +70,22 @@ const ArtistOfDay = () => {
 
   return (
     <div className='dayHeader'>
-      { userBase.map(user => {
-        return <p>{user}</p>;
+      <h1>OUR ARTISTS</h1>
+      { userBase.map((user, i) => {
+        if (user.type === 'artist') {
+          return <div
+            key={i}
+          > <p>{user.name}</p>
+            <img
+              height={100}
+              width={100}
+              src={user.pic}></img>
+            <p>{user.type}</p>
+            <p>{user.bio}</p>
+            <p>{user.city}</p>
+          </div>;
+        }
+
       }) }
 
     </div>
