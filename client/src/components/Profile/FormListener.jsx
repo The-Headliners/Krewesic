@@ -91,7 +91,7 @@ const FormListener = () => {
       <br/>
       <Button
         onClick={handleSubmit}
-        href='/artistofday'
+        href='/DiscoverArtists'
         color="primary"
         variant="contained"
         startIcon={ <AccountCircle/> }

@@ -18,7 +18,7 @@ import keys from '../Events/keys.js';
 
 
 
-const ArtistOfDay = () => {
+const discoverArtists = () => {
   const [ userBase, setUserBase ] = useState([]);
   const {name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn, id, setId} = useContext(GlobalContext);
   const [ artistOfTheDay, setArtistOfTheDay ] = useState(dummyData.artists[0]);
@@ -71,6 +71,7 @@ const ArtistOfDay = () => {
   return (
     <div className='dayHeader'>
       <h1>OUR ARTISTS</h1>
+      <hr/>
       { userBase.map((user, i) => {
         if (user.type === 'artist') {
           return <div
@@ -83,6 +84,7 @@ const ArtistOfDay = () => {
             <p>{user.type}</p>
             <p>{user.bio}</p>
             <p>{user.city}</p>
+            <hr></hr>
           </div>;
         }
 
@@ -93,7 +95,7 @@ const ArtistOfDay = () => {
   );
 };
 
-export default ArtistOfDay;
+export default discoverArtists;
 //<img src={/*artistOfTheDay.strArtistThumb*/} width="200" height="200" alt='' />
 // <div marginY="4vh">
 // {/*artistOfTheDay.strBiographyEN*/}

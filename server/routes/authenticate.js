@@ -13,14 +13,14 @@ auth.get('/google/redirect', passport.authenticate('google'), (req, res) => {
   res.cookie('user', req.user.name);
   //if the type is null: this redirects to the form
   if (req.user.type !== null) { // //if the type is not null: redirect to the artistOfDay page
-    res.redirect('/artistofday');
+    res.redirect('/DiscoverArtists');
   } else {
     res.redirect('/form');
   }
- 
 
-  
-  
+
+
+
 });
 
 //auth logout
@@ -34,16 +34,16 @@ auth.get('/logout', (req, res) => {
 //get request to get the cookie and user's name
 auth.get('/cookie', async (req, res) => {
   const arr = req.headers.cookie.split('; ');
-  
+
   let user = null;
   for (let i = 0; i < arr.length; i++) {
     const cookie = arr[i].split('=');
     if (cookie[0] === 'user') {
       user = cookie[1];
       user = user.replace('%20', ' ');
-    } 
+    }
   }
-  
+
   try {
     const userInfo = await User.findAll({
       where: {

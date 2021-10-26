@@ -13,7 +13,7 @@ import styled from 'styled-components';
 
 const StyledFormArtist = styled.div`
   .wrapper {
- 
+
   }
 `;
 
@@ -112,7 +112,7 @@ const FormArtist = () => {
         <br/>
         <Button
           onClick={handleCreate}
-          href='/artistofday'
+          href='/DiscoverArtists'
           color="primary"
           variant="contained"
           startIcon={ <AccountCircle/> }

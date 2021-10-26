@@ -12,7 +12,7 @@ import Profile from './Profile/Profile.jsx';
 import Form from './Profile/Form.jsx';
 import FormArtist from './Profile/FormArtist.jsx';
 import FormListener from './Profile/FormListener.jsx';
-import ArtistOfDay from './Home/ArtistOfDay.jsx';
+import DiscoverArtists from './Home/DiscoverArtists.jsx';
 import BandsHome from './Bands/BandsHome.jsx';
 import MapEvents from './Events/MapEvents.jsx';
 import Header from './Header.jsx';
@@ -58,7 +58,7 @@ const App = (props) => {
         <Router>
           <Header />
           <nav>
-            <Link className='clickableLight' to='/artistofday'>artist of day </Link>
+            <Link className='clickableLight' to='/DiscoverArtists'> Discover Artists </Link>
             <Link className='clickableLight' to='/bands'>bands</Link>
             <Link className='clickableLight' to='/mapevents'>map events</Link>
             <Link className='clickableLight' to='/messages'>Messages</Link>
@@ -73,8 +73,8 @@ const App = (props) => {
           <Switch>
             <Route exact path="/" component={Login}>
             </Route>
-            <Route path='/artistofday' >
-              <ArtistOfDay />
+            <Route path='/DiscoverArtists' >
+              <DiscoverArtists />
             </Route>
             <Route path='/profile' >
               <Profile />
