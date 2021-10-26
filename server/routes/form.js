@@ -73,4 +73,15 @@ form.put('/createArtist', (req, res) => {
     });
 });
 
+form.get('/allUsers', (req, res) => {
+
+
+  User.findAll()
+    .then(users => res.status(200).send(users))
+    .catch(err => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+});
+
 module.exports = {form};
