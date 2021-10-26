@@ -10,6 +10,7 @@ import 'regenerator-runtime/runtime';
 import styled from 'styled-components';
 import dummyData from './dummyData.js';
 import keys from '../Events/keys.js';
+import Artist from './Artist.jsx';
 
 
 // const StyledArtistOfDay = styled.div`
@@ -74,20 +75,11 @@ const discoverArtists = () => {
       <hr/>
       { userBase.map((user, i) => {
         if (user.type === 'artist') {
-          return <div
+          return <Artist
             key={i}
-          > <p>{user.name}</p>
-            <img
-              height={100}
-              width={100}
-              src={user.pic}></img>
-            <p>{user.type}</p>
-            <p>{user.bio}</p>
-            <p>{user.city}</p>
-            <hr></hr>
-          </div>;
+            user={user}
+          />;
         }
-
       }) }
 
     </div>
