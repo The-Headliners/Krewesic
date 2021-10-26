@@ -19,7 +19,7 @@ import keys from '../Events/keys.js';
 
 
 const ArtistOfDay = () => {
-
+  const [ userBase, setUserBase ] = useState([]);
   const {name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn, id, setId} = useContext(GlobalContext);
   const [ artistOfTheDay, setArtistOfTheDay ] = useState(dummyData.artists[0]);
   const [ artistList, setArtistList ] = useState([]);
@@ -39,11 +39,14 @@ const ArtistOfDay = () => {
   ];
 
 
-  const renderArtistOfTheDay = async () => {
-    await axios.get('/artistOfTheDay/artistOfTheDay')
-      .then((data) => {
+  const renderUsers = async () => {
+    await axios.get('/form/allUsers')
+      .then(({data}) => {
         console.log('dataaa: ', data);
-        setArtistList(data.data);
+        const myUsers = data.map(user => {
+          return user.name;
+        });
+        setUserBase(myUsers);
       })
       .catch((err) => console.error(err));
     console.log(artistList);
@@ -59,36 +62,18 @@ const ArtistOfDay = () => {
     setId(data.id);
     //renderArtistOfTheDay();
     console.log('picture', picture, 'type', type);
-
+    renderUsers();
   }, []);
+
+
 
 
   return (
     <div className='dayHeader'>
+      { userBase.map(user => {
+        return <p>{user}</p>;
+      }) }
 
-      <h1>Today's Featured Artist:</h1>
-      <Box display='flex' marginX='10vh' paddingX='10vh'>
-        <div>
-          <h1>
-            {/*artistOfTheDay.strArtist*/}
-          </h1>
-         
-        </div>
-        <div>
-
-        </div>
-      </Box>
-      <ul>
-        <h2>Friends</h2>
-        <ul>
-          {/*list.map(item => (
-            <li key={item.id}>
-              <div>{item.id}</div>
-              <div>{item.firstname} {item.lastname}</div>
-            </li>
-          ))*/}
-        </ul>
-      </ul>
     </div>
 
   );
@@ -101,7 +86,7 @@ export default ArtistOfDay;
 // </div>
 
 
-//below is what this page was when i pulled it down, a lot of it is commented out or deleted above becasue it was causing an error that was not letting the global context to be updated, which was causing other issues in the app  
+//below is what this page was when i pulled it down, a lot of it is commented out or deleted above becasue it was causing an error that was not letting the global context to be updated, which was causing other issues in the app
 /*
 import React, { reactDOM, useContext, useState, useEffect} from 'react';
 import {Router, Route, Link, RouteHandler} from 'react-router';
@@ -151,18 +136,18 @@ const ArtistOfDay = () => {
   useEffect(() => {
 
     renderArtistOfTheDay();
-      
+
   }, []);
 
 
   return (
     <div className='dayHeader'>
 
-      <h1>Today's Featured Artist:</h1> 
+      <h1>Today's Featured Artist:</h1>
       <Box display='flex' marginX='10vh' paddingX='10vh'>
         <div>
           <h1>
-            {artistOfTheDay.strArtist} 
+            {artistOfTheDay.strArtist}
           </h1>
           <div marginY="4vh">
             {artistOfTheDay.strBiographyEN}
@@ -184,7 +169,7 @@ const ArtistOfDay = () => {
         </ul>
       </ul>
     </div>
-    
+
   );
 };
 
