@@ -21,23 +21,16 @@ import Artist from './Artist.jsx';
 
 const discoverArtists = () => {
   const [ userBase, setUserBase ] = useState([]);
+
+  //IMPORTANT
   const {name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn, id, setId} = useContext(GlobalContext);
-  const [ artistOfTheDay, setArtistOfTheDay ] = useState(dummyData.artists[0]);
-  const [ artistList, setArtistList ] = useState([]);
+  //IMPORTANT
 
 
 
 
-  const list = [
-    {
-      firstname: 'First Name',
-      lastname: 'Last Name',
-    },
-    {
-      firstname: 'First Name',
-      lastname: 'Last Name',
-    },
-  ];
+
+
 
 
   const renderUsers = async () => {
@@ -50,7 +43,6 @@ const discoverArtists = () => {
         setUserBase(data);
       })
       .catch((err) => console.error(err));
-    console.log(artistList);
   };
 
   useEffect(async() => {
@@ -76,7 +68,7 @@ const discoverArtists = () => {
       { userBase.map((user, i) => {
         if (user.type === 'artist') {
           return <Artist
-            key={i}
+            key={user.id}
             user={user}
           />;
         }

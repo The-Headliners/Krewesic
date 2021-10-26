@@ -1,4 +1,5 @@
 import React, { reactDOM, useContext, useState, useEffect} from 'react';
+import axios from 'axios';
 
 
 
@@ -6,9 +7,10 @@ import React, { reactDOM, useContext, useState, useEffect} from 'react';
 
 
 
-
-const Artist = ({user}) => {
+const Artist = ({user, key}) => {
   const [ word, setWord] = useState('');
+
+
 
 
   return (
@@ -25,7 +27,14 @@ const Artist = ({user}) => {
       <p>{user.myGenre}</p>
       <p>{user.artistBio}</p>
       <p>{user.city}</p>
-      <button>Go To Profile</button>
+      <button
+        onClick={() => {
+          axios.get(`/form/oneUser/${user.id}`)
+            .then(({data}) => {
+              console.log(data);
+            });
+        }}
+      >Go To Profile</button>
       <hr></hr>
     </div>
   );

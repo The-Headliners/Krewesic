@@ -87,7 +87,6 @@ const Profile = (props) => {
   };
 
   const getAllPosts = () => {
-    const arr = [];
     axios.get('/post/getProfilePost')
       .then(({ data }) => {
         const myPostArr = data.map(post => {

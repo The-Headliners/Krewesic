@@ -84,4 +84,17 @@ form.get('/allUsers', (req, res) => {
     });
 });
 
+form.get('/oneUser/:id', (req, res) => {
+  //const id = 2;
+  const {id} = req.params;
+  console.log(req.user);
+  console.log('hello');
+  User.findByPk(id)
+    .then(user => res.status(201).send(user))
+    .catch(err => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+});
+
 module.exports = {form};
