@@ -13,6 +13,8 @@ import Form from './Profile/Form.jsx';
 import FormArtist from './Profile/FormArtist.jsx';
 import FormListener from './Profile/FormListener.jsx';
 import DiscoverArtists from './Home/DiscoverArtists.jsx';
+import Artist from './Home/Artist.jsx';
+import Prof from './Home/Prof.jsx';
 import BandsHome from './Bands/BandsHome.jsx';
 import MapEvents from './Events/MapEvents.jsx';
 import Header from './Header.jsx';
@@ -78,6 +80,9 @@ const App = (props) => {
             </Route>
             <Route path='/DiscoverArtists' >
               <DiscoverArtists />
+            </Route>
+            <Route path='/Prof' >
+              <Prof />
             </Route>
             <Route path='/profile' >
               <Profile />

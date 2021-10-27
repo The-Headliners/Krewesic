@@ -66,7 +66,7 @@ const discoverArtists = () => {
       { userBase.map((user, i) => {
         if (user.type === 'artist') {
           return <Artist
-            key={user.id}
+            key={i}
             user={user}
           />;
         }

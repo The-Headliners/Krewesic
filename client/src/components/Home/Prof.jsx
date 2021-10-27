@@ -1,13 +1,20 @@
 import React, { reactDOM, useContext, useState, useEffect} from 'react';
+import GlobalContext from '../Contexts/GlobalContext.jsx';
+import Artist from './Artist.jsx';
+import axios from 'axios';
+
+const Prof = () => {
+
+
+  //const { userProf, setUserProf } = useContext(GlobalContext);
 
 
 
-const Prof = ({prof}) => {
 
 
 
   return (
-    <div>hello || {prof.artistName}</div>
+    <div> yo </div>
   );
 };
 
