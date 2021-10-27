@@ -1,7 +1,7 @@
 const express = require('express');
 const { async } = require('regenerator-runtime');
 const Upload = express.Router();
-const {MusicUpload} = require('../../../db/index.js');
+const {User, MusicUpload} = require('../../../db/index.js');
 
 Upload.post('/musicUpload/:id', async (req, res) => {
   const { id } = req.params;
@@ -17,4 +17,21 @@ Upload.post('/musicUpload/:id', async (req, res) => {
 
 });
 
+//get all music from the current user
+Upload.get('/musicUpload/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const music = await User.findAll({
+      where: {
+        id: id,
+      },
+      include: [{model: MusicUpload}]
+    });
+    res.json(music);
+  } catch (err) {
+    console.warn(err);
+    res.sendStatus(500);
+  }
+
+});
 module.exports = { Upload };

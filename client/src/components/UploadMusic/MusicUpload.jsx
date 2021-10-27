@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
+import { AudioCard, VideoCard } from 'material-ui-player';
 import axios from 'axios';
 import UploadForm from './UploadForm.jsx';
 
 const MusicUpload = () => {
 
   const [currentUser, setUser] = useState('');
+  const [musicUploads, setMusic] = useState([]);
   //Create a state that will hold the files that is being uploaded
   const [fileSelected, setFileSelected] = useState('');
 
@@ -29,18 +31,43 @@ const MusicUpload = () => {
     widget.open();
   };
 
+  useEffect( () => {
+
+    const getMusic = async () => {
+      try {
+        const music = await axios.get(`/upload/musicUpload/${currentUser.id}`);
+        console.info('Current user music:', music);
+        // console.info(currentUser.data.MusicUploads);
+        setMusic(music.data[0].MusicUploads);
+      } catch (err) {
+        console.warn(err);
+      }
+    };
+    getMusic();
+  }, [currentUser]);
+
+  
+  
+
   useEffect(() => {
     axios.get('/auth/cookie')
       .then(({data}) => {
         setUser(data[0]);
       });
-
   }, []);
+  
+  console.info(musicUploads);
   return (
     <div className='upload-page'>
       Hello Welcome!
 
       <UploadForm setFileSelected={setFileSelected} showWidget={showWidget}/>
+
+      <div className='videoPlayer' style={{backgroundColor: 'white'}}>
+        {
+          musicUploads.map(music => (<VideoCard src={music.fileUrl}/>))
+        }
+      </div>
     </div>
   );
 };
