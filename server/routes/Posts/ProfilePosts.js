@@ -43,6 +43,26 @@ post.get('/getProfilePost', async (req, res) => {
   }
 });
 
+post.get('/getArtistsPosts', async (req, res) => {
+  try {
+    //change when done testing and doing frontend
+    //const { profileId, senderId, id } = req.params;
+    const {id} = req.user;
+    //const id = 2;
+    const posties = await Posts.findAll({
+      where: {profileId: id},
+      include: [{model: User, attributes: ['name']}]
+
+    });
+
+    res.status(201).send(posties);
+
+  } catch (err) {
+    console.warn(err);
+    res.sendStatus(500);
+  }
+});
+
 
 
 module.exports = post;
