@@ -1,8 +1,9 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useContext} from 'react';
 import Video from './Video.jsx';
 import io from 'socket.io-client';
 import styled from 'styled-components';
 //import Peer from 'peerjs';
+import GlobalContext from '../Contexts/GlobalContext.jsx';
 
 
 
@@ -25,11 +26,15 @@ const host = aws === true
 
 const VirtualEvent = () => {
 
+  //const {id} = useContext(GlobalContext)
   const myPeer = new Peer();
   console.log('peer', myPeer);
 
+  
   const [stream, setStream ] = useState();
   const [peerStream, setPeerStream] = useState();
+  //get userId from the context/  then the cookies later
+  const [mySocketId, setMySocketId] = useState();
 
   const userVideo = useRef();
   const peerVideo = useRef();
@@ -60,6 +65,13 @@ const VirtualEvent = () => {
       userVideo.current.srcObject = stream;
     }
 
+
+    socket.current.on('user-connected', (data) => {
+      console.log('u connect', data);
+      //when user is connected then connect to thenew user (connectToNewUser() function)
+      connectToNewUser(data, stream);
+    });
+
     myPeer.on('call', call => {
       call.answer(stream);
       //put this stream in the peerVideo and the peerStream
@@ -69,23 +81,16 @@ const VirtualEvent = () => {
 
   }, []);
 
-  const joinShow = () => {
-    socket.current.emit('joinShow', {showId: 'thisisashowid', userId: 1}); //hardcoded for testing
+  const joinShow = (x) => {
+    socket.current.emit('joinShow', {showId: 'thisisashowid', userId: x}); //hardcoded for testing
    
   };
 
 
 
-
-  socket.current.on('user-connected', (data) => {
-    console.log('u connect', data);
-    //when user is connected then connect to thenew user (connectToNewUser() function)
-  });
-
-
   myPeer.on('open', (id) => {
-    //socket.emit('test', 'test')
-    // joinShow();
+    console.log('open', id);
+    joinShow(id);
   });
 
   const testSocket = () => {
