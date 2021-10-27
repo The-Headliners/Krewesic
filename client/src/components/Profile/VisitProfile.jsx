@@ -12,6 +12,8 @@ import useGetUser from '../CustomHooks/useGetUser.jsx';
 
 const VisitProfile = () => {
 
+
+  const [ profDesc, setProfDesc ] = useState('');
   const {id} = useParams();
 
   //const user = useGetUser(id);
@@ -48,6 +50,20 @@ const VisitProfile = () => {
   };
 
 
+
+
+  const profDescription = () => {
+    if (artistName) {
+      setProfDesc('Artist Profile');
+    } else {
+      setProfDesc('Listener Profile');
+    }
+  };
+
+  useEffect(() => {
+    profDescription();
+  });
+
   return (
     <Box
       bgcolor="primary.dark"
@@ -63,7 +79,7 @@ const VisitProfile = () => {
           color='textSecondary'
           variant='h4'
         >
-          My Profile
+          {profDesc}
         </Typography>
         <br/>
       </Box>
@@ -72,7 +88,7 @@ const VisitProfile = () => {
           align='center'
           variant='h4'
         >
-          { name }
+          { artistName || name }
         </Typography>
         <br/>
         <Box

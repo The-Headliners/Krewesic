@@ -14,7 +14,6 @@ import FormArtist from './Profile/FormArtist.jsx';
 import FormListener from './Profile/FormListener.jsx';
 import DiscoverArtists from './Home/DiscoverArtists.jsx';
 import Artist from './Home/Artist.jsx';
-import Prof from './Home/Prof.jsx';
 import BandsHome from './Bands/BandsHome.jsx';
 import MapEvents from './Events/MapEvents.jsx';
 import Header from './Header.jsx';
@@ -62,7 +61,6 @@ const App = (props) => {
           <Header />
           <nav>
             <Link className='clickableLight' to='/DiscoverArtists'> Discover Artists </Link>
-            <Link className='clickableLight' to='/Prof'> Artist </Link>
             <Link className='clickableLight' to='/bands'>bands</Link>
             <Link className='clickableLight' to='/mapevents'>map events</Link>
             <Link className='clickableLight' to='/messages'>Messages</Link>
@@ -80,9 +78,6 @@ const App = (props) => {
             </Route>
             <Route path='/DiscoverArtists' >
               <DiscoverArtists />
-            </Route>
-            <Route path='/Prof' >
-              <Prof />
             </Route>
             <Route path='/profile' >
               <Profile />
