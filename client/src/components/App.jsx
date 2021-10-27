@@ -25,6 +25,7 @@ import CreateEvent from './Events/CreateEvent.jsx';
 import Events from './Events/Events.jsx';
 import KreweEventLandingPage from './Events/KrewesicArtists/KreweEventLandingPage.jsx';
 import VisitProfile from './Profile/VisitProfile.jsx';
+import VirtualEvent from './LiveStream/VirtualEvent.jsx';
 
 
 
@@ -66,6 +67,7 @@ const App = (props) => {
             <Link className='clickableLight' to='/createevent'>create event</Link>
             {/* <Link to ='/mailingList'>Join Our Mailing List</Link> */}
             <Link className='clickableLight' to='/events'>events link</Link>
+            <Link className='clickableLight' to='/virtualevent'>testing livestream</Link>
          
 
           </nav>
@@ -105,6 +107,9 @@ const App = (props) => {
             </Route>
             <Route path='/createevent' >
               <CreateEvent />
+            </Route>
+            <Route path='/virtualevent' >
+              <VirtualEvent />
             </Route>
             <Route path='/visitProfile/:id' >
               <VisitProfile />

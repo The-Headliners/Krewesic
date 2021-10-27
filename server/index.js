@@ -24,11 +24,21 @@ const mailingList = require('./routes/mailingList.js');
 const kEvents = require('./routes/events/krewesicEvents.js');
 const cookieParser = require('cookie-parser');
 
+//for video streaming
+const {v4: uuidv4} = require('uuid');
+const virtualEvent = require('./routes/virtualEvent.js');
+const {ExpressPeerServer} = require('peer');
 
 
 
 //create the server
 const server = http.createServer(app);
+
+//create peer express server
+const peerServer = ExpressPeerServer(server, {
+  debug: true,
+  path: '/p2p'
+});
 
 app.use(express.static(frontEnd));
 app.use(express.json());
@@ -58,6 +68,7 @@ const getUser = (userId) => {
 };
 io.on('connection', socket => {
   //when connect
+  console.log(`user ${socket.id} is connected`);
 
   //***FOR LIVE CHAT FOR ALL USERS*** when a message is sent
   socket.on('message', ({ name, message}) => {
@@ -89,6 +100,20 @@ io.on('connection', socket => {
     });
   });
 
+  //****for streaming features */
+  socket.on('joinShow', ({showId, userId}) => {
+    console.log('showId then userId', showId, userId);
+    socket.join(showId);
+    socket.to(showId).emit('user-connected', userId);
+  });
+
+  socket.on('test', (data) => {
+    console.log(data);
+    // socket.broadcast.emit('data', data)
+  });
+
+  //****end events related to streaming features */
+
   //When disconnect
   socket.on('disconnect', () => {
     //if there are any disconnections
@@ -96,6 +121,10 @@ io.on('connection', socket => {
     io.emit('getUsers', users);
   });
 });
+
+// setInterval(() => {
+//   io.emit('image', 'data')
+// }, 1000)
 
 
 
@@ -118,6 +147,7 @@ app.use('/artist', artist);
 app.use('/mailingList', mailingList);
 app.use('/krewesicevents', kEvents);
 app.use('/userProf', userRouter);
+app.use('/virtualEvent', virtualEvent);
 
 app.use('/post', post);
 
