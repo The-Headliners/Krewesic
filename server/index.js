@@ -35,10 +35,10 @@ const {ExpressPeerServer} = require('peer');
 const server = http.createServer(app);
 
 //create peer express server
-const peerServer = ExpressPeerServer(server, {
-  debug: true,
-  path: '/p2p'
-});
+// const peerServer = ExpressPeerServer(server, {
+//   debug: true,
+//   path: '/p2p'
+// });
 
 app.use(express.static(frontEnd));
 app.use(express.json());

@@ -27,7 +27,12 @@ const host = aws === true
 const VirtualEvent = () => {
 
   //const {id} = useContext(GlobalContext)
-  const myPeer = new Peer();
+  const myPeer = new Peer( undefined, { //remember: npm i -g peer   \n peerjs --port 3001   running peer port on 3001
+  
+      host: '/',
+      port: '3001'
+    
+  });
   console.log('peer', myPeer);
 
   
@@ -35,6 +40,7 @@ const VirtualEvent = () => {
   const [peerStream, setPeerStream] = useState();
   //get userId from the context/  then the cookies later
   const [mySocketId, setMySocketId] = useState();
+  const [myPeerId, setMyPeerId] = useState()
 
   const userVideo = useRef();
   const peerVideo = useRef();
@@ -69,7 +75,7 @@ const VirtualEvent = () => {
     socket.current.on('user-connected', (data) => {
       console.log('u connect', data);
       //when user is connected then connect to thenew user (connectToNewUser() function)
-      connectToNewUser(data, stream);
+     // connectToNewUser(data, stream);
     });
 
     myPeer.on('call', call => {
