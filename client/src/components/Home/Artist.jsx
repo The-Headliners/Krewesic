@@ -29,7 +29,6 @@ const Artist = ({user}) => {
           width={100}
           src={user.pic}></img>
         <p>Genre: {user.myGenre}</p>
-        <p>Bio: {user.artistBio}</p>
         <p>City: {user.city}</p>
         <hr></hr>
       </div>

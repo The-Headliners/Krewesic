@@ -36,7 +36,6 @@ const discoverArtists = () => {
   const renderUsers = async () => {
     await axios.get('/form/allUsers')
       .then(({data}) => {
-        console.info('dataaa: ', data);
 
 
 
