@@ -102,21 +102,29 @@ io.on('connection', socket => {
 
   //****for streaming features */
   socket.on('joinShow', ({showId, userId}) => {
-    console.log('showId then userId', showId, userId);
+    console.log('join show event, showId then userId', showId, userId);
     socket.join(showId);
     socket.to(showId).emit('user-connected', userId);
   });
 
+
+  socket.on('peerconnected', (data) => {
+    console.log('peerconnected', data)
+  })
+
+
+
   socket.on('test', (data) => {
     console.log(data);
-    // socket.broadcast.emit('data', data)
   });
+
 
   //****end events related to streaming features */
 
   //When disconnect
   socket.on('disconnect', () => {
     //if there are any disconnections
+    console.log('disconnected user', socket.id);
     removeUser(socket.id);
     io.emit('getUsers', users);
   });

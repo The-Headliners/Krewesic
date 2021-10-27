@@ -114,9 +114,7 @@ const App = (props) => {
             <Route path='/visitProfile/:id' >
               <VisitProfile />
             </Route>
-            <Route path='/messages' component={MessagesPage}>
-            </Route>
-            <Route exact path='/DirectMessage' component={DirectMessages} />
+           
             <Route>
               <div>404 page not available</div>
             </Route>
@@ -130,3 +128,12 @@ const App = (props) => {
 };
 
 export default App;
+
+/**
+ * 
+ *  <Route exact path='/DirectMessage' component={DirectMessages} />
+           
+
+             <Route path='/messages' component={MessagesPage}>
+            </Route>
+ */

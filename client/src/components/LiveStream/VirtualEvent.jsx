@@ -21,19 +21,19 @@ const host = aws === true
   : 'localhost';
 
 
-//const socket = io.connect(`http://${host}:1337`);
-
+const socket = io.connect(`http://${host}:1337`);
+const myPeer = new Peer( undefined, { //remember: npm i -g peer   \n peerjs --port 3002   running peer port on 3001
+  
+  host: '/',
+  port: '3002'
+  
+});
 
 const VirtualEvent = () => {
 
   //const {id} = useContext(GlobalContext)
-  const myPeer = new Peer( undefined, { //remember: npm i -g peer   \n peerjs --port 3001   running peer port on 3001
-  
-    host: '/',
-    port: '3001'
-    
-  });
-  console.log('peer', myPeer);
+
+  console.log('myPeer', myPeer);
 
   
   const [stream, setStream ] = useState();
@@ -44,13 +44,17 @@ const VirtualEvent = () => {
 
   const userVideo = useRef();
   const peerVideo = useRef();
-  const socket = useRef();
+
+  const [peers, setPeers] = useState('');
+  //const socket = useRef();
 
 
   //socket.current = io.connect('/')
-  socket.current = io.connect(`http://${host}:1337`);
+  //socket.current = io.connect(`http://${host}:1339`);
 
   const connectToNewUser = (userId, stream) => {
+    //const call = myPeer.call(userId, stream);
+    console.log('connect to new user fn', userId);
     const call = myPeer.call(userId, stream);
     call.on('stream', userVideoStream => {
       setPeerStream(userVideoStream);
@@ -63,44 +67,63 @@ const VirtualEvent = () => {
 
 
   useEffect(async () => {
-
+  
     //get the stream into the video
     const stream = await navigator.mediaDevices.getUserMedia({video: true, audio: true});
     setStream(stream);
+   
+
     if (userVideo.current) {
       userVideo.current.srcObject = stream;
     }
 
-
-    socket.current.on('user-connected', (data) => {
-      console.log('u connect', data);
-      //when user is connected then connect to thenew user (connectToNewUser() function)
-      // connectToNewUser(data, stream);
-    });
-
-    myPeer.on('call', call => {
-      call.answer(stream);
-      //put this stream in the peerVideo and the peerStream
-    });
+   
 
 
 
   }, []);
 
   const joinShow = (x) => {
-    socket.current.emit('joinShow', {showId: 'thisisashowid', userId: x}); //hardcoded for testing
+    //socket.current.emit('joinShow', {showId: 'thisisashowid', userId: x}); 
+    socket.emit('joinShow', {showId: 'thisisashowid', userId: x}); 
    
   };
 
+  useEffect(() => {
 
+    console.log('socket changed');
 
-  myPeer.on('open', (id) => {
-    console.log('open', id);
-    joinShow(id);
-  });
+    socket.on('user-connected', (data) => {
+      // socket.current.on('user-connected', (data) => {
+      console.log('another user joined the room', data);
+      //when user is connected then connect to thenew user (connectToNewUser() function)
+      connectToNewUser(data, stream);
+      setPeers(data);
+      //setPeers(myShowPeers => [...peers, data])
+      console.log('my show peers', peers);
+      socket.emit('peerconnected', peers)
+    });
+   
+    myPeer.on('call', call => {
+      console.log('on call event handler');
+      call.answer(stream);
+      //put this stream in the peerVideo and the peerStream
+    });
+  }, [socket]);
+
+  useEffect(() => {
+    console.log('here');
+    myPeer.on('open', (id) => {
+      console.log('open', id);
+      joinShow(id);
+    });
+  }, [myPeer]);
+
+ 
 
   const testSocket = () => {
-    socket.current.emit('test', {test: 'hello'});
+    ///socket.current.emit('test', {test: 'this is a test hello'});
+    socket.emit('test', {test: 'this is a test hello'});
   };
 
   return (

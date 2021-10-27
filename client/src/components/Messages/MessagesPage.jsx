@@ -6,7 +6,10 @@ import io from 'socket.io-client';
 import {Link} from 'react-router-dom';
 
 //need the socket to connect to the server, which is the local host
-const socket = io.connect('http://localhost:1337');
+
+//this is temporarily commented out, becasue if it is on the same port as our server it is making multiple connections, but if i chagne the port then my dev console is filled iwth errors 
+
+//const socket = io.connect('http://localhost:1338');
 
 const MessagesPage = () => {
   //need to hold the value of the message in state
