@@ -37,13 +37,13 @@ const VirtualEvent = () => {
  
 
   //const socket = useRef(io.connect(`http://${host}:1337`)).current 
-  const [socket] = useState(io.connect(`http://${host}:1337`))
+  const [socket] = useState(io.connect(`http://${host}:1337`));
   const [myPeer] = useState(new Peer( undefined, { //remember: npm i -g peer   \n peerjs --port 3002   running peer port on 3001
   
     host: '/',
     port: '3002'
     
-  }))
+  }));
 
 
   const [stream, setStream ] = useState({});
