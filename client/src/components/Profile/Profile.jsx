@@ -79,6 +79,7 @@ const Profile = (props) => {
       setMySend('');
       setMyProfId('');
     }).then(() => getAllPosts())
+      .then(() => setMyTexts(''))
       .catch(err => {
         console.warn(err);
       });
@@ -90,7 +91,7 @@ const Profile = (props) => {
         const myPostArr = data.map(post => {
           return post.text;
         });
-        setMyPost(myPostArr);
+        setMyPost([myPostArr]);
       });
   };
 
@@ -164,7 +165,9 @@ const Profile = (props) => {
         marginLeft="100px"
       >
         <TextField
-          onChange={e => setMyTexts(e.target.value)}
+          onChange={e => {
+            setMyTexts(e.target.value);
+          }}
           multiline
           label="Post"
           size="small"

@@ -1,49 +1,37 @@
 import React, { reactDOM, useContext, useState, useEffect} from 'react';
 import axios from 'axios';
-import Prof from './Prof.jsx';
+import {useHistory} from 'react-router-dom';
+import {Button} from '@material-ui/core';
 
 
 
 
 
-
-const Artist = ({user, key}) => {
+const Artist = ({user}) => {
   const [ word, setWord] = useState('');
   const [ userProf, setUserProf ] = useState([]);
+  const history = useHistory();
 
 
-  const getArtist = () => {
-    axios.get(`/form/oneUser/${user.id}`)
-      .then(({data}) => {
-        console.info(data);
-
-      });
+  const visitProfile = (user) => {
+    history.push(`/visitProfile/${user}`);
   };
 
+
   return (
-    <div>
-      <p>{user.artistName}</p>
-      <input
-        onChange={e => setWord(e.target.value)}
-      />
-      <p>{word}</p>
-      <img
-        height={100}
-        width={100}
-        src={user.pic}></img>
-      <p>{user.myGenre}</p>
-      <p>{user.artistBio}</p>
-      <p>{user.city}</p>
-      <button
-        // onClick={() => {axios.get(`/form/oneUser/${user.id}`).then(({data}) => {
-        //       return <Prof
-        //         prof={data}
-        //       />;
-        //     });
-        // }}
-        onClick={getArtist}
-      >Go To Profile</button>
-      <hr></hr>
+    <div
+      onClick={() => visitProfile(user.id)}
+    >
+      <div>
+        <p>Artist: {user.artistName}</p>
+        <img
+          height={100}
+          width={100}
+          src={user.pic}></img>
+        <p>Genre: {user.myGenre}</p>
+        <p>City: {user.city}</p>
+        <hr></hr>
+      </div>
     </div>
   );
 

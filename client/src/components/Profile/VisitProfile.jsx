@@ -12,6 +12,10 @@ import useGetUser from '../CustomHooks/useGetUser.jsx';
 
 const VisitProfile = () => {
 
+  const [ post, setMyPost ] = useState([]);
+  const [ profDesc, setProfDesc ] = useState('');
+  const [description, setDescription] = useState('');
+  const [ genreDesc, setGenreDesc ] = useState('');
   const {id} = useParams();
 
   //const user = useGetUser(id);
@@ -48,6 +52,52 @@ const VisitProfile = () => {
   };
 
 
+
+
+  const profDescription = () => {
+    if (artistName) {
+      setProfDesc('Artist Profile');
+    } else {
+      setProfDesc('Listener Profile');
+    }
+  };
+
+  const artDescription = () => {
+    if (artistName) {
+      setDescription('Influence:');
+    } else {
+      setDescription('Favorite Artist:');
+    }
+  };
+
+  const genreDescription = () => {
+    if (artistName) {
+      setGenreDesc('My Genre:');
+    } else {
+      setGenreDesc('Favorite Genre:');
+    }
+  };
+
+
+  const getAllPosts = () => {
+    axios.get('/post/getArtistsPosts')
+      .then(({ data }) => {
+        const myPostArr = data.map(post => {
+          return post.text;
+        });
+        setMyPost(myPostArr);
+      })
+      .catch((err) => {
+        console.warn(err);
+      });
+  };
+
+  useEffect(() => {
+    profDescription();
+    artDescription();
+    genreDescription();
+  });
+
   return (
     <Box
       bgcolor="primary.dark"
@@ -56,14 +106,13 @@ const VisitProfile = () => {
       alignItems="stretch"
     >
       <br/>
-      <button onClick={getParams}></button>
       <Box>
         <Typography
           align='left'
           color='textSecondary'
           variant='h4'
         >
-          My Profile
+          {profDesc}
         </Typography>
         <br/>
       </Box>
@@ -72,7 +121,7 @@ const VisitProfile = () => {
           align='center'
           variant='h4'
         >
-          { name }
+          { artistName || name }
         </Typography>
         <br/>
         <Box
@@ -94,27 +143,27 @@ const VisitProfile = () => {
         City: { city }
         </Box>
         <br/>
-
+        <Box
+          align='center'
+        >
+          {genreDesc} { favGenre || myGenre }
+        </Box>
         <br/>
-
+        <Box
+          align='center'
+        >
+          {description}  { favArtist || influences }
+        </Box>
       </Box>
       <br/>
       <Box
         align='center'
-        marginLeft="100px"
       >
-        <TextField
-        // onChange={e => setMyPosts(e.target.value)}
-          multiline
-          label="Post"
-          size="small"
-          variant="outlined"
-        />
         <Button
           startIcon={<PublishIcon />}
           //onClick={handlePost}
         >
-          Post
+          Follow
         </Button>
       </Box>
       <Box
@@ -122,7 +171,14 @@ const VisitProfile = () => {
         marginRight='50px'
         component="div"
         sx={{ visibility: 'visible' }}>
-        posts
+        <Button
+          onClick={getAllPosts}
+        >See Posts</Button>
+        { post.map((posty, i) => {
+          return <p
+            key={i}
+          >{posty}</p>;
+        }) }
       </Box>
     </Box>
   );
