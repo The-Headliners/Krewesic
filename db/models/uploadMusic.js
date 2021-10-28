@@ -15,6 +15,9 @@ const dbmusicUpload = (sequelize,
       type: Sequelize.STRING(255)
       
     }, 
+    is_audio: {
+      type: Sequelize.BOOLEAN
+    }
   });
 };
 

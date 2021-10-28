@@ -30,6 +30,7 @@ const ChatOnline = ({conversation, currentUser}) => {
     getUser();
   }, [conversation, currentUser]);
 
+ 
   //to render the conversations
   return (
     <div className='chatonline'>
