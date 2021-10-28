@@ -9,14 +9,23 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import PublishIcon from '@mui/icons-material/Publish';
 import { DataRowMessage } from 'pg-protocol/dist/messages';
+import {useHistory} from 'react-router-dom';
+import DiscoverArtists from '../Home/DiscoverArtists.jsx';
+import Artist from '../Home/Artist.jsx';
 
+const Profile = () => {
 
+  const history = useHistory();
+  const visitProfile = () => {
+    axios.get('/form/allUsers')
+      .then(({data}) => {
+        console.info(data);
 
-const Profile = (props) => {
+      });
 
+  };
 
-
-
+  const [ amount, setMyAmount ] = useState(null);
   const [description, setDescription] = useState('');
   const [ genreDesc, setGenreDesc ] = useState('');
 
@@ -55,11 +64,18 @@ const Profile = (props) => {
     }
   };
 
-
+  const followAmount = () => {
+    if (myArtists.length > 0) {
+      setMyAmount(myArtists.length);
+    } else {
+      setMyAmount(null);
+    }
+  };
 
 
 
   //AXIOS AREA NEED THE POST TO SEED THEN GET REQUEST TO YA KNOW GET IT AND DISPLAY
+  const [ myArtists, setMyArtists ] = useState([]);
   const [ text, setMyTexts ] = useState('');
   const [ senderId, setMySend] = useState(null);
   const [ profileId, setMyProfId ] = useState(null);
@@ -95,12 +111,23 @@ const Profile = (props) => {
       });
   };
 
+  const getFollowed = () => {
+    axios.get('follow/getFollows')
+      .then(({ data }) => {
+        const myArtistsArr = data.map(artist => {
+          return artist.artist;
+        });
+        setMyArtists(myArtistsArr);
+      });
+  };
 
 
   useEffect(() => {
     artDescription();
     genreDescription();
   });
+
+
 
   return (
     <Box
@@ -191,6 +218,23 @@ const Profile = (props) => {
             key={i}
           >{posty}</p>;
         }) }
+      </Box>
+      <Box
+      >
+        <Button
+          onClick={getFollowed}
+        >
+          My Followed Artists
+        </Button>
+        <br />
+        {amount}
+        {myArtists.map((artist, i) => {
+          return <div
+            onClick={visitProfile}
+            key={i}
+
+          >{artist}</div>;
+        })}
       </Box>
     </Box>
   );
