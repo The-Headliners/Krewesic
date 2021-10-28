@@ -19,6 +19,7 @@ const {db} = require('../db');
 const auth = require('./routes/authenticate');
 const {form} = require('./routes/form.js');
 const post = require('./routes/Posts/ProfilePosts');
+const follow = require('./routes/Follow/Follows');
 const events = require('./routes/events/events.js');
 const artist = require('./routes/artist.js');
 const mailingList = require('./routes/mailingList.js');
@@ -120,7 +121,7 @@ app.use('/artist', artist);
 app.use('/mailingList', mailingList);
 app.use('/krewesicevents', kEvents);
 app.use('/userProf', userRouter);
-
+app.use('/follow', follow);
 app.use('/post', post);
 
 
