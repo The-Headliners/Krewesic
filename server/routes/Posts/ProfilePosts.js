@@ -5,50 +5,64 @@ const { Posts, User } = require('../../../db/index.js');
 
 
 
-post.put('/profilePost', async(req, res) => {
+post.post('/profilePost/:profileId', async(req, res) => {
   try {
-    console.log(req.body, 'howdy ho');
-    console.log(Posts, 'userino');
-    console.log(req.params, 'hello');
-    res.sendStatus(500);
-    //const {id} = req.user;
-    const senderId = 1 || 2;
-    const { comment } = req.body;
-    const myPost = Posts.findByPk(senderId);
+    const { text } = req.body;
+    const { profileId, senderId } = req.params;
+    const {id} = req.user;
+    //const id = 1;
 
-    await Post.update({
-      text: comment,
+    await Posts.create({
+      text: text,
+      senderId: id,
+      profileId: id,
     });
     res.sendStatus(200);
   } catch (err) {
-    console.log(err);
+    console.warn(err);
     res.sendStatus(500);
   }
 });
 
+post.get('/getProfilePost', async (req, res) => {
+  try {
+    //change when done testing and doing frontend
+    const {id} = req.user;
+    //const id = 1;
+    const posties = await Posts.findAll({
+      where: {profileId: id},
+      include: [{model: User, attributes: ['name']}]
 
+    });
 
-// form.put('/createListener', (req, res) => {
-//   const {id} = req.user;
-//   User.findByPk(id)
-//     .then(user => {
-//       user.update({
-//         bio: bio,
-//         favGenre: favGenre,
-//         favArtist: favArtist,
-//         city: city,
-//         pic: pic
-//       })
-//         .then(() => {
-//           console.log('hello');
-//           res.sendStatus(201);
-//         });
-//     })
-//     .catch(err => {
-//       console.error(err);
-//       res.sendStatus(500);
-//     });
-// });
+    res.status(201).send(posties);
+
+  } catch (err) {
+    console.warn(err);
+    res.sendStatus(500);
+  }
+});
+
+post.get('/getArtistsPosts', async (req, res) => {
+  try {
+    //change when done testing and doing frontend
+    //const { profileId, senderId, id } = req.params;
+    const {id} = req.user;
+    //const id = 2;
+    const posties = await Posts.findAll({
+      where: {profileId: id},
+      include: [{model: User, attributes: ['name']}]
+
+    });
+
+    res.status(201).send(posties);
+
+  } catch (err) {
+    console.warn(err);
+    res.sendStatus(500);
+  }
+});
+
 
 
 module.exports = post;

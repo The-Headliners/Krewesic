@@ -34,7 +34,7 @@ const FormListener = () => {
       setCity('');
       setPic('');
     }).catch(err => {
-      console.log('darn', err);
+      console.warn(err);
     });
   };
 
@@ -91,7 +91,7 @@ const FormListener = () => {
       <br/>
       <Button
         onClick={handleSubmit}
-        href='/artistofday'
+        href='/DiscoverArtists'
         color="primary"
         variant="contained"
         startIcon={ <AccountCircle/> }

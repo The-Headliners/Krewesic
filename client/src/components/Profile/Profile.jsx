@@ -8,13 +8,13 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import PublishIcon from '@mui/icons-material/Publish';
+import { DataRowMessage } from 'pg-protocol/dist/messages';
 
 
 
 const Profile = (props) => {
 
-  const [ input, setInput ] = useState(null);
-  const [ post, setPost ] = useState(false);
+
 
 
   const [description, setDescription] = useState('');
@@ -24,7 +24,6 @@ const Profile = (props) => {
 
   useEffect(async()=>{
     const {data} = await axios.get('/form/user');
-    console.log(data);
     setName(data.name);
     setPicture(data.picture);
     setType(data.type);
@@ -37,7 +36,6 @@ const Profile = (props) => {
     setMyBio(data.artistBio);
     setPic(data.pic);
     setInfluence(data.influences);
-    console.log('picture', picture);
   }, []);
 
 
@@ -58,26 +56,45 @@ const Profile = (props) => {
   };
 
 
-  // const handleSubmit = e => {
-  //   e.preventDefault();
-
-  //   props.onSubmit({
-  //     id: Math.floor(Math.random() * 10000),
-  //     text: input
-  //   });
-  //   setInput('');
-  // };
 
 
-  const getData = (val) => {
-    setInput(val.target.value);
-    setPost(false);
 
+  //AXIOS AREA NEED THE POST TO SEED THEN GET REQUEST TO YA KNOW GET IT AND DISPLAY
+  const [ text, setMyTexts ] = useState('');
+  const [ senderId, setMySend] = useState(null);
+  const [ profileId, setMyProfId ] = useState(null);
+  const [ data, setData ] = useState(null);
+
+  const [ post, setMyPost ] = useState([]);
+
+  const handlePost = () => {
+    const data = {
+      text: text,
+      senderId: senderId,
+      profileId: profileId,
+    };
+    axios.post(`/post/profilePost/${profileId}`, data).then(res => {
+      setData(res.data);
+      setMyTexts('');
+      setMySend('');
+      setMyProfId('');
+    }).then(() => getAllPosts())
+      .then(() => setMyTexts(''))
+      .catch(err => {
+        console.warn(err);
+      });
   };
 
-  const submit = () => {
-    setPost(true);
+  const getAllPosts = () => {
+    axios.get('/post/getProfilePost')
+      .then(({ data }) => {
+        const myPostArr = data.map(post => {
+          return post.text;
+        });
+        setMyPost([myPostArr]);
+      });
   };
+
 
 
   useEffect(() => {
@@ -148,7 +165,9 @@ const Profile = (props) => {
         marginLeft="100px"
       >
         <TextField
-          onChange={getData}
+          onChange={e => {
+            setMyTexts(e.target.value);
+          }}
           multiline
           label="Post"
           size="small"
@@ -156,7 +175,7 @@ const Profile = (props) => {
         />
         <Button
           startIcon={<PublishIcon />}
-          onClick={submit}
+          onClick={handlePost}
         >
           Post
         </Button>
@@ -167,11 +186,11 @@ const Profile = (props) => {
         component="div"
         sx={{ visibility: 'visible' }}>
         <h4>My Posts</h4>
-        {
-          post ?
-            <p>{input}</p> :
-            null
-        }
+        { post.map((posty, i) => {
+          return <p
+            key={i}
+          >{posty}</p>;
+        }) }
       </Box>
     </Box>
   );

@@ -10,13 +10,13 @@ const Search = () => {
   const changeInput = (name) => {
     setValue(name);
   };
-   
+
   const searchUser = (user) => {
     return axios.get(`/directMessage/users/${user}`)
       .then(user => {
-        console.log('USERS:', user);
-        setUserSearched(user.data);
         
+        setUserSearched(user.data);
+
       });
   };
 
@@ -35,7 +35,7 @@ const Search = () => {
           //map over the userSearched, to render the user that was searched
           userSearched.map(user => {
             return (
-              <h1>{user.name}</h1> 
+              <h1>{user.name}</h1>
             );
           })
         }

@@ -30,7 +30,7 @@ const StreamChat = ({socket, showId}) => {
 
   useEffect(() => {
     socket.on('receiveLiveStreamMessage', (message) => {
-      console.log('receiveLSM', message);
+
       setAllMessages((list) => [...list, message]);
     });
   }, []);

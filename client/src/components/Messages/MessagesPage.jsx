@@ -18,11 +18,11 @@ const MessagesPage = () => {
   // //for live chat practice, create a chat array in state to hold the chat messages
   const [chat, setChat] = useState([]);
 
-  
+
   //get the current user's name, hold the user in the state
   const [user, setUser] = useState('');
 
-  
+
 
 
   const sendMessage = (event) => {
@@ -41,28 +41,27 @@ const MessagesPage = () => {
     //     console.log('ERROR:', err);
     //   });
   };
- 
-  
+
+
 
   const handleChange = (event) => {
     setValue(event.target.value);
   };
 
- 
+
   //**Get all messages from current User*/
   const getMessages = () => {
     axios.get('/messages/sendMessage')
       .then( (results) => {
         // setMessages(results.data);
-        //console.log('Messages:', results.data);
       })
       .catch( err => {
-        console.log('ERROR!:', err);
+        console.warn('ERROR!:', err);
       });
   };
 
   socket.on('message', ({name, message}) => {
-    console.log(chat);
+
     setChat([...chat, {name, message: message}]);
   });
 
@@ -78,7 +77,7 @@ const MessagesPage = () => {
       });
   }, []);
 
-  console.log('DATA Socket!:', chat);
+
 
 
   const page = {
@@ -92,7 +91,7 @@ const MessagesPage = () => {
     height: '90vh',
     width: '90vw',
   };
-  
+
   return (
     <div className='message-page' style={page}>
       <Link to='/DirectMessage'>Direct Messaging </Link>

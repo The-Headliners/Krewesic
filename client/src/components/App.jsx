@@ -12,13 +12,15 @@ import Profile from './Profile/Profile.jsx';
 import Form from './Profile/Form.jsx';
 import FormArtist from './Profile/FormArtist.jsx';
 import FormListener from './Profile/FormListener.jsx';
-import ArtistOfDay from './Home/ArtistOfDay.jsx';
+import DiscoverArtists from './Home/DiscoverArtists.jsx';
+import Artist from './Home/Artist.jsx';
 import BandsHome from './Bands/BandsHome.jsx';
 import MapEvents from './Events/MapEvents.jsx';
 import Header from './Header.jsx';
 import GlobalContext from './Contexts/GlobalContext.jsx';
 import MessagesPage from './Messages/MessagesPage.jsx';
 import DirectMessages from './DirectMessage/DirectMessages.jsx';
+import MusicUpload from './UploadMusic/MusicUpload.jsx';
 import EventLandingPage from './Events/EventLandingPage.jsx';
 import CreateEvent from './Events/CreateEvent.jsx';
 // import MailingList from './Home/mailing list/MailingList.jsx';
@@ -69,7 +71,7 @@ const App = (props) => {
         <Router>
           <Header />
           <nav>
-            <Link className='clickableLight' to='/artistofday'>artist of day </Link>
+            <Link className='clickableLight' to='/DiscoverArtists'> Discover Artists </Link>
             <Link className='clickableLight' to='/bands'>bands</Link>
             <Link className='clickableLight' to='/mapevents'>map events</Link>
             <Link className='clickableLight' to='/messages'>Messages</Link>
@@ -79,14 +81,16 @@ const App = (props) => {
             <Link className='clickableLight' to='/events'>events link</Link>
             <Link className='clickableLight' to='/virtualevent'>testing livestream</Link>
          
+            <Link className='upload' to='/uploadMusic'>Upload Music</Link>
+
 
           </nav>
 
           <Switch>
             <Route exact path="/" component={Login}>
             </Route>
-            <Route path='/artistofday' >
-              <ArtistOfDay />
+            <Route path='/DiscoverArtists' >
+              <DiscoverArtists />
             </Route>
             <Route path='/profile' >
               <Profile />
@@ -125,6 +129,10 @@ const App = (props) => {
               <VisitProfile />
             </Route>
            
+            <Route path='/messages' component={MessagesPage}>
+            </Route>
+            <Route exact path='/DirectMessage' component={DirectMessages} />
+            <Route exact path='/uploadMusic' component={MusicUpload} />
             <Route>
               <div>404 page not available</div>
             </Route>

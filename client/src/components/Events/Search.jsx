@@ -23,10 +23,10 @@ const Search = () => {
 
   return (
     <Combobox onSelect={(direccion) => {
-      console.log(direccion);
+
     }}>
-      <ComboboxInput 
-        value={value} 
+      <ComboboxInput
+        value={value}
         onChange={e => setValue(e.target.value)}
         disabled={!ready}
         placeholder={'placeholder'}

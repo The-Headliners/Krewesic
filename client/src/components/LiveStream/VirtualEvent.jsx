@@ -67,7 +67,6 @@ const VirtualEvent = () => {
   useEffect(() => {
 
     myPeer.on('open', (id) => {
-      // console.log('open', id);
       joinShow(id);
     });
   
@@ -86,14 +85,9 @@ const VirtualEvent = () => {
 
   const connectToNewUser = (userId, stream) => {
   
-    //const call = myPeer.call(userId, stream);
-    console.log('connect to new user fn', userId);
-    console.log('my peer', myPeer);
-    console.log('stream', stream);
-    console.log('currentstream.current', currentStream.current);
     const call = myPeer.call(userId, currentStream.current);
     
-    console.log('call', call);
+    //console.log('call', call);
     call.on('stream', userVideoStream => {
       setPeerStream(userVideoStream);
     });
@@ -104,14 +98,11 @@ const VirtualEvent = () => {
     
   };
   const joinShow = (x) => {
-    //socket.current.emit('joinShow', {showId: 'thisisashowid', userId: x}); 
     socket.emit('joinShow', {showId: showId, userId: x}); 
-   
   };
 
   useEffect(() => {
 
-    //console.log('socket changed');
 
     socket.on('user-connected', (data) => {
       // socket.current.on('user-connected', (data) => {
@@ -119,7 +110,6 @@ const VirtualEvent = () => {
       //when user is connected then connect to thenew user (connectToNewUser() function)
       connectToNewUser(data, stream);
       setPeers(data);
-      //console.log('my show peers', peers);
       socket.emit('peerconnected', peers);
     });
    
@@ -140,7 +130,6 @@ const VirtualEvent = () => {
  
 
   const testSocket = () => {
-    ///socket.current.emit('test', {test: 'this is a test hello'});
     socket.emit('test', {test: 'this is a test hello'});
   };
 

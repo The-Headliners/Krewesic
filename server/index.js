@@ -14,6 +14,7 @@ const {Message} = require('./routes/message/messages.js');
 const {Room} = require('./routes/message/rooms.js');
 const {Users} = require('./routes/message/directMessage.js');
 const {Conversation} = require('./routes/message/converations.js');
+const {Upload} = require('./routes/MusicUpload/musicUpload.js');
 const {db} = require('../db');
 const auth = require('./routes/authenticate');
 const {form} = require('./routes/form.js');
@@ -114,14 +115,14 @@ io.on('connection', socket => {
 
   socket.on('liveStreamMessage', (messageObj) => {
     const {showId, message} = messageObj;
-    console.log('showId', showId, 'message', message);
+    // console.log('showId', showId, 'message', message);
     socket.to(showId).emit('receiveLiveStreamMessage', );
   });
 
 
 
   socket.on('test', (data) => {
-    console.log(data);
+  //  console.log(data);
   });
 
 
@@ -156,6 +157,7 @@ app.use('/messages', Message);
 app.use('/roomChat', Room);
 app.use('/directMessage', Users);
 app.use('/chat', Conversation);
+app.use('/upload', Upload);
 app.use('/events', events);
 app.use('/artist', artist);
 app.use('/mailingList', mailingList);
@@ -171,7 +173,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(frontEnd, 'index.html'));
 
 });
-
+/* eslint-disable */
 server.listen(PORT, ()=> {
   //console.log(`listening on port ${PORT}`);
 });
