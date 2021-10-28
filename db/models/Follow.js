@@ -3,7 +3,7 @@ const { User } = require('../index.js');
 
 
 const dbFollow = (sequelize) => {
-  return sequelize.define('ProfilePosts', {
+  return sequelize.define('Follow', {
 
     id: {
       type: Sequelize.INTEGER,
