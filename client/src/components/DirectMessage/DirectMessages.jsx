@@ -11,8 +11,8 @@ import { async } from 'regenerator-runtime';
 
 //need the socket to connect to the server, which is the local host
 
-//this is temporarily commented out, becasue if it is on the same port as our server it is making multiple connections, but if i chagne the port then my dev console is filled iwth errors 
-//const socket = io.connect('http://localhost:1338');
+ 
+const socket = io.connect('http://localhost:1337');
 
 //use socket.emit, to send event to server
 //use socket.on, to take event from server
