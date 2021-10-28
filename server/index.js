@@ -112,10 +112,16 @@ io.on('connection', socket => {
     // console.log('peerconnected', data);
   });
 
+  socket.on('liveStreamMessage', (messageObj) => {
+    const {showId, message} = messageObj;
+    // console.log('showId', showId, 'message', message)
+    socket.to(showId).emit('receiveLiveStreamMessage', messageObj);
+  });
+
 
 
   socket.on('test', (data) => {
-    console.log(data);
+  //  console.log(data);
   });
 
 

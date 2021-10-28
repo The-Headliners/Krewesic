@@ -4,13 +4,14 @@ import io from 'socket.io-client';
 import styled from 'styled-components';
 //import Peer from 'peerjs';
 import GlobalContext from '../Contexts/GlobalContext.jsx';
+import StreamChat from './StreamChat.jsx';
 
 
 
 const StyledEvent = styled.div`
   .videoScreen {
-    height: 200px;
-    width: 200px;
+    height: 100px;
+    width: 100px;
   }
 `;
 
@@ -48,11 +49,13 @@ const VirtualEvent = () => {
   const [peers, setPeers] = useState('');
   const currentStream = useRef();
 
+  const [showId, setShowId] = useState('this_is_a_show_id');
+
 
 
   useEffect(() => {
   
-    navigator.mediaDevices.getUserMedia({video: true, audio: true})
+    navigator.mediaDevices.getUserMedia({video: true, audio: false}) //turn the audio back to true after figure out how to mute hte videos!!!!
       .then(stream => {
         //console.log('streammm', stream)
         setStream(stream);
@@ -86,7 +89,7 @@ const VirtualEvent = () => {
   };
   const joinShow = (x) => {
     //socket.current.emit('joinShow', {showId: 'thisisashowid', userId: x}); 
-    socket.emit('joinShow', {showId: 'thisisashowid', userId: x}); 
+    socket.emit('joinShow', {showId: showId, userId: x}); 
    
   };
 
@@ -118,9 +121,9 @@ const VirtualEvent = () => {
   }, [socket]);
 
   useEffect(() => {
-    console.log('here');
+  //  console.log('here');
     myPeer.on('open', (id) => {
-      console.log('open', id);
+      // console.log('open', id);
       joinShow(id);
     });
   }, [myPeer]); //this seems to be a buggy way to get this started.  needs to refresh page for some reason to trigger this effect. find a better way before presentation. 
@@ -140,6 +143,9 @@ const VirtualEvent = () => {
       virtual event
         <video playsInline muted ref={userVideo} autoPlay></video>
         <video playsInline muted ref={peerVideo} autoPlay></video>
+        <div>
+          <StreamChat showId={showId} socket={socket} />
+        </div>
       </div>
     </StyledEvent>
   );
