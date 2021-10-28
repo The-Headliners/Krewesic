@@ -25,11 +25,21 @@ const mailingList = require('./routes/mailingList.js');
 const kEvents = require('./routes/events/krewesicEvents.js');
 const cookieParser = require('cookie-parser');
 
+//for video streaming
+const {v4: uuidv4} = require('uuid');
+const virtualEvent = require('./routes/virtualEvent.js');
+const {ExpressPeerServer} = require('peer');
 
 
 
 //create the server
 const server = http.createServer(app);
+
+//create peer express server
+// const peerServer = ExpressPeerServer(server, {
+//   debug: true,
+//   path: '/p2p'
+// });
 
 app.use(express.static(frontEnd));
 app.use(express.json());
@@ -59,6 +69,7 @@ const getUser = (userId) => {
 };
 io.on('connection', socket => {
   //when connect
+  //console.log(`user ${socket.id} is connected`);
 
   //***FOR LIVE CHAT FOR ALL USERS*** when a message is sent
   socket.on('message', ({ name, message}) => {
@@ -90,13 +101,45 @@ io.on('connection', socket => {
     });
   });
 
+  //****for streaming features */
+  socket.on('joinShow', ({showId, userId}) => {
+  //  console.log('join show event, showId then userId', showId, userId);
+    socket.join(showId);
+    socket.to(showId).emit('user-connected', userId);
+  });
+
+
+  socket.on('peerconnected', (data) => {
+    // console.log('peerconnected', data);
+  });
+
+  socket.on('liveStreamMessage', (messageObj) => {
+    const {showId, message} = messageObj;
+    // console.log('showId', showId, 'message', message);
+    socket.to(showId).emit('receiveLiveStreamMessage', );
+  });
+
+
+
+  socket.on('test', (data) => {
+  //  console.log(data);
+  });
+
+
+  //****end events related to streaming features */
+
   //When disconnect
   socket.on('disconnect', () => {
     //if there are any disconnections
+    //console.log('disconnected user', socket.id);
     removeUser(socket.id);
     io.emit('getUsers', users);
   });
 });
+
+// setInterval(() => {
+//   io.emit('image', 'data')
+// }, 1000)
 
 
 
@@ -120,6 +163,7 @@ app.use('/artist', artist);
 app.use('/mailingList', mailingList);
 app.use('/krewesicevents', kEvents);
 app.use('/userProf', userRouter);
+app.use('/virtualEvent', virtualEvent);
 
 app.use('/post', post);
 
@@ -131,5 +175,5 @@ app.get('*', (req, res) => {
 });
 /* eslint-disable */
 server.listen(PORT, ()=> {
-  console.log(`listening on port ${PORT}`);
+  //console.log(`listening on port ${PORT}`);
 });

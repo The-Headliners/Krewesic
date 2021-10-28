@@ -6,6 +6,9 @@ import io from 'socket.io-client';
 import {Link} from 'react-router-dom';
 
 //need the socket to connect to the server, which is the local host
+
+
+
 const socket = io.connect('http://localhost:1337');
 
 const MessagesPage = () => {

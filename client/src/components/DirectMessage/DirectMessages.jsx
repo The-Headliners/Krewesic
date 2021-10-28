@@ -7,8 +7,13 @@ import Conversation from './Conversation.jsx';
 import Users from './Users.jsx';
 import { async } from 'regenerator-runtime';
 
+
+
 //need the socket to connect to the server, which is the local host
+
+ 
 const socket = io.connect('http://localhost:1337');
+
 //use socket.emit, to send event to server
 //use socket.on, to take event from server
 
