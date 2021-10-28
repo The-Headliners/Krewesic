@@ -17,10 +17,13 @@ const MusicUpload = () => {
       uploadPreset: 'udl2nhbw'},
     (error, result) => {
       if (!error && result && result.event === 'success') {
-        const file = { fileUrl: result.info.url };
+        const file = { fileUrl: result.info.url, is_audio: result.info.is_audio};
+
+        setMusic(music => [...music, file]);
+
         axios.post(`/upload/musicUpload/${currentUser.id}`, file)
           .then(results => {
-            console.info('Upload File:', results);
+            
           })
           .catch(err => {
             console.warn(err);
@@ -36,8 +39,6 @@ const MusicUpload = () => {
     const getMusic = async () => {
       try {
         const music = await axios.get(`/upload/musicUpload/${currentUser.id}`);
-        console.info('Current user music:', music);
-        // console.info(currentUser.data.MusicUploads);
         setMusic(music.data[0].MusicUploads);
       } catch (err) {
         console.warn(err);
@@ -56,16 +57,15 @@ const MusicUpload = () => {
       });
   }, []);
   
-  console.info(musicUploads);
   return (
     <div className='upload-page'>
       Hello Welcome!
 
-      <UploadForm setFileSelected={setFileSelected} showWidget={showWidget}/>
+      <UploadForm showWidget={showWidget}/>
 
       <div className='videoPlayer' style={{backgroundColor: 'white'}}>
         {
-          musicUploads.map(music => (<VideoCard src={music.fileUrl}/>))
+          musicUploads.slice(0).reverse().map(music => music.is_audio === false ? (<div style={{color: 'black'}}>Video: <VideoCard src={music.fileUrl}/> </div>) : (<div style={{color: 'black'}}>Audio <AudioCard src={music.fileUrl}/> </div>))
         }
       </div>
     </div>

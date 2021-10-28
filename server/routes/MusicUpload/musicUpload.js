@@ -5,10 +5,10 @@ const {User, MusicUpload} = require('../../../db/index.js');
 
 Upload.post('/musicUpload/:id', async (req, res) => {
   const { id } = req.params;
-  const {fileUrl} = req.body;
+  const {fileUrl, is_audio} = req.body;
   try {
 
-    const music = MusicUpload.create({fileUrl: fileUrl, UserId: id});
+    const music = MusicUpload.create({fileUrl: fileUrl, is_audio: is_audio, UserId: id});
     res.status(200).send(music);
   } catch (err) {
     console.warn(err);
