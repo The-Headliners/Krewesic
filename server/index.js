@@ -68,7 +68,7 @@ const getUser = (userId) => {
 };
 io.on('connection', socket => {
   //when connect
-  console.log(`user ${socket.id} is connected`);
+  //console.log(`user ${socket.id} is connected`);
 
   //***FOR LIVE CHAT FOR ALL USERS*** when a message is sent
   socket.on('message', ({ name, message}) => {
@@ -102,15 +102,15 @@ io.on('connection', socket => {
 
   //****for streaming features */
   socket.on('joinShow', ({showId, userId}) => {
-    console.log('join show event, showId then userId', showId, userId);
+  //  console.log('join show event, showId then userId', showId, userId);
     socket.join(showId);
     socket.to(showId).emit('user-connected', userId);
   });
 
 
   socket.on('peerconnected', (data) => {
-    console.log('peerconnected', data)
-  })
+    // console.log('peerconnected', data);
+  });
 
 
 
@@ -124,7 +124,7 @@ io.on('connection', socket => {
   //When disconnect
   socket.on('disconnect', () => {
     //if there are any disconnections
-    console.log('disconnected user', socket.id);
+    //console.log('disconnected user', socket.id);
     removeUser(socket.id);
     io.emit('getUsers', users);
   });
@@ -167,5 +167,5 @@ app.get('*', (req, res) => {
 });
 
 server.listen(PORT, ()=> {
-  console.log(`listening on port ${PORT}`);
+  //console.log(`listening on port ${PORT}`);
 });

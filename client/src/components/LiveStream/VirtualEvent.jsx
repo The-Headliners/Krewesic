@@ -36,8 +36,8 @@ const VirtualEvent = () => {
   console.log('myPeer', myPeer);
 
   
-  const [stream, setStream ] = useState();
-  const [peerStream, setPeerStream] = useState();
+  const [stream, setStream ] = useState({});
+  const [peerStream, setPeerStream] = useState({});
   //get userId from the context/  then the cookies later
   const [mySocketId, setMySocketId] = useState();
   const [myPeerId, setMyPeerId] = useState();
@@ -46,43 +46,44 @@ const VirtualEvent = () => {
   const peerVideo = useRef();
 
   const [peers, setPeers] = useState('');
-  //const socket = useRef();
+  const currentStream = useRef();
 
 
-  //socket.current = io.connect('/')
-  //socket.current = io.connect(`http://${host}:1339`);
 
-  const connectToNewUser = (userId, stream) => {
-    //const call = myPeer.call(userId, stream);
-    console.log('connect to new user fn', userId);
-    const call = myPeer.call(userId, stream);
-    call.on('stream', userVideoStream => {
-      setPeerStream(userVideoStream);
-    });
-
-    //call on cloase remove vide
-
-    
-  };
-
-
-  useEffect(async () => {
+  useEffect(() => {
   
-    //get the stream into the video
-    const stream = await navigator.mediaDevices.getUserMedia({video: true, audio: true});
-    setStream(stream);
-   
+    navigator.mediaDevices.getUserMedia({video: true, audio: true})
+      .then(stream => {
+        //console.log('streammm', stream)
+        setStream(stream);
+        currentStream.current = stream;
+        userVideo.current.srcObject = stream;
+      });
 
-    if (userVideo.current) {
-      userVideo.current.srcObject = stream;
-    }
-
-   
 
 
 
   }, []);
 
+  const connectToNewUser = (userId, stream) => {
+  
+    //const call = myPeer.call(userId, stream);
+    console.log('connect to new user fn', userId);
+    console.log('my peer', myPeer);
+    console.log('stream', stream);
+    console.log('currentstream.current', currentStream.current);
+    const call = myPeer.call(userId, currentStream.current);
+    
+    console.log('call', call);
+    call.on('stream', userVideoStream => {
+      setPeerStream(userVideoStream);
+    });
+
+    //call on cloase remove vide
+    
+
+    
+  };
   const joinShow = (x) => {
     //socket.current.emit('joinShow', {showId: 'thisisashowid', userId: x}); 
     socket.emit('joinShow', {showId: 'thisisashowid', userId: x}); 
@@ -91,23 +92,28 @@ const VirtualEvent = () => {
 
   useEffect(() => {
 
-    console.log('socket changed');
+    //console.log('socket changed');
 
     socket.on('user-connected', (data) => {
       // socket.current.on('user-connected', (data) => {
-      console.log('another user joined the room', data);
+      //console.log('another user joined the room', data);
       //when user is connected then connect to thenew user (connectToNewUser() function)
       connectToNewUser(data, stream);
       setPeers(data);
-      //setPeers(myShowPeers => [...peers, data])
-      console.log('my show peers', peers);
-      socket.emit('peerconnected', peers)
+      //console.log('my show peers', peers);
+      socket.emit('peerconnected', peers);
     });
    
     myPeer.on('call', call => {
-      console.log('on call event handler');
-      call.answer(stream);
+      call.answer(currentStream.current);
       //put this stream in the peerVideo and the peerStream
+      call.on('stream', (peerStream) => {
+        peerVideo.current.srcObject = peerStream;
+        //console.log('PEER STREAM', peerStream)
+        setPeerStream(peerStream);
+      });
+      
+
     });
   }, [socket]);
 
@@ -117,7 +123,7 @@ const VirtualEvent = () => {
       console.log('open', id);
       joinShow(id);
     });
-  }, [myPeer]);
+  }, [myPeer]); //this seems to be a buggy way to get this started.  needs to refresh page for some reason to trigger this effect. find a better way before presentation. 
 
  
 
