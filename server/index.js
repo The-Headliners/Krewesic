@@ -114,14 +114,14 @@ io.on('connection', socket => {
 
   socket.on('liveStreamMessage', (messageObj) => {
     const {showId, message} = messageObj;
-    // console.log('showId', showId, 'message', message)
-    socket.to(showId).emit('receiveLiveStreamMessage', messageObj);
-  });
+    console.log('showId', showId, 'message', message)
+    socket.to(showId).emit('receiveLiveStreamMessage', )
+  })
 
 
 
   socket.on('test', (data) => {
-  //  console.log(data);
+    console.log(data);
   });
 
 

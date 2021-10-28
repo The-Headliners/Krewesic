@@ -22,21 +22,30 @@ const host = aws === true
   : 'localhost';
 
 
-const socket = io.connect(`http://${host}:1337`);
-const myPeer = new Peer( undefined, { //remember: npm i -g peer   \n peerjs --port 3002   running peer port on 3001
+//const socket = io.connect(`http://${host}:1337`);
+// const myPeer = new Peer( undefined, { //remember: npm i -g peer   \n peerjs --port 3002   running peer port on 3001
   
-  host: '/',
-  port: '3002'
+//   host: '/',
+//   port: '3002'
   
-});
+// });
 
 const VirtualEvent = () => {
 
   //const {id} = useContext(GlobalContext)
 
-  console.log('myPeer', myPeer);
+ 
 
+  //const socket = useRef(io.connect(`http://${host}:1337`)).current 
+  const [socket] = useState(io.connect(`http://${host}:1337`))
+  const [myPeer] = useState(new Peer( undefined, { //remember: npm i -g peer   \n peerjs --port 3002   running peer port on 3001
   
+    host: '/',
+    port: '3002'
+    
+  }))
+
+
   const [stream, setStream ] = useState({});
   const [peerStream, setPeerStream] = useState({});
   //get userId from the context/  then the cookies later
@@ -53,7 +62,14 @@ const VirtualEvent = () => {
 
 
 
+
+
   useEffect(() => {
+
+    myPeer.on('open', (id) => {
+      // console.log('open', id);
+      joinShow(id);
+    });
   
     navigator.mediaDevices.getUserMedia({video: true, audio: false}) //turn the audio back to true after figure out how to mute hte videos!!!!
       .then(stream => {
@@ -120,13 +136,6 @@ const VirtualEvent = () => {
     });
   }, [socket]);
 
-  useEffect(() => {
-  //  console.log('here');
-    myPeer.on('open', (id) => {
-      // console.log('open', id);
-      joinShow(id);
-    });
-  }, [myPeer]); //this seems to be a buggy way to get this started.  needs to refresh page for some reason to trigger this effect. find a better way before presentation. 
 
  
 

@@ -27,7 +27,13 @@ import KreweEventLandingPage from './Events/KrewesicArtists/KreweEventLandingPag
 import VisitProfile from './Profile/VisitProfile.jsx';
 import VirtualEvent from './LiveStream/VirtualEvent.jsx';
 
+import io from 'socket.io-client';
 
+const aws = false;
+const deployedDNS = ''; //put deployed URI here
+const host = aws === true
+  ? deployedDNS
+  : 'localhost';
 
 
 
@@ -50,8 +56,12 @@ const App = (props) => {
   const [picture, setPicture] = useState('');
   const [type, setType] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
+  //const [socket] = useState(io.connect(`http://${host}:1337`))
+  //const socket = io.connect(`http://${host}:1337`);
 
-  const value = {id, setId, name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn, city, setCity, bio, setBio, favArtist, setArtist, favGenre, setGenre, artistBio, setMyBio, artistName, setMyName, pic, setPic, myGenre, setMyGenre, influences, setInfluence, };
+  const value = {id, setId, name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn, city, setCity, bio, setBio, favArtist, setArtist, favGenre, setGenre, artistBio, setMyBio, artistName, setMyName, pic, setPic, myGenre, setMyGenre, influences, setInfluence };
+
+  //connect socket here, add it to the global context and then use it in the 3 components 
 
   return (
     <AppStyles>
