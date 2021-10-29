@@ -23,7 +23,7 @@ const host = aws === true
 
 
 //const socket = io.connect(`http://${host}:1337`);
-// const myPeer = new Peer( undefined, { //remember: npm i -g peer   \n peerjs --port 3002   running peer port on 3001
+// const myPeer = new Peer( undefined, { //remember: npm i -g peer   \n peerjs --port 3002   running peer port on 3002
   
 //   host: '/',
 //   port: '3002'

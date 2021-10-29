@@ -16,8 +16,6 @@ const AudioRecording = () => {
   const chunks = useRef([]);
 
   const [recording, setRecording] = useState(false);
-  //const [chunks, setChunks] = useState([])
-  //const [mediaRecorder, setMediaRecorder] = useState({})
 
   const mediaRecorder = useRef();
 
@@ -30,17 +28,11 @@ const AudioRecording = () => {
     currentStream.current = stream;
     
     userVideo.current.srcObject = stream;
-    //setMediaRecorder(new MediaRecorder(stream)) //or stream?
     mediaRecorder.current = new MediaRecorder(stream);
 
     mediaRecorder.current.ondataavailable = (e) => {
-      //setChunks(list => [...list, e.data])
       chunks.current.push(e.data);
     };
-
-
-    mediaRecorder.current.onstop = (e) => {};
-    
 
   }, []);
 
@@ -49,8 +41,6 @@ const AudioRecording = () => {
   const saveMedia = () => {
     const blob = new Blob(chunks.current, {type: 'video/mp4'});
     const videoURL = window.URL.createObjectURL(blob);
-    //console.log('vidurl', videoURL)
-    // recordedVideo.src = videoURL;
     setVideoUrl(videoURL);
     
   };
@@ -63,7 +53,6 @@ const AudioRecording = () => {
   const stopRecording = (e) => {
     mediaRecorder.current.stop();
     setRecording(false);
-    //console.log('chunks', chunks)
     saveMedia();
   };
 
@@ -84,6 +73,3 @@ const AudioRecording = () => {
 };
 
 export default AudioRecording;
-
-
-//let mediaRecorder = new MediaRecorder(mediaStreamObj)
