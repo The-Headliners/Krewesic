@@ -110,7 +110,8 @@ io.on('connection', socket => {
 
 
   socket.on('peerconnected', (data) => {
-    // console.log('peerconnected', data);
+    const {showId, userId} = data;
+    socket.to(showId).emit('anotherPeerHere', userId);
   });
 
   socket.on('liveStreamMessage', (messageObj) => {
@@ -120,10 +121,6 @@ io.on('connection', socket => {
   });
 
 
-
-  socket.on('test', (data) => {
-  //  console.log(data);
-  });
 
 
   //****end events related to streaming features */

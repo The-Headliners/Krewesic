@@ -6,13 +6,13 @@ import Message from './Message.jsx';
 import Conversation from './Conversation.jsx';
 import Users from './Users.jsx';
 import { async } from 'regenerator-runtime';
+import GlobalContext from '../Contexts/GlobalContext.jsx';
 
 
 
 //need the socket to connect to the server, which is the local host
 
- 
-const socket = io.connect('http://localhost:1337');
+
 
 //use socket.emit, to send event to server
 //use socket.on, to take event from server
@@ -21,6 +21,7 @@ const socket = io.connect('http://localhost:1337');
 
 const DirectMessages = () => {
   //const socket = useRef();
+  const {socket} = useContext(GlobalContext);
 
   //get the current user's name, hold the user in the state
   const [currentUser, setUser] = useState('');
