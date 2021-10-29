@@ -13,6 +13,7 @@ import {useHistory} from 'react-router-dom';
 import DiscoverArtists from '../Home/DiscoverArtists.jsx';
 import Artist from '../Home/Artist.jsx';
 import Post from '../Profile/Post.jsx';
+import Krewe from '../Profile/Krewe.jsx';
 const Profile = () => {
 
   const history = useHistory();
@@ -25,7 +26,7 @@ const Profile = () => {
 
   };
 
-  const [ amount, setMyAmount ] = useState(null);
+
   const [description, setDescription] = useState('');
   const [ genreDesc, setGenreDesc ] = useState('');
 
@@ -64,17 +65,12 @@ const Profile = () => {
     }
   };
 
-  const followAmount = () => {
-    if (myArtists.length > 0) {
-      setMyAmount(myArtists.length);
-    } else {
-      setMyAmount(null);
-    }
-  };
+
 
 
 
   //AXIOS AREA NEED THE POST TO SEED THEN GET REQUEST TO YA KNOW GET IT AND DISPLAY
+
   const [ myArtists, setMyArtists ] = useState([]);
   const [ text, setMyTexts ] = useState('');
   const [ senderId, setMySend] = useState(null);
@@ -228,13 +224,12 @@ const Profile = () => {
           My Krewe
         </Button>
         <br />
-        {amount}
         {myArtists.map((artist, i) => {
-          return <div
-            onClick={visitProfile}
-            key={i}
+          return <Krewe
 
-          >{artist}</div>;
+            key={i}
+            artist={artist}
+          ></Krewe>;
         })}
       </Box>
     </Box>
