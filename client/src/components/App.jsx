@@ -133,7 +133,7 @@ const App = (props) => {
             <Route path='/visitProfile/:id' >
               <VisitProfile />
             </Route>
-           
+            <Route exact path='/uploadMusic' component={MusicUpload} />
             <Route path='/messages' component={MessagesPage}>
             </Route>
             <Route exact path='/DirectMessage' component={DirectMessages} />
@@ -161,4 +161,4 @@ export default App;
             </Route>
  */
 
-//   <Route exact path='/uploadMusic' component={MusicUpload} />
+//   
