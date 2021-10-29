@@ -27,6 +27,10 @@ import CreateEvent from './Events/CreateEvent.jsx';
 import Events from './Events/Events.jsx';
 import KreweEventLandingPage from './Events/KrewesicArtists/KreweEventLandingPage.jsx';
 import VisitProfile from './Profile/VisitProfile.jsx';
+import GlobalStyle from '../components/styles/globalStyles.jsx';
+import ColorBlind from '../components/styles/colorBlind.jsx';
+
+
 
 
 
@@ -51,11 +55,15 @@ const App = (props) => {
   const [picture, setPicture] = useState('');
   const [type, setType] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
+  const [colorBlind, setColorBlind] = useState(false);
 
   const value = {id, setId, name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn, city, setCity, bio, setBio, favArtist, setArtist, favGenre, setGenre, artistBio, setMyBio, artistName, setMyName, pic, setPic, myGenre, setMyGenre, influences, setInfluence };
-
+  
   return (
     <AppStyles>
+      { colorBlind === false ? (<GlobalStyle />) :
+        (<ColorBlind />)
+      }
       <GlobalContext.Provider value={value}>
         <Router>
           <Header />
@@ -70,7 +78,7 @@ const App = (props) => {
             <Link className='clickableLight' to='/events'>events link</Link>
             <Link className='upload' to='/uploadMusic'>Upload Music</Link>
 
-
+            <props.switch checked={colorBlind} onChange={() => setColorBlind(!colorBlind)} />
           </nav>
 
           <Switch>
