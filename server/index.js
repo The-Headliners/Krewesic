@@ -122,10 +122,6 @@ io.on('connection', socket => {
 
 
 
-  socket.on('test', (data) => {
-  //  console.log(data);
-  });
-
 
   //****end events related to streaming features */
 

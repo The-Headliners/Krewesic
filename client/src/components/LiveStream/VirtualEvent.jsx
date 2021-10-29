@@ -15,32 +15,12 @@ const StyledEvent = styled.div`
   }
 `;
 
-const aws = false;
-const deployedDNS = ''; //put deployed URI here
-const host = aws === true
-  ? deployedDNS
-  : 'localhost';
 
-
-//const socket = io.connect(`http://${host}:1337`);
-// const myPeer = new Peer( undefined, { //remember: npm i -g peer   \n peerjs --port 3002   running peer port on 3002
-  
-//   host: '/',
-//   port: '3002'
-  
-// });
 
 const VirtualEvent = () => {
-
-
-  //const socket = useRef(io.connect(`http://${host}:1337`)).current 
-  const [socket] = useState(io.connect(`http://${host}:1337`));
-  // const [myPeer] = useState(new Peer( undefined, { //remember: npm i -g peer   \n peerjs --port 3002   running peer port on 3001
   
-  //   host: '/',
-  //   port: '3002'
-    
-  // }));
+  const {socket} = useContext(GlobalContext);
+
   const myPeer = useRef(new Peer( undefined, { //remember: npm i -g peer   \n peerjs --port 3002   running peer port on 3002
   
     host: '/',
@@ -128,15 +108,12 @@ const VirtualEvent = () => {
 
  
 
-  const testSocket = () => {
-    socket.emit('test', {test: 'this is a test hello'});
-  };
+ 
 
   return (
     <StyledEvent>
       <div>
-        <button onClick={testSocket}>test</button>
-        <button onClick={joinShow}>join show</button>
+
       virtual event
         <video playsInline muted ref={userVideo} autoPlay></video>
         <video playsInline muted ref={peerVideo} autoPlay></video>

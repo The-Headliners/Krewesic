@@ -5,7 +5,7 @@ const RecordStyles = styled.div`
   background-color: green;
 `;
 
-//const chunks = []
+
 
 const AudioRecording = () => {
 
