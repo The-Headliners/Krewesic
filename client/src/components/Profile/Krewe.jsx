@@ -6,17 +6,12 @@ import axios from 'axios';
 const Krewe = ({ artist }) => {
   const [ artistAlbum, setArtistAlbum] = useState('');
   const [ albumDesc, setAlbumDesc ] = useState('');
+
+
   const randomAlbum = () => {
-    if (artistAlbum) {
-      setAlbumDesc('Random Album:');
-    } else {
-      setAlbumDesc(null);
-    }
+    setAlbumDesc('Random Album:');
   };
 
-  useEffect(() => {
-    randomAlbum();
-  });
 
   return (
     <div>
@@ -26,7 +21,9 @@ const Krewe = ({ artist }) => {
           const randomValue = data.data.album[Math.floor(Math.random() * data.data.album.length)];
           console.info(randomValue.strAlbum);
           setArtistAlbum(randomValue.strAlbum);
-        })}
+        })
+          .then(() => randomAlbum())
+        }
       >
         {artist}
       </div>
