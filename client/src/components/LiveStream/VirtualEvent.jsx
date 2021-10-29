@@ -32,17 +32,20 @@ const host = aws === true
 
 const VirtualEvent = () => {
 
-  //const {id} = useContext(GlobalContext)
-
- 
 
   //const socket = useRef(io.connect(`http://${host}:1337`)).current 
   const [socket] = useState(io.connect(`http://${host}:1337`));
-  const [myPeer] = useState(new Peer( undefined, { //remember: npm i -g peer   \n peerjs --port 3002   running peer port on 3001
+  // const [myPeer] = useState(new Peer( undefined, { //remember: npm i -g peer   \n peerjs --port 3002   running peer port on 3001
+  
+  //   host: '/',
+  //   port: '3002'
+    
+  // }));
+  const myPeer = useRef(new Peer( undefined, { //remember: npm i -g peer   \n peerjs --port 3002   running peer port on 3002
   
     host: '/',
     port: '3002'
-    
+      
   }));
 
 
@@ -50,7 +53,9 @@ const VirtualEvent = () => {
   const [peerStream, setPeerStream] = useState({});
   //get userId from the context/  then the cookies later
   const [mySocketId, setMySocketId] = useState();
-  const [myPeerId, setMyPeerId] = useState();
+  //const [myPeerId, setMyPeerId] = useState();
+  const myPeerId = useRef();
+  const [otherPeerId, setOtherPeerId] = useState('');
 
   const userVideo = useRef();
   const peerVideo = useRef();
@@ -61,39 +66,28 @@ const VirtualEvent = () => {
   const [showId, setShowId] = useState('this_is_a_show_id');
 
 
-
-
-
   useEffect(() => {
 
-    myPeer.on('open', (id) => {
+    myPeer.current.on('open', (id) => {
+      myPeerId.current = id;
       joinShow(id);
     });
   
     navigator.mediaDevices.getUserMedia({video: true, audio: false}) //turn the audio back to true after figure out how to mute hte videos!!!!
       .then(stream => {
-        //console.log('streammm', stream)
         setStream(stream);
         currentStream.current = stream;
         userVideo.current.srcObject = stream;
       });
 
-
-
-
   }, []);
 
   const connectToNewUser = (userId, stream) => {
   
-    const call = myPeer.call(userId, currentStream.current);
-    
-    //console.log('call', call);
+    const call = myPeer.current.call(userId, currentStream.current);
     call.on('stream', userVideoStream => {
       setPeerStream(userVideoStream);
     });
-
-    //call on cloase remove vide
-    
 
     
   };
@@ -103,26 +97,31 @@ const VirtualEvent = () => {
 
   useEffect(() => {
 
-
     socket.on('user-connected', (data) => {
-      // socket.current.on('user-connected', (data) => {
-      //console.log('another user joined the room', data);
       //when user is connected then connect to thenew user (connectToNewUser() function)
       connectToNewUser(data, stream);
       setPeers(data);
-      socket.emit('peerconnected', peers);
+      socket.emit('peerconnected', {showId: showId, userId: myPeerId.current}); //this goes back, and signals other user that this person joined the room.  to not throw infinite loop: should probably account for to only add that peer to the state if the state is empty
+
+    });
+
+    socket.on('anotherPeerHere', (data) => {
+      //when user is connected then connect to thenew user (connectToNewUser() function)
+      connectToNewUser(data, stream);
+      setPeers(data);
+      socket.emit('peerconnected', peers); //this is the step missing-- this needs to go back, and signal other user that this person joined the room.  to not throw infinite loop: should probably account for to only add that peer to the state if the state is empty
+      
     });
    
-    myPeer.on('call', call => {
+    myPeer.current.on('call', call => {
       call.answer(currentStream.current);
       //put this stream in the peerVideo and the peerStream
       call.on('stream', (peerStream) => {
         peerVideo.current.srcObject = peerStream;
-        //console.log('PEER STREAM', peerStream)
         setPeerStream(peerStream);
-      });
-      
 
+      });
+     
     });
   }, [socket]);
 
