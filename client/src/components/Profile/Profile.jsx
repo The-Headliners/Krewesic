@@ -9,12 +9,22 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import PublishIcon from '@mui/icons-material/Publish';
 import { DataRowMessage } from 'pg-protocol/dist/messages';
+import {useHistory} from 'react-router-dom';
+import DiscoverArtists from '../Home/DiscoverArtists.jsx';
+import Artist from '../Home/Artist.jsx';
+import Post from '../Profile/Post.jsx';
+import Krewe from '../Profile/Krewe.jsx';
+const Profile = () => {
 
+  const history = useHistory();
+  const visitProfile = () => {
+    axios.get('/form/allUsers')
+      .then(({data}) => {
+        console.info(data);
 
+      });
 
-const Profile = (props) => {
-
-
+  };
 
 
   const [description, setDescription] = useState('');
@@ -60,6 +70,8 @@ const Profile = (props) => {
 
 
   //AXIOS AREA NEED THE POST TO SEED THEN GET REQUEST TO YA KNOW GET IT AND DISPLAY
+
+  const [ myArtists, setMyArtists ] = useState([]);
   const [ text, setMyTexts ] = useState('');
   const [ senderId, setMySend] = useState(null);
   const [ profileId, setMyProfId ] = useState(null);
@@ -91,16 +103,27 @@ const Profile = (props) => {
         const myPostArr = data.map(post => {
           return post.text;
         });
-        setMyPost([myPostArr]);
+        setMyPost(myPostArr);
       });
   };
 
+  const getFollowed = () => {
+    axios.get('follow/getFollows')
+      .then(({ data }) => {
+        const myArtistsArr = data.map(artist => {
+          return artist.artist;
+        });
+        setMyArtists(myArtistsArr);
+      });
+  };
 
 
   useEffect(() => {
     artDescription();
     genreDescription();
   });
+
+
 
   return (
     <Box
@@ -184,13 +207,30 @@ const Profile = (props) => {
         align='right'
         marginRight='50px'
         component="div"
-        sx={{ visibility: 'visible' }}>
+      >
         <h4>My Posts</h4>
         { post.map((posty, i) => {
-          return <p
+          return <Post
             key={i}
-          >{posty}</p>;
+            posty={posty}
+          ></Post>;
         }) }
+      </Box>
+      <Box
+      >
+        <Button
+          onClick={getFollowed}
+        >
+          My Krewe
+        </Button>
+        <br />
+        {myArtists.map((artist, i) => {
+          return <Krewe
+
+            key={i}
+            artist={artist}
+          ></Krewe>;
+        })}
       </Box>
     </Box>
   );
