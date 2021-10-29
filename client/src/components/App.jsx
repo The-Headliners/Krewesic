@@ -28,6 +28,7 @@ import Events from './Events/Events.jsx';
 import KreweEventLandingPage from './Events/KrewesicArtists/KreweEventLandingPage.jsx';
 import VisitProfile from './Profile/VisitProfile.jsx';
 import VirtualEvent from './LiveStream/VirtualEvent.jsx';
+import AudioRecording from './Recording/Recording.jsx';
 
 import io from 'socket.io-client';
 
@@ -80,6 +81,7 @@ const App = (props) => {
             {/* <Link to ='/mailingList'>Join Our Mailing List</Link> */}
             <Link className='clickableLight' to='/events'>events link</Link>
             <Link className='clickableLight' to='/virtualevent'>testing livestream</Link>
+            <Link className='clickableLight' to='/audiorecording'>audio recording</Link>
          
             <Link className='upload' to='/uploadMusic'>Upload Music</Link>
 
@@ -125,6 +127,9 @@ const App = (props) => {
             <Route path='/virtualevent' >
               <VirtualEvent />
             </Route>
+            <Route path='/audiorecording' >
+              <AudioRecording />
+            </Route>
             <Route path='/visitProfile/:id' >
               <VisitProfile />
             </Route>
@@ -132,7 +137,7 @@ const App = (props) => {
             <Route path='/messages' component={MessagesPage}>
             </Route>
             <Route exact path='/DirectMessage' component={DirectMessages} />
-            <Route exact path='/uploadMusic' component={MusicUpload} />
+         
             <Route>
               <div>404 page not available</div>
             </Route>
@@ -155,3 +160,5 @@ export default App;
              <Route path='/messages' component={MessagesPage}>
             </Route>
  */
+
+//   <Route exact path='/uploadMusic' component={MusicUpload} />
