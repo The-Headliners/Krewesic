@@ -12,7 +12,7 @@ import { DataRowMessage } from 'pg-protocol/dist/messages';
 import {useHistory} from 'react-router-dom';
 import DiscoverArtists from '../Home/DiscoverArtists.jsx';
 import Artist from '../Home/Artist.jsx';
-
+import Post from '../Profile/Post.jsx';
 const Profile = () => {
 
   const history = useHistory();
@@ -107,7 +107,7 @@ const Profile = () => {
         const myPostArr = data.map(post => {
           return post.text;
         });
-        setMyPost([myPostArr]);
+        setMyPost(myPostArr);
       });
   };
 
@@ -211,12 +211,13 @@ const Profile = () => {
         align='right'
         marginRight='50px'
         component="div"
-        sx={{ visibility: 'visible' }}>
+      >
         <h4>My Posts</h4>
         { post.map((posty, i) => {
-          return <p
+          return <Post
             key={i}
-          >{posty}</p>;
+            posty={posty}
+          ></Post>;
         }) }
       </Box>
       <Box
@@ -224,7 +225,7 @@ const Profile = () => {
         <Button
           onClick={getFollowed}
         >
-          My Followed Artists
+          My Krewe
         </Button>
         <br />
         {amount}
