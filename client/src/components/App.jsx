@@ -27,8 +27,11 @@ import CreateEvent from './Events/CreateEvent.jsx';
 import Events from './Events/Events.jsx';
 import KreweEventLandingPage from './Events/KrewesicArtists/KreweEventLandingPage.jsx';
 import VisitProfile from './Profile/VisitProfile.jsx';
+import VirtualEvent from './LiveStream/VirtualEvent.jsx';
+import AudioRecording from './Recording/Recording.jsx';
 
-
+import io from 'socket.io-client';
+const socket = io.connect('/');
 
 
 
@@ -38,21 +41,25 @@ const AppStyles = styled.div`
 
 const App = (props) => {
   const [id, setId] = useState(0);
-  const [ artistBio, setMyBio ] = useState('');
-  const [ influences, setInfluence ] = useState('');
-  const [ artistName, setMyName ] = useState('');
-  const [ myGenre, setMyGenre ] = useState('');
-  const [ pic, setPic ] = useState('');
-  const [ favArtist, setArtist ] = useState('');
-  const [ favGenre, setGenre ] = useState('');
-  const [ bio, setBio ] = useState('');
-  const [ city, setCity ] = useState('');
+  const [artistBio, setMyBio] = useState('');
+  const [influences, setInfluence] = useState('');
+  const [artistName, setMyName] = useState('');
+  const [myGenre, setMyGenre] = useState('');
+  const [pic, setPic] = useState('');
+  const [favArtist, setArtist] = useState('');
+  const [favGenre, setGenre] = useState('');
+  const [bio, setBio] = useState('');
+  const [city, setCity] = useState('');
   const [name, setName] = useState('');
   const [picture, setPicture] = useState('');
   const [type, setType] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
+  //const [socket] = useState(io.connect('/'));
 
-  const value = {id, setId, name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn, city, setCity, bio, setBio, favArtist, setArtist, favGenre, setGenre, artistBio, setMyBio, artistName, setMyName, pic, setPic, myGenre, setMyGenre, influences, setInfluence };
+
+  const value = { id, setId, name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn, city, setCity, bio, setBio, favArtist, setArtist, favGenre, setGenre, artistBio, setMyBio, artistName, setMyName, pic, setPic, myGenre, setMyGenre, influences, setInfluence, socket };
+
+
 
   return (
     <AppStyles>
@@ -68,6 +75,9 @@ const App = (props) => {
             <Link className='clickableLight' to='/createevent'>create event</Link>
             {/* <Link to ='/mailingList'>Join Our Mailing List</Link> */}
             <Link className='clickableLight' to='/events'>events link</Link>
+            <Link className='clickableLight' to='/virtualevent'>testing livestream</Link>
+            <Link className='clickableLight' to='/audiorecording'>audio recording</Link>
+
             <Link className='upload' to='/uploadMusic'>Upload Music</Link>
 
 
@@ -109,13 +119,20 @@ const App = (props) => {
             <Route path='/createevent' >
               <CreateEvent />
             </Route>
+            <Route path='/virtualevent' >
+              <VirtualEvent />
+            </Route>
+            <Route path='/audiorecording' >
+              <AudioRecording />
+            </Route>
             <Route path='/visitProfile/:id' >
               <VisitProfile />
             </Route>
+            <Route exact path='/uploadMusic' component={MusicUpload} />
             <Route path='/messages' component={MessagesPage}>
             </Route>
             <Route exact path='/DirectMessage' component={DirectMessages} />
-            <Route exact path='/uploadMusic' component={MusicUpload} />
+
             <Route>
               <div>404 page not available</div>
             </Route>
@@ -129,3 +146,14 @@ const App = (props) => {
 };
 
 export default App;
+
+/**
+ *
+ *  <Route exact path='/DirectMessage' component={DirectMessages} />
+
+
+             <Route path='/messages' component={MessagesPage}>
+            </Route>
+ */
+
+//   

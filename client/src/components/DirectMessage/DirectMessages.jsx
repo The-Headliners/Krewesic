@@ -6,9 +6,14 @@ import Message from './Message.jsx';
 import Conversation from './Conversation.jsx';
 import Users from './Users.jsx';
 import { async } from 'regenerator-runtime';
+import GlobalContext from '../Contexts/GlobalContext.jsx';
+
+
 
 //need the socket to connect to the server, which is the local host
-const socket = io.connect('http://localhost:1337');
+
+
+
 //use socket.emit, to send event to server
 //use socket.on, to take event from server
 
@@ -16,6 +21,7 @@ const socket = io.connect('http://localhost:1337');
 
 const DirectMessages = () => {
   //const socket = useRef();
+  const {socket} = useContext(GlobalContext);
 
   //get the current user's name, hold the user in the state
   const [currentUser, setUser] = useState('');
@@ -39,6 +45,7 @@ const DirectMessages = () => {
     //socket.current = io('ws://localhost:1337');
     socket.emit('addUser', currentUser.googleId);
     socket.on('getUsers', users => {
+      
 
     });
 
@@ -106,6 +113,7 @@ const DirectMessages = () => {
 
     let receiver;
     currentChat.senderId === currentUser.googleId ? receiver = currentChat.receiverId : receiver = currentChat.senderId;
+    
     //send message to the Socket server
     await socket.emit('sendMessage', {
       senderId: currentUser.googleId,
@@ -121,6 +129,7 @@ const DirectMessages = () => {
 
     try {
       const res = await axios.post(`/messages/sendMessage/${currentUser.id}`, message);
+      
 
       //setMessages([...messages], res.data);
       //setValue('');
@@ -136,10 +145,12 @@ const DirectMessages = () => {
 
   //***For incoming messages from another user, coming back from the Socket Server ***/
   socket.on('getMessage', ({senderId, text, name}) => {
+   
     // let name;
     // senderId === currentUser.googleId ? name = currentUser.name : name;
     setMessages([...messages, {sender: senderId, text: text, name: name}]);
   });
+  //console.log('NEW MESSAGE', messages);
 
 
   return (

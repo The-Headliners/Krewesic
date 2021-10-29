@@ -4,11 +4,14 @@ import MessagesView from './MessagesView.jsx';
 import Sidebar from './SidebarChat.jsx';
 import io from 'socket.io-client';
 import {Link} from 'react-router-dom';
-
+import GlobalContext from '../Contexts/GlobalContext.jsx';
 //need the socket to connect to the server, which is the local host
-const socket = io.connect('http://localhost:1337');
+
+
+
 
 const MessagesPage = () => {
+  const {socket} = useContext(GlobalContext);
   //need to hold the value of the message in state
   const [value, setValue] = useState('');
 
