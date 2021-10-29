@@ -77,7 +77,7 @@ const AudioRecording = () => {
       audio recording component
         <video autoPlay playsInline muted ref={userVideo} ></video>
         {recording ? <button onClick={stopRecording}>stop</button> : <button onClick={startRecording}>record</button>}
-        <video src={videoUrl} autoPlay playsInline ref={recordedVideo} ></video>
+        <video controls src={videoUrl} autoPlay playsInline ref={recordedVideo} ></video>
       </div>
     </RecordStyles>
   );
