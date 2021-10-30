@@ -10,7 +10,7 @@ import { InputLabel } from '@mui/material';
 import { Select } from '@mui/material';
 import {MenuItem} from '@material-ui/core';
 import styled from 'styled-components';
-
+import Box from '@material-ui/core/Box';
 const StyledFormArtist = styled.div`
   .wrapper {
 
@@ -19,6 +19,7 @@ const StyledFormArtist = styled.div`
 
 
 const FormArtist = () => {
+  const [ loading, setLoading ] = useState(false);
   const [ artistBio, setMyBio ] = useState('');
   const [ artistName, setMyName ] = useState('');
   const [ myGenre, setMyGenre ] = useState('');
@@ -49,6 +50,28 @@ const FormArtist = () => {
       console.warn(err);
     });
   };
+
+
+  const uploadImage = async e => {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append('file', files[0]);
+    data.append('upload_preset', 'cloveNsage');
+    setLoading(true);
+    const res = await fetch('https://api.cloudinary.com/v1_1/dxnzac0np/image/upload',
+      {
+        method: 'POST',
+        body: data
+      }
+    );
+    const file = await res.json();
+
+
+    setPic(file.secure_url);
+    setLoading(false);
+  };
+
+
 
   return (
     <StyledFormArtist>
@@ -104,10 +127,24 @@ const FormArtist = () => {
           variant="outlined" />
         <br/>
         <br/>
-        <TextField
-          onChange={e => setPic(e.target.value)}
-          label="Profile Picture"
-          variant="outlined" />
+        <Button
+          variant="contained"
+          component="label"
+        >Profile Picture
+          <input
+            type="file"
+            name="file"
+            onChange={uploadImage}
+            hidden
+          />
+        </Button>
+        <br/>
+        {loading ? (
+          <h3>loading...</h3>
+
+        ) : (
+          <img src={pic} style={{ width: '50px' }} />
+        )}
         <br/>
         <br/>
         <Button
