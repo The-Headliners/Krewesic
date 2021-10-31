@@ -34,7 +34,7 @@ const VirtualEvent = () => {
   const [peerStream, setPeerStream] = useState({});
   //get userId from the context/  then the cookies later
   const [mySocketId, setMySocketId] = useState();
-  //const [myPeerId, setMyPeerId] = useState();
+
   const myPeerId = useRef();
   const [otherPeerId, setOtherPeerId] = useState('');
 
@@ -44,33 +44,80 @@ const VirtualEvent = () => {
   const [allPeers, setAllPeers] = useState([]);
   const [peers, setPeers] = useState('');
   const currentStream = useRef();
+  
 
   const [showId, setShowId] = useState('this_is_a_show_id');
 
 
   useEffect(async () => {
 
+
     myPeer.current.on('open', (id) => {
+      //console.log('open', id);
       myPeerId.current = id;
       joinShow(id);
     });
-  
-    navigator.mediaDevices.getUserMedia({video: true, audio: false}) //turn the audio back to true after figure out how to mute hte videos!!!!
-      .then(stream => {
-        setStream(stream);
-        currentStream.current = stream;
-        userVideo.current.srcObject = stream;
-      });
 
-    const data = await axios.get(`/virtualEventUsers/${showId}`);
-    console.log('data', data);
+    const stream = await navigator.mediaDevices.getUserMedia({video: true, audio: false}); //turn the audio back to true after figure out how to mute hte videos!!!!
+    //console.log('navigator setting the stream');
+   
+    setStream(stream);
+    currentStream.current = stream;
+    userVideo.current.srcObject = stream;
+
+    socket.on('user-connected', (data) => {
+      //when user is connected then connect to thenew user (connectToNewUser() function)
+      // console.log('u connected', data);
+      connectToNewUser(data.latestUser, stream);
+      setPeers(data.latestUser);
+      socket.emit('peerconnected', {showId: showId, userId: myPeerId.current}); //this goes back, and signals other user that this person joined the room.  to not throw infinite loop: should probably account for to only add that peer to the state if the state is empty
+      const notMe = data.allUsers.filter(uObj => uObj.peerId !== myPeerId.current);
+      //console.log('notMe', notMe);
+      setAllPeers(notMe);
+
+    });
+
+    socket.on('anotherPeerHere', (data) => {
+      //when user is connected then connect to thenew user (connectToNewUser() function)
+      //console.log('another peer data', data);
+      connectToNewUser(data.latestUser, stream);
+      setPeers(data);
+      socket.emit('peerconnected', peers); //this is the step missing-- this needs to go back, and signal other user that this person joined the room.  to not throw infinite loop: should probably account for to only add that peer to the state if the state is empty
+      const notMe = data.allUsers.filter(uObj => uObj.peerId !== myPeerId.current);
+      //console.log('notMe', notMe);
+      setAllPeers(notMe);
+      
+    });
+
+
+    myPeer.current.on('call', call => {
+      //console.log('call mypeer.current.on');
+      call.answer(currentStream.current);
+      //put this stream in the peerVideo and the peerStream
+      call.on('stream', (peerStream) => {
+        peerVideo.current.srcObject = peerStream;
+        setPeerStream(peerStream);
+
+      });
+     
+    });
+  
+  
+
+    const {data} = await axios.get(`/virtualEventUsers/${showId}`);
+    //console.log('data from fetch', data);
+    if (data) {
+      const notMe = data.filter(uObj => uObj.peerId !== myPeerId.current);
+      //console.log('notMe', notMe);
+      setAllPeers(notMe);
+    }
     
 
   }, []);
 
 
   const connectToNewUser = (userId, stream) => {
-  
+    //console.log('connectToNewUser', userId, currentStream.current);
     const call = myPeer.current.call(userId, currentStream.current);
     call.on('stream', userVideoStream => {
       setPeerStream(userVideoStream);
@@ -83,36 +130,11 @@ const VirtualEvent = () => {
   };
 
   useEffect(() => {
-
-    socket.on('user-connected', (data) => {
-      //when user is connected then connect to thenew user (connectToNewUser() function)
-      console.log('u connected', data);
-      connectToNewUser(data, stream);
-      setPeers(data);
-      socket.emit('peerconnected', {showId: showId, userId: myPeerId.current}); //this goes back, and signals other user that this person joined the room.  to not throw infinite loop: should probably account for to only add that peer to the state if the state is empty
-
-    });
-
-    socket.on('anotherPeerHere', (data) => {
-      //when user is connected then connect to thenew user (connectToNewUser() function)
-      console.log('another peer', data);
-      connectToNewUser(data, stream);
-      setPeers(data);
-      socket.emit('peerconnected', peers); //this is the step missing-- this needs to go back, and signal other user that this person joined the room.  to not throw infinite loop: should probably account for to only add that peer to the state if the state is empty
-      
-    });
+    //console.log('allPeers change', allPeers);
+    allPeers.length && connectToNewUser(allPeers[allPeers.length - 1].peerId);
    
-    myPeer.current.on('call', call => {
-      call.answer(currentStream.current);
-      //put this stream in the peerVideo and the peerStream
-      call.on('stream', (peerStream) => {
-        peerVideo.current.srcObject = peerStream;
-        setPeerStream(peerStream);
-
-      });
-     
-    });
-  }, [socket]);
+  
+  }, [allPeers]);
 
 
  

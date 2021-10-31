@@ -128,13 +128,13 @@ const AudioRecording = () => {
 
   const play = () => {
     //connect recorded audio to analyser nde
-    console.log('recorded audio', recordedAudio.current);
+    //console.log('recorded audio', recordedAudio.current);
     const playback = audioContext.createMediaElementSource(recordedAudio.current);
     playback.connect(audioContext.destination);
     playback.connect(analyserNode);
     analyserNode.connect(audioContext.destination);
 
-    console.log('analyser node', analyserNode);
+    //console.log('analyser node', analyserNode);
     playback.start(0);
 
 

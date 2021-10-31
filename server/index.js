@@ -25,10 +25,12 @@ const mailingList = require('./routes/mailingList.js');
 const kEvents = require('./routes/events/krewesicEvents.js');
 const cookieParser = require('cookie-parser');
 
+
 //for video streaming
 const {v4: uuidv4} = require('uuid');
 const virtualEvent = require('./routes/virtualEvent.js');
 const {ExpressPeerServer} = require('peer');
+const _ = require('underscore');
 
 
 
@@ -54,6 +56,12 @@ const io = require('socket.io')(server);
 let users = [];
 
 const liveStreamUsers = {}; //this gonna hold the rooms and their arrays {roomId: [user1, user2...]}
+const removeLiveStreamUser = (socketId, showId) => {
+  for (show in liveStreamUsers) {
+    liveStreamUsers[show] = liveStreamUsers[show].filter(user => user.socketId !== socketId); 
+  }
+ 
+};
 
 //function to add user to the array
 const addUser = (userId, socketId) => {
@@ -71,7 +79,7 @@ const getUser = (userId) => {
 };
 io.on('connection', socket => {
   //when connect
-  console.log(`user ${socket.id} is connected`);
+  console.info(`user ${socket.id} is connected`);
 
   //***FOR LIVE CHAT FOR ALL USERS*** when a message is sent
   socket.on('message', ({ name, message}) => {
@@ -105,26 +113,33 @@ io.on('connection', socket => {
 
   //****for streaming features */
   socket.on('joinShow', ({showId, userId}) => {
-    console.log('join show event, showId then userId', showId, userId);
+    //console.log('join show event, showId then userId', showId, userId);
+    const idObj = {socketId: socket.id, peerId: userId};
     if (liveStreamUsers[showId]) {
-      liveStreamUsers[showId].push(userId);
+      liveStreamUsers[showId].push(idObj);
     } else {
-      liveStreamUsers[showId] = [userId];
+      liveStreamUsers[showId] = [idObj];
     }
     // console.log('lsusid', liveStreamUsers[showId])
     socket.join(showId);
+
     socket.to(showId).emit('user-connected', {latestUser: userId, allUsers: liveStreamUsers[showId]}); /**changed this restructure the data on the front end!!!! */
   });
 
 
   socket.on('peerconnected', (data) => {
     const {showId, userId} = data;
-    if (liveStreamUsers[showId] === undefined) {
-      liveStreamUsers[showId] = userId;
-    } else if (!liveStreamUsers[showId].includes(userId)) {
-      liveStreamUsers[showId].push(userId);
+    const idObj = {socketId: socket.id, peerId: userId};
+    if (showId && userId) {
+      if (liveStreamUsers[showId] === undefined) {
+        liveStreamUsers[showId] = idObj;
+      } else if (liveStreamUsers[showId] && !liveStreamUsers[showId].map(obj => obj.peerId).includes(userId)) {
+        liveStreamUsers[showId].push(idObj);
+      }
+      socket.to(showId).emit('anotherPeerHere', {latestUser: userId, allUsers: liveStreamUsers[showId]}); /**changed this restructure the data on the front end!!!! */
+
     }
-    socket.to(showId).emit('anotherPeerHere', userId, liveStreamUsers[showId]); /**changed this restructure the data on the front end!!!! */
+   
   });
 
   socket.on('liveStreamMessage', (messageObj) => {
@@ -141,8 +156,9 @@ io.on('connection', socket => {
   //When disconnect
   socket.on('disconnect', () => {
     //if there are any disconnections
-    //console.log('disconnected user', socket.id);
+    console.info('disconnected user', socket.id);
     removeUser(socket.id);
+    removeLiveStreamUser(socket.id); //this needs to account for peerId not socketId because the users are via peerId
     io.emit('getUsers', users);
   });
 });
@@ -150,11 +166,11 @@ io.on('connection', socket => {
 app.get('/virtualEventUsers/:showId', async (req, res) => {
   try {
     const {showId} = req.params;
-    console.log(liveStreamUsers);
-    console.log(liveStreamUsers[showId]);
+    //console.log(liveStreamUsers);
+    //console.log(liveStreamUsers[showId]);
     res.status(201).send(liveStreamUsers[showId]);
   } catch (err) {
-    console.error(err);
+    console.warn(err);
     res.sendStatus(500);
   }
 });
