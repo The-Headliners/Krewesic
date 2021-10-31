@@ -7,7 +7,7 @@ const RecordStyles = styled.div`
 
 
 
-const AudioRecording = () => {
+const Recording = () => {
 
   const [stream, setStream] = useState({});
   const currentStream = useRef();
@@ -72,4 +72,4 @@ const AudioRecording = () => {
   );
 };
 
-export default AudioRecording;
+export default Recording;

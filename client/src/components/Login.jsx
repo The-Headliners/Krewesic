@@ -28,7 +28,7 @@ const Login = () => (
           align='center'
           color='secondary'
           variant='h4'
-        >KREWESIC</Typography>
+        >KREWEZIC</Typography>
         <br/>
         <p
           align='center'
