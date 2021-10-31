@@ -13,7 +13,7 @@ const LoginStyles = styled.div`
   }
   .logo {
     height: 200px;
-    width: 200px; 
+    width: 200px;
     margin-bottom: 20px;
 
   }

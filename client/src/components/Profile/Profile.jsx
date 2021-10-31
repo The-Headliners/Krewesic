@@ -9,22 +9,14 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import PublishIcon from '@mui/icons-material/Publish';
 import { DataRowMessage } from 'pg-protocol/dist/messages';
-import {useHistory} from 'react-router-dom';
 import DiscoverArtists from '../Home/DiscoverArtists.jsx';
 import Artist from '../Home/Artist.jsx';
 import Post from '../Profile/Post.jsx';
 import Krewe from '../Profile/Krewe.jsx';
+//import { set } from 'core-js/core/dict';
 const Profile = () => {
 
-  const history = useHistory();
-  const visitProfile = () => {
-    axios.get('/form/allUsers')
-      .then(({data}) => {
-        console.info(data);
 
-      });
-
-  };
 
 
   const [description, setDescription] = useState('');
@@ -76,6 +68,7 @@ const Profile = () => {
   const [ senderId, setMySend] = useState(null);
   const [ profileId, setMyProfId ] = useState(null);
   const [ data, setData ] = useState(null);
+  const [ time, setTime ] = useState([]);
 
   const [ post, setMyPost ] = useState([]);
 
@@ -101,7 +94,8 @@ const Profile = () => {
     axios.get('/post/getProfilePost')
       .then(({ data }) => {
         const myPostArr = data.map(post => {
-          return post.text;
+          setTime(new Date(post.createdAt).toString().slice(16, 25));
+          return post;
         });
         setMyPost(myPostArr);
       });
@@ -188,6 +182,7 @@ const Profile = () => {
         marginLeft="100px"
       >
         <TextField
+          value={text}
           onChange={e => {
             setMyTexts(e.target.value);
           }}
@@ -198,7 +193,7 @@ const Profile = () => {
         />
         <Button
           startIcon={<PublishIcon />}
-          onClick={handlePost}
+          onClick={() => handlePost()}
         >
           Post
         </Button>
@@ -212,9 +207,12 @@ const Profile = () => {
         { post.map((posty, i) => {
           return <Post
             key={i}
-            posty={posty}
+            index={i}
+            posty={posty.text}
+            timey={new Date(posty.createdAt).toString().slice(16, 21)}
           ></Post>;
         }) }
+
       </Box>
       <Box
       >
