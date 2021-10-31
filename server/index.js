@@ -106,23 +106,23 @@ io.on('connection', socket => {
   //****for streaming features */
   socket.on('joinShow', ({showId, userId}) => {
     console.log('join show event, showId then userId', showId, userId);
-    if(liveStreamUsers[showId]) {
-      liveStreamUsers[showId].push(userId)
+    if (liveStreamUsers[showId]) {
+      liveStreamUsers[showId].push(userId);
     } else {
-      liveStreamUsers[showId] = [userId]
+      liveStreamUsers[showId] = [userId];
     }
-   // console.log('lsusid', liveStreamUsers[showId])
+    // console.log('lsusid', liveStreamUsers[showId])
     socket.join(showId);
-    socket.to(showId).emit('user-connected', {latestUser: userId, allUsers: liveStreamUsers[showId]});  /**changed this restructure the data on the front end!!!! */
+    socket.to(showId).emit('user-connected', {latestUser: userId, allUsers: liveStreamUsers[showId]}); /**changed this restructure the data on the front end!!!! */
   });
 
 
   socket.on('peerconnected', (data) => {
     const {showId, userId} = data;
-    if(liveStreamUsers[showId] === undefined) {
-      liveStreamUsers[showId] = userId
+    if (liveStreamUsers[showId] === undefined) {
+      liveStreamUsers[showId] = userId;
     } else if (!liveStreamUsers[showId].includes(userId)) {
-      liveStreamUsers[showId].push(userId)
+      liveStreamUsers[showId].push(userId);
     }
     socket.to(showId).emit('anotherPeerHere', userId, liveStreamUsers[showId]); /**changed this restructure the data on the front end!!!! */
   });
@@ -149,15 +149,15 @@ io.on('connection', socket => {
 
 app.get('/virtualEventUsers/:showId', async (req, res) => {
   try {
-    const {showId} = req.params
-    console.log(liveStreamUsers)
-    console.log(liveStreamUsers[showId])
-    res.status(201).send(liveStreamUsers[showId])
+    const {showId} = req.params;
+    console.log(liveStreamUsers);
+    console.log(liveStreamUsers[showId]);
+    res.status(201).send(liveStreamUsers[showId]);
   } catch (err) {
-    console.error(err)
-    res.sendStatus(500)
+    console.error(err);
+    res.sendStatus(500);
   }
-})
+});
 
 
 
