@@ -145,7 +145,7 @@ io.on('connection', socket => {
   socket.on('liveStreamMessage', (messageObj) => {
     const {showId, message} = messageObj;
     // console.log('showId', showId, 'message', message);
-    socket.to(showId).emit('receiveLiveStreamMessage', );
+    socket.to(showId).emit('receiveLiveStreamMessage', messageObj );
   });
 
 

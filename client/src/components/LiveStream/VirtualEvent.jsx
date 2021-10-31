@@ -10,9 +10,27 @@ import axios from 'axios';
 
 
 const StyledEvent = styled.div`
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+  }
   .videoScreen {
+
+  }
+  .myVideoWrapper {
+    height: 50px;
+    width: 50px;
+  }
+  .peerVideoWrapper {
     height: 100px;
     width: 100px;
+    position: absolute;
+    top: 450px;
+  }
+  .lowerWrapper {
+    position: absolute;
+    top: 250px;
+    right: 20px;
   }
 `;
 
@@ -31,7 +49,7 @@ const VirtualEvent = () => {
 
 
   const [stream, setStream ] = useState({});
-  const [peerStream, setPeerStream] = useState({});
+  //const [peerStream, setPeerStream] = useState({});
   //get userId from the context/  then the cookies later
   const [mySocketId, setMySocketId] = useState();
 
@@ -44,9 +62,10 @@ const VirtualEvent = () => {
   const [allPeers, setAllPeers] = useState([]);
   const [peers, setPeers] = useState('');
   const currentStream = useRef();
+  //const peerStream = useRef();
   
 
-  const [showId, setShowId] = useState('this_is_a_show_id');
+  const showId = useRef('this_is_a_show_id').current;
 
 
   useEffect(async () => {
@@ -61,7 +80,7 @@ const VirtualEvent = () => {
     const stream = await navigator.mediaDevices.getUserMedia({video: true, audio: false}); //turn the audio back to true after figure out how to mute hte videos!!!!
     //console.log('navigator setting the stream');
    
-    setStream(stream);
+    //setStream(stream);
     currentStream.current = stream;
     userVideo.current.srcObject = stream;
 
@@ -96,7 +115,7 @@ const VirtualEvent = () => {
       //put this stream in the peerVideo and the peerStream
       call.on('stream', (peerStream) => {
         peerVideo.current.srcObject = peerStream;
-        setPeerStream(peerStream);
+        //setPeerStream(peerStream);
 
       });
      
@@ -120,7 +139,7 @@ const VirtualEvent = () => {
     //console.log('connectToNewUser', userId, currentStream.current);
     const call = myPeer.current.call(userId, currentStream.current);
     call.on('stream', userVideoStream => {
-      setPeerStream(userVideoStream);
+      //setPeerStream(userVideoStream);
     });
 
     
@@ -143,12 +162,18 @@ const VirtualEvent = () => {
 
   return (
     <StyledEvent>
-      <div>
+      <div className='wrapper'>
 
-      virtual event
-        <video playsInline muted ref={userVideo} autoPlay></video>
-        <video playsInline muted ref={peerVideo} autoPlay></video>
-        <div>
+      virtual 
+        <div className='videoWrapper myVideoWrapper'>
+          <video playsInline style={{width: '300px', height: '300px'}} muted ref={userVideo} autoPlay></video>
+        </div>
+        <div className='videoWrapper peerVideoWrapper'>
+          <video playsInline muted style={{width: '400px', height: '400px', marginTop: '100px'}} ref={peerVideo}autoPlay></video>
+        </div>
+        
+        
+        <div className='lowerWrapper'>
           <StreamChat showId={showId} socket={socket} />
         </div>
       </div>
