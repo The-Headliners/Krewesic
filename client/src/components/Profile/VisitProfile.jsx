@@ -11,11 +11,13 @@ import useGetUser from '../CustomHooks/useGetUser.jsx';
 
 
 const VisitProfile = () => {
-
+  const [ artistNamed, setArtistNamed ] = useState('');
+  const [ artistId, setArtistId ] = useState(0);
   const [ post, setMyPost ] = useState([]);
   const [ profDesc, setProfDesc ] = useState('');
   const [description, setDescription] = useState('');
   const [ genreDesc, setGenreDesc ] = useState('');
+  const [ data, setData ] = useState(null);
   const {id} = useParams();
 
   //const user = useGetUser(id);
@@ -92,6 +94,26 @@ const VisitProfile = () => {
       });
   };
 
+
+  const followArtist = () => {
+    axios.get(`/follow/followedArtist/${id}`)
+      .then(({ data }) => {
+        const name = data.artistName;
+        setArtistId(data.id);
+        setArtistNamed(data.artistName);
+      }).then(() => {
+        const data = {
+          artist: artistName,
+          followedId: id,
+        };
+        axios.post('/follow/myFavArtists', data).then(res => {
+          setData(res.data);
+          setArtistNamed('');
+          setArtistId('');
+        });
+      });
+  };
+
   useEffect(() => {
     profDescription();
     artDescription();
@@ -161,7 +183,7 @@ const VisitProfile = () => {
       >
         <Button
           startIcon={<PublishIcon />}
-          //onClick={handlePost}
+          onClick={followArtist}
         >
           Follow
         </Button>

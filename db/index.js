@@ -8,6 +8,7 @@ const { dbmusicUpload} = require('./models/uploadMusic.js');
 const { dbProfilePosts } = require('./models/ProfilePost');
 const {dbConversation} = require('./models/conversation.js');
 const {dbEventComment} = require('./models/eventComment.js');
+const { dbFollow } = require('./models/Follow.js');
 const {dbSGEvent} = require('./models/SGEvent.js');
 const { dbSGEventComment} = require('./models/SGEventComment.js');
 const dbEvent = require('./models/events.js');
@@ -54,6 +55,13 @@ const Posts = dbProfilePosts(db);
 User.hasMany(Posts);
 Posts.belongsTo(User, {foreignKey: 'senderId'});
 Posts.belongsTo(User, {foreignKey: 'profileId'});
+
+const Follows = dbFollow(db);
+User.hasMany(Follows);
+Follows.belongsTo(User, {foreignKey: 'followId'});
+Follows.belongsTo(User, {foreignKey: 'followedId'});
+
+
 //sync the db
 db.sync()
   .then(() => {
@@ -72,5 +80,6 @@ module.exports = {
   SGEventComment,
   Event,
   EventComment,
-  Posts
+  Posts,
+  Follows,
 };

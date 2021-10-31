@@ -9,10 +9,12 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import PublishIcon from '@mui/icons-material/Publish';
 import { DataRowMessage } from 'pg-protocol/dist/messages';
-
-
-
-const Profile = (props) => {
+import DiscoverArtists from '../Home/DiscoverArtists.jsx';
+import Artist from '../Home/Artist.jsx';
+import Post from '../Profile/Post.jsx';
+import Krewe from '../Profile/Krewe.jsx';
+//import { set } from 'core-js/core/dict';
+const Profile = () => {
 
 
 
@@ -60,10 +62,13 @@ const Profile = (props) => {
 
 
   //AXIOS AREA NEED THE POST TO SEED THEN GET REQUEST TO YA KNOW GET IT AND DISPLAY
+
+  const [ myArtists, setMyArtists ] = useState([]);
   const [ text, setMyTexts ] = useState('');
   const [ senderId, setMySend] = useState(null);
   const [ profileId, setMyProfId ] = useState(null);
   const [ data, setData ] = useState(null);
+  const [ time, setTime ] = useState([]);
 
   const [ post, setMyPost ] = useState([]);
 
@@ -89,18 +94,30 @@ const Profile = (props) => {
     axios.get('/post/getProfilePost')
       .then(({ data }) => {
         const myPostArr = data.map(post => {
-          return post.text;
+          setTime(new Date(post.createdAt).toString().slice(16, 25));
+          return post;
         });
-        setMyPost([myPostArr]);
+        setMyPost(myPostArr);
       });
   };
 
+  const getFollowed = () => {
+    axios.get('follow/getFollows')
+      .then(({ data }) => {
+        const myArtistsArr = data.map(artist => {
+          return artist.artist;
+        });
+        setMyArtists(myArtistsArr);
+      });
+  };
 
 
   useEffect(() => {
     artDescription();
     genreDescription();
   });
+
+
 
   return (
     <Box
@@ -165,6 +182,7 @@ const Profile = (props) => {
         marginLeft="100px"
       >
         <TextField
+          value={text}
           onChange={e => {
             setMyTexts(e.target.value);
           }}
@@ -175,7 +193,7 @@ const Profile = (props) => {
         />
         <Button
           startIcon={<PublishIcon />}
-          onClick={handlePost}
+          onClick={() => handlePost()}
         >
           Post
         </Button>
@@ -184,13 +202,33 @@ const Profile = (props) => {
         align='right'
         marginRight='50px'
         component="div"
-        sx={{ visibility: 'visible' }}>
+      >
         <h4>My Posts</h4>
         { post.map((posty, i) => {
-          return <p
+          return <Post
             key={i}
-          >{posty}</p>;
+            index={i}
+            posty={posty.text}
+            timey={new Date(posty.createdAt).toString().slice(16, 21)}
+          ></Post>;
         }) }
+
+      </Box>
+      <Box
+      >
+        <Button
+          onClick={getFollowed}
+        >
+          My Krewe
+        </Button>
+        <br />
+        {myArtists.map((artist, i) => {
+          return <Krewe
+
+            key={i}
+            artist={artist}
+          ></Krewe>;
+        })}
       </Box>
     </Box>
   );
