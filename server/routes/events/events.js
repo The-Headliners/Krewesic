@@ -2,6 +2,7 @@ const {Router} = require('express');
 const events = Router();
 require('dotenv').config();
 const axios = require('axios');
+const {v4} = require('uuid');
 
 //const sampleData = require('./sampleData/sample.json');
 //const citySample = require('./sampleData/citySample.json');
@@ -141,6 +142,7 @@ events.get('/interestedUsersSG/:sgId', async (req, res) => {
 
 events.post('/SGcomment', async(req, res) => {
   try {
+   
     const {comment, SGEventId} = req.body;
     const {id} = req.user;
     const event = await SGEvent.findByPk(SGEventId);
@@ -153,7 +155,8 @@ events.post('/SGcomment', async(req, res) => {
         city: city,
         lat: lat,
         lng: lng,
-        when: when
+        when: when,
+        
       });
     }
     await SGEventComment.create({
@@ -194,7 +197,7 @@ events.get('/SGcomments/:eventId', async (req, res) => {
 
 events.post('/createEvent', async(req, res) => {
   try {
-
+    const uuid = v4();
     const {performers, when, type, medium, address, city, venue, state} = req.body;
     //console.log(req.body);
     const {id} = req.user;
@@ -209,7 +212,7 @@ events.post('/createEvent', async(req, res) => {
     }
 
     await Event.create({
-      performers, when, type, medium, lat: coordinates.lat, lng: coordinates.lng, address, city, state, venue, artistId: id
+      performers, when, type, medium, lat: coordinates.lat, lng: coordinates.lng, address, city, state, venue, artistId: id, code: uuid
 
     });
 

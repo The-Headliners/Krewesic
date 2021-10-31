@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import GlobalContext from '../Contexts/GlobalContext.jsx';
 import StreamChat from './StreamChat.jsx';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 
 
@@ -47,7 +48,7 @@ const VirtualEvent = () => {
       
   }));
 
-
+  //const code = useRef(useParams())
   const [stream, setStream ] = useState({});
   //const [peerStream, setPeerStream] = useState({});
   //get userId from the context/  then the cookies later
@@ -65,11 +66,10 @@ const VirtualEvent = () => {
   //const peerStream = useRef();
   
 
-  const showId = useRef('this_is_a_show_id').current;
+  const showId = useRef(useParams().code).current;
 
 
   useEffect(async () => {
-
 
     myPeer.current.on('open', (id) => {
       //console.log('open', id);

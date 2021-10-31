@@ -29,6 +29,7 @@ import KreweEventLandingPage from './Events/KrewesicArtists/KreweEventLandingPag
 import VisitProfile from './Profile/VisitProfile.jsx';
 import VirtualEvent from './LiveStream/VirtualEvent.jsx';
 import AudioRecording from './Recording/AudioRecording.jsx';
+import VideoChats from './LiveStream/VideoChats.jsx';
 
 import io from 'socket.io-client';
 const socket = io.connect('/');
@@ -54,6 +55,7 @@ const App = (props) => {
   const [picture, setPicture] = useState('');
   const [type, setType] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
+  
   //const [socket] = useState(io.connect('/'));
 
 
@@ -75,7 +77,9 @@ const App = (props) => {
             <Link className='clickableLight' to='/createevent'>create event</Link>
             {/* <Link to ='/mailingList'>Join Our Mailing List</Link> */}
             <Link className='clickableLight' to='/events'>events link</Link>
-            <Link className='clickableLight' to='/virtualevent'>testing livestream</Link>
+            <Link className='clickableLight' to='/virtualevent/1'>testing livestream</Link>
+            <Link className='clickableLight' to='/videoChats'>video chats</Link>
+            
             <Link className='clickableLight' to='/audiorecording'>audio recording</Link>
 
             <Link className='upload' to='/uploadMusic'>Upload Music</Link>
@@ -119,8 +123,11 @@ const App = (props) => {
             <Route path='/createevent' >
               <CreateEvent />
             </Route>
-            <Route path='/virtualevent' >
+            <Route path='/virtualevent/:code' >
               <VirtualEvent />
+            </Route>
+            <Route path='/videoChats' >
+              <VideoChats />
             </Route>
             <Route path='/audiorecording' >
               <AudioRecording />
