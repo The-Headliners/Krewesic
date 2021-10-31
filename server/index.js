@@ -54,6 +54,8 @@ const io = require('socket.io')(server);
 //holds alll users that are online
 let users = [];
 
+const liveStreamUsers = {}; //this gonna hold the rooms and their arrays {roomId: [user1, user2...]}
+
 //function to add user to the array
 const addUser = (userId, socketId) => {
   //check inside users array, if the same user is already inside users
@@ -70,7 +72,7 @@ const getUser = (userId) => {
 };
 io.on('connection', socket => {
   //when connect
-  //console.log(`user ${socket.id} is connected`);
+  console.log(`user ${socket.id} is connected`);
 
   //***FOR LIVE CHAT FOR ALL USERS*** when a message is sent
   socket.on('message', ({ name, message}) => {
@@ -104,15 +106,26 @@ io.on('connection', socket => {
 
   //****for streaming features */
   socket.on('joinShow', ({showId, userId}) => {
-  //  console.log('join show event, showId then userId', showId, userId);
+    console.log('join show event, showId then userId', showId, userId);
+    if(liveStreamUsers[showId]) {
+      liveStreamUsers[showId].push(userId)
+    } else {
+      liveStreamUsers[showId] = [userId]
+    }
+   // console.log('lsusid', liveStreamUsers[showId])
     socket.join(showId);
-    socket.to(showId).emit('user-connected', userId);
+    socket.to(showId).emit('user-connected', {latestUser: userId, allUsers: liveStreamUsers[showId]});  /**changed this restructure the data on the front end!!!! */
   });
 
 
   socket.on('peerconnected', (data) => {
     const {showId, userId} = data;
-    socket.to(showId).emit('anotherPeerHere', userId);
+    if(liveStreamUsers[showId] === undefined) {
+      liveStreamUsers[showId] = userId
+    } else if (!liveStreamUsers[showId].includes(userId)) {
+      liveStreamUsers[showId].push(userId)
+    }
+    socket.to(showId).emit('anotherPeerHere', userId, liveStreamUsers[showId]); /**changed this restructure the data on the front end!!!! */
   });
 
   socket.on('liveStreamMessage', (messageObj) => {
@@ -135,9 +148,17 @@ io.on('connection', socket => {
   });
 });
 
-// setInterval(() => {
-//   io.emit('image', 'data')
-// }, 1000)
+app.get('/virtualEventUsers/:showId', async (req, res) => {
+  try {
+    const {showId} = req.params
+    console.log(liveStreamUsers)
+    console.log(liveStreamUsers[showId])
+    res.status(201).send(liveStreamUsers[showId])
+  } catch (err) {
+    console.error(err)
+    res.sendStatus(500)
+  }
+})
 
 
 

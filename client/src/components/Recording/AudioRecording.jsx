@@ -128,6 +128,15 @@ const AudioRecording = () => {
 
   const play = () => {
     //connect recorded audio to analyser nde
+    console.log('recorded audio', recordedAudio.current);
+    const playback = audioContext.createMediaElementSource(recordedAudio.current);
+    playback.connect(audioContext.destination);
+    playback.connect(analyserNode);
+    analyserNode.connect(audioContext.destination);
+
+    console.log('analyser node', analyserNode);
+    playback.start(0);
+
 
   };
   
@@ -141,7 +150,8 @@ const AudioRecording = () => {
 
         <audio autoPlay playsInline muted ref={userAudio} ></audio>
         {recording ? <button onClick={stopRecording}>stop</button> : <button onClick={startRecording}>record</button>}
-        <audio controls src={audioUrl} autoPlay playsInline ref={recordedAudio} ></audio>
+        <audio controls src={audioUrl} autoPlay playsInline ref={recordedAudio.current} ></audio>
+        <button onClick={play}>play back</button>
       </div>
       <div className='visualizerDiv'>
         <canvas className='visualizer' ref={canvasRef} />
