@@ -28,7 +28,7 @@ import Events from './Events/Events.jsx';
 import KreweEventLandingPage from './Events/KrewesicArtists/KreweEventLandingPage.jsx';
 import VisitProfile from './Profile/VisitProfile.jsx';
 import VirtualEvent from './LiveStream/VirtualEvent.jsx';
-import AudioRecording from './Recording/Recording.jsx';
+import AudioRecording from './Recording/AudioRecording.jsx';
 
 import io from 'socket.io-client';
 const socket = io.connect('/');
