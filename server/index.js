@@ -125,7 +125,7 @@ io.on('connection', socket => {
   socket.on('notify', (data) => {
     const {id, notification} = data;
     const sockId = loggedInUsers[id];
-    io.to(sockId).emit('notified', notification);
+    io.to(sockId).emit('notified', data);
   });
   socket.on('joinShow', ({showId, userId, name}) => {
     //console.log('join show event, showId then userId', showId, userId);
@@ -135,9 +135,7 @@ io.on('connection', socket => {
     } else {
       liveStreamUsers[showId] = [idObj];
     }
-    // console.log('lsusid', liveStreamUsers[showId])
     socket.join(showId);
-
     socket.to(showId).emit('user-connected', {name: name, latestUser: userId, allUsers: liveStreamUsers[showId]}); /**changed this restructure the data on the front end!!!! */
   });
 
@@ -159,7 +157,6 @@ io.on('connection', socket => {
 
   socket.on('liveStreamMessage', (messageObj) => {
     const {showId, message} = messageObj;
-    // console.log('showId', showId, 'message', message);
     socket.to(showId).emit('receiveLiveStreamMessage', messageObj );
   });
 

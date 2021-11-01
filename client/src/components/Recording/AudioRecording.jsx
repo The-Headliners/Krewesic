@@ -6,6 +6,7 @@ const RecordStyles = styled.div`
   .visualizer {
     height: 200px;
     width: 200px;
+    margin-left: 50px;
   }
 `;
 

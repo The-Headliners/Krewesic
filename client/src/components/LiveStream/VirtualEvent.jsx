@@ -115,7 +115,7 @@ const VirtualEvent = () => {
       //console.log('notMe', notMe);
       setAllPeers(notMe);
       setMyVidDisplay('hidden');
-      //myVidDisplay.current= 'hidden'
+      myVidDisplay.current = 'hidden';
 
       
     });
@@ -127,7 +127,7 @@ const VirtualEvent = () => {
       //put this stream in the peerVideo and the peerStream
       call.on('stream', (peerStream) => {
         //console.log('peerVideo.current', peerVideo.current);
-        peerVideo.current.srcObject = peerStream;
+        //peerVideo.current.srcObject = peerStream;
         //setPeerStream(peerStream);
 
       });
