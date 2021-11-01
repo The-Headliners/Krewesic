@@ -81,17 +81,17 @@ const App = (props) => {
           <Header />
           <nav>
             <Link className='clickableLight' to='/DiscoverArtists'> Discover Artists </Link>
-            <Link className='clickableLight' to='/bands'>bands</Link>
-            <Link className='clickableLight' to='/mapevents'>map events</Link>
+        
+            <Link className='clickableLight' to='/mapevents'>Find Events</Link>
             <Link className='clickableLight' to='/messages'>Messages</Link>
             <Link className='clickableLight' to='/profile'>Profile</Link>
             <Link className='clickableLight' to='/createevent'>create event</Link>
-            {/* <Link to ='/mailingList'>Join Our Mailing List</Link> */}
-            <Link className='clickableLight' to='/events'>events link</Link>
-            <Link className='clickableLight' to='/myEvents'>myEvents</Link>
-            <Link className='clickableLight' to='/videoChats'>video chats</Link>
+      
+            <Link className='clickableLight' to='/events'>Event Hub</Link>
+            <Link className='clickableLight' to='/myEvents'>My Events</Link>
+            <Link className='clickableLight' to='/videoChats'>Video Chats</Link>
             
-            <Link className='clickableLight' to='/audiorecording'>audio recording</Link>
+            <Link className='clickableLight' to='/audiorecording'>Recording Studio</Link>
 
             <Link className='upload' to='/uploadMusic'>Upload Music</Link>
 

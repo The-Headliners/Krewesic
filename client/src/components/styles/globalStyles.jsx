@@ -1,14 +1,23 @@
 import { createGlobalStyle } from 'styled-components';
 
+//color pallete:
+/**
+ * 
+ #000000 
+ #150050
+ #3F0071
+ #610094
 
+ #c3c2c5
+ */
 
 const GlobalStyle = createGlobalStyle`
 
 
   body {
     background-color: black;
-    color: #f5ebd0; 
-    font-family: 'Roboto', sans-serif;
+    color: #c3c2c5; 
+    font-family: 'Hind Madurai', sans-serif;
     line-height: 1.5;
     
   }
@@ -16,13 +25,14 @@ const GlobalStyle = createGlobalStyle`
     
   }
   nav {
-    background-color: #fdf0a6; 
+    background-color: #3F0071; 
     padding: 15px;
   }
   a {
     margin-left: 15px;
     margin-right: 15px;
     text-decoration: none;
+    color: #c3c2c5;
   }
 
   .backgroundColorLight {
@@ -39,14 +49,14 @@ const GlobalStyle = createGlobalStyle`
   .clickableDark {
     :hover {
       cursor: pointer;
-      background-color: #18191a;
+      background-color:  #150050;
     }
   }
   .clickableLight {
     padding: 15px;
     :hover {
       cursor: pointer;
-      background-color: #9c9c6e;
+      background-color: #610094;
 
     }
   }
@@ -58,7 +68,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .btn1 {
-    background-color: #b8a959; 
+    background-color: #3F0071; 
   }
   
 `;
