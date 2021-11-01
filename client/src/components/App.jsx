@@ -27,6 +27,10 @@ import CreateEvent from './Events/CreateEvent.jsx';
 import Events from './Events/Events.jsx';
 import KreweEventLandingPage from './Events/KrewesicArtists/KreweEventLandingPage.jsx';
 import VisitProfile from './Profile/VisitProfile.jsx';
+import GlobalStyle from '../components/styles/globalStyles.jsx';
+import ColorBlind from '../components/styles/colorBlind.jsx';
+
+
 import VirtualEvent from './LiveStream/VirtualEvent.jsx';
 import AudioRecording from './Recording/AudioRecording.jsx';
 import VideoChats from './LiveStream/VideoChats.jsx';
@@ -57,6 +61,8 @@ const App = (props) => {
   const [picture, setPicture] = useState('');
   const [type, setType] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
+  const [colorBlind, setColorBlind] = useState(false);
+
   
   //const [socket] = useState(io.connect('/'));
 
@@ -67,6 +73,9 @@ const App = (props) => {
 
   return (
     <AppStyles>
+      { colorBlind === false ? (<GlobalStyle />) :
+        (<ColorBlind />)
+      }
       <GlobalContext.Provider value={value}>
         <Router>
           <Header />
@@ -86,7 +95,7 @@ const App = (props) => {
 
             <Link className='upload' to='/uploadMusic'>Upload Music</Link>
 
-
+            <p style={{color: 'black'}}>Color Blind Accessibility: <props.switch checked={colorBlind} onChange={() => setColorBlind(!colorBlind)} /> </p>
           </nav>
 
           <Switch>
