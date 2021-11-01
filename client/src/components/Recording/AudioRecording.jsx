@@ -35,6 +35,8 @@ const AudioRecording = () => {
   //const canvasRef = React.createRef()
   const canvasRef = useRef(null);
   //const [canvas] = useState(canvasRef.current)
+
+  const [recordingUrls, setRecordingUrls] = useState([])
  
 
 
@@ -73,7 +75,7 @@ const AudioRecording = () => {
 
     const width = 200;
     const height = 200;
-    const barWidth = width / height;
+    const barWidth = width / height * 10;
    
 
     const canvas = canvasRef.current;
@@ -87,13 +89,13 @@ const AudioRecording = () => {
     analyserNode.getByteFrequencyData(dataArray);
     //console.log(dataArray)
     dataArray.forEach((item, index) => {
-      const y = item / 255 * height / 2;
+      const y = item / 255 * height;
       const x = barWidth * index;
       // console.log('x', x, 'y', y)
 
       // canvasContext.rect(5,5,90,90);
       // canvasContext.fill();
-      canvasContext.fillStyle = 'black';
+      canvasContext.fillStyle = `hsl(${y/height * 250}, 100%, 50%)`;
       canvasContext.fillRect(x, height - y, barWidth, y);
       // canvasContext.fillRect = (20, 20, 10, 20)
     });
@@ -110,18 +112,21 @@ const AudioRecording = () => {
     //console.log('blob', blob)
     const audioURL = window.URL.createObjectURL(blob);
     setAudioUrl(audioURL);
+    setRecordingUrls(list => [...list, audioURL])
     
   };
 
   const startRecording = (e) => {
+    chunks.current = []
     mediaRecorder.current.start(10);
-    osc.start(0);
+   osc.start(0);
     setRecording(true);
   };
 
   const stopRecording = (e) => {
     mediaRecorder.current.stop();
     osc.stop(0);
+
     setRecording(false);
     saveMedia();
   };
@@ -135,7 +140,7 @@ const AudioRecording = () => {
     analyserNode.connect(audioContext.destination);
 
     //console.log('analyser node', analyserNode);
-    playback.start(0);
+    //playback.start(0);
 
 
   };
@@ -150,7 +155,7 @@ const AudioRecording = () => {
 
         <audio autoPlay playsInline muted ref={userAudio} ></audio>
         {recording ? <button onClick={stopRecording}>stop</button> : <button onClick={startRecording}>record</button>}
-        <audio controls src={audioUrl} autoPlay playsInline ref={recordedAudio.current} ></audio>
+        {recordingUrls.map ((url, i) => <audio key={i} controls src={url}  playsInline ref={recordedAudio.current} ></audio>)}
         <button onClick={play}>play back</button>
       </div>
       <div className='visualizerDiv'>
@@ -162,3 +167,5 @@ const AudioRecording = () => {
 };
 
 export default AudioRecording;
+
+//<audio controls src={audioUrl} autoPlay playsInline ref={recordedAudio.current} ></audio>

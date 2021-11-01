@@ -23,7 +23,7 @@ const discoverArtists = () => {
   const [ userBase, setUserBase ] = useState([]);
 
   //IMPORTANT
-  const {name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn, id, setId} = useContext(GlobalContext);
+  const {name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn, id, setId, socket} = useContext(GlobalContext);
   //IMPORTANT
 
 
