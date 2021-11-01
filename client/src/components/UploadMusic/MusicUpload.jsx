@@ -57,15 +57,35 @@ const MusicUpload = () => {
       });
   }, []);
   
+
+  const cardStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '50%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: '150px',
+    marginBottom: '10px',
+    backgroundColor: 'white'
+  };
+  const uploadStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    // width: '23%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: '150px',
+    marginBottom: '10px',
+    color: 'blue'
+  };
   return (
     <div className='upload-page'>
-      Hello Welcome!
-
+      <div style={uploadStyle}>Let's Upload Your Music Here! </div>
       <UploadForm showWidget={showWidget}/>
 
-      <div className='videoPlayer' style={{backgroundColor: 'white'}}>
+      <div className='videoPlayer' style={cardStyle}>
         {
-          musicUploads.slice(0).reverse().map(music => music.is_audio === false ? (<div style={{color: 'black'}}>Video: <VideoCard src={music.fileUrl}/> </div>) : (<div style={{color: 'black'}}>Audio <AudioCard src={music.fileUrl}/> </div>))
+          musicUploads.slice(0).reverse().map(music => music.is_audio === false ? (<div style={{color: 'black'}}>Video: <VideoCard src={music.fileUrl} style={cardStyle}/> </div>) : (<div style={{color: 'black'}}>Audio <AudioCard src={music.fileUrl} style={cardStyle}/> </div>))
         }
       </div>
     </div>

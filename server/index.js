@@ -19,17 +19,28 @@ const {db} = require('../db');
 const auth = require('./routes/authenticate');
 const {form} = require('./routes/form.js');
 const post = require('./routes/Posts/ProfilePosts');
+const follow = require('./routes/Follow/Follows');
 const events = require('./routes/events/events.js');
 const artist = require('./routes/artist.js');
 const mailingList = require('./routes/mailingList.js');
 const kEvents = require('./routes/events/krewesicEvents.js');
 const cookieParser = require('cookie-parser');
 
+//for video streaming
+const {v4: uuidv4} = require('uuid');
+const virtualEvent = require('./routes/virtualEvent.js');
+const {ExpressPeerServer} = require('peer');
 
 
 
 //create the server
 const server = http.createServer(app);
+
+//create peer express server
+// const peerServer = ExpressPeerServer(server, {
+//   debug: true,
+//   path: '/p2p'
+// });
 
 app.use(express.static(frontEnd));
 app.use(express.json());
@@ -59,6 +70,7 @@ const getUser = (userId) => {
 };
 io.on('connection', socket => {
   //when connect
+  //console.log(`user ${socket.id} is connected`);
 
   //***FOR LIVE CHAT FOR ALL USERS*** when a message is sent
   socket.on('message', ({ name, message}) => {
@@ -90,13 +102,42 @@ io.on('connection', socket => {
     });
   });
 
+  //****for streaming features */
+  socket.on('joinShow', ({showId, userId}) => {
+  //  console.log('join show event, showId then userId', showId, userId);
+    socket.join(showId);
+    socket.to(showId).emit('user-connected', userId);
+  });
+
+
+  socket.on('peerconnected', (data) => {
+    const {showId, userId} = data;
+    socket.to(showId).emit('anotherPeerHere', userId);
+  });
+
+  socket.on('liveStreamMessage', (messageObj) => {
+    const {showId, message} = messageObj;
+    // console.log('showId', showId, 'message', message);
+    socket.to(showId).emit('receiveLiveStreamMessage', );
+  });
+
+
+
+
+  //****end events related to streaming features */
+
   //When disconnect
   socket.on('disconnect', () => {
     //if there are any disconnections
+    //console.log('disconnected user', socket.id);
     removeUser(socket.id);
     io.emit('getUsers', users);
   });
 });
+
+// setInterval(() => {
+//   io.emit('image', 'data')
+// }, 1000)
 
 
 
@@ -120,6 +161,8 @@ app.use('/artist', artist);
 app.use('/mailingList', mailingList);
 app.use('/krewesicevents', kEvents);
 app.use('/userProf', userRouter);
+app.use('/follow', follow);
+app.use('/virtualEvent', virtualEvent);
 
 app.use('/post', post);
 
@@ -131,5 +174,5 @@ app.get('*', (req, res) => {
 });
 /* eslint-disable */
 server.listen(PORT, ()=> {
-  console.log(`listening on port ${PORT}`);
+  //console.log(`listening on port ${PORT}`);
 });
