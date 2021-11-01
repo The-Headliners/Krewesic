@@ -23,7 +23,7 @@ const discoverArtists = () => {
   const [ userBase, setUserBase ] = useState([]);
 
   //IMPORTANT
-  const {name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn, id, setId} = useContext(GlobalContext);
+  const {name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn, id, setId, socket} = useContext(GlobalContext);
   //IMPORTANT
 
 
@@ -52,6 +52,8 @@ const discoverArtists = () => {
     setLoggedIn(true);
     setId(data.id);
     renderUsers();
+    //since the logged in redirect goes here, send this out so socket can keep track of logged in Us
+    socket.emit('loggedIn', data.id);
   }, []);
 
 

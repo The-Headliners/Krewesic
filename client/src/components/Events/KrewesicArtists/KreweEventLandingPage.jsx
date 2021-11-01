@@ -33,11 +33,14 @@ const KreweEventLandingPage = () => {
   const [venue, setVenue] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
+  const [artistId, setArtistId] = useState('');
 
   const [interestedUsers, setInterestedUsers] = useState([]);
   const [alreadyInterested, setAlreadyInterested] = useState(false);
   const [commentText, setCommentText] = useState('');
   const [commentWall, setCommentWall] = useState([]);
+
+  const [code, setCode] = useState('');
 
 
   //const user = useGetUser();
@@ -50,6 +53,8 @@ const KreweEventLandingPage = () => {
     setAddress(data.address);
     setCity(data.city);
     setState(data.state);
+    setCode(data.code);
+    setArtistId(data.User.id);
 
   };
 
@@ -99,6 +104,10 @@ const KreweEventLandingPage = () => {
     history.push(`/visitProfile/${id}`);
   };
 
+  const redirectToShow = () => {
+    history.push(`/virtualevent/${code}/${artistId}/${artist}`);
+  };
+
 
   return (
     <StyledLanding>
@@ -134,7 +143,7 @@ const KreweEventLandingPage = () => {
           </div>
 
         </div>
-
+        <Button className='landingButton' onClick={redirectToShow}>liveStream</Button>
       </div>
     </StyledLanding>
   );
