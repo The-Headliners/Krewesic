@@ -30,6 +30,8 @@ import VisitProfile from './Profile/VisitProfile.jsx';
 import VirtualEvent from './LiveStream/VirtualEvent.jsx';
 import AudioRecording from './Recording/AudioRecording.jsx';
 import VideoChats from './LiveStream/VideoChats.jsx';
+import ConferenceCall from './LiveStream/ConferenceCall.jsx';
+import MyEvents from './Events/MyEvents.jsx';
 
 import io from 'socket.io-client';
 const socket = io.connect('/');
@@ -77,7 +79,7 @@ const App = (props) => {
             <Link className='clickableLight' to='/createevent'>create event</Link>
             {/* <Link to ='/mailingList'>Join Our Mailing List</Link> */}
             <Link className='clickableLight' to='/events'>events link</Link>
-            <Link className='clickableLight' to='/virtualevent/1'>testing livestream</Link>
+            <Link className='clickableLight' to='/myEvents'>myEvents</Link>
             <Link className='clickableLight' to='/videoChats'>video chats</Link>
             
             <Link className='clickableLight' to='/audiorecording'>audio recording</Link>
@@ -111,6 +113,9 @@ const App = (props) => {
             <Route path='/events' >
               <Events />
             </Route>
+            <Route path='/myEvents' >
+              <MyEvents />
+            </Route>
             <Route path='/kreweEventLandingPage/:eventId' >
               <KreweEventLandingPage />
             </Route>
@@ -123,8 +128,11 @@ const App = (props) => {
             <Route path='/createevent' >
               <CreateEvent />
             </Route>
-            <Route path='/virtualevent/:code' >
+            <Route path='/virtualevent/:code/:artistId/:artistName' >
               <VirtualEvent />
+            </Route>
+            <Route path='/conferenceCall/:code/:creator/:other' >
+              <ConferenceCall />
             </Route>
             <Route path='/videoChats' >
               <VideoChats />

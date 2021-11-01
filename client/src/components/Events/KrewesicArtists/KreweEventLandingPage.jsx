@@ -33,6 +33,7 @@ const KreweEventLandingPage = () => {
   const [venue, setVenue] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
+  const [artistId, setArtistId] = useState('');
 
   const [interestedUsers, setInterestedUsers] = useState([]);
   const [alreadyInterested, setAlreadyInterested] = useState(false);
@@ -53,6 +54,7 @@ const KreweEventLandingPage = () => {
     setCity(data.city);
     setState(data.state);
     setCode(data.code);
+    setArtistId(data.User.id);
 
   };
 
@@ -103,7 +105,7 @@ const KreweEventLandingPage = () => {
   };
 
   const redirectToShow = () => {
-    history.push(`/virtualevent/${code}`);
+    history.push(`/virtualevent/${code}/${artistId}/${artist}`);
   };
 
 

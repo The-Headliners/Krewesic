@@ -113,7 +113,7 @@ io.on('connection', socket => {
   });
 
   //****for streaming features */
-  socket.on('joinShow', ({showId, userId}) => {
+  socket.on('joinShow', ({showId, userId, name}) => {
     //console.log('join show event, showId then userId', showId, userId);
     const idObj = {socketId: socket.id, peerId: userId};
     if (liveStreamUsers[showId]) {
@@ -124,12 +124,12 @@ io.on('connection', socket => {
     // console.log('lsusid', liveStreamUsers[showId])
     socket.join(showId);
 
-    socket.to(showId).emit('user-connected', {latestUser: userId, allUsers: liveStreamUsers[showId]}); /**changed this restructure the data on the front end!!!! */
+    socket.to(showId).emit('user-connected', {name: name, latestUser: userId, allUsers: liveStreamUsers[showId]}); /**changed this restructure the data on the front end!!!! */
   });
 
 
   socket.on('peerconnected', (data) => {
-    const {showId, userId} = data;
+    const {showId, userId, name} = data;
     const idObj = {socketId: socket.id, peerId: userId};
     if (showId && userId) {
       if (liveStreamUsers[showId] === undefined) {
@@ -137,7 +137,7 @@ io.on('connection', socket => {
       } else if (liveStreamUsers[showId] && !liveStreamUsers[showId].map(obj => obj.peerId).includes(userId)) {
         liveStreamUsers[showId].push(idObj);
       }
-      socket.to(showId).emit('anotherPeerHere', {latestUser: userId, allUsers: liveStreamUsers[showId]}); /**changed this restructure the data on the front end!!!! */
+      socket.to(showId).emit('anotherPeerHere', {name: name, latestUser: userId, allUsers: liveStreamUsers[showId]}); /**changed this restructure the data on the front end!!!! */
 
     }
    
