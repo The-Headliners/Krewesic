@@ -7,7 +7,7 @@ import { createGlobalStyle } from 'styled-components';
  #150050
  #3F0071
  #610094
-
+#a2a1a7
  #c3c2c5
  */
 
@@ -16,13 +16,13 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     background-color: black;
-    color: #c3c2c5; 
+    color: #a2a1a7;
     font-family: 'Hind Madurai', sans-serif;
     line-height: 1.5;
     
   }
   h1 {
-    
+    color: #c3c2c5;
   }
   nav {
     background-color: #3F0071; 
