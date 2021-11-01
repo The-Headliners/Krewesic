@@ -36,7 +36,7 @@ const AudioRecording = () => {
   const canvasRef = useRef(null);
   //const [canvas] = useState(canvasRef.current)
 
-  const [recordingUrls, setRecordingUrls] = useState([])
+  const [recordingUrls, setRecordingUrls] = useState([]);
  
 
 
@@ -95,7 +95,7 @@ const AudioRecording = () => {
 
       // canvasContext.rect(5,5,90,90);
       // canvasContext.fill();
-      canvasContext.fillStyle = `hsl(${y/height * 250}, 100%, 50%)`;
+      canvasContext.fillStyle = `hsl(${y / height * 250}, 100%, 50%)`;
       canvasContext.fillRect(x, height - y, barWidth, y);
       // canvasContext.fillRect = (20, 20, 10, 20)
     });
@@ -112,14 +112,14 @@ const AudioRecording = () => {
     //console.log('blob', blob)
     const audioURL = window.URL.createObjectURL(blob);
     setAudioUrl(audioURL);
-    setRecordingUrls(list => [...list, audioURL])
+    setRecordingUrls(list => [...list, audioURL]);
     
   };
 
   const startRecording = (e) => {
-    chunks.current = []
+    chunks.current = [];
     mediaRecorder.current.start(10);
-   osc.start(0);
+    osc.start(0);
     setRecording(true);
   };
 
@@ -155,7 +155,7 @@ const AudioRecording = () => {
 
         <audio autoPlay playsInline muted ref={userAudio} ></audio>
         {recording ? <button onClick={stopRecording}>stop</button> : <button onClick={startRecording}>record</button>}
-        {recordingUrls.map ((url, i) => <audio key={i} controls src={url}  playsInline ref={recordedAudio.current} ></audio>)}
+        {recordingUrls.map ((url, i) => <audio key={i} controls src={url} playsInline ref={recordedAudio.current} ></audio>)}
         <button onClick={play}>play back</button>
       </div>
       <div className='visualizerDiv'>

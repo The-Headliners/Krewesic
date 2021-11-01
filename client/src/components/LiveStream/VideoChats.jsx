@@ -11,7 +11,7 @@ import {useHistory} from 'react-router-dom';
 
 const VideoChats = () => {
   const history = useHistory();
-  const {id} = useContext(GlobalContext);
+  const {id, socket} = useContext(GlobalContext);
 
   const [allChats, setAllChats] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
@@ -34,6 +34,7 @@ const VideoChats = () => {
     //post the video chat to db
     await axios.post('/userProf/newVideoChat', {code: uuid, includes: [id, userId], creatorId: id});
     getMyChats();
+    socket.emit('notify', {id: userId, notification: 'notification'});
   };
 
   const goToChat = (chatObj) => {

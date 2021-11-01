@@ -56,6 +56,8 @@ const io = require('socket.io')(server);
 //holds alll users that are online
 let users = [];
 
+const loggedInUsers = {}; //to keep track of logged in users.  will be in key:value pairs of userId: socketId
+
 const liveStreamUsers = {}; //this gonna hold the rooms and their arrays {roomId: [user1, user2...]}
 const removeLiveStreamUser = (socketId, showId) => {
   for (show in liveStreamUsers) {
@@ -112,7 +114,19 @@ io.on('connection', socket => {
     });
   });
 
+  /**for when a user logs in */
+  socket.on('loggedIn', async (data) => {
+    const id = data;
+    loggedInUsers[id] = socket.id;
+  });
+
   //****for streaming features */
+
+  socket.on('notify', (data) => {
+    const {id, notification} = data;
+    const sockId = loggedInUsers[id];
+    io.to(sockId).emit('notified', notification);
+  });
   socket.on('joinShow', ({showId, userId, name}) => {
     //console.log('join show event, showId then userId', showId, userId);
     const idObj = {socketId: socket.id, peerId: userId};

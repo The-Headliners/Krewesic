@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import GlobalContext from './Contexts/GlobalContext.jsx';
 import {AppBar, Toolbar, Typography, Button} from '@material-ui/core';
 import styled from 'styled-components';
@@ -36,7 +36,10 @@ const StyledHeader = styled.div`
 
 const Header = (props) => {
 
-  const {name, setName, type, setType, loggedIn, setLoggedIn} = useContext(GlobalContext);
+  const {name, setName, type, setType, loggedIn, setLoggedIn, socket} = useContext(GlobalContext);
+
+  const [notification, setNotification] = useState(''); //for now a string but in future array and have drop down menu for all notifications 
+  const [activeNotifications, setActiveNotifications] = useState(false);
  
   //to logout: call the logout endpoint
   //will need additional work to redirect, after we have better idea of where to redirect to.
@@ -46,8 +49,17 @@ const Header = (props) => {
     setType('');
     setLoggedIn(false);
     //history pusch redirect to wherever should be redirected to
-
+ 
   };
+
+  useEffect(() => {
+    socket.on('notified', (data) => {
+      //console.log('notified', data);
+      setNotification(data);
+      setActiveNotifications(true);
+      //put in a redirect and description on notifications!!
+    });
+  }, []);
   
   //display: conditionally displays login button if user not logged in, or the name and type if logged in and a log out button.   resets the global state if logging out. 
   //note: after more development, a hamburger menu shold be on the right of all this.  the logo should also be ... a logo
@@ -61,6 +73,7 @@ const Header = (props) => {
     <StyledHeader>
       <AppBar position="static" className='bar' >
         <div className='wrapper'>
+          <div className="notifications" onClick={() => setActiveNotifications(false)} style={{backgroundColor: activeNotifications ? 'red' : 'blue'}}>notifications</div>
           <img src='https://export-download.canva.com/G8Nys/DAEtvsG8Nys/3/0/0001-10686997051.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAJHKNGJLC2J7OGJ6Q%2F20211024%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20211024T080316Z&X-Amz-Expires=30299&X-Amz-Signature=0d1aed5b963affb1cb29ba2f29fd81f0fdbea7f630aa9d28ba495ffdddb36e2b&X-Amz-SignedHeaders=host&response-content-disposition=attachment%3B%20filename%2A%3DUTF-8%27%27Cream%2520and%2520Green%2520Circles%2520Art%2520%26%2520Design%2520Logo.png&response-expires=Sun%2C%2024%20Oct%202021%2016%3A28%3A15%20GMT' className='logo'/>
           {display()}
         </div>        
