@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-import logo from './images/KrewesicCropped.png';
+import logo from './images/KrewesicLight.png';
 
 const StyledHeader = styled.div`
   .bar {
@@ -30,8 +30,8 @@ const StyledHeader = styled.div`
    
  }
  .logo {
-   height: 50px;
-   width: 50px;
+   height: 70px;
+   width: 70px;
  }
 `;
 
