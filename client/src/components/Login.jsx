@@ -13,7 +13,7 @@ const LoginStyles = styled.div`
     align-items: center;
   }
   .logo {
-  
+
     width: 200px;
     margin-bottom: 20px;
 
@@ -27,9 +27,9 @@ const Login = () => (
       <div >
         <img align='center' src={logo} className='logo' alt='logo' />
         <br/>
-        
-        <h1 >find your Krewe and Music to march to</h1>
-        
+
+        <h1 >Find Your Krewe And Music To March To</h1>
+
         <br/>
         <div
           align='center'

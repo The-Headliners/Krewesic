@@ -4,12 +4,25 @@ import axios from 'axios';
 import FormListener from './FormListener.jsx';
 import FormArtist from './FormArtist.jsx';
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
+//import Grid from '@material-ui/core/Grid';
+import styled from 'styled-components';
 // import Item from '@material-ui/core/Item'
 import HeadsetIcon from '@material-ui/icons/Headset';
 import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import Typography from '@material-ui/core/Typography';
 const Form = (props) => {
+
+
+
+
+
+
+
+
+
+
+
+
   //get user info
   const history = useHistory();
 
@@ -17,7 +30,7 @@ const Form = (props) => {
     return (
       <Button
         startIcon={<HeadsetIcon />}
-        color='primary'
+        style={{ backgroundColor: '#610094', justifyItems: 'center' }}
         variant='contained'
         onClick={() => {
           selectType('listener');
@@ -30,9 +43,8 @@ const Form = (props) => {
 
       <Button
         startIcon={<MusicNoteIcon />}
-        color='primary'
+        style={{ backgroundColor: '#610094' }}
         variant='contained'
-        align='right'
         onClick={() => {
           selectType('artist');
           history.push('/artistform');
@@ -45,24 +57,49 @@ const Form = (props) => {
   const selectType = (type) => {
     axios.put(`/form/setType/${type}`);
   };
-  return (
-    <div className='backgroundColorLight'>
 
-      <div>
-        <Typography
-          color='secondary'
-          align='center'
-          variant='h4'>Listener or Artist</Typography>
+
+
+  const FormStyles = styled.div`
+  background-color: ${props => props.theme.colorBackground};
+  box-sizing: border-box;
+  .row {
+    display: flex;
+  }
+  .column {
+    text-align: center;
+    flex: 50%;
+    padding: 10px;
+    height: 300px;
+  }
+`;
+
+
+  return (
+    <FormStyles>
+      <Typography
+        style={{ color: '#c3c2c5', marginBottom: '10'}}
+        align='center'
+        variant='h4'>Select Profile</Typography>
+      <div className='row'>
+
+
+        <div
+          className='column'
+        >
+
+          <ListenerButton
+          />
+        </div>
+        <div
+          className='column'
+        >
+
+          <ArtistButton
+          />
+        </div>
       </div>
-      <Grid container spacing={3}>
-        <Grid item xs>
-          <ListenerButton />
-        </Grid>
-        <Grid item xs={14}>
-          <ArtistButton />
-        </Grid>
-      </Grid>
-    </div>
+    </FormStyles>
   );
 };
 

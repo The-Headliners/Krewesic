@@ -63,19 +63,19 @@ const App = (props) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [colorBlind, setColorBlind] = useState(false);
 
-  
+
   //const [socket] = useState(io.connect('/'));
 
 
   const value = { id, setId, name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn, city, setCity, bio, setBio, favArtist, setArtist, favGenre, setGenre, artistBio, setMyBio, artistName, setMyName, pic, setPic, myGenre, setMyGenre, influences, setInfluence, socket };
 
   const theme = {
-    colorBackground: '#000000',
-    colorDark: '#150050',
-    colorMed: '#3F0071',
-    colorLight: '#610094',
-    textColorDark: '#a2a1a7',
-    textColorLight: '#c3c2c5'
+    colorBackground: '#000000', //background
+    colorDark: '#150050', //top banner/ optional use
+    colorMed: '#3F0071', //navbar
+    colorLight: '#610094', //buttons
+    textColorDark: '#a2a1a7', //text descriptions/body
+    textColorLight: '#c3c2c5' //text headers
   };
   //using the theme makes it easier to override the defaults for mui that we we dont want.  We will need to set up a colorblind theme and switch it with the toggle so they dont override the Color accessibility toggling.  so pass it props theme={coloracccesibility ? theme1 : theme2} or something similar
 
@@ -92,16 +92,16 @@ const App = (props) => {
             <Header />
             <nav>
               <Link className='clickableLight' to='/DiscoverArtists'> Discover Artists </Link>
-        
+
               <Link className='clickableLight' to='/mapevents'>Find Events</Link>
               <Link className='clickableLight' to='/messages'>Messages</Link>
               <Link className='clickableLight' to='/profile'>Profile</Link>
               <Link className='clickableLight' to='/createevent'>create event</Link>
-      
+
               <Link className='clickableLight' to='/events'>Event Hub</Link>
               <Link className='clickableLight' to='/myEvents'>My Events</Link>
               <Link className='clickableLight' to='/videoChats'>Video Chats</Link>
-            
+
               <Link className='clickableLight' to='/audiorecording'>Recording Studio</Link>
 
               <Link className='upload' to='/uploadMusic'>Upload Music</Link>
@@ -192,4 +192,4 @@ export default App;
             </Route>
  */
 
-//   
+//
