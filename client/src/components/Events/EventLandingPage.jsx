@@ -4,16 +4,20 @@ import axios from 'axios';
 import CommentComponent from './CommentComponent.jsx';
 import { TextField, MenuItem, Button } from '@material-ui/core';
 import GlobalContext from '../Contexts/GlobalContext.jsx';
-import styled from 'styled-components';
+import styled, {ThemeProvider} from 'styled-components';
 
 const StyledLanding = styled.div`
   .landingButton {
-    background-color: #b3a970;
+    background-color: ${props => props.theme.colorLight};
   }
   .commentInput {
     width: 600px;
     margin-bottom: 20px;
   }
+  h3 {
+    color: ${props => props.theme.colorLight}
+  }
+
 `;
 
 const EventLandingPage = () => {

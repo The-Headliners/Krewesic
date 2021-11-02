@@ -23,14 +23,12 @@ const LoginStyles = styled.div`
 const Login = () => (
   <LoginStyles>
     <div className='wrapper' >
-      <br/>
+
       <div >
-        <img src={logo} className='logo'/>
+        <img align='center' src={logo} className='logo' alt='logo' />
         <br/>
         
-        <h1
-          align='center'
-        >find your Krewe and Music to march to</h1>
+        <h1 >find your Krewe and Music to march to</h1>
         
         <br/>
         <div
