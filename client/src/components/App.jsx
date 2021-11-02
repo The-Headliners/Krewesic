@@ -77,6 +77,7 @@ const App = (props) => {
     textColorDark: '#a2a1a7',
     textColorLight: '#c3c2c5'
   };
+  //using the theme makes it easier to override the defaults for mui that we we dont want.  We will need to set up a colorblind theme and switch it with the toggle so they dont override the Color accessibility toggling.  so pass it props theme={coloracccesibility ? theme1 : theme2} or something similar
 
 
 
