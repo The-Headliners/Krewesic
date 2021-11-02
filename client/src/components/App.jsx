@@ -5,7 +5,7 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, {ThemeProvider} from 'styled-components';
 
 import Login from './Login.jsx';
 import Profile from './Profile/Profile.jsx';
@@ -69,6 +69,16 @@ const App = (props) => {
 
   const value = { id, setId, name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn, city, setCity, bio, setBio, favArtist, setArtist, favGenre, setGenre, artistBio, setMyBio, artistName, setMyName, pic, setPic, myGenre, setMyGenre, influences, setInfluence, socket };
 
+  const theme = {
+    colorBackground: '#000000',
+    colorDark: '#150050',
+    colorMed: '#3F0071',
+    colorLight: '#610094',
+    textColorDark: '#a2a1a7',
+    textColorLight: '#c3c2c5'
+  };
+  //using the theme makes it easier to override the defaults for mui that we we dont want.  We will need to set up a colorblind theme and switch it with the toggle so they dont override the Color accessibility toggling.  so pass it props theme={coloracccesibility ? theme1 : theme2} or something similar
+
 
 
   return (
@@ -78,89 +88,91 @@ const App = (props) => {
       }
       <GlobalContext.Provider value={value}>
         <Router>
-          <Header />
-          <nav>
-            <Link className='clickableLight' to='/DiscoverArtists'> Discover Artists </Link>
+          <ThemeProvider theme={theme}>
+            <Header />
+            <nav>
+              <Link className='clickableLight' to='/DiscoverArtists'> Discover Artists </Link>
         
-            <Link className='clickableLight' to='/mapevents'>Find Events</Link>
-            <Link className='clickableLight' to='/messages'>Messages</Link>
-            <Link className='clickableLight' to='/profile'>Profile</Link>
-            <Link className='clickableLight' to='/createevent'>create event</Link>
+              <Link className='clickableLight' to='/mapevents'>Find Events</Link>
+              <Link className='clickableLight' to='/messages'>Messages</Link>
+              <Link className='clickableLight' to='/profile'>Profile</Link>
+              <Link className='clickableLight' to='/createevent'>create event</Link>
       
-            <Link className='clickableLight' to='/events'>Event Hub</Link>
-            <Link className='clickableLight' to='/myEvents'>My Events</Link>
-            <Link className='clickableLight' to='/videoChats'>Video Chats</Link>
+              <Link className='clickableLight' to='/events'>Event Hub</Link>
+              <Link className='clickableLight' to='/myEvents'>My Events</Link>
+              <Link className='clickableLight' to='/videoChats'>Video Chats</Link>
             
-            <Link className='clickableLight' to='/audiorecording'>Recording Studio</Link>
+              <Link className='clickableLight' to='/audiorecording'>Recording Studio</Link>
 
-            <Link className='upload' to='/uploadMusic'>Upload Music</Link>
+              <Link className='upload' to='/uploadMusic'>Upload Music</Link>
 
-            <p style={{color: 'black'}}>Color Blind Accessibility: <props.switch checked={colorBlind} onChange={() => setColorBlind(!colorBlind)} /> </p>
-          </nav>
+              <p style={{color: 'black'}}>Color Blind Accessibility: <props.switch checked={colorBlind} onChange={() => setColorBlind(!colorBlind)} /> </p>
+            </nav>
 
-          <Switch>
-            <Route exact path="/" component={Login}>
-            </Route>
-            <Route path='/DiscoverArtists' >
-              <DiscoverArtists />
-            </Route>
-            <Route path='/profile' >
-              <Profile />
-            </Route>
-            <Route path='/form' >
-              <Form />
-            </Route>
-            <Route path='/listenerform' >
-              <FormListener />
-            </Route>
-            <Route path='/artistform' >
-              <FormArtist />
-            </Route>
-            <Route path='/bands' >
-              <BandsHome />
-            </Route>
-            <Route path='/events' >
-              <Events />
-            </Route>
-            <Route path='/myEvents' >
-              <MyEvents />
-            </Route>
-            <Route path='/kreweEventLandingPage/:eventId' >
-              <KreweEventLandingPage />
-            </Route>
-            <Route path='/mapevents' >
-              <MapEvents />
-            </Route>
-            <Route path='/eventLandingPage/:eventId/:venue/:city/:performers/:lat/:lng/:type/:datetime' >
-              <EventLandingPage />
-            </Route>
-            <Route path='/createevent' >
-              <CreateEvent />
-            </Route>
-            <Route path='/virtualevent/:code/:artistId/:artistName' >
-              <VirtualEvent />
-            </Route>
-            <Route path='/conferenceCall/:code/:creator/:other' >
-              <ConferenceCall />
-            </Route>
-            <Route path='/videoChats' >
-              <VideoChats />
-            </Route>
-            <Route path='/audiorecording' >
-              <AudioRecording />
-            </Route>
-            <Route path='/visitProfile/:id' >
-              <VisitProfile />
-            </Route>
-            <Route exact path='/uploadMusic' component={MusicUpload} />
-            <Route path='/messages' component={MessagesPage}>
-            </Route>
-            <Route exact path='/DirectMessage' component={DirectMessages} />
+            <Switch>
+              <Route exact path="/" component={Login}>
+              </Route>
+              <Route path='/DiscoverArtists' >
+                <DiscoverArtists />
+              </Route>
+              <Route path='/profile' >
+                <Profile />
+              </Route>
+              <Route path='/form' >
+                <Form />
+              </Route>
+              <Route path='/listenerform' >
+                <FormListener />
+              </Route>
+              <Route path='/artistform' >
+                <FormArtist />
+              </Route>
+              <Route path='/bands' >
+                <BandsHome />
+              </Route>
+              <Route path='/events' >
+                <Events />
+              </Route>
+              <Route path='/myEvents' >
+                <MyEvents />
+              </Route>
+              <Route path='/kreweEventLandingPage/:eventId' >
+                <KreweEventLandingPage />
+              </Route>
+              <Route path='/mapevents' >
+                <MapEvents />
+              </Route>
+              <Route path='/eventLandingPage/:eventId/:venue/:city/:performers/:lat/:lng/:type/:datetime' >
+                <EventLandingPage />
+              </Route>
+              <Route path='/createevent' >
+                <CreateEvent />
+              </Route>
+              <Route path='/virtualevent/:code/:artistId/:artistName' >
+                <VirtualEvent />
+              </Route>
+              <Route path='/conferenceCall/:code/:creator/:other' >
+                <ConferenceCall />
+              </Route>
+              <Route path='/videoChats' >
+                <VideoChats />
+              </Route>
+              <Route path='/audiorecording' >
+                <AudioRecording />
+              </Route>
+              <Route path='/visitProfile/:id' >
+                <VisitProfile />
+              </Route>
+              <Route exact path='/uploadMusic' component={MusicUpload} />
+              <Route path='/messages' component={MessagesPage}>
+              </Route>
+              <Route exact path='/DirectMessage' component={DirectMessages} />
 
-            <Route>
-              <div>404 page not available</div>
-            </Route>
-          </Switch>
+              <Route>
+                <div>404 page not available</div>
+              </Route>
+            </Switch>
+          </ThemeProvider>
         </Router>
       </GlobalContext.Provider>
 

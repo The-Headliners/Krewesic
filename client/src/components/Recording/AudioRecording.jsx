@@ -1,12 +1,21 @@
 import React, {useState, useEffect, useContext, useRef } from 'react';
 import styled from 'styled-components';
+import { Button } from '@material-ui/core';
+import Card from '@mui/material/Card';
 
 const RecordStyles = styled.div`
-  background-color: green;
+  background-color: black;
   .visualizer {
     height: 200px;
     width: 200px;
     margin-left: 50px;
+  }
+  .recordBtn {
+    background-color: pink;
+    margin: 20px;
+  }
+  .visualizerCard {
+    background-color: #150050;
   }
 `;
 
@@ -152,16 +161,15 @@ const AudioRecording = () => {
   return (
     <RecordStyles>
       <div>
-      audio recording component
 
         <audio autoPlay playsInline muted ref={userAudio} ></audio>
-        {recording ? <button onClick={stopRecording}>stop</button> : <button onClick={startRecording}>record</button>}
+        {recording ? <Button onClick={stopRecording} className='recordBtn'>stop</Button> : <Button onClick={startRecording} className='recordBtn'>record</Button>}
         {recordingUrls.map ((url, i) => <audio key={i} controls src={url} playsInline ref={recordedAudio.current} ></audio>)}
-        <button onClick={play}>play back</button>
+        <Button className='recordBtn' onClick={play}>play back</Button>
       </div>
-      <div className='visualizerDiv'>
+      <Card className='visualizerCard'>
         <canvas className='visualizer' ref={canvasRef} />
-      </div>
+      </Card>
 
     </RecordStyles>
   );

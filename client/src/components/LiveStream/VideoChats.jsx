@@ -5,6 +5,22 @@ import {v4} from 'uuid';
 import useGetUser from '../CustomHooks/useGetUser.jsx';
 import GlobalContext from '../Contexts/GlobalContext.jsx';
 import {useHistory} from 'react-router-dom';
+import styled from 'styled-components';
+import {Button} from '@material-ui/core';
+
+const backgroundColor = '#610094';
+const StyledVideoChat = styled.div`
+  .wrapper {
+
+  }
+  .friend {
+    padding: 20px;
+    width: 350px;
+  }
+  .chatButton {
+    background-color: #610094;
+  }
+`;
 
 
 
@@ -69,25 +85,27 @@ const VideoChats = () => {
   }, []);
 
   return (
-    <div>
-      <div className='allUsersWrapper'>
-        {allUsers.map((user, i) => {
+    <StyledVideoChat>
+      <div className='wrapper'>
+        <div className='allUsersWrapper'>
+          <h1>All Friends</h1>
+          {allUsers.map((user, i) => {
 
-          return <div 
+            return <div 
+              key={i}
+              onClick={() => createVideoChat(user.id)}
+              className='friend clickableDark'
+            >{user.name}</div>;
+          })}
+        </div>
+        <div>
+          {allChats.map((chatObj, i )=> <Button className='chatButton'
             key={i}
-            onClick={() => createVideoChat(user.id)}
-          >{user.name}</div>;
-        })}
+            onClick={() => goToChat(chatObj)}
+          > created by: {chatObj.creator.name} roomId: {chatObj.code} </Button> )}
+        </div>
       </div>
-      <div>
-        {allChats.map((chatObj, i )=> <button 
-          key={i}
-          onClick={() => goToChat(chatObj)}
-        > created by: {chatObj.creator.name} roomId: {chatObj.code} </button> )}
-      </div>
-      
-    
-    </div>
+    </StyledVideoChat>
   );
 };
 

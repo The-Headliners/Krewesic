@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import LoginIcon from '@mui/icons-material/Login';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
-import logo from './images/KrewesicCropped.png';
+import logo from './images/Krewesic.png';
 
 const LoginStyles = styled.div`
   .wrapper {
@@ -23,14 +23,12 @@ const LoginStyles = styled.div`
 const Login = () => (
   <LoginStyles>
     <div className='wrapper' >
-      <br/>
+
       <div >
-        <img src={logo} className='logo'/>
+        <img align='center' src={logo} className='logo' alt='logo' />
         <br/>
-      <h1>a random header</h1>
-        <p
-          align='center'
-        >find your Krewe and Music to march to</p>
+        
+        <h1 >find your Krewe and Music to march to</h1>
         
         <br/>
         <div
