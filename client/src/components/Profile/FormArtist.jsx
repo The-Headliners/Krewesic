@@ -8,15 +8,29 @@ import Typography from '@material-ui/core/Typography';
 import { FormControl } from '@mui/material';
 import { InputLabel } from '@mui/material';
 import { Select } from '@mui/material';
-import {MenuItem} from '@material-ui/core';
+import {MenuItem, makeStyles } from '@material-ui/core';
 import styled from 'styled-components';
 import Box from '@material-ui/core/Box';
-const StyledFormArtist = styled.div`
-  .wrapper {
+import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 
-  }
+const StyledFormArtist = styled.div`
+background-color: ${props => props.theme.colorDark};
+text-align: center;
+.mainHeader: {
+  color: pink;
+}
+.yo: {
+  display: flex
+  text-align: right;
+}
 `;
 
+
+const useStyles = makeStyles(theme => ({
+  formControl: {
+    minWidth: 100
+  }
+}));
 
 const FormArtist = () => {
   const [ loading, setLoading ] = useState(false);
@@ -71,92 +85,128 @@ const FormArtist = () => {
     setLoading(false);
   };
 
-
+  const classes = useStyles();
 
   return (
     <StyledFormArtist>
-      <div className='backgroundColorLight '>
-        <br/>
+      <br/>
+      <div
+        //className='mainHeader'
+      >
         <Typography
+          style={{ color: '#c3c2c5', marginBottom: '10'}}
           align='center'
-          color='secondary'
-          variant='h4'
-        >What kind of Artist are you?</Typography>
-        <br/>
-        <TextField
-          onChange={e => setMyName(e.target.value)}
-          id="outlined-basic"
-          label="My Artist Name"
-          variant="outlined" />
-        <br/><br/>
-        <TextField
-          onChange={e => setMyBio(e.target.value)}
-          label="Bio"
-          variant="outlined" />
-        <br/>
-        <br/>
-        <TextField
-          onChange={e => setInfluence(e.target.value)}
-          id="outlined-basic"
-          label="Influences"
-          variant="outlined" />
-        <br/>
-        <br/>
-        <FormControl fullWidth>
-          <InputLabel >My Genre</InputLabel>
+          variant='h4'>Artist Profile Creation</Typography>
+      </div>
+      <br/>
+      <TextField
+        onChange={e => setMyName(e.target.value)}
+        id="outlined-basic"
+        label="My Artist Name"
+        style={{ backgroundColor: '#a2a1a7' }}
+        variant="outlined" />
+      <br/><br/>
+      <TextField
+        onChange={e => setMyBio(e.target.value)}
+        label="Bio"
+        style={{ backgroundColor: '#a2a1a7' }}
+        variant="outlined" />
+      <br/>
+      <br/>
+      <TextField
+        onChange={e => setInfluence(e.target.value)}
+        id="outlined-basic"
+        label="Influences"
+        style={{ backgroundColor: '#a2a1a7' }}
+        variant="outlined" />
+      <br/>
+      <br/>
+      <div
+
+      >
+        <FormControl
+          style={{minWidth: 225}}
+
+        >
+          <InputLabel
+            style={{ backgroundColor: '#a2a1a7', paddingTop: 0, paddingBottom: 0 }}
+            id="demo-simple-select-label" >My Genre</InputLabel>
           <Select
             onChange={e => setMyGenre(e.target.value)}
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             label="My Genre"
+            style={{ backgroundColor: '#a2a1a7', paddingTop: 0, paddingBottom: 0 }}
           >
-            <MenuItem value={'Rock'}>Rock</MenuItem>
-            <MenuItem value={'Pop'}>Pop</MenuItem>
-            <MenuItem value={'Hip Hop'}>Hip Hop</MenuItem>
-            <MenuItem value={'Indie'}>Indie</MenuItem>
-            <MenuItem value={'Metal'}>Metal</MenuItem>
-            <MenuItem value={'Country'}>Country</MenuItem>
-            <MenuItem value={'House'}>House</MenuItem>
+            <MenuItem
+
+              value={'Rock'}>Rock</MenuItem>
+            <MenuItem
+
+              value={'Pop'}>Pop</MenuItem>
+            <MenuItem
+
+              value={'Hip Hop'}>Hip Hop</MenuItem>
+            <MenuItem
+
+              value={'Indie'}>Indie</MenuItem>
+            <MenuItem
+
+              value={'Metal'}>Metal</MenuItem>
+            <MenuItem
+
+              value={'Country'}>Country</MenuItem>
+            <MenuItem
+
+              value={'House'}>House</MenuItem>
           </Select>
           <br/>
         </FormControl>
-        <TextField
-          onChange={e => setCity(e.target.value)}
-          id="outlined-basic"
-          label="My City"
-          variant="outlined" />
-        <br/>
-        <br/>
-        <Button
-          variant="contained"
-          component="label"
-        >Profile Picture
-          <input
-            type="file"
-            name="file"
-            onChange={uploadImage}
-            hidden
-          />
-        </Button>
-        <br/>
-        {loading ? (
-          <h3>loading...</h3>
+      </div>
+      <TextField
+        onChange={e => setCity(e.target.value)}
+        id="outlined-basic"
+        label="My City"
+        style={{ backgroundColor: '#a2a1a7' }}
+        variant="outlined" />
+      <br/>
+      <br/>
+      <Button
+        variant="contained"
+        component="label"
+        style={{ backgroundColor: '#610094' }}
+        startIcon={< AddAPhotoIcon />}
+      >Profile Picture
+        <input
+          type="file"
+          name="file"
+          onChange={uploadImage}
+          hidden
+        />
+      </Button>
+      <br/>
+      <br/>
+      {loading ? (
+        <h3>Loading...</h3>
 
-        ) : (
-          <img src={pic} style={{ width: '50px' }} />
-        )}
-        <br/>
-        <br/>
+      ) : (
+        <img src={pic} style={{ width: '80px', borderRadius: '8px' }} />
+      )}
+      <br/>
+      <br/>
+      <div
+        className='yo'
+        style={{textAlign: 'center'}}
+      >
         <Button
           onClick={handleCreate}
           href='/DiscoverArtists'
-          color="primary"
+          style={{ backgroundColor: '#610094' }}
           variant="contained"
           startIcon={ <AccountCircle/> }
         > Create Profile </Button>
-        <br/><br/>
-
       </div>
+      <br/><br/>
     </StyledFormArtist>
   );
 };
