@@ -25,6 +25,7 @@ const Artist = ({user}) => {
       <div>
         <p>Artist: {user.artistName}</p>
         <img
+          style={{ borderRadius: '50%'}}
           height={100}
           width={100}
           src={user.pic}></img>

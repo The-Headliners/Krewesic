@@ -13,6 +13,8 @@ import DiscoverArtists from '../Home/DiscoverArtists.jsx';
 import Artist from '../Home/Artist.jsx';
 import Post from '../Profile/Post.jsx';
 import Krewe from '../Profile/Krewe.jsx';
+import PeopleIcon from '@mui/icons-material/People';
+import styled from 'styled-components';
 //import { set } from 'core-js/core/dict';
 const Profile = () => {
 
@@ -117,120 +119,116 @@ const Profile = () => {
     genreDescription();
   });
 
+  const ProfileStyles = styled.div`
+  background-color: ${props => props.theme.colorBackground};
+  box-sizing: border-box;
+  .row {
+    display: flex;
+  }
+  .column {
+    text-align: center;
+    flex: 50%;
+    padding: 10px;
+    height: 300px;
+  }
+`;
 
 
   return (
-    <Box
-      bgcolor="primary.dark"
-      display="flex"
-      flexDirection="column"
-      alignItems="stretch"
-    >
-      <br/>
-      <Box>
+    <ProfileStyles>
+      <Box
+        style={{backgroundColor: '#150050'}}
+      >
+        <br/>
         <Typography
           align='left'
-          color='textSecondary'
-          variant='h4'
-        >
-          My Profile
-        </Typography>
-        <br/>
-      </Box>
-      <Box>
-        <Typography
-          align='center'
           variant='h4'
         >
           { artistName || name }
         </Typography>
         <br/>
         <Box
-          align='center'
+          style={{align: 'left', width: '50%', height: '50%'}}
         >
           <img
+            style={{borderRadius: '50%', width: '25%', height: '25%'}}
             src={pic}
             height="150"
             width="150"
           />
-          <br/>
-          <br/>
+        </Box>
+        <br/>
+        <br/>
+        <Box
+          style={{align: 'left', width: '50%', height: '50%', color: '#a2a1a7'}}
+        >
          Bio: { bio || artistBio }
-        </Box>
-        <br/>
-        <Box
-          align='center'
-        >
+          <br/>
         City: { city }
-        </Box>
-        <br/>
-        <Box
-          align='center'
-        >
+          <br/>
           {genreDesc} { favGenre || myGenre }
-        </Box>
-        <br/>
-        <Box
-          align='center'
-        >
+          <br/>
           {description}  { favArtist || influences }
         </Box>
-      </Box>
-      <br/>
-      <Box
-        align='center'
-        marginLeft="100px"
-      >
-        <TextField
-          value={text}
-          onChange={e => {
-            setMyTexts(e.target.value);
-          }}
-          multiline
-          label="Post"
-          size="small"
-          variant="outlined"
-        />
-        <Button
-          startIcon={<PublishIcon />}
-          onClick={() => handlePost()}
+        <br/>
+        <Box
+          style={{ color: 'pink'}}
         >
+          <TextField
+            value={text}
+            style={{ backgroundColor: '#a2a1a7' }}
+            onChange={e => {
+              setMyTexts(e.target.value);
+            }}
+            multiline
+            label="Post"
+            size="small"
+            variant="outlined"
+          />
+          <Button
+            style={{ backgroundColor: '#610094' }}
+            startIcon={<PublishIcon />}
+            onClick={() => handlePost()}
+          >
           Post
-        </Button>
-      </Box>
-      <Box
-        align='right'
-        marginRight='50px'
-        component="div"
-      >
-        <h4>My Posts</h4>
-        { post.map((posty, i) => {
-          return <Post
-            key={i}
-            index={i}
-            posty={posty.text}
-            timey={new Date(posty.createdAt).toString().slice(16, 21)}
-          ></Post>;
-        }) }
-
-      </Box>
-      <Box
-      >
-        <Button
-          onClick={getFollowed}
+          </Button>
+        </Box>
+        <Box
+          align='right'
+          marginRight='50px'
+          component="div"
         >
-          My Krewe
-        </Button>
-        <br />
-        {myArtists.map((artist, i) => {
-          return <Krewe
+          <h4>My Posts</h4>
+          { post.map((posty, i) => {
+            return <Post
+              key={i}
+              index={i}
+              posty={posty.text}
+              timey={new Date(posty.createdAt).toString().slice(16, 21)}
+            ></Post>;
+          }) }
 
-            key={i}
-            artist={artist}
-          ></Krewe>;
-        })}
+        </Box>
+        <Box
+        >
+          <Button
+            style={{ backgroundColor: '#610094' }}
+            startIcon={<PeopleIcon />}
+            onClick={getFollowed}
+          >
+          My Krewe
+          </Button>
+          <br />
+          {myArtists.map((artist, i) => {
+            return <Krewe
+
+              key={i}
+              artist={artist}
+            ></Krewe>;
+          })}
+        </Box>
       </Box>
-    </Box>
+    </ProfileStyles>
   );
 };
 

@@ -29,6 +29,9 @@ const FormListener = (props) => {
       city: city,
       pic: pic
     };
+    if (data.pic === '') {
+      data.pic = 'https://cdn4.iconfinder.com/data/icons/staff-management-vol-1/72/38-512.png';
+    }
     axios.put('/form/createListener', data).then(res => {
       setData(res.data);
       setBio('');

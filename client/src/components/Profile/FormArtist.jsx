@@ -13,6 +13,7 @@ import styled from 'styled-components';
 import Box from '@material-ui/core/Box';
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 
+
 const StyledFormArtist = styled.div`
 background-color: ${props => props.theme.colorDark};
 text-align: center;
@@ -52,6 +53,9 @@ const FormArtist = () => {
       pic: pic,
       influences: influences,
     };
+    if (data.pic === '') {
+      data.pic = 'https://cdn4.iconfinder.com/data/icons/staff-management-vol-1/72/38-512.png';
+    }
     axios.put('/form/createArtist', data).then(res => {
       setData(res.data);
       setMyBio('');
