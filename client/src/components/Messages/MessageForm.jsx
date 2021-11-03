@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import Button from '@material-ui/core/Button';
 // import axios from 'axios';
 
 const MessageForm = ({handleChange, sendMessage, value}) => {
@@ -72,7 +73,7 @@ const MessageForm = ({handleChange, sendMessage, value}) => {
     <form className="message-form" style={chatForm}>
       <input className="message-input" placeholder="Send a message..." style={chatInput} value={value} onChange={handleChange} />
 
-      <button className="message-button" onClick={ (event) => sendMessage(event)}> send </button>
+      <Button className="message-button" variant="contained" style={{backgroundColor: 'blue', color: '#c3c2c5'}} onClick={ (event) => sendMessage(event)}> send </Button>
     </form>
 
   );

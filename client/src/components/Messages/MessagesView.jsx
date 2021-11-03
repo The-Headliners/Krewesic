@@ -4,30 +4,42 @@ import MessageForm from './MessageForm.jsx'; //goes towards the chat footer
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import MicIcon from '@material-ui/icons/Mic'; 
 
-const MessagesView = ({chat, handleChange, sendMessage, value}) => {
+const MessagesView = ({chat, handleChange, sendMessage, value, user}) => {
 
 
   //Style for MessagesView//
   const boxStyle = {
     flex: '0.65',
-    backgroundColor: 'lightgray',
+    backgroundColor: '#610094',
   };
   const chatHeader = {
     padding: '20px',
     display: 'flex',
     alignItems: 'center',
-    borderBottom: '1px solid lightgray'
+    borderBottom: '1px solid lightgray',
+    backgroundColor: '#3F0071',
   };
   const chatMessageSender = {
     position: 'relative',
     fontSize: '16px',
     padding: '10px',
-    backgroundColor: 'white',
+    backgroundColor: '#150050',
     borderRadius: '10px',
     width: 'fit-content',
     marginBottom: '30px',
     marginLeft: 'auto',
-    color: 'black'
+    color: '#c3c2c5'
+  };
+  const chatMessageRecipient = {
+    position: 'relative',
+    fontSize: '16px',
+    padding: '10px',
+    backgroundColor: '#150050',
+    borderRadius: '10px',
+    width: 'fit-content',
+    marginBottom: '30px',
+    // marginLeft: 'auto',
+    color: '#c3c2c5'
   };
   // const chatMessageRecipient = {
   //   position: 'relative',
@@ -39,7 +51,8 @@ const MessagesView = ({chat, handleChange, sendMessage, value}) => {
   // }
   const timeStamp = {
     marginLeft: '10px',
-    fontSize: 'xx-small'
+    fontSize: 'xx-small', 
+    color: '#c3c2c5'
   };
 
   const chatFooter = {
@@ -56,14 +69,18 @@ const MessagesView = ({chat, handleChange, sendMessage, value}) => {
   // color: 'grey'
   };
 
+  const textStyle = {
+    color: '#c3c2c5'
+  };
+
   return (
     <div className='chat' style={boxStyle}>
       <div className="chat-header" style={chatHeader}>
-        <Avatar src='https://www.uidownload.com/files/790/68/996/free-set-of-material-design-avatars.png'/>
+        {/* <Avatar src='https://www.uidownload.com/files/790/68/996/free-set-of-material-design-avatars.png'/> */}
 
         <div className="chat-header-info" style={{color: 'black'}}>
-          <h3>Krewesic Chat Room</h3>
-          <p>Chat along...</p>
+          <h3 style={textStyle}>Krewesic Chat Room</h3>
+          <p style={textStyle}>Chat along...</p>
         </div>
       </div>
 
@@ -72,8 +89,8 @@ const MessagesView = ({chat, handleChange, sendMessage, value}) => {
           chat.map(message => {
             return (
               <div>
-                <h2 style={{position: 'relative', marginLeft: 'auto', width: 'fit-content', color: 'black'}}>{message.name}</h2>
-                <p className="chat-message" style={chatMessageSender}>
+                <h2 style={ message.name === user ? {position: 'relative', marginLeft: 'auto', width: 'fit-content', color: '#c3c2c5'} : {position: 'relative', width: 'fit-content', color: '#c3c2c5'}}>{message.name}</h2>
+                <p className="chat-message" style={message.name === user ? chatMessageSender : chatMessageRecipient}>
                   {message.message}
 
                   <span className="chat-timeStamp" style={timeStamp}> 3:52pm</span>

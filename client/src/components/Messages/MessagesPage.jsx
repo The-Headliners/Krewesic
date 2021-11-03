@@ -22,7 +22,7 @@ const MessagesPage = () => {
   //get the current user's name, hold the user in the state
   const [user, setUser] = useState('');
 
-
+  const [users, setUsers] = useState([]);
 
 
   const sendMessage = (event) => {
@@ -77,17 +77,24 @@ const MessagesPage = () => {
       });
   }, []);
 
+  useEffect(() => {
+   
+    axios.get('/userProf/allUsers')
+      .then(({data}) => {
+        // console.info('ALL USERS', data);
+        setUsers(data);
+      });
+  }, []);
 
-
-
+  console.info('ALL USERS', users);
   const page = {
-    backgroundColor: 'yellow',
+    backgroundColor: 'black',
     height: '100vh'
   };
 
   const body = {
     display: 'flex',
-    backgroundColor: '#ededed',
+    backgroundColor: '#150050',
     height: '90vh',
     width: '90vw',
   };
@@ -97,8 +104,8 @@ const MessagesPage = () => {
       <Link to='/DirectMessage'>Direct Messaging </Link>
       <h1 style={{color: 'black'}}>{user}</h1>
       <div className='message-body' style={body}>
-        <Sidebar />
-        <MessagesView chat={chat} handleChange={handleChange} sendMessage={sendMessage} value={value}/>
+        <Sidebar users={users}/>
+        <MessagesView chat={chat} handleChange={handleChange} sendMessage={sendMessage} value={value} user={user}/>
       </div>
     </div>
   );

@@ -20,13 +20,19 @@ const Search = () => {
       });
   };
 
+  const chatMenuInput = {
+    width: '90%',
+    padding: '10px 0',
+    border: 'none',
+    borderBottom: '1px solid grey'
+  };
 
   return (
     <div className='sidebar-search'>
 
       <div className='search-section'>
         <h5>Find a user </h5>
-        <input type="text" className="search-bar"placeholder="Find a user..." value={value} onChange={(e) => changeInput(e.target.value)}/>
+        <input type="text" className="chatMenuInput" style ={chatMenuInput} placeholder="Search for friends..." value={value} onChange={(e) => changeInput(e.target.value)}/>
         <button className="search-button" onClick={() => searchUser(value)}> Search </button>
       </div>
 

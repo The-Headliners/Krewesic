@@ -5,7 +5,7 @@ import DonutLargeIcon from '@material-ui/icons/DonutLarge';
 import ChatIcon from '@material-ui/icons/Chat';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import SidebarRooms from './SidebarRooms.jsx';
-const Sidebar = () => {
+const Sidebar = ({users}) => {
 
   //hold the state of the chat rooms
   const [rooms, setRooms] = useState([]);
@@ -46,7 +46,7 @@ const Sidebar = () => {
 
   const sidebarChats = {
     flex: '1',
-    backgroundColor: 'white',
+    backgroundColor: '#150050',
     overflow: 'scroll'
   };
   return (
@@ -65,7 +65,7 @@ const Sidebar = () => {
       </div>
 
       <div className="sidebar-chats" style={sidebarChats}>
-        <SidebarRooms rooms={rooms}/>
+        <SidebarRooms users={users}/>
       </div>
     </div>
   );

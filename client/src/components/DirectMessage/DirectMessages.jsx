@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 import Search from './Search.jsx';
 import Message from './Message.jsx';
 import Conversation from './Conversation.jsx';
+import ChatOnline from './Chat.jsx';
 import Users from './Users.jsx';
 import { async } from 'regenerator-runtime';
 import GlobalContext from '../Contexts/GlobalContext.jsx';
@@ -152,16 +153,74 @@ const DirectMessages = () => {
   });
   //console.log('NEW MESSAGE', messages);
 
+  const messenger = {
+    height: 'calc(100vh - 70px)',
+    display: 'flex',
+    backgroundColor: 'white'
+  };
 
+  const chatMenu = {
+    flex: '3.5',
+    backgroundColor: 'black'
+  };
+
+  const chatBox = {
+    flex: '5.5'
+  };
+  const chatOnline = {
+    flex: '3'
+  };
+  const chatWrappers = {
+    padding: '10px',
+    height: '100%',
+    backgroundColor: 'white'
+  };
+
+  const chatBoxWrapper = {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    position: 'relative',
+    padding: '10px',
+    height: '100%',
+    backgroundColor: 'white'
+  };
+  const chatBoxBottom = {
+    marginTop: '5px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  };
+  const chatMessageInput = {
+    width: '80%',
+    height: '90px',
+    padding: '10px'
+  };
+
+  const chatSubmitButton = {
+    width: '70px',
+    height: '40px',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    backgroundColor: 'teal',
+    color: 'white'
+  };
+  const chatBoxTop = {
+    height: '100%',
+    overflowY: 'scroll',
+    paddingRight: '10px'
+  };
   return (
-    <div className='directPage backgroundColorLight'>
+    <div className='messenger' style={messenger}>
       {/* <Users currentUser={currentUser}/> */}
-      <div className='search-feature'>
+      {/* <div className='search-feature'>
         <Search />
-      </div>
-      <div className='chatOnline'>
-        <div className='chatWrapper'>
-        Conversations:
+      </div> */}
+      <div className='chatMenu' style={chatMenu}>
+        <div className='chatMenuWrapper' style={chatWrappers}>
+        Conversations: menu
+          <Search />
           {
             conversations.map(convo => (
               <div onClick={() => setCurrentChat(convo)}>
@@ -173,23 +232,34 @@ const DirectMessages = () => {
         </div>
       </div>
 
-      <div className='chatBox'>
-        <div className='chatBoxCover'>
+      <div className='chatBox' style={chatBox}>
+        <div className='chatBoxWrapper' style={chatBoxWrapper}>
+          box
           {
             currentChat ? (
               <>
-                {messages.map(message => (
+                <div className="chatBoxTop" style={chatBoxTop}>
+                  {messages.map(message => (
+                    
+                    <div> 
+                      <Message message={message} owner={message.sender === currentUser.googleId} currentUser={currentUser}/>
+                    </div>
+                  ))}
+                </div>
 
-                  <Message message={message} owner={message.sender === currentUser.googleId} currentUser={currentUser}/>
-                ))}
-
-
-                <div className='writeMessage' style={{position: 'relative', marginLeft: '500px' }}>
-                  <textarea className='messageInput' placeholder='write something...' value={value} onChange={(e) => setValue(e.target.value)}> </textarea>
-                  <button className='sendMessageButton' onClick={handleSubmit}>Send</button>
+                <div className='chatBoxBottom' style={chatBoxBottom}>
+                  <textarea className='chatMessageInput' style={chatMessageInput} placeholder='write something...' value={value} onChange={(e) => setValue(e.target.value)}> </textarea>
+                  <button className='chatSubmitButton' style={chatSubmitButton} onClick={handleSubmit}>Send</button>
                 </div> </> ) : (<span className="noConversation"> Open a Conversation to start a Chat.</span>
 
-            )}
+                
+            )
+          }
+        </div>
+      </div>
+      <div className='chatOnline' style={chatOnline}>
+        <div className='chatOnlineWrapper' style={chatWrappers}>
+       online <ChatOnline />
         </div>
       </div>
     </div>
