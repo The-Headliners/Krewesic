@@ -135,100 +135,98 @@ const Profile = () => {
 
 
   return (
-    <ProfileStyles>
-      <Box
-        style={{backgroundColor: '#150050'}}
+
+    <Box
+      style={{backgroundColor: '#150050', boxSizing: 'border-box'}}
+    >
+      <br/>
+      <Typography
+        align='left'
+        variant='h4'
       >
-        <br/>
-        <Typography
-          align='left'
-          variant='h4'
-        >
-          { artistName || name }
-        </Typography>
-        <br/>
-        <Box
-          style={{align: 'left', width: '50%', height: '50%'}}
-        >
-          <img
-            style={{borderRadius: '50%', width: '25%', height: '25%'}}
-            src={pic}
-            height="150"
-            width="150"
-          />
-        </Box>
-        <br/>
-        <br/>
-        <Box
-          style={{align: 'left', width: '50%', height: '50%', color: '#a2a1a7'}}
-        >
-         Bio: { bio || artistBio }
-          <br/>
-        City: { city }
-          <br/>
-          {genreDesc} { favGenre || myGenre }
-          <br/>
-          {description}  { favArtist || influences }
-        </Box>
-        <br/>
-        <Box
-          style={{ color: 'pink'}}
-        >
-          <TextField
-            value={text}
-            style={{ backgroundColor: '#a2a1a7' }}
-            onChange={e => {
-              setMyTexts(e.target.value);
-            }}
-            multiline
-            label="Post"
-            size="small"
-            variant="outlined"
-          />
-          <Button
-            style={{ backgroundColor: '#610094' }}
-            startIcon={<PublishIcon />}
-            onClick={() => handlePost()}
-          >
-          Post
-          </Button>
-        </Box>
-        <Box
-          align='right'
-          marginRight='50px'
-          component="div"
-        >
-          <h4>My Posts</h4>
-          { post.map((posty, i) => {
-            return <Post
-              key={i}
-              index={i}
-              posty={posty.text}
-              timey={new Date(posty.createdAt).toString().slice(16, 21)}
-            ></Post>;
-          }) }
-
-        </Box>
-        <Box
-        >
-          <Button
-            style={{ backgroundColor: '#610094' }}
-            startIcon={<PeopleIcon />}
-            onClick={getFollowed}
-          >
-          My Krewe
-          </Button>
-          <br />
-          {myArtists.map((artist, i) => {
-            return <Krewe
-
-              key={i}
-              artist={artist}
-            ></Krewe>;
-          })}
-        </Box>
+        { artistName || name }
+      </Typography>
+      <br/>
+      <Box
+        style={{align: 'left', display: 'flex'}}
+      >
+        <img
+          style={{borderRadius: '50%'}}
+          src={pic}
+          height="150"
+          width="150"
+        />
       </Box>
-    </ProfileStyles>
+      <br/>
+      <br/>
+      <Box
+        style={{align: 'left', color: '#a2a1a7', flex: '50%'}}
+      >
+         Bio: { bio || artistBio }
+        <br/>
+        City: { city }
+        <br/>
+        {genreDesc} { favGenre || myGenre }
+        <br/>
+        {description}  { favArtist || influences }
+      </Box>
+      <br/>
+      <Box
+        style={{ color: 'pink'}}
+      >
+        <TextField
+          value={text}
+          style={{ backgroundColor: '#a2a1a7' }}
+          onChange={e => {
+            setMyTexts(e.target.value);
+          }}
+          multiline
+          label="Post"
+          size="small"
+          variant="outlined"
+        />
+        <Button
+          style={{ backgroundColor: '#610094' }}
+          startIcon={<PublishIcon />}
+          onClick={() => handlePost()}
+        >
+          Post
+        </Button>
+      </Box>
+      <Box
+        style={{border: '1px solid blue', top: '300px', left: '300px'}}
+      >
+        <h4
+          style={{ color: '#a2a1a7' }}
+        >Posts</h4>
+        { post.map((posty, i) => {
+          return <Post
+            key={i}
+            index={i}
+            posty={posty.text}
+            timey={new Date(posty.createdAt).toString().slice(16, 21)}
+          ></Post>;
+        }) }
+
+
+        <Button
+          style={{ backgroundColor: '#610094' }}
+          startIcon={<PeopleIcon />}
+          onClick={getFollowed}
+        >
+          My Krewe
+        </Button>
+        <br />
+        {myArtists.map((artist, i) => {
+          return <Krewe
+
+            key={i}
+            artist={artist}
+          ></Krewe>;
+        })}
+      </Box>
+    </Box>
+
   );
 };
 
