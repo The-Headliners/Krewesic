@@ -5,15 +5,16 @@ import styled from 'styled-components';
 //require('dotenv').config()
 import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import InfoCard from './InfoCard.jsx';
+import mapStyles from './snazzyMaps.js';
 
 
 
 
 const containerStyle = {
-  width: '500px',
+  width: '700px',
   height: '500px'
 };
-//  mapContainerStyle={containerStyle}
+
 
 
 
@@ -65,12 +66,7 @@ const Map = ({events, kEvents}) => {
   }, [events]);
 
   useEffect(() => {
-    // const locations = events.map(event => {
-    //   const latLng = {};
-    //   latLng.lat = event.location.lat;
-    //   latLng.lng = event.location.lon;
-    //   return latLng
-    // })
+
     setKVenues(kEvents);
 
   }, [kEvents]);
@@ -87,6 +83,7 @@ const Map = ({events, kEvents}) => {
           zoom={10}
           onClick={showVenues}
           onLoad={onMapLoad}
+          options={{styles: mapStyles}}
 
         >
           <div>

@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 const StyledMapEvents = styled.div`
   .wrapper {
-    background-color: #7749a1;
+    background-color: ${props => props.theme.colorDark};
     padding: 20px;
     width: 80vw;
     margin: auto;
@@ -17,7 +17,7 @@ const StyledMapEvents = styled.div`
     margin: 10px;
   }
   .showButton {
-    background-color: #fce97e;
+    background-color: ${props => props.theme.colorLight};
   }
 `;
 
@@ -80,13 +80,6 @@ const MapEvents = () => {
         <TextField variant="outlined" className='inputField' placeholder='YYYY-MM-DD' onChange={(e)=>setDate2(e.target.value)} value={date2} />
         <TextField variant="outlined" className='inputField' placeholder='city' onChange={(e)=>setCity(e.target.value)} value={city} />
         <Button className='showButton' onClick={findLocalShows}>find local shows</Button>
-
-
-
-
-
-        <Button onClick={searchDate}>search nolaween</Button>
-
         <Map events={events} kEvents={krewesicEvents} />
       </div>
     </StyledMapEvents>

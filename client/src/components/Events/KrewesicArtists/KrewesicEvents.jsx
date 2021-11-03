@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 const KEStyled = styled.div`
  .wrapper {
-  background-color: #a47ec4; 
+  background-color: ${props => props.theme.colorDark}; 
   padding: 30px; 
  }
  

@@ -33,6 +33,9 @@ const StyledHeader = styled.div`
    height: 70px;
    width: 70px;
  }
+ .notifications {
+  background-color: ${props => props.theme.highlight}
+ }
 `;
 
 
@@ -77,7 +80,7 @@ const Header = (props) => {
     <StyledHeader>
       <AppBar position="static" className='bar' >
         <div className='wrapper'>
-          <div className="notifications" onClick={() => setActiveNotifications(false)} style={{backgroundColor: activeNotifications ? 'red' : 'blue'}}>{notification && notification.notification.body}</div>
+          <div className="notifications" onClick={() => setActiveNotifications(false)} >{notification && notification.notification.body}</div>
           <img src={logo} alt='logo' className='logo'/>
           {display()}
         </div>        
@@ -87,4 +90,4 @@ const Header = (props) => {
 };
 
 export default Header;
-//<Typography>Logo</Typography>
+//<Typography>Logo</Typography>style={/*{backgroundColor: activeNotifications ? 'red' : 'blue'}*/}

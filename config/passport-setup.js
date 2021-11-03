@@ -23,10 +23,6 @@ passport.use(
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: '/auth/google/redirect'
   }, (accessToken, refreshToken, profile, done) => {
-    //console.log(profile)
-
-    
-
 
     User.findOne({ where: { googleId: profile.id } })
       .then(currentUser => {
