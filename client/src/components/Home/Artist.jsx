@@ -23,14 +23,16 @@ const Artist = ({user}) => {
       onClick={() => visitProfile(user.id)}
     >
       <div>
-        <p>Artist: {user.artistName}</p>
         <img
+          style={{ borderRadius: '50%', width: '20%', height: '20%' }}
           height={100}
           width={100}
           src={user.pic}></img>
+        <p>Artist: {user.artistName}</p>
         <p>Genre: {user.myGenre}</p>
-        <p>City: {user.city}</p>
-        <hr></hr>
+        <hr
+          style={{border: '1px solid #610094'}}
+        ></hr>
       </div>
     </div>
   );

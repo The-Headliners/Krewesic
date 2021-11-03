@@ -13,6 +13,8 @@ import DiscoverArtists from '../Home/DiscoverArtists.jsx';
 import Artist from '../Home/Artist.jsx';
 import Post from '../Profile/Post.jsx';
 import Krewe from '../Profile/Krewe.jsx';
+import PeopleIcon from '@mui/icons-material/People';
+import styled from 'styled-components';
 //import { set } from 'core-js/core/dict';
 const Profile = () => {
 
@@ -117,72 +119,64 @@ const Profile = () => {
     genreDescription();
   });
 
+  const ProfileStyles = styled.div`
+  background-color: ${props => props.theme.colorBackground};
+  box-sizing: border-box;
+  .row {
+    display: flex;
+  }
+  .column {
+    text-align: center;
+    flex: 50%;
+    padding: 10px;
+    height: 300px;
+  }
+`;
 
 
   return (
+
     <Box
-      bgcolor="primary.dark"
-      display="flex"
-      flexDirection="column"
-      alignItems="stretch"
+      style={{backgroundColor: '#150050', boxSizing: 'border-box'}}
     >
       <br/>
-      <Box>
-        <Typography
-          align='left'
-          color='textSecondary'
-          variant='h4'
-        >
-          My Profile
-        </Typography>
-        <br/>
+      <Typography
+        align='left'
+        variant='h4'
+      >
+        { artistName || name }
+      </Typography>
+      <br/>
+      <Box
+        style={{align: 'left', display: 'flex'}}
+      >
+        <img
+          style={{borderRadius: '50%'}}
+          src={pic}
+          height="150"
+          width="150"
+        />
       </Box>
-      <Box>
-        <Typography
-          align='center'
-          variant='h4'
-        >
-          { artistName || name }
-        </Typography>
-        <br/>
-        <Box
-          align='center'
-        >
-          <img
-            src={pic}
-            height="150"
-            width="150"
-          />
-          <br/>
-          <br/>
+      <br/>
+      <br/>
+      <Box
+        style={{align: 'left', color: '#a2a1a7', flex: '50%'}}
+      >
          Bio: { bio || artistBio }
-        </Box>
         <br/>
-        <Box
-          align='center'
-        >
         City: { city }
-        </Box>
         <br/>
-        <Box
-          align='center'
-        >
-          {genreDesc} { favGenre || myGenre }
-        </Box>
+        {genreDesc} { favGenre || myGenre }
         <br/>
-        <Box
-          align='center'
-        >
-          {description}  { favArtist || influences }
-        </Box>
+        {description}  { favArtist || influences }
       </Box>
       <br/>
       <Box
-        align='center'
-        marginLeft="100px"
+        style={{ color: 'pink'}}
       >
         <TextField
           value={text}
+          style={{ backgroundColor: '#a2a1a7' }}
           onChange={e => {
             setMyTexts(e.target.value);
           }}
@@ -192,6 +186,7 @@ const Profile = () => {
           variant="outlined"
         />
         <Button
+          style={{ backgroundColor: '#610094' }}
           startIcon={<PublishIcon />}
           onClick={() => handlePost()}
         >
@@ -199,11 +194,11 @@ const Profile = () => {
         </Button>
       </Box>
       <Box
-        align='right'
-        marginRight='50px'
-        component="div"
+        style={{border: '1px solid blue', top: '300px', left: '300px'}}
       >
-        <h4>My Posts</h4>
+        <h4
+          style={{ color: '#a2a1a7' }}
+        >Posts</h4>
         { post.map((posty, i) => {
           return <Post
             key={i}
@@ -213,10 +208,10 @@ const Profile = () => {
           ></Post>;
         }) }
 
-      </Box>
-      <Box
-      >
+
         <Button
+          style={{ backgroundColor: '#610094' }}
+          startIcon={<PeopleIcon />}
           onClick={getFollowed}
         >
           My Krewe
@@ -231,6 +226,7 @@ const Profile = () => {
         })}
       </Box>
     </Box>
+
   );
 };
 
