@@ -9,7 +9,6 @@ const Post = ({ posty, timey, index }) => {
 
   return (
     <Box
-      display="flex" flexDirection="column" alignItems="stretch" padding={1}
     >
       {index + 1}. {posty}
       <br/>
