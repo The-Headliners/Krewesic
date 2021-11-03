@@ -122,7 +122,7 @@ const VisitProfile = () => {
 
   return (
     <Box
-      bgcolor="primary.dark"
+      style={{ backgroundColor: '#150050'}}
       display="flex"
       flexDirection="column"
       alignItems="stretch"
@@ -151,6 +151,7 @@ const VisitProfile = () => {
         >
           <img
             src={pic}
+            style={{ borderRadius: '50%'}}
             height="150"
             width="150"
           />
@@ -180,13 +181,19 @@ const VisitProfile = () => {
       <br/>
       <Box
         align='center'
-      >
-        <Button
-          startIcon={<PublishIcon />}
-          onClick={followArtist}
-        >
+      >{
+          artistName ? (
+            <Button
+              startIcon={<PublishIcon />}
+              onClick={followArtist}
+            >
           Follow
-        </Button>
+            </Button>
+          ) : (
+            null
+          )
+        }
+
       </Box>
       <Box
         align='right'
