@@ -89,6 +89,22 @@ const DirectMessages = () => {
   }, [currentUser.googleId]);
 
 
+  //Event handler: whenever a user name is clicked, make the user and the current user logged in as a new conversation
+  const createConversation = async (user) => {
+    
+    const users = {
+      senderId: currentUser.googleId,
+      receiverId: user.googleId
+    };
+
+    try {
+      const conversation = await axios.post( '/chat/conversation', users);
+      setConversations([...conversations, users]);
+      //console.info('CONVERSATION!!:', conversation);
+    } catch (err) {
+      console.warn(err);
+    }
+  };
 
 
   //Doing another useEffect
@@ -96,6 +112,7 @@ const DirectMessages = () => {
     const getMessages = async () => {
       try {
         const messages = await axios.get(`/messages/allMessages/${currentChat?.id}`);
+        console.info('ALL MESSAGES', messages.data);
         setMessages(messages.data);
 
       } catch (err) {
@@ -152,6 +169,8 @@ const DirectMessages = () => {
     setMessages([...messages, {sender: senderId, text: text, name: name}]);
   });
   //console.log('NEW MESSAGE', messages);
+  //console.info('CURRENT USER:', currentUser);
+  console.info('CURRENT CHAT!!:', currentChat);
 
   const messenger = {
     height: 'calc(100vh - 70px)',
@@ -220,7 +239,7 @@ const DirectMessages = () => {
       <div className='chatMenu' style={chatMenu}>
         <div className='chatMenuWrapper' style={chatWrappers}>
         Conversations: menu
-          <Search />
+          <Search createConversation={createConversation}/>
           {
             conversations.map(convo => (
               <div onClick={() => setCurrentChat(convo)}>

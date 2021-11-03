@@ -53,8 +53,9 @@ const Message = ({message, owner, currentUser}) => {
     <div className='message' style={message.name === currentUser.name ? ownMessage : Message}>
       <div className='messageTop'>
         <img className='messageImg' style={messageImg} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIbCHBytowb0SiotsKsEzRFiJ37uH8GqkA-A&usqp=CAU" alt=""/>
+        {message.name}
         {/* <div className='username'>{message.name}</div>  */}
-        <p className="messageText" style={message.name === currentUser.name ? ownMessageText : messageText}>{message.name}: {message.text} </p>
+        <p className="messageText" style={message.name === currentUser.name ? ownMessageText : messageText}> {message.text} </p>
       </div>
       {/* <div className="messageDate">{message.createdAt}</div> */}
       <div className='messageBottom' style={messageBottom}> 1 hour ago</div>
