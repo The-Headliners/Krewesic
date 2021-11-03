@@ -3,10 +3,17 @@ import {TextField, Button} from '@material-ui/core/';
 import axios from 'axios';
 import Map from './Map.jsx';
 import styled from 'styled-components';
+import {KeyboardDatePicker, MuiPickersUtilsProvider} from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import DateAdapter from '@mui/lab/AdapterDateFns';
+import DatePicker from '@mui/lab/DatePicker';
+
+import { alpha } from '@material-ui/core/styles'; 
+import { LocalizationProvider } from '@mui/lab';
 
 const StyledMapEvents = styled.div`
   .wrapper {
-    background-color: ${props => props.theme.colorDark};
+    background-color: ${props => props.theme.colorLight};
     padding: 20px;
     width: 80vw;
     margin: auto;
@@ -31,8 +38,8 @@ const MapEvents = () => {
   const [city, setCity] = useState('');
   const [events, setEvents] = useState([]);
   //const [value, setValue] = useState(DateTime.now)
-  const [date1, setDate1] = useState('2021-10-29');
-  const [date2, setDate2] = useState('2021-10-31');
+  const [date1, setDate1] = useState(new Date('2021-11-11'));
+  const [date2, setDate2] = useState(new Date());
 
   const [krewesicEvents, setKrewesicEvents] = useState([]);
 
@@ -77,6 +84,11 @@ const MapEvents = () => {
     <StyledMapEvents>
       <div className='wrapper'>
         <TextField variant="outlined" className='inputField' placeholder='YYYY-MM-DD' onChange={(e)=>setDate1(e.target.value)} value={date1} />
+
+     
+         
+
+        
         <TextField variant="outlined" className='inputField' placeholder='YYYY-MM-DD' onChange={(e)=>setDate2(e.target.value)} value={date2} />
         <TextField variant="outlined" className='inputField' placeholder='city' onChange={(e)=>setCity(e.target.value)} value={city} />
         <Button className='showButton' onClick={findLocalShows}>find local shows</Button>
@@ -97,4 +109,16 @@ Your can add client_id and optionally client_secret to the end of any valid url 
 /**
  * curl https://api.seatgeek.com/2/events?client_id=MYCLIENTID
 curl https://api.seatgeek.com/2/events?client_id=MYCLIENTID&client_secret=MYCLIENTSECRET
+ */
+
+/**
+ * 
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+       
+          <KeyboardDatePicker
+            label="material date picker"
+            value={date1}
+            onChange={(e)=>setDate1(e.target.value)}
+          />
+        </MuiPickersUtilsProvider>
  */
