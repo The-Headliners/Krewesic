@@ -18,7 +18,7 @@ const StyledVideoChat = styled.div`
     width: 350px;
   }
   .chatButton {
-    background-color: #610094;
+    background-color: ${props => props.theme.colorMed};
   }
 `;
 
