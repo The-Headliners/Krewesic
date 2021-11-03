@@ -46,7 +46,8 @@ const VirtualEvent = () => {
   const myPeer = useRef(new Peer( undefined, { //remember: npm i -g peer   \n peerjs --port 3002   running peer port on 3002
   
     host: '/',
-    port: '3002'
+    port: '3002',
+    secure: true
       
   }));
 
