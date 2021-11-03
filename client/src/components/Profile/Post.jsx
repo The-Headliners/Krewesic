@@ -8,12 +8,23 @@ const Post = ({ posty, timey, index }) => {
 
 
   return (
-    <Box
-    >
-      {index + 1}. {posty}
-      <br/>
-      <div>Posted: {timey}</div>
-    </Box>
+    <div>
+      <Box
+        style={{ display: 'flex'}}
+      >
+        <Box
+          style={{ display: 'flex', justifyContent: 'center', textAlign: 'center'}}
+        >
+          {index + 1}. {posty}
+        </Box>
+        <br/>
+
+      </Box>
+      <Box
+        style={{ display: 'flex', textAlign: 'center', justifyContent: 'center'}}
+      >
+    -Posted: {timey}</Box>
+    </div>
 
   );
 };

@@ -129,7 +129,6 @@ const Profile = () => {
       <Box
         style={{backgroundColor: '#150050', display: 'flex', flexFlow: 'column', border: '1px solid green', width: '50%' }}
       >
-        <br/>
         <Box
           style={{ flex: 'display', border: '1px solid pink', justifyContent: 'center'}}
         >
