@@ -5,7 +5,22 @@ import TextField from '@material-ui/core/TextField';
 
 const Post = ({ posty, timey, index }) => {
 
+  const [ time, setTime ] = useState(null);
 
+  const myTime = () => {
+    if (timey.slice(0, 2) > 12) {
+      let hey = timey.slice(0, 2);
+      hey -= 12;
+      const usTime = hey + ':' + timey.slice(3);
+      setTime(usTime + ' ' + 'PM');
+    } else {
+      setTime(timey + ' ' + 'AM');
+    }
+  };
+
+  useEffect(() => {
+    myTime();
+  });
 
   return (
     <div>
@@ -23,7 +38,7 @@ const Post = ({ posty, timey, index }) => {
       <Box
         style={{ display: 'flex', textAlign: 'center', justifyContent: 'center'}}
       >
-    -Posted: {timey}</Box>
+        {time}</Box>
     </div>
 
   );
