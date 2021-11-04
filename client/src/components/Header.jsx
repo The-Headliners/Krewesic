@@ -34,7 +34,7 @@ const StyledHeader = styled.div`
    width: 70px;
  }
  .notifications {
-  background-color: ${props => props.theme.highlight}
+  background-color: ${props => props.theme.colorLight}
  }
 `;
 
