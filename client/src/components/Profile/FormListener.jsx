@@ -11,6 +11,25 @@ import {MenuItem, makeStyles } from '@material-ui/core';
 import styled from 'styled-components';
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 
+
+
+const StyledFormListener = styled.div`
+background-color: ${props => props.theme.colorDark};
+text-align: center;
+align-items: stretch
+.mainHeader: {
+  color: pink;
+}
+
+@media screen and (max-width: 480px) {
+  .typey {
+    font-size: 26px;
+  }
+}
+
+
+`;
+
 const FormListener = (props) => {
   const [ loading, setLoading ] = useState(false);
   const [ bio, setBio ] = useState('');
@@ -65,26 +84,18 @@ const FormListener = (props) => {
   };
 
 
-  const StyledFormListener = styled.div`
-background-color: ${props => props.theme.colorDark};
 
-.yo: {
-  display: flex
-  text-align: center;
-}
-`;
 
 
 
   return (
-    <div
-      style={{backgroundColor: '#150050', textAlign: 'center'}}
-    >
+    <StyledFormListener>
       <br/>
       <div
         //className='mainHeader'
       >
         <Typography
+          className='typey'
           style={{ color: '#c3c2c5', marginBottom: '10'}}
           align='center'
           variant='h4'>Listener Profile Creation</Typography>
@@ -93,20 +104,20 @@ background-color: ${props => props.theme.colorDark};
       <TextField
         onChange={e => setBio(e.target.value)}
         label="Bio"
-        style={{ backgroundColor: '#a2a1a7' }}
+        style={{ backgroundColor: '#a2a1a7', width: '60%' }}
         variant="outlined" />
       <br/><br/>
       <TextField
         onChange={e => setArtist(e.target.value)}
         id="outlined-basic"
         label="Favorite Artist"
-        style={{ backgroundColor: '#a2a1a7' }}
+        style={{ backgroundColor: '#a2a1a7', width: '60%' }}
         variant="outlined" />
       <br/>
       <br/>
       <div>
         <FormControl
-          style={{minWidth: 225}}
+          style={{width: '60%'}}
         >
           <InputLabel
 
@@ -132,7 +143,7 @@ background-color: ${props => props.theme.colorDark};
       <TextField
         onChange={e => setCity(e.target.value)}
         label="My City"
-        style={{ backgroundColor: '#a2a1a7' }}
+        style={{ backgroundColor: '#a2a1a7', width: '60%' }}
         variant="outlined" />
       <br/>
       <br/>
@@ -174,7 +185,10 @@ background-color: ${props => props.theme.colorDark};
         > Create Profile </Button>
       </div>
       <br/><br/>
-    </div>
+      <Typography
+        variant='h7'
+      >All Rights Reserved, Krewesic ©</Typography>
+    </StyledFormListener>
   );
 };
 
