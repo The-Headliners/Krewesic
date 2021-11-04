@@ -41,7 +41,7 @@ const server = http.createServer(app);
 
 const peerServer = PeerServer({
   port: 3002,
-  path: '/peerjs',
+  path: '/',
   proxied: true,
   debug: true
 });
