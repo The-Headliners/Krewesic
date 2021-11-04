@@ -119,86 +119,76 @@ const Profile = () => {
     genreDescription();
   });
 
-  const ProfileStyles = styled.div`
-  background-color: ${props => props.theme.colorBackground};
-  box-sizing: border-box;
-  .row {
-    display: flex;
-  }
-  .column {
-    text-align: center;
-    flex: 50%;
-    padding: 10px;
-    height: 300px;
-  }
-`;
+
 
 
   return (
-
     <Box
-      style={{backgroundColor: '#150050', boxSizing: 'border-box'}}
+      style={{display: 'flex'}}
     >
-      <br/>
-      <Typography
-        align='left'
-        variant='h4'
-      >
-        { artistName || name }
-      </Typography>
-      <br/>
       <Box
-        style={{align: 'left', display: 'flex'}}
+        style={{backgroundColor: '#150050', display: 'flex', flexFlow: 'column', width: '50%' }}
       >
-        <img
-          style={{borderRadius: '50%'}}
-          src={pic}
-          height="150"
-          width="150"
-        />
-      </Box>
-      <br/>
-      <br/>
-      <Box
-        style={{align: 'left', color: '#a2a1a7', flex: '50%'}}
-      >
-         Bio: { bio || artistBio }
-        <br/>
-        City: { city }
-        <br/>
-        {genreDesc} { favGenre || myGenre }
-        <br/>
-        {description}  { favArtist || influences }
-      </Box>
-      <br/>
-      <Box
-        style={{ color: 'pink'}}
-      >
-        <TextField
-          value={text}
-          style={{ backgroundColor: '#a2a1a7' }}
-          onChange={e => {
-            setMyTexts(e.target.value);
-          }}
-          multiline
-          label="Post"
-          size="small"
-          variant="outlined"
-        />
-        <Button
-          style={{ backgroundColor: '#610094' }}
-          startIcon={<PublishIcon />}
-          onClick={() => handlePost()}
+        <Box
+          style={{ flex: 'display', justifyContent: 'center', textAlign: 'center' }}
         >
-          Post
-        </Button>
+          <Typography
+
+            variant='h4'
+          >
+            { artistName || name }
+          </Typography>
+          <br/>
+          <img
+            style={{borderRadius: '50%'}}
+            src={pic}
+            height="150"
+            width="150"
+          />
+        </Box>
+        <br/>
+        <Box
+          style={{align: 'left', color: '#a2a1a7', flex: 'display', justifyContent: 'center', textAlign: 'center' }}
+        >
+         Bio: { bio || artistBio }
+          <br/>
+        City: { city }
+          <br/>
+          {genreDesc} { favGenre || myGenre }
+          <br/>
+          {description}  { favArtist || influences }
+        </Box>
+        <br/>
+        <Box
+          style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}
+        >
+          <Button
+            style={{ backgroundColor: '#610094', width: '70%', align: 'center' }}
+            startIcon={<PeopleIcon />}
+            onClick={getFollowed}
+          >
+          My Krewe
+          </Button>
+          <br />
+          {myArtists.map((artist, i) => {
+            return <Krewe
+
+              key={i}
+              artist={artist}
+            ></Krewe>;
+          })}
+        </Box>
+
+
       </Box>
       <Box
-        style={{border: '1px solid blue', top: '300px', left: '300px'}}
+        style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', backgroundColor: '#150050', width: '50%', alignItems: 'center'}}
       >
-        <h4
-          style={{ color: '#a2a1a7' }}
-        >Posts</h4>
+        <Typography
+          style={{ color: '#a2a1a7', paddingTop: '10px' }}
+          variant='h5'
+        >Posts</Typography>
+        <br/>
         { post.map((posty, i) => {
           return <Post
             key={i}
@@ -207,26 +197,30 @@ const Profile = () => {
             timey={new Date(posty.createdAt).toString().slice(16, 21)}
           ></Post>;
         }) }
-
-
-        <Button
-          style={{ backgroundColor: '#610094' }}
-          startIcon={<PeopleIcon />}
-          onClick={getFollowed}
+        <Box
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', justifyContent: 'flex-end'}}
         >
-          My Krewe
-        </Button>
-        <br />
-        {myArtists.map((artist, i) => {
-          return <Krewe
-
-            key={i}
-            artist={artist}
-          ></Krewe>;
-        })}
+          <TextField
+            value={text}
+            style={{ backgroundColor: '#a2a1a7' }}
+            onChange={e => {
+              setMyTexts(e.target.value);
+            }}
+            multiline
+            label="Post"
+            size="small"
+            variant="outlined"
+          />
+          <Button
+            style={{ backgroundColor: '#610094' }}
+            startIcon={<PublishIcon />}
+            onClick={() => handlePost()}
+          >
+          Post
+          </Button>
+        </Box>
       </Box>
     </Box>
-
   );
 };
 
