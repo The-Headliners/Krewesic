@@ -6,7 +6,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import PublishIcon from '@mui/icons-material/Publish';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import useGetUser from '../CustomHooks/useGetUser.jsx';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ArtistPosts from '../Profile/ArtistPosts.jsx';
@@ -184,7 +184,8 @@ const VisitProfile = () => {
           >{
               artistName ? (
                 <Button
-                  startIcon={<PublishIcon />}
+                  style={{ backgroundColor: '#610094'}}
+                  startIcon={<GroupAddIcon />}
                   onClick={followArtist}
                 >
           Follow
@@ -199,7 +200,7 @@ const VisitProfile = () => {
       </Box>
       <br/>
       <Box
-        style={{ display: 'flex', flexFlow: 'column', border: '1px solid blue', width: '50%', backgroundColor: '#150050', justifyContent: 'center' }}>
+        style={{ display: 'flex', flexFlow: 'column', border: '1px solid blue', width: '50%', backgroundColor: '#150050', justifyContent: 'center', alignItems: 'center'}}>
         <Button
           style={{ backgroundColor: '#610094'}}
           startIcon={<VisibilityIcon />}
@@ -208,7 +209,9 @@ const VisitProfile = () => {
         { post.map((posty, i) => {
           return <ArtistPosts
             key={i}
+            index={i}
             posty={posty.text}
+            timey={new Date(posty.createdAt).toString().slice(16, 21)}
           />;
         }) }
       </Box>

@@ -130,7 +130,7 @@ const Profile = () => {
         style={{backgroundColor: '#150050', display: 'flex', flexFlow: 'column', border: '1px solid green', width: '50%' }}
       >
         <Box
-          style={{ flex: 'display', border: '1px solid pink', justifyContent: 'center'}}
+          style={{ flex: 'display', border: '1px solid pink', justifyContent: 'center', textAlign: 'center' }}
         >
           <Typography
 
@@ -160,10 +160,10 @@ const Profile = () => {
         </Box>
         <br/>
         <Box
-          style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', border: '1px solid red' }}
+          style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', border: '1px solid red', alignItems: 'center' }}
         >
           <Button
-            style={{ backgroundColor: '#610094'}}
+            style={{ backgroundColor: '#610094', width: '70%', align: 'center' }}
             startIcon={<PeopleIcon />}
             onClick={getFollowed}
           >
@@ -184,9 +184,11 @@ const Profile = () => {
       <Box
         style={{border: '1px solid blue', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', backgroundColor: '#150050', width: '50%', alignItems: 'center'}}
       >
-        <h4
+        <Typography
           style={{ color: '#a2a1a7' }}
-        >Posts</h4>
+          variant='h5'
+        >Posts</Typography>
+        <br/>
         { post.map((posty, i) => {
           return <Post
             key={i}
@@ -195,24 +197,28 @@ const Profile = () => {
             timey={new Date(posty.createdAt).toString().slice(16, 21)}
           ></Post>;
         }) }
-        <TextField
-          value={text}
-          style={{ backgroundColor: '#a2a1a7' }}
-          onChange={e => {
-            setMyTexts(e.target.value);
-          }}
-          multiline
-          label="Post"
-          size="small"
-          variant="outlined"
-        />
-        <Button
-          style={{ backgroundColor: '#610094' }}
-          startIcon={<PublishIcon />}
-          onClick={() => handlePost()}
+        <Box
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', border: '3px solid black', height: '100%', justifyContent: 'flex-end'}}
         >
+          <TextField
+            value={text}
+            style={{ backgroundColor: '#a2a1a7' }}
+            onChange={e => {
+              setMyTexts(e.target.value);
+            }}
+            multiline
+            label="Post"
+            size="small"
+            variant="outlined"
+          />
+          <Button
+            style={{ backgroundColor: '#610094' }}
+            startIcon={<PublishIcon />}
+            onClick={() => handlePost()}
+          >
           Post
-        </Button>
+          </Button>
+        </Box>
       </Box>
     </Box>
   );

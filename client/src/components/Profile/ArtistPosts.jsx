@@ -5,17 +5,44 @@ import TextField from '@material-ui/core/TextField';
 
 const ArtistPosts = ({ posty, timey, index }) => {
 
+  const [ time, setTime ] = useState(null);
 
+  const myTime = () => {
+    if (timey.slice(0, 2) > 12) {
+      let hey = timey.slice(0, 2);
+      hey -= 12;
+      const usTime = hey + ':' + timey.slice(3);
+      setTime(usTime + ' ' + 'PM');
+    } else {
+      setTime(timey + ' ' + 'AM');
+    }
+  };
+
+  useEffect(() => {
+    myTime();
+  });
 
   return (
-    <Box
-      style={{ display: 'flex', justifyContent: 'center', textAlign: 'center'}}
-    >
-      {posty}
-      <br/>
-    </Box>
+    <div>
+      <Box
+        style={{ display: 'flex'}}
+      >
+        <Box
+          style={{ display: 'flex', textAlign: 'center', justifyContent: 'center'}}
+        >
+          {index + 1}. {posty}
+        </Box>
+        <br/>
+
+      </Box>
+      <Box
+        style={{ display: 'flex', textAlign: 'center', justifyContent: 'center'}}
+      >
+        {time}</Box>
+    </div>
 
   );
 };
 
 export default ArtistPosts;
+

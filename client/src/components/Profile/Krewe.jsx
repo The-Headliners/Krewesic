@@ -15,7 +15,7 @@ const Krewe = ({ artist }) => {
 
   return (
     <Box
-      style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center'}}
+      style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center'}}
     >
       <Box
         style={{ display: 'flex', justifyContent: 'center'}}
@@ -31,7 +31,7 @@ const Krewe = ({ artist }) => {
         <li> {artist} </li>
       </Box>
       <Box
-        style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap'}}
+        style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}
       >
         {albumDesc} {artistAlbum}
       </Box>
