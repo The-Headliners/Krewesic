@@ -23,7 +23,6 @@ import DirectMessages from './DirectMessage/DirectMessages.jsx';
 import MusicUpload from './UploadMusic/MusicUpload.jsx';
 import EventLandingPage from './Events/EventLandingPage.jsx';
 import CreateEvent from './Events/CreateEvent.jsx';
-// import MailingList from './Home/mailing list/MailingList.jsx';
 import Events from './Events/Events.jsx';
 import KreweEventLandingPage from './Events/KrewesicArtists/KreweEventLandingPage.jsx';
 import VisitProfile from './Profile/VisitProfile.jsx';
@@ -36,6 +35,9 @@ import AudioRecording from './Recording/AudioRecording.jsx';
 import VideoChats from './LiveStream/VideoChats.jsx';
 import ConferenceCall from './LiveStream/ConferenceCall.jsx';
 import MyEvents from './Events/MyEvents.jsx';
+
+import {MuiPickersUtilsProvider} from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 import io from 'socket.io-client';
 const socket = io.connect('/');
@@ -183,13 +185,3 @@ const App = (props) => {
 
 export default App;
 
-/**
- *
- *  <Route exact path='/DirectMessage' component={DirectMessages} />
-
-
-             <Route path='/messages' component={MessagesPage}>
-            </Route>
- */
-
-//

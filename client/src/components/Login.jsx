@@ -13,10 +13,8 @@ const LoginStyles = styled.div`
     align-items: center;
   }
   .logo {
-
     width: 200px;
     margin-bottom: 20px;
-
   }
 `;
 

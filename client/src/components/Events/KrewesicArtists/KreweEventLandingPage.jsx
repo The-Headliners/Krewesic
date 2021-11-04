@@ -7,6 +7,10 @@ import styled from 'styled-components';
 import GlobalContext from '../../Contexts/GlobalContext.jsx';
 import {useHistory} from 'react-router-dom';
 import VisitProfile from '../../Profile/VisitProfile.jsx';
+import {format} from 'date-fns';
+
+
+
 
 
 const StyledLanding = styled.div`
@@ -48,14 +52,17 @@ const KreweEventLandingPage = () => {
   const getEventDeetz = async () => {
     const {data} = await axios.get(`/krewesicevents/event/${eventId}`);
     setArtist(data.User.name);
-    setDateTime(data.when);
+    //setDateTime(data.when);
     setVenue(data.venue);
     setAddress(data.address);
     setCity(data.city);
     setState(data.state);
     setCode(data.code);
     setArtistId(data.User.id);
-
+    const when = new Date(data.when.slice(0, -5));
+  
+    const formattedDate = format(when, 'MM.dd.yyyy h:mm aaa', { timeZone: 'America/Chicago'},);
+    setDateTime(formattedDate);
   };
 
 
