@@ -88,7 +88,7 @@ const getUser = (userId) => {
 };
 io.on('connection', socket => {
   //when connect
-  console.info(`user ${socket.id} is connected`);
+ // console.info(`user ${socket.id} is connected`);
 
   //***FOR LIVE CHAT FOR ALL USERS*** when a message is sent */
   socket.on('message', ({ name, message}) => {
@@ -134,7 +134,7 @@ io.on('connection', socket => {
     io.to(sockId).emit('notified', data);
   });
   socket.on('joinShow', ({showId, userId, name}) => {
-    console.info('join show event, showId then userId', showId, userId);
+    //console.info('join show event, showId then userId', showId, userId);
     const idObj = {socketId: socket.id, peerId: userId};
     if (liveStreamUsers[showId]) {
       liveStreamUsers[showId].push(idObj);
@@ -147,7 +147,7 @@ io.on('connection', socket => {
 
 
   socket.on('peerconnected', (data) => {
-    console.info('on peer connected', data);
+    //console.info('on peer connected', data);
     const {showId, userId, name} = data;
     const idObj = {socketId: socket.id, peerId: userId};
     if (showId && userId) {
@@ -175,7 +175,7 @@ io.on('connection', socket => {
   //When disconnect
   socket.on('disconnect', () => {
     //if there are any disconnections
-    console.info('disconnected user', socket.id);
+   // console.info('disconnected user', socket.id);
     removeUser(socket.id);
     removeLiveStreamUser(socket.id); //this needs to account for peerId not socketId because the users are via peerId
     io.emit('getUsers', users);

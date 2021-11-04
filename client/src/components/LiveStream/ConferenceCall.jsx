@@ -49,15 +49,6 @@ const ConferenceCall = () => {
     path: '/',
     port: '3002'
     
-    //for deployment: 
-    // const myPeer = useRef(new Peer( undefined, { //remember: npm i -g peer   \n peerjs --port 3002   running peer port on 3002
-    //   host: 'krewesic.com',
-    //   path: '/',
-    
-    //   secure: true,       
-    
-    // })); 
-    
   }));
 
 
