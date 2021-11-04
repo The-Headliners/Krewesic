@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
-
+import { Box } from '@material-ui/core';
 
 
 const Krewe = ({ artist }) => {
@@ -9,13 +9,16 @@ const Krewe = ({ artist }) => {
 
 
   const randomAlbum = () => {
-    setAlbumDesc('Random Album:');
+    setAlbumDesc('Record:');
   };
 
 
   return (
-    <div>
-      <div
+    <Box
+      style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center'}}
+    >
+      <Box
+        style={{ display: 'flex', justifyContent: 'center'}}
         onClick={() => axios.get(`https://theaudiodb.com/api/v1/json/523532/searchalbum.php?s=${artist}`).then((data) => {
         //console.info(data.data.album);
           const randomValue = data.data.album[Math.floor(Math.random() * data.data.album.length)];
@@ -25,12 +28,14 @@ const Krewe = ({ artist }) => {
           .then(() => randomAlbum())
         }
       >
-        {artist}
-      </div>
-      <div>
-        {albumDesc}  {artistAlbum}
-      </div>
-    </div>
+        <li> {artist} </li>
+      </Box>
+      <Box
+        style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}
+      >
+        {albumDesc} {artistAlbum}
+      </Box>
+    </Box>
   );
 };
 

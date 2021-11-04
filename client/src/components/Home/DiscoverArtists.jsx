@@ -64,7 +64,7 @@ const discoverArtists = () => {
       <Typography
         style={{ color: '#c3c2c5' }}
         align='center'
-        variant='h4'>Our Artists</Typography>
+        variant='h4'>Artists</Typography>
       <hr
         style={{border: '1px solid #610094'}}
       />
