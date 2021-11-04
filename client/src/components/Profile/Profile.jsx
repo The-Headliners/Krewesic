@@ -127,10 +127,10 @@ const Profile = () => {
       style={{display: 'flex'}}
     >
       <Box
-        style={{backgroundColor: '#150050', display: 'flex', flexFlow: 'column', border: '1px solid green', width: '50%' }}
+        style={{backgroundColor: '#150050', display: 'flex', flexFlow: 'column', width: '50%' }}
       >
         <Box
-          style={{ flex: 'display', border: '1px solid pink', justifyContent: 'center', textAlign: 'center' }}
+          style={{ flex: 'display', justifyContent: 'center', textAlign: 'center' }}
         >
           <Typography
 
@@ -148,7 +148,7 @@ const Profile = () => {
         </Box>
         <br/>
         <Box
-          style={{align: 'left', color: '#a2a1a7', flex: 'display', border: '1px solid yellow' }}
+          style={{align: 'left', color: '#a2a1a7', flex: 'display', justifyContent: 'center', textAlign: 'center' }}
         >
          Bio: { bio || artistBio }
           <br/>
@@ -160,7 +160,7 @@ const Profile = () => {
         </Box>
         <br/>
         <Box
-          style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', border: '1px solid red', alignItems: 'center' }}
+          style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}
         >
           <Button
             style={{ backgroundColor: '#610094', width: '70%', align: 'center' }}
@@ -182,10 +182,10 @@ const Profile = () => {
 
       </Box>
       <Box
-        style={{border: '1px solid blue', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', backgroundColor: '#150050', width: '50%', alignItems: 'center'}}
+        style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', backgroundColor: '#150050', width: '50%', alignItems: 'center'}}
       >
         <Typography
-          style={{ color: '#a2a1a7' }}
+          style={{ color: '#a2a1a7', paddingTop: '10px' }}
           variant='h5'
         >Posts</Typography>
         <br/>
@@ -198,7 +198,7 @@ const Profile = () => {
           ></Post>;
         }) }
         <Box
-          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', border: '3px solid black', height: '100%', justifyContent: 'flex-end'}}
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', justifyContent: 'flex-end'}}
         >
           <TextField
             value={text}

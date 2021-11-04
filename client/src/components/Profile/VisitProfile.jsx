@@ -126,10 +126,10 @@ const VisitProfile = () => {
       style={{ display: 'flex' }}
     >
       <Box
-        style={{ backgroundColor: '#150050', display: 'flex', flexFlow: 'column', border: '1px solid green', width: '50%' }}
+        style={{ backgroundColor: '#150050', display: 'flex', flexFlow: 'column', width: '50%' }}
       >
         <Box
-          style={{ flex: 'display', border: '1px solid pink', }}
+          style={{ flex: 'display' }}
         >
           <Typography
             align='left'
@@ -200,7 +200,7 @@ const VisitProfile = () => {
       </Box>
       <br/>
       <Box
-        style={{ display: 'flex', flexFlow: 'column', border: '1px solid blue', width: '50%', backgroundColor: '#150050', justifyContent: 'center', alignItems: 'center'}}>
+        style={{ display: 'flex', flexFlow: 'column', width: '50%', backgroundColor: '#150050', justifyContent: 'center', alignItems: 'center'}}>
         <Button
           style={{ backgroundColor: '#610094'}}
           startIcon={<VisibilityIcon />}
