@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import {TextField, Button} from '@material-ui/core/';
+import { Button} from '@material-ui/core/';
+import TextField from '@mui/material/TextField';
+import InputLabel from '@mui/material/InputLabel';
 import axios from 'axios';
 import Map from './Map.jsx';
 import styled from 'styled-components';
@@ -13,10 +15,23 @@ import { LocalizationProvider } from '@mui/lab';
 
 const StyledMapEvents = styled.div`
   .wrapper {
-    background-color: ${props => props.theme.colorLight};
+    background-color: ${props => props.theme.colorBackground};
     padding: 20px;
     width: 80vw;
     margin: auto;
+    
+  }
+  .inputsWrapper {
+    display: flex;
+    flex-direction: column;
+  }
+  .datesWrapper {
+    display: flex;
+    flex-direction: row;
+  }
+  .cityWrapper {
+    display: flex;
+    flex-direction: row;
   }
   .inputField {
     background-color: white;
@@ -25,6 +40,10 @@ const StyledMapEvents = styled.div`
   }
   .showButton {
     background-color: ${props => props.theme.colorLight};
+    color: ${props => props.theme.textColorLight}
+  }
+  .labels {
+    color: ${props => props.theme.textColorLight}
   }
 `;
 
@@ -83,15 +102,46 @@ const MapEvents = () => {
   return (
     <StyledMapEvents>
       <div className='wrapper'>
-        <TextField variant="outlined" className='inputField' placeholder='YYYY-MM-DD' onChange={(e)=>setDate1(e.target.value)} value={date1} />
-
-     
-         
-
-        
-        <TextField variant="outlined" className='inputField' placeholder='YYYY-MM-DD' onChange={(e)=>setDate2(e.target.value)} value={date2} />
-        <TextField variant="outlined" className='inputField' placeholder='city' onChange={(e)=>setCity(e.target.value)} value={city} />
-        <Button className='showButton' onClick={findLocalShows}>find local shows</Button>
+        <div className='inputsWrapper'>
+          <div className='datesWrapper'>
+            <InputLabel htmlFor='startDateInput' className='labels'>Start Date</InputLabel>
+            <TextField 
+              id='startDateInput'
+              variant="outlined" 
+              margin='dense'
+              InputLabelProps={{style: {color: 'white', marginBottom: '5px'} }}
+              className='inputField' 
+              placeholder='YYYY-MM-DD' 
+              onChange={(e)=>setDate1(e.target.value)} 
+              value={date1} 
+            />
+            <InputLabel htmlFor='endDateInput' className='labels'>End Date</InputLabel>
+            <TextField 
+              id='endDateInput'
+              variant="outlined" 
+              margin='dense'
+              className='inputField' 
+              placeholder='YYYY-MM-DD' 
+              onChange={(e)=>setDate2(e.target.value)} 
+              value={date2} 
+              label='end date'
+            />
+          </div>
+          <div className='cityWrapper'>
+            <InputLabel htmlFor='cityInput' className='labels'>city</InputLabel>
+            <TextField 
+              id='cityInput'
+              variant="outlined" 
+              className='inputField' 
+              placeholder='city' 
+              onChange={(e)=>setCity(e.target.value)} 
+              label='city'
+              value={city} />
+            <Button className='showButton' onClick={findLocalShows}>find local shows</Button>
+          </div>
+        </div>
+    
+      
         <Map events={events} kEvents={krewesicEvents} />
       </div>
     </StyledMapEvents>

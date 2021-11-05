@@ -132,7 +132,7 @@ const Map = ({events, kEvents, markers}) => {
                   url: musicNoteMarker,
                   scaledSize: new window.google.maps.Size(100, 100),
                   origin: new window.google.maps.Point(0, 0),
-                  anchor: new window.google.maps.Point(15, 15)}}
+                  anchor: new window.google.maps.Point(80, 80)}}
                 onClick={() => {
                   setSelected(venue);
                 }}
