@@ -7,6 +7,7 @@ import GlobalContext from '../Contexts/GlobalContext.jsx';
 import StreamChat from './StreamChat.jsx';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import Peer from 'peerjs';
 
 
 
@@ -46,7 +47,7 @@ const VirtualEvent = () => {
   const myPeer = useRef(new Peer( undefined, { //remember: npm i -g peer   \n peerjs --port 3002   running peer port on 3002
   
     host: '/',
-    port: '3002',
+    path: '/peerjs',
     secure: true
       
   }));
@@ -114,7 +115,7 @@ const VirtualEvent = () => {
       setPeers(data);
       socket.emit('peerconnected', peers); //this is the step missing-- this needs to go back, and signal other user that this person joined the room.  to not throw infinite loop: should probably account for to only add that peer to the state if the state is empty
       const notMe = data.allUsers.filter(uObj => uObj.peerId !== myPeerId.current);
-      //console.log('notMe', notMe);
+      // console.log('notMe', notMe);
       setAllPeers(notMe);
       setMyVidDisplay('hidden');
       myVidDisplay.current = 'hidden';
@@ -128,7 +129,7 @@ const VirtualEvent = () => {
       call.answer(currentStream.current);
       //put this stream in the peerVideo and the peerStream
       call.on('stream', (peerStream) => {
-        //console.log('peerVideo.current', peerVideo.current);
+        // console.log('peerVideo.current', peerVideo.current);
         //peerVideo.current.srcObject = peerStream;
         //setPeerStream(peerStream);
 
