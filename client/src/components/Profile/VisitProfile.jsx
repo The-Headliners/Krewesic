@@ -25,6 +25,10 @@ const VisitStyles = styled.div`
     .namey {
       font-size: 24px;
     }
+    .profPic {
+      height: 120px;
+      width: 120px;
+    }
   }
 
 `;
@@ -172,6 +176,7 @@ const VisitProfile = () => {
               align='center'
             >
               <img
+                className='profPic'
                 src={pic}
                 style={{ borderRadius: '50%'}}
                 height="150"

@@ -32,6 +32,10 @@ const ProfileStyles = styled.div`
     .namey {
       font-size: 24px;
     }
+    .profPic {
+      height: 120px;
+      width: 120px;
+    }
   }
 
 `;
@@ -157,6 +161,7 @@ const Profile = () => {
             style={{ flex: 'display', justifyContent: 'center', textAlign: 'center' }}
           >
             <Typography
+              style={{marginTop: '10px' }}
               className='namey'
               variant='h4'
             >
@@ -164,6 +169,7 @@ const Profile = () => {
             </Typography>
             <br/>
             <img
+              className='profPic'
               style={{borderRadius: '50%'}}
               src={pic}
               height="150"
