@@ -7,6 +7,8 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import logo from './images/KrewesicLight.png';
 import Grid from '@material-ui/core/Grid';
+import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const StyledHeader = styled.div`
   .bar {
@@ -92,10 +94,10 @@ const Header = (props) => {
     return loggedIn
       ? <Grid
         item xs={4} md={4} sm={4} lg={4}
-      ><Button className='btn flexChild' onClick={logout}>logout</Button></Grid>
+      ><Button className='btn flexchild' startIcon={ <LogoutIcon />} onClick={logout}>logout</Button></Grid>
       : <Grid
         item xs={4} md={4} sm={4} lg={4}
-      ><a href='/auth/google'><Button className='btn flexchild' >Log In</Button></a></Grid>;
+      ><a href='/auth/google'><Button startIcon={ <LoginIcon />} className='btn flexchild' >Log In</Button></a></Grid>;
   };
 
 
