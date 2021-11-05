@@ -25,20 +25,19 @@ const Post = ({ posty, timey, index }) => {
   return (
     <div>
       <Box
-        style={{ display: 'flex'}}
+        style={{ justifyContent: 'center'}}
       >
         <Box
           style={{ display: 'flex', justifyContent: 'center', textAlign: 'center'}}
         >
           {index + 1}. {posty}
         </Box>
-        <br/>
-
       </Box>
       <Box
         style={{ display: 'flex', textAlign: 'center', justifyContent: 'center'}}
       >
         {time}</Box>
+      <br/>
     </div>
 
   );

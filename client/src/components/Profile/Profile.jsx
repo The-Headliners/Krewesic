@@ -7,6 +7,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import PublishIcon from '@mui/icons-material/Publish';
 import { DataRowMessage } from 'pg-protocol/dist/messages';
 import DiscoverArtists from '../Home/DiscoverArtists.jsx';
@@ -15,6 +16,7 @@ import Post from '../Profile/Post.jsx';
 import Krewe from '../Profile/Krewe.jsx';
 import PeopleIcon from '@mui/icons-material/People';
 import styled from 'styled-components';
+import { wrap } from 'regenerator-runtime';
 //import { set } from 'core-js/core/dict';
 const Profile = () => {
 
@@ -123,11 +125,12 @@ const Profile = () => {
 
 
   return (
-    <Box
-      style={{display: 'flex'}}
+    <Grid
+      container
     >
-      <Box
-        style={{backgroundColor: '#150050', display: 'flex', flexFlow: 'column', width: '50%' }}
+      <Grid
+        item xs={12} md={6} sm={12} lg={6}
+        style={{backgroundColor: '#150050'}}
       >
         <Box
           style={{ flex: 'display', justifyContent: 'center', textAlign: 'center' }}
@@ -180,9 +183,10 @@ const Profile = () => {
         </Box>
 
 
-      </Box>
-      <Box
-        style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', backgroundColor: '#150050', width: '50%', alignItems: 'center'}}
+      </Grid>
+      <Grid
+        item xs={12} md={6} sm={12} lg={6}
+        style={{ alignItems: 'flex-end', backgroundColor: '#150050', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}
       >
         <Typography
           style={{ color: '#a2a1a7', paddingTop: '10px' }}
@@ -198,7 +202,7 @@ const Profile = () => {
           ></Post>;
         }) }
         <Box
-          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', justifyContent: 'flex-end'}}
+          style={{ alignItems: 'center', justifyContent: 'center'}}
         >
           <TextField
             value={text}
@@ -219,8 +223,8 @@ const Profile = () => {
           Post
           </Button>
         </Box>
-      </Box>
-    </Box>
+      </Grid>
+    </Grid>
   );
 };
 
