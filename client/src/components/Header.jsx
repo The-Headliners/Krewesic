@@ -20,14 +20,14 @@ const StyledHeader = styled.div`
 
  .btn {
    margin-left: 10px;
-   background-color: #610094; 
+   background-color: #610094;
    :hover {
      background-color: #3F0071;
    }
- 
+
  }
  .flexChild {
-   
+
  }
  .logo {
    height: 70px;
@@ -45,9 +45,9 @@ const Header = (props) => {
 
   const {name, setName, type, setType, loggedIn, setLoggedIn, socket} = useContext(GlobalContext);
 
-  const [notification, setNotification] = useState(''); //for now a string but in future array and have drop down menu for all notifications 
+  const [notification, setNotification] = useState(''); //for now a string but in future array and have drop down menu for all notifications
   const [activeNotifications, setActiveNotifications] = useState(false);
- 
+
   //to logout: call the logout endpoint
   //will need additional work to redirect, after we have better idea of where to redirect to.
   const logout = async () => {
@@ -56,7 +56,7 @@ const Header = (props) => {
     setType('');
     setLoggedIn(false);
     //history pusch redirect to wherever should be redirected to
- 
+
   };
 
   useEffect(() => {
@@ -67,8 +67,8 @@ const Header = (props) => {
       //put in a redirect and description on notifications!!
     });
   }, []);
-  
-  //display: conditionally displays login button if user not logged in, or the name and type if logged in and a log out button.   resets the global state if logging out. 
+
+  //display: conditionally displays login button if user not logged in, or the name and type if logged in and a log out button.   resets the global state if logging out.
   //note: after more development, a hamburger menu shold be on the right of all this.  the logo should also be ... a logo
 
   const display = () => {
@@ -76,6 +76,8 @@ const Header = (props) => {
       ? <Typography className='flexChild'>{name} type: {type} <Button className='btn' onClick={logout}>logout</Button></Typography>
       : <div ><a href='/auth/google'><Button className='btn flexchild' >Log In</Button></a></div>;
   };
+
+
   return (
     <StyledHeader>
       <AppBar position="static" className='bar' >
@@ -83,7 +85,7 @@ const Header = (props) => {
           <div className="notifications" onClick={() => setActiveNotifications(false)} >{notification && notification.notification.body}</div>
           <img src={logo} alt='logo' className='logo'/>
           {display()}
-        </div>        
+        </div>
       </AppBar>
     </StyledHeader>
   );

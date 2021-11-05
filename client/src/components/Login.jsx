@@ -22,10 +22,10 @@ const Login = () => (
   <LoginStyles>
     <div className='wrapper' >
 
-      <div >
-        <img align='center' src={logo} className='logo' alt='logo' />
-        <br/>
-
+      <div
+        align='center'
+      >
+        <img src={logo} className='logo' alt='logo' />
         <h1 >Find Your Krewe And Music To March To</h1>
 
         <br/>
@@ -33,7 +33,7 @@ const Login = () => (
           align='center'
         ><a href='/auth/google'><Button
             startIcon={ <LoginIcon />}
-            color='primary'
+            style={{ backgroundColor: '#610094' }}
             variant='contained'
           >Log In</Button></a></div>
       </div>
