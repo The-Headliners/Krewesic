@@ -1,11 +1,12 @@
 import keys from './keys.js'; //this cant be permanent
 import React, {useState, memo, useEffect, useCallback, useRef} from 'react';
-import { GoogleMap, LoadScript, useLoadScript, Marker, InfoWindow} from '@react-google-maps/api';
+import { GoogleMap, LoadScript, useLoadScript, Marker, InfoWindow, MarkerClusterer} from '@react-google-maps/api';
 import styled from 'styled-components';
 //require('dotenv').config()
 import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import InfoCard from './InfoCard.jsx';
 import mapStyles from './snazzyMaps.js';
+import musicNoteMarker from '../images/musicMarker.png';
 
 
 
@@ -20,9 +21,9 @@ const containerStyle = {
 
 const libraries = ['places'];
 
-const Map = ({events, kEvents}) => {
+const Map = ({events, kEvents, markers}) => {
 
-  const center = { lat: 30, lng: -90 };
+  const [center, setCenter] = useState({ lat: 30, lng: -90 });
 
   const {isLoaded, loadError} = useLoadScript({
     googleMapsApiKey: keys.GOOGLE_MAPS_KEY,
@@ -54,6 +55,17 @@ const Map = ({events, kEvents}) => {
     mapRef.current = map;
   }, []);
 
+  const panToPins = useCallback(({lat, lng}) => {
+    mapRef.current.panTo({lat, lng});
+    mapRef.current.setZoom(20);
+  }, []);
+
+  const calcCenter = (latLongObjects) => {
+
+  };
+
+ 
+
   useEffect(() => {
     // const locations = events.map(event => {
     //   const latLng = {};
@@ -62,8 +74,31 @@ const Map = ({events, kEvents}) => {
     //   return latLng
     // })
     setVenues(events);
+    console.info('events go to venues state', events);
 
   }, [events]);
+
+
+
+  useEffect(() => {
+    console.info('useeffect map', events);
+    if (mapRef.current) {
+      const bounds = new window.google.maps.LatLngBounds();
+      //console.log('bounds', bounds)
+      
+      events.map(event => {
+        bounds.extend({
+          lat: event.lat,
+          lng: event.lng
+        });
+      });
+      const newCenter = bounds.getCenter();
+      //console.log('newCenter', newCenter)
+      setCenter(newCenter);
+      mapRef.current.fitBounds(bounds);
+    }
+
+  }, [mapRef.current, events]);
 
   useEffect(() => {
 
@@ -87,15 +122,27 @@ const Map = ({events, kEvents}) => {
 
         >
           <div>
-            {venues.map((venue, i) => (
+        
+            {venues.map((venue, i) => 
               <Marker
                 key={i}
                 position={{lat: venue.lat, lng: venue.lng}}
+               
+                icon={{
+                  url: musicNoteMarker,
+                  scaledSize: new window.google.maps.Size(100, 100),
+                  origin: new window.google.maps.Point(0, 0),
+                  anchor: new window.google.maps.Point(15, 15)}}
                 onClick={() => {
                   setSelected(venue);
                 }}
+      
               />
-            ))}
+
+            )}
+     
+          
+            
             {kVenues.map((kVenue, i) => (
               <Marker
                 key={i}
@@ -129,9 +176,28 @@ export default memo(Map);
 
 
 
-
 /**
-   *  <LoadScript
-        googleMapsApiKey={keys.GOOGLE_MAPS_KEY}
-      >
-   */
+ *  <MarkerClusterer>
+              {(clusterer) => (
+                venues.map((venue, i) => 
+                  <Marker
+                    key={i}
+                    position={{lat: venue.lat, lng: venue.lng}}
+                    clusterer={clusterer}
+                    icon={{
+                      url: musicNoteMarker,
+                      scaledSize: new window.google.maps.Size(100, 100),
+                      origin: new window.google.maps.Point(0, 0),
+                      anchor: new window.google.maps.Point(15, 15)}}
+                    onClick={() => {
+                      setSelected(venue);
+                    }}
+      
+                  />
+
+                ))
+              }
+            </MarkerClusterer>
+ */
+
+      
