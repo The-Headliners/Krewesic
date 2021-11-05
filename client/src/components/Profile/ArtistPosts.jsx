@@ -9,12 +9,10 @@ const PostStyles = styled.div`
   @media screen and (max-width: 480px) {
 
   }
-  .posty:hover {
-    background-color: #9932CC;
+  .hoverino:hover {
+    background-color: #D8BFD8;
   }
-  .timey:hover {
-    background-color: #8B008B;
-  }
+
 `;
 
 const ArtistPosts = ({ posty, timey, index }) => {
@@ -39,21 +37,25 @@ const ArtistPosts = ({ posty, timey, index }) => {
   return (
     <PostStyles>
       <Box
-        className='posty'
-        style={{ justifyContent: 'center'}}
+        className='hoverino'
       >
         <Box
-          style={{ display: 'flex', justifyContent: 'center', textAlign: 'center'}}
+          className='posty'
+          style={{ justifyContent: 'center'}}
         >
-          {index + 1}. {posty}
-        </Box>
+          <Box
+            style={{ display: 'flex', justifyContent: 'center', textAlign: 'center'}}
+          >
+            {index + 1}. {posty}
+          </Box>
 
+        </Box>
+        <Box
+          className='timey'
+          style={{ display: 'flex', textAlign: 'center', justifyContent: 'center', marginBottom: '10px'}}
+        >
+          {time}</Box>
       </Box>
-      <Box
-        className='timey'
-        style={{ display: 'flex', textAlign: 'center', justifyContent: 'center', marginBottom: '10px'}}
-      >
-        {time}</Box>
     </PostStyles>
 
   );
