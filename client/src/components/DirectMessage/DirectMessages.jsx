@@ -233,7 +233,7 @@ const DirectMessages = () => {
     border: 'none',
     borderRadius: '5px',
     cursor: 'pointer',
-    backgroundColor: 'teal',
+    backgroundColor: '#1877f2',
     color: 'white'
   };
   const chatBoxTop = {
