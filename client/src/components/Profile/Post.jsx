@@ -2,6 +2,20 @@ import React, { useState, useContext, useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import styled, {ThemeProvider} from 'styled-components';
+
+const ProfilePostStyles = styled.div`
+
+  @media screen and (max-width: 480px) {
+
+  }
+  .posty:hover {
+    background-color: #9932CC;
+  }
+  .timey:hover {
+    background-color: #8B008B;
+  }
+`;
 
 const Post = ({ posty, timey, index }) => {
 
@@ -23,8 +37,9 @@ const Post = ({ posty, timey, index }) => {
   });
 
   return (
-    <div>
+    <ProfilePostStyles>
       <Box
+        className='posty'
         style={{ justifyContent: 'center'}}
       >
         <Box
@@ -34,11 +49,12 @@ const Post = ({ posty, timey, index }) => {
         </Box>
       </Box>
       <Box
+        className='timey'
         style={{ display: 'flex', textAlign: 'center', justifyContent: 'center'}}
       >
         {time}</Box>
       <br/>
-    </div>
+    </ProfilePostStyles>
 
   );
 };

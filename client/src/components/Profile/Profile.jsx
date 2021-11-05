@@ -18,6 +18,26 @@ import PeopleIcon from '@mui/icons-material/People';
 import styled from 'styled-components';
 import { wrap } from 'regenerator-runtime';
 //import { set } from 'core-js/core/dict';
+
+
+const ProfileStyles = styled.div`
+
+.DivWithScroll {
+  height:200px;
+  overflow:scroll;
+  overflow-x:hidden;
+}
+
+  @media screen and (max-width: 480px) {
+    .namey {
+      font-size: 24px;
+    }
+  }
+
+`;
+
+
+
 const Profile = () => {
 
 
@@ -125,106 +145,112 @@ const Profile = () => {
 
 
   return (
-    <Grid
-      container
-    >
+    <ProfileStyles>
       <Grid
-        item xs={12} md={6} sm={12} lg={6}
-        style={{backgroundColor: '#150050'}}
+        container
       >
-        <Box
-          style={{ flex: 'display', justifyContent: 'center', textAlign: 'center' }}
+        <Grid
+          item xs={12} md={6} sm={12} lg={6}
+          style={{backgroundColor: '#150050'}}
+        >
+          <Box
+            style={{ flex: 'display', justifyContent: 'center', textAlign: 'center' }}
+          >
+            <Typography
+              className='namey'
+              variant='h4'
+            >
+              { artistName || name }
+            </Typography>
+            <br/>
+            <img
+              style={{borderRadius: '50%'}}
+              src={pic}
+              height="150"
+              width="150"
+            />
+          </Box>
+          <br/>
+          <Box
+            style={{align: 'left', color: '#a2a1a7', flex: 'display', justifyContent: 'center', textAlign: 'center' }}
+          >
+         Bio: { bio || artistBio }
+            <br/>
+        City: { city }
+            <br/>
+            {genreDesc} { favGenre || myGenre }
+            <br/>
+            {description}  { favArtist || influences }
+          </Box>
+          <br/>
+          <Box
+            style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}
+          >
+            <Button
+              style={{ backgroundColor: '#610094', width: '70%', align: 'center' }}
+              startIcon={<PeopleIcon />}
+              onClick={getFollowed}
+            >
+          My Krewe
+            </Button>
+            <br />
+            {myArtists.map((artist, i) => {
+              return <Krewe
+
+                key={i}
+                artist={artist}
+              ></Krewe>;
+            })}
+          </Box>
+
+
+        </Grid>
+        <Grid
+          item xs={12} md={6} sm={12} lg={6}
+          style={{ alignItems: 'flex-end', backgroundColor: '#150050', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}
         >
           <Typography
-
-            variant='h4'
+            style={{ color: '#a2a1a7', paddingTop: '10px' }}
+            variant='h5'
+          >Posts</Typography>
+          <br/>
+          <Box
+            className='DivWithScroll'
           >
-            { artistName || name }
-          </Typography>
-          <br/>
-          <img
-            style={{borderRadius: '50%'}}
-            src={pic}
-            height="150"
-            width="150"
-          />
-        </Box>
-        <br/>
-        <Box
-          style={{align: 'left', color: '#a2a1a7', flex: 'display', justifyContent: 'center', textAlign: 'center' }}
-        >
-         Bio: { bio || artistBio }
-          <br/>
-        City: { city }
-          <br/>
-          {genreDesc} { favGenre || myGenre }
-          <br/>
-          {description}  { favArtist || influences }
-        </Box>
-        <br/>
-        <Box
-          style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}
-        >
-          <Button
-            style={{ backgroundColor: '#610094', width: '70%', align: 'center' }}
-            startIcon={<PeopleIcon />}
-            onClick={getFollowed}
+            { post.map((posty, i) => {
+              return <Post
+                key={i}
+                index={i}
+                posty={posty.text}
+                timey={new Date(posty.createdAt).toString().slice(16, 21)}
+              ></Post>;
+            }) }
+          </Box>
+          <Box
+            style={{ alignItems: 'center', justifyContent: 'center'}}
           >
-          My Krewe
-          </Button>
-          <br />
-          {myArtists.map((artist, i) => {
-            return <Krewe
-
-              key={i}
-              artist={artist}
-            ></Krewe>;
-          })}
-        </Box>
-
-
-      </Grid>
-      <Grid
-        item xs={12} md={6} sm={12} lg={6}
-        style={{ alignItems: 'flex-end', backgroundColor: '#150050', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}
-      >
-        <Typography
-          style={{ color: '#a2a1a7', paddingTop: '10px' }}
-          variant='h5'
-        >Posts</Typography>
-        <br/>
-        { post.map((posty, i) => {
-          return <Post
-            key={i}
-            index={i}
-            posty={posty.text}
-            timey={new Date(posty.createdAt).toString().slice(16, 21)}
-          ></Post>;
-        }) }
-        <Box
-          style={{ alignItems: 'center', justifyContent: 'center'}}
-        >
-          <TextField
-            value={text}
-            style={{ backgroundColor: '#a2a1a7' }}
-            onChange={e => {
-              setMyTexts(e.target.value);
-            }}
-            multiline
-            label="Post"
-            size="small"
-            variant="outlined"
-          />
-          <Button
-            style={{ backgroundColor: '#610094' }}
-            startIcon={<PublishIcon />}
-            onClick={() => handlePost()}
-          >
+            <TextField
+              value={text}
+              style={{ backgroundColor: '#a2a1a7' }}
+              onChange={e => {
+                setMyTexts(e.target.value);
+              }}
+              multiline
+              label="Post"
+              size="small"
+              variant="outlined"
+            />
+            <Button
+              style={{ backgroundColor: '#610094' }}
+              startIcon={<PublishIcon />}
+              onClick={() => handlePost()}
+            >
           Post
-          </Button>
-        </Box>
+            </Button>
+          </Box>
+        </Grid>
       </Grid>
-    </Grid>
+    </ProfileStyles>
   );
 };
 
