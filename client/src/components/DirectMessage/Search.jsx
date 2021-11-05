@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
+import Button from '@material-ui/core/Button';
 
 const Search = ({createConversation}) => {
 
@@ -49,13 +50,18 @@ const Search = ({createConversation}) => {
       backgroundColor: 'blue'
     }
   };
+  const searchButton = {
+    color: '#c3c2c5',
+    backgroundColor: '#3F0071'
+  };
+
   return (
     <div className='sidebar-search'>
 
       <div className='search-section'>
         <h5>Find a user </h5>
         <input type="text" className="chatMenuInput" style ={chatMenuInput} placeholder="Search for friends..." value={value} onChange={(e) => changeInput(e.target.value)}/>
-        <button className="search-button" onClick={() => searchUser(value)}> Search </button>
+        <Button className="search-button" style={searchButton} onClick={() => searchUser(value)}> Search </Button>
       </div>
 
       <div className='user-preview'>

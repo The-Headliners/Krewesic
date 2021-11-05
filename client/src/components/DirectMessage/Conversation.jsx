@@ -55,7 +55,7 @@ const Conversation = ({conversation, currentUser}) => {
   return (
     <div className='conversation' style={Conversation}>
       <img className='conversationImg' src="https://www.archiefoundationhome.org.uk/wp-content/uploads/2020/05/profile-photo-social-media.jpg" alt="" style={conversationImg} />
-      <span className="conversationName" style={conversationName}>{user?.name} Bob </span>
+      <span className="conversationName" style={conversationName}>{user?.name} </span>
     </div>
   );
 };

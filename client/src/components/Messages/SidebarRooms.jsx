@@ -30,7 +30,7 @@ const SidebarRooms = ({users}) => {
           users.map( user => (
           
          
-            <div style={infoHeader}>{user.name}</div>
+            <div key={user.id} style={infoHeader}>{user.name}</div>
          
           ))
         }

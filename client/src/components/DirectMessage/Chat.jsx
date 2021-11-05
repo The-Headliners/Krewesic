@@ -3,12 +3,15 @@ import React, {useState, useEffect, useContext} from 'react';
 import { async } from 'regenerator-runtime';
 
 
-const ChatOnline = ({conversation, currentUser}) => {
+const ChatOnline = ({onlineUsers}) => {
 
   // //hold state of user dealing with the conversation involved
   // const [user, setUser] = useState('ben');
 
 
+  // useEffect(() => {
+  //  const getUser
+  // }, []);
 
   // //find the other user that the current user is having a conversation with
 
@@ -63,27 +66,25 @@ const ChatOnline = ({conversation, currentUser}) => {
   //to render the conversations
   return (
     <div className='chatOnline'>
-      <div className='chatOnlineUser' style={chatOnlineUser}>
-        <div className="chatOnlineImgContainer" style={chatOnlineImgContainer}>
-          <img className="chatOnlineImg" style={chatOnlineImg} src="https://www.archiefoundationhome.org.uk/wp-content/uploads/2020/05/profile-photo-social-media.jpg" alt=""/>
-          <div className='chatOnlineBadge' style={chatOnlineBadge}></div>
-        </div>
+      {
+        onlineUsers.map( user => {
+          console.info('online user', user);
+          return (
+            <div className='chatOnlineUser' style={chatOnlineUser}>
+        
+              <div className="chatOnlineImgContainer" style={chatOnlineImgContainer}>
+                <img className="chatOnlineImg" style={chatOnlineImg} src="https://www.archiefoundationhome.org.uk/wp-content/uploads/2020/05/profile-photo-social-media.jpg" alt=""/>
+                <div className='chatOnlineBadge' style={chatOnlineBadge}></div>
+              </div>
       
-        <div className='chatOnlineName'>
-          {/* {user.name} */} Johnny Bravo
-        </div>
-      </div>
+              <div className='chatOnlineName'>
+                {user.name} 
+              </div>
 
-      <div className='chatOnlineUser' style={chatOnlineUser}>
-        <div className="chatOnlineImgContainer" style={chatOnlineImgContainer}>
-          <img className="chatOnlineImg" style={chatOnlineImg} src="https://www.archiefoundationhome.org.uk/wp-content/uploads/2020/05/profile-photo-social-media.jpg" alt=""/>
-          <div className='chatOnlineBadge' style={chatOnlineBadge}></div>
-        </div>
-      
-        <div className='chatOnlineName'>
-          {/* {user.name} */} Wesley Blake
-        </div>
-      </div>
+            </div>
+          );
+        })
+      }
     </div>
   );
 };

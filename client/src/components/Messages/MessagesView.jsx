@@ -88,12 +88,12 @@ const MessagesView = ({chat, handleChange, sendMessage, value, user}) => {
         {
           chat.map(message => {
             return (
-              <div>
-                <h2 style={ message.name === user ? {position: 'relative', marginLeft: 'auto', width: 'fit-content', color: '#c3c2c5'} : {position: 'relative', width: 'fit-content', color: '#c3c2c5'}}>{message.name}</h2>
-                <p className="chat-message" style={message.name === user ? chatMessageSender : chatMessageRecipient}>
+              <div key={message.id}>
+                <h2 key={message.id} style={ message.name === user ? {position: 'relative', marginLeft: 'auto', width: 'fit-content', color: '#c3c2c5'} : {position: 'relative', width: 'fit-content', color: '#c3c2c5'}}>{message.name}</h2>
+                <p key={message.id} className="chat-message" style={message.name === user ? chatMessageSender : chatMessageRecipient}>
                   {message.message}
 
-                  <span className="chat-timeStamp" style={timeStamp}> 3:52pm</span>
+                  <span key={message.id} className="chat-timeStamp" style={timeStamp}> 3:52pm</span>
                 </p>
               </div>
             );
@@ -104,7 +104,7 @@ const MessagesView = ({chat, handleChange, sendMessage, value, user}) => {
       <div className="chat-footer" style={chatFooter}>
         <AddAPhotoIcon style={photoIcon}/>
         <MessageForm handleChange={handleChange} sendMessage={sendMessage} value={value}/>
-        <MicIcon />
+        <MicIcon /> 
       </div>
     </div>
   );
