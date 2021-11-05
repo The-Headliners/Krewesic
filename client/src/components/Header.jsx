@@ -25,6 +25,7 @@ const StyledHeader = styled.div`
  .btn {
    float: right;
    margin-top: 20px;
+   margin-right: 5px;
    background-color: #610094;
    :hover {
      background-color: #3F0071;

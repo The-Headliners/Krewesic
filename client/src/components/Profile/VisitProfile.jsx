@@ -147,6 +147,7 @@ const VisitProfile = () => {
     <VisitStyles>
       <Grid
         container
+        style={{ height: '100vh'}}
       >
         <Grid
           item xs={12} md={6} sm={12} lg={6}

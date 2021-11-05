@@ -21,7 +21,7 @@ import { wrap } from 'regenerator-runtime';
 
 
 const ProfileStyles = styled.div`
-
+height: 100vh;
 .DivWithScroll {
   height:200px;
   overflow:scroll;
@@ -152,6 +152,7 @@ const Profile = () => {
     <ProfileStyles>
       <Grid
         container
+        style={{ height: '100vh'}}
       >
         <Grid
           item xs={12} md={6} sm={12} lg={6}
