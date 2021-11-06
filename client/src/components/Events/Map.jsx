@@ -11,18 +11,21 @@ import musicNoteMarker from '../images/musicMarker.png';
 
 const StyledMap = styled.div`
 
+  @media screen and (max-width: 650px) {
+    margin: 10px;
+  }
+  @media screen and (min-width: 651px) {
+    margin: 40px;
+  }
 `;
 
 
 
 
 const containerStyle = {
-  width: '80vw',
+ 
   height: '80vh'
 };
-
-
-
 
 const libraries = ['places'];
 
@@ -115,7 +118,7 @@ const Map = ({events, kEvents, markers}) => {
   //return the map component
   if (isLoaded) {
     return (
-      <div>
+      <StyledMap>
 
         <GoogleMap
           mapContainerStyle={containerStyle}
@@ -168,7 +171,7 @@ const Map = ({events, kEvents, markers}) => {
           </div>
         </GoogleMap>
 
-      </div>
+      </StyledMap>
     );
 
   } else {

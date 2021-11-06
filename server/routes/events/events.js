@@ -58,8 +58,6 @@ events.get('/citySearch/:city', async(req, res) => {
 events.get('/dateSearch/:date1/:date2/:city', async (req, res) => {
   try {
     const {date1, date2, city} = req.params;
-
-
     const {data} = await axios.get(`${baseUri}/events?client_id=${process.env.SEATGEEK_CLIENT_ID}&client_secret=${process.env.SEATGEEK_SECRET}&datetime_local.gte=${date1}&datetime_local.lte=${date2}&venue.city=${city}`);
 
 
