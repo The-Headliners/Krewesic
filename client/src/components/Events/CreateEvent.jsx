@@ -34,8 +34,6 @@ const CreateEventStyled = styled.div`
 
 const CreateEvent = () => {
 
-  //const classes = useStyles(); 
-  //console.log('classes;', classes);
 
   const performers = 'performer names'; //this is going to be an array at some pt: needs, to match the format from the external api and also so more than one artist can be added to this event.  for starting, will just be the one artist who is adding, adding others will be a later addition.  will need to be .join(',') before being passed to req.body so can be stored in the db
   const [when, setWhen] = useState('');
@@ -47,10 +45,6 @@ const CreateEvent = () => {
   const [state, setState] = useState('');
   const [venue, setVenue] = useState('');
 
-  //link or code only if virtual, this is de-prioritized option
-  //const [link, setLink] = useState('')
-  //const [code, setCode] = useState('')
- 
   const createEvent = async() => {
     //await getGeocode() 
     //right now the getGeocode fn runs on mouse over then this one on click.  need a better way to handle the asynchronous aspect of setting the state . 
@@ -117,7 +111,6 @@ const CreateEvent = () => {
                 <MenuItem value={'virtual'}>Virtual</MenuItem>
                 <MenuItem value={'venue'}>At a venue</MenuItem>
               </Select>
-    
             </FormControl>
           </Grid>
 

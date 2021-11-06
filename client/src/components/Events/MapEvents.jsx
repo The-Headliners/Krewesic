@@ -5,12 +5,8 @@ import InputLabel from '@mui/material/InputLabel';
 import axios from 'axios';
 import Map from './Map.jsx';
 import styled from 'styled-components';
-//import {KeyboardDatePicker, MuiPickersUtilsProvider} from '@material-ui/pickers';
-//import DateFnsUtils from '@date-io/date-fns';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import DatePicker from '@mui/lab/DatePicker';
-
-//import { alpha } from '@material-ui/core/styles'; 
 import { LocalizationProvider } from '@mui/lab';
 import Grid from '@mui/material/Grid';
 

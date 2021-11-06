@@ -3,10 +3,6 @@ const events = Router();
 require('dotenv').config();
 const axios = require('axios');
 const {v4} = require('uuid');
-
-//const sampleData = require('./sampleData/sample.json');
-//const citySample = require('./sampleData/citySample.json');
-// const nolaweenSample = require('./sampleData/datesamplenolahalloweenwknd.json');
 const {SGEvent, SGEventComment, User, Event} = require('../../../db/index.js');
 
 const fs = require('fs');
@@ -32,28 +28,14 @@ events.get('/bandSearch/:bandName', async (req, res) => {
 
 events.get('/citySearch/:city', async(req, res) => {
   try {
-
-    //const {city} = req.params;
-
-
     const {data} = await axios.get(`${baseUri}/venues?client_id=${process.env.SEATGEEK_CLIENT_ID}&client_secret=${process.env.SEATGEEK_SECRET}&city=${city}`);
 
-    // //to create sample data
-    // const jdata = JSON.stringify(data);
-    // await fs.writeFile('citySample.txt', jdata, (err) => {
-    //   console.log('err', err);
-    // });
-
     res.status(200).send(data);
-
-
-
   } catch (err) {
     console.warn(err);
     res.sendStatus(500);
   }
 });
-
 
 events.get('/dateSearch/:date1/:date2/:city', async (req, res) => {
   try {
@@ -223,8 +205,6 @@ events.post('/createEvent', async(req, res) => {
 
 events.get('/sampleLocalWeekend', async(req, res) => {
   try {
-
-    // console.log(nolaweenSample.events)
     const releventInfo = nolaweenSample.events.map(event => {
       const {datetime_local, type, performers, venue, id} = event;
       const sgId = 'sg-' + id.toString();
