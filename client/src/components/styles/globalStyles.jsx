@@ -27,6 +27,10 @@ const GlobalStyle = createGlobalStyle`
   nav {
     background-color: #3F0071;
     padding: 15px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
   a {
     margin-left: 15px;
@@ -61,6 +65,15 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
+  .clickableNav {
+    padding: 3px;
+    :hover {
+      cursor: pointer;
+      background-color: #610094;
+
+    }
+  }
+
 
   .inputBackground {
     background-color: white;
@@ -70,6 +83,8 @@ const GlobalStyle = createGlobalStyle`
   .btn1 {
     background-color: #3F0071;
   }
+
+
 
 `;
 

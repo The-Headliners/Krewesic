@@ -6,7 +6,7 @@ import {
   Link
 } from 'react-router-dom';
 import styled, {ThemeProvider} from 'styled-components';
-
+import Grid from '@material-ui/core/Grid';
 import Login from './Login.jsx';
 import Profile from './Profile/Profile.jsx';
 import Form from './Profile/Form.jsx';
@@ -28,7 +28,7 @@ import KreweEventLandingPage from './Events/KrewesicArtists/KreweEventLandingPag
 import VisitProfile from './Profile/VisitProfile.jsx';
 import GlobalStyle from '../components/styles/globalStyles.jsx';
 import ColorBlind from '../components/styles/colorBlind.jsx';
-
+import Box from '@material-ui/core/Box';
 
 import VirtualEvent from './LiveStream/VirtualEvent.jsx';
 import AudioRecording from './Recording/AudioRecording.jsx';
@@ -45,6 +45,24 @@ const socket = io.connect('/');
 
 
 const AppStyles = styled.div`
+.nav {
+  background-color: yellow;
+}
+@media screen and (max-width: 600px) {
+  .naval {
+    background-color: green;
+  }
+
+  .desktopRender {
+    display: none
+  }
+}
+
+@media only screen and (min-width: 601px) {
+  .mobileRender {
+    display: none
+  }
+}
 
 `;
 
@@ -92,24 +110,56 @@ const App = (props) => {
         <Router>
           <ThemeProvider theme={theme}>
             <Header />
-            <nav>
-              <Link className='clickableLight' to='/DiscoverArtists'> Discover Artists </Link>
+            <Box
+              className='mobileRender'
+            >
+              <nav
+                style={{ display: 'flex'}}
+                className='nav'
+              >
+                <Link className='clickableNav' to='/DiscoverArtists'> Discover Artists </Link>
 
-              <Link className='clickableLight' to='/mapevents'>Find Events</Link>
-              <Link className='clickableLight' to='/messages'>Messages</Link>
-              <Link className='clickableLight' to='/profile'>Profile</Link>
-              <Link className='clickableLight' to='/createevent'>create event</Link>
+                <Link className='clickableNav' to='/mapevents'>Find Events</Link>
+                <Link className='clickableNav' to='/messages'>Messages</Link>
+                <Link className='clickableNav' to='/profile'>Profile</Link>
+                <Link className='clickableNav' to='/createevent'>create event</Link>
 
-              <Link className='clickableLight' to='/events'>Event Hub</Link>
-              <Link className='clickableLight' to='/myEvents'>My Events</Link>
-              <Link className='clickableLight' to='/videoChats'>Video Chats</Link>
+                <Link className='clickableNav' to='/events'>Event Hub</Link>
+                <Link className='clickableNav' to='/myEvents'>My Events</Link>
+                <Link className='clickableNav' to='/videoChats'>Video Chats</Link>
 
-              <Link className='clickableLight' to='/audiorecording'>Recording Studio</Link>
+                <Link className='clickableNav' to='/audiorecording'>Recording Studio</Link>
 
-              <Link className='upload' to='/uploadMusic'>Upload Music</Link>
+                <Link className='upload' to='/uploadMusic'>Upload Music</Link>
 
-              <p style={{color: 'black'}}>Color Blind Accessibility: <props.switch checked={colorBlind} onChange={() => setColorBlind(!colorBlind)} /> </p>
-            </nav>
+                <p style={{color: 'black'}}>Color Blind Accessibility: <props.switch checked={colorBlind} onChange={() => setColorBlind(!colorBlind)} /> </p>
+              </nav>
+            </Box>
+            <Box
+              className='desktopRender'
+            >
+              <nav
+                style={{ display: 'flex'}}
+                className='naval'
+              >
+                <Link className='clickableNav' to='/DiscoverArtists'> Discover Artists </Link>
+
+                <Link className='clickableNav' to='/mapevents'>Find Events</Link>
+                <Link className='clickableNav' to='/messages'>Messages</Link>
+                <Link className='clickableNav' to='/profile'>Profile</Link>
+                <Link className='clickableNav' to='/createevent'>create event</Link>
+
+                <Link className='clickableNav' to='/events'>Event Hub</Link>
+                <Link className='clickableNav' to='/myEvents'>My Events</Link>
+                <Link className='clickableNav' to='/videoChats'>Video Chats</Link>
+
+                <Link className='clickableNav' to='/audiorecording'>Recording Studio</Link>
+
+                <Link className='upload' to='/uploadMusic'>Upload Music</Link>
+
+                <p style={{color: 'black'}}>Color Blind Accessibility: <props.switch checked={colorBlind} onChange={() => setColorBlind(!colorBlind)} /> </p>
+              </nav>
+            </Box>
 
             <Switch>
               <Route exact path="/" component={Login}>
