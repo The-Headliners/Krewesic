@@ -50,7 +50,7 @@ const MessagesView = ({message, user}) => {
     maxWidth: '300px',
   };
   return (
-    <div className='message' style={message.name === user ? ownMessage : Message}>
+    <div className='message' key={message.id} style={message.name === user ? ownMessage : Message}>
       <div className="messageTop" >
         <img className='messageImg' style={messageImg} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIbCHBytowb0SiotsKsEzRFiJ37uH8GqkA-A&usqp=CAU" alt=""/>
 

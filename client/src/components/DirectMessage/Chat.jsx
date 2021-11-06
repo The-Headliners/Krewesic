@@ -1,7 +1,5 @@
 import axios from 'axios';
 import React, {useState, useEffect, useContext} from 'react';
-import { async } from 'regenerator-runtime';
-
 
 const ChatOnline = ({onlineUsers}) => {
 
@@ -41,7 +39,7 @@ const ChatOnline = ({onlineUsers}) => {
       {
         onlineUsers.map( user => {
           return (
-            <div className='chatOnlineUser' style={chatOnlineUser}>
+            <div className='chatOnlineUser' key={user.id} style={chatOnlineUser}>
         
               <div className="chatOnlineImgContainer" style={chatOnlineImgContainer}>
                 <img className="chatOnlineImg" style={chatOnlineImg} src="https://www.archiefoundationhome.org.uk/wp-content/uploads/2020/05/profile-photo-social-media.jpg" alt=""/>

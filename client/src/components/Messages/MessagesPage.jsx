@@ -179,10 +179,10 @@ const MessagesPage = () => {
               )
                 :
 
-                chat.map(message => {
+                chat.map((message, i) => {
   
                   return (
-                    <div key={message.id}>
+                    <div key={i}>
                       <MessagesView message={message} user={user}/>
                     </div>
                   );

@@ -61,7 +61,7 @@ const Sidebar = ({users}) => {
       {
         users.map( user => (
           
-          <div className='chatOnlineUser' style={chatOnlineUser}>
+          <div className='chatOnlineUser' key={user.id} style={chatOnlineUser}>
             <div className="chatOnlineImgContainer" style={chatOnlineImgContainer}>
               <img className="chatOnlineImg" style={chatOnlineImg} src="https://www.archiefoundationhome.org.uk/wp-content/uploads/2020/05/profile-photo-social-media.jpg" alt=""/>
               <div className='chatOnlineBadge' style={chatOnlineBadge}>

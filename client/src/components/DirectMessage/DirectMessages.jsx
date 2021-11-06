@@ -6,7 +6,6 @@ import Message from './Message.jsx';
 import Conversation from './Conversation.jsx';
 import ChatOnline from './Chat.jsx';
 import Users from './Users.jsx';
-import { async } from 'regenerator-runtime';
 import GlobalContext from '../Contexts/GlobalContext.jsx';
 
 
@@ -288,7 +287,7 @@ const DirectMessages = () => {
                       );
                     } else {
                       return (
-                        <div> 
+                        <div key={message.id}> 
                           <Message message={message} owner={message.sender === currentUser.googleId} currentUser={currentUser}/>
                         </div>
                       );

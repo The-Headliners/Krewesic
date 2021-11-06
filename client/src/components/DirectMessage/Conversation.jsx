@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, {useState, useEffect, useContext} from 'react';
-import { async } from 'regenerator-runtime';
 
 
 const Conversation = ({conversation, currentUser}) => {
