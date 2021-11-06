@@ -1,7 +1,7 @@
 const {Router} = require('express');
 const auth = Router();
 const passport = require('passport');
-const {User} = require('../../db/index.js');
+const {User, Messages} = require('../../db/index.js');
 
 
 auth.get('/google', passport.authenticate('google', {scope: ['profile', 'email']}) );

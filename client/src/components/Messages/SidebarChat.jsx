@@ -5,7 +5,7 @@ import DonutLargeIcon from '@material-ui/icons/DonutLarge';
 import ChatIcon from '@material-ui/icons/Chat';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import SidebarRooms from './SidebarRooms.jsx';
-const Sidebar = () => {
+const Sidebar = ({users}) => {
 
   //hold the state of the chat rooms
   const [rooms, setRooms] = useState([]);
@@ -26,47 +26,57 @@ const Sidebar = () => {
   }, []);
 
   //STYLE//
-  const sidebar = {
-    flex: '0.35',
-  };
-  const sidebarHeader = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    padding: '20px',
-    borderRight: '1px solid blue',
-  // backgroundColor: 'lightgray'
-  };
-
-  const headerRight = {
+  const chatOnlineUser = {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    minWidth: '10vw'
+    fontWeight: '500',
+    cursor: 'pointer',
+    marginTop: '10px'
   };
 
-  const sidebarChats = {
-    flex: '1',
-    backgroundColor: 'white',
-    overflow: 'scroll'
+  const chatOnlineImg = {
+    width: '40px',
+    height: '40px',
+    borderRadius: '50%',
+    objectFit: 'cover',
+    border: '1px solid white'
+  };
+
+  const chatOnlineImgContainer = {
+    position: 'relative',
+    marginRight: '10px'
+  };
+
+  const chatOnlineBadge = { 
+    width: '10px',
+    height: '10px',
+    borderRadius: '50%',
+    backgroundColor: 'limegreen',
+    position: 'absolute',
+    top: '2px',
+    right: '2px'
   };
   return (
-    <div className="sidebar" style={sidebar}>
-      <div className="sidebar-header" style={sidebarHeader}>
-        <Avatar />
-        <div className="sidebar-headerRight" style={headerRight}>
-          <DonutLargeIcon />
-          <ChatIcon />
-          <MoreVertIcon />
-
-        </div>
-      </div> 
-      <div className='sidebar-search'>
+    <div className="chatOnline">
+      {
+        users.map( user => (
+          
+          <div className='chatOnlineUser' key={user.id} style={chatOnlineUser}>
+            <div className="chatOnlineImgContainer" style={chatOnlineImgContainer}>
+              <img className="chatOnlineImg" style={chatOnlineImg} src="https://www.archiefoundationhome.org.uk/wp-content/uploads/2020/05/profile-photo-social-media.jpg" alt=""/>
+              <div className='chatOnlineBadge' style={chatOnlineBadge}>
+              </div>
+            </div>
+            <div className='chatOnlineName' key={user.id}>
+              {/* <SidebarRooms className='chatOnlineName' users={users}/> */}
+              {user.name}
+            </div>
+          </div>
+              
+         
+        ))
+      }
      
-      </div>
-
-      <div className="sidebar-chats" style={sidebarChats}>
-        <SidebarRooms rooms={rooms}/>
-      </div>
     </div>
   );
 };
