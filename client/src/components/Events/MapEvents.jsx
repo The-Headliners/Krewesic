@@ -12,6 +12,7 @@ import DatePicker from '@mui/lab/DatePicker';
 
 import { alpha } from '@material-ui/core/styles'; 
 import { LocalizationProvider } from '@mui/lab';
+import Grid from '@mui/material/Grid';
 
 const StyledMapEvents = styled.div`
   .wrapper {
@@ -19,20 +20,12 @@ const StyledMapEvents = styled.div`
     padding: 20px;
     width: 80vw;
     margin: auto;
+    align-items: center;
+    display: flex;
+    justify-content: center;
     
   }
-  .inputsWrapper {
-    display: flex;
-    flex-direction: column;
-  }
-  .datesWrapper {
-    display: flex;
-    flex-direction: row;
-  }
-  .cityWrapper {
-    display: flex;
-    flex-direction: row;
-  }
+
   .inputField {
     background-color: white;
     border-radius: 3px;
@@ -40,10 +33,13 @@ const StyledMapEvents = styled.div`
   }
   .showButton {
     background-color: ${props => props.theme.colorLight};
-    color: ${props => props.theme.textColorLight}
+    color: ${props => props.theme.textColorLight};
+    margin: 10px;
   }
   .labels {
-    color: ${props => props.theme.textColorLight}
+    color: ${props => props.theme.textColorLight};
+    font-size: 12px;
+    margin-left: 15px;
   }
 `;
 
@@ -54,11 +50,11 @@ const StyledMapEvents = styled.div`
 const MapEvents = () => {
 
   const [bandName, setBandName] = useState('');
-  const [city, setCity] = useState('');
+  const [city, setCity] = useState('New Orleans');
   const [events, setEvents] = useState([]);
   //const [value, setValue] = useState(DateTime.now)
-  const [date1, setDate1] = useState(new Date('2021-11-11'));
-  const [date2, setDate2] = useState(new Date());
+  const [date1, setDate1] = useState('2021-11-11');
+  const [date2, setDate2] = useState('2021-11-13');
 
   const [krewesicEvents, setKrewesicEvents] = useState([]);
 
@@ -101,10 +97,10 @@ const MapEvents = () => {
 
   return (
     <StyledMapEvents>
-      <div className='wrapper'>
-        <div className='inputsWrapper'>
-          <div className='datesWrapper'>
-            <InputLabel htmlFor='startDateInput' className='labels'>Start Date</InputLabel>
+      <Grid container spacing={3} className='wrapper'>
+        <Grid container justifContenty='space-between' spacing={1} item sm={12} lg={6}>
+          <Grid item xs={6} sm={4} md={4} lg={4}>
+            <InputLabel htmlFor='startDateInput' className='labels'>Between YYYY-MM-DD</InputLabel>
             <TextField 
               id='startDateInput'
               variant="outlined" 
@@ -115,7 +111,10 @@ const MapEvents = () => {
               onChange={(e)=>setDate1(e.target.value)} 
               value={date1} 
             />
-            <InputLabel htmlFor='endDateInput' className='labels'>End Date</InputLabel>
+          </Grid>
+      
+          <Grid item xs={6} sm={4} md={4} lg={4}>
+            <InputLabel htmlFor='endDateInput' className='labels'>Until YYYY-MM-DD</InputLabel>
             <TextField 
               id='endDateInput'
               variant="outlined" 
@@ -126,9 +125,10 @@ const MapEvents = () => {
               value={date2} 
               label='end date'
             />
-          </div>
-          <div className='cityWrapper'>
-            <InputLabel htmlFor='cityInput' className='labels'>city</InputLabel>
+          </Grid>
+       
+          <Grid item xs={6} sm={4} md={4} lg={4} >
+            <InputLabel htmlFor='cityInput' className='labels'>City</InputLabel>
             <TextField 
               id='cityInput'
               variant="outlined" 
@@ -136,14 +136,26 @@ const MapEvents = () => {
               placeholder='city' 
               onChange={(e)=>setCity(e.target.value)} 
               label='city'
-              value={city} />
+              value={city} 
+            />
+          </Grid>
+            
+          <Grid item xs={6} sm={4} md={4} lg={6} alignSelf='flex-end'>
             <Button className='showButton' onClick={findLocalShows}>find local shows</Button>
-          </div>
-        </div>
+          </Grid>
+           
+        
     
+    
+        </Grid>
+        <Grid item sm={12} lg={6}>
+          <Map events={events} kEvents={krewesicEvents} />
+        </Grid>
+
       
-        <Map events={events} kEvents={krewesicEvents} />
-      </div>
+        
+      </Grid>
+
     </StyledMapEvents>
   );
 };
@@ -172,3 +184,13 @@ curl https://api.seatgeek.com/2/events?client_id=MYCLIENTID&client_secret=MYCLIE
           />
         </MuiPickersUtilsProvider>
  */
+
+/*
+            background-color: ${props => props.theme.colorBackground};
+    padding: 20px;
+    width: 80vw;
+    margin: auto;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    */

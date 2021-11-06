@@ -9,11 +9,16 @@ import mapStyles from './snazzyMaps.js';
 import musicNoteMarker from '../images/musicMarker.png';
 
 
+const StyledMap = styled.div`
+
+`;
+
+
 
 
 const containerStyle = {
-  width: '700px',
-  height: '500px'
+  width: '80vw',
+  height: '80vh'
 };
 
 

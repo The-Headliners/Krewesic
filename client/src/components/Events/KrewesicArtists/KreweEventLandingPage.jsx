@@ -15,7 +15,8 @@ import {format} from 'date-fns';
 
 const StyledLanding = styled.div`
   .landingButton {
-    background-color: #b3a970;
+    background-color: ${props => props.theme.colorLight};
+    color: ${props => props.theme.textLight}
   }
   .commentInput {
     width: 600px;
