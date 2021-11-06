@@ -2,6 +2,18 @@ import React, { useState, useContext, useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import styled, {ThemeProvider} from 'styled-components';
+
+const ProfilePostStyles = styled.div`
+
+  @media screen and (max-width: 480px) {
+
+  }
+  .hoverino:hover {
+    background-color: #D8BFD8;
+  }
+
+`;
 
 const Post = ({ posty, timey, index }) => {
 
@@ -23,23 +35,27 @@ const Post = ({ posty, timey, index }) => {
   });
 
   return (
-    <div>
+    <ProfilePostStyles>
       <Box
-        style={{ display: 'flex'}}
+        className='hoverino'
       >
         <Box
-          style={{ display: 'flex', justifyContent: 'center', textAlign: 'center'}}
+          className='posty'
+          style={{ justifyContent: 'center'}}
         >
-          {index + 1}. {posty}
+          <Box
+            style={{ display: 'flex', justifyContent: 'center', textAlign: 'center'}}
+          >
+            {index + 1}. {posty}
+          </Box>
         </Box>
-        <br/>
-
+        <Box
+          className='timey'
+          style={{ display: 'flex', textAlign: 'center', justifyContent: 'center', marginBottom: '10px' }}
+        >
+          {time}</Box>
       </Box>
-      <Box
-        style={{ display: 'flex', textAlign: 'center', justifyContent: 'center'}}
-      >
-        {time}</Box>
-    </div>
+    </ProfilePostStyles>
 
   );
 };
