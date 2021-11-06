@@ -2,8 +2,8 @@ import { createGlobalStyle } from 'styled-components';
 
 //color pallete:
 /**
- * 
- #000000 
+ *
+ #000000
  #150050
  #3F0071
  #610094
@@ -19,13 +19,13 @@ const GlobalStyle = createGlobalStyle`
     color: #a2a1a7;
     font-family: 'Hind Madurai', sans-serif;
     line-height: 1.5;
-    
+
   }
   h1 {
     color: #c3c2c5;
   }
   nav {
-    background-color: #3F0071; 
+    background-color: #3F0071;
     padding: 15px;
   }
   a {
@@ -60,7 +60,7 @@ const GlobalStyle = createGlobalStyle`
 
     }
   }
- 
+
 
   .inputBackground {
     background-color: white;
@@ -68,9 +68,9 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .btn1 {
-    background-color: #3F0071; 
+    background-color: #3F0071;
   }
-  
+
 `;
 
 export default GlobalStyle;
