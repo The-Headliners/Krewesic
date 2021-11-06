@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, {useState, useEffect, useContext} from 'react';
-import { async } from 'regenerator-runtime';
 
 
 const Conversation = ({conversation, currentUser}) => {
@@ -29,10 +28,33 @@ const Conversation = ({conversation, currentUser}) => {
     getUser();
   }, [conversation, currentUser]);
 
+  const Conversation = {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '10px',
+    cursor: 'pointer',
+    marginTop: '20px',
+    '&:hover': {
+      backgroundColor: 'blue'
+    }
+  };
+
+  const conversationImg = {
+    width: '40px',
+    height: '40px',
+    borderRadius: '50%',
+    objectFit: 'cover',
+    marginRight: '20px',
+  };
+
+  const conversationName = {
+    fontWeight: '500'
+  };
   //to render the conversations
   return (
-    <div className='chatonline'>
-      <span className="conversationName">{user?.name} </span>
+    <div className='conversation' style={Conversation}>
+      <img className='conversationImg' src="https://www.archiefoundationhome.org.uk/wp-content/uploads/2020/05/profile-photo-social-media.jpg" alt="" style={conversationImg} />
+      <span className="conversationName" style={conversationName}>{user?.name} </span>
     </div>
   );
 };
