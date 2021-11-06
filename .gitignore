@@ -1,8 +1,8 @@
 node_modules
+client/dist
 client/dist/bundles.js
 client/dist/bundles.js.map
-client/dist/36d8d45df81909bc9a210e93d4463e01.png
-client/dist/839982f425a1cae550bb752f9fc23a64.png
+
 .env
 db/db.config.js
 config/keys.js

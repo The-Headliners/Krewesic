@@ -1,10 +1,12 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, useRef} from 'react';
 import axios from 'axios';
 import MessagesView from './MessagesView.jsx';
 import Sidebar from './SidebarChat.jsx';
+import MessageForm from './MessageForm.jsx'; 
 import io from 'socket.io-client';
 import {Link} from 'react-router-dom';
 import GlobalContext from '../Contexts/GlobalContext.jsx';
+import Button from '@material-ui/core/Button';
 //need the socket to connect to the server, which is the local host
 
 
@@ -12,6 +14,8 @@ import GlobalContext from '../Contexts/GlobalContext.jsx';
 
 const MessagesPage = () => {
   const {socket} = useContext(GlobalContext);
+
+  const scrollRef = useRef();
   //need to hold the value of the message in state
   const [value, setValue] = useState('');
 
@@ -86,26 +90,114 @@ const MessagesPage = () => {
       });
   }, []);
 
-  console.info('ALL USERS', users);
-  const page = {
-    backgroundColor: 'black',
-    height: '100vh'
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [chat]);
+
+  // console.info('ALL USERS', users);
+  console.info('current user', user);
+  
+  const messenger = {
+    height: 'calc(100vh - 70px)',
+    display: 'flex',
+    backgroundColor: '#150050'
   };
 
-  const body = {
-    display: 'flex',
-    backgroundColor: '#150050',
-    height: '90vh',
-    width: '90vw',
+  const chatMenu = {
+    flex: '3.5',
+    backgroundColor: 'black'
   };
+
+  const chatBox = {
+    flex: '5.5'
+  };
+  const chatOnline = {
+    flex: '3'
+  };
+  const chatWrappers = {
+    padding: '10px',
+    height: '100%',
+    backgroundColor: '#150050'
+  };
+
+  const chatBoxWrapper = {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    position: 'relative',
+    padding: '10px',
+    height: '100%',
+    backgroundColor: '#150050'
+  };
+  const chatBoxBottom = {
+    marginTop: '5px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  };
+  const chatMessageInput = {
+    // width: '80%',
+    // height: '90px',
+    flex: '1',
+    borderRadius: '30px',
+    padding: '10px',
+    border: 'none'
+  };
+
+  const chatSubmitButton = {
+    width: '70px',
+    height: '40px',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    backgroundColor: '#1877f2',
+    color: 'white'
+  };
+  const chatBoxTop = {
+    height: '100%',
+    overflowY: 'scroll',
+    paddingRight: '10px'
+  };
+
 
   return (
-    <div className='message-page' style={page}>
-      <Link to='/DirectMessage'>Direct Messaging </Link>
-      <h1 style={{color: 'black'}}>{user}</h1>
-      <div className='message-body' style={body}>
-        <Sidebar users={users}/>
-        <MessagesView chat={chat} handleChange={handleChange} sendMessage={sendMessage} value={value} user={user}/>
+    <div className='messenger' style={messenger}>
+      <div className='chatMenu' style={chatMenu}>
+        <div className='chatMenuWrapper' style={chatWrappers}>
+          <h1 style={{color: 'black'}}>{user}</h1>
+          <Link to='/DirectMessage'>Direct Messaging </Link>
+        </div>
+      </div>
+
+      <div className='chatBox' style={chatBox}>
+        <div className='chatBoxWrapper' style={chatBoxWrapper}>
+          Live Chat
+          <div className="chatBoxTop" style={chatBoxTop}>
+            {
+              chat.map(message => {
+                return (
+                  <div key={message.id}>
+                    <MessagesView message={message} user={user}/>
+                  </div>
+                );
+              })
+            }
+          </div>
+          {/* <MessagesView chat={chat} handleChange={handleChange} sendMessage={sendMessage} value={value} user={user}/> */}
+       
+
+          <div className='chatBoxBottom' style={chatBoxBottom}>
+            <input className="message-input" style={chatMessageInput} placeholder="Send a message..." value={value} onChange={handleChange} />
+
+            <Button className="message-button" variant="contained" style={chatSubmitButton} onClick={ (event) => sendMessage(event)}> send </Button>
+            {/* <MessageForm handleChange={handleChange} sendMessage={sendMessage} value={value} chatMessageInput={chatMessageInput} chatSubmitButton={chatSubmitButton}/> */}
+          </div>
+        </div>
+      </div>
+      <div className='chatOnline' style={chatOnline}> 
+        <div className='chatOnlineWrapper' style={chatWrappers}> 
+           Online  <Sidebar users={users}/>
+        </div>
       </div>
     </div>
   );

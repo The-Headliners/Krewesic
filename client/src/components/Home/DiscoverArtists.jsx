@@ -10,7 +10,7 @@ import 'regenerator-runtime/runtime';
 import styled from 'styled-components';
 import keys from '../Events/keys.js';
 import Artist from './Artist.jsx';
-
+import Typography from '@material-ui/core/Typography';
 
 
 // const StyledArtistOfDay = styled.div`
@@ -60,9 +60,14 @@ const discoverArtists = () => {
 
 
   return (
-    <div className='dayHeader'>
-      <h1>OUR ARTISTS</h1>
-      <hr/>
+    <div style={{backgroundColor: '#150050'}}>
+      <Typography
+        style={{ color: '#c3c2c5' }}
+        align='center'
+        variant='h4'>Artists</Typography>
+      <hr
+        style={{border: '1px solid #610094'}}
+      />
       { userBase.map((user, i) => {
         if (user.type === 'artist') {
           return <Artist

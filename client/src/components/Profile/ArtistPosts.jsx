@@ -3,7 +3,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
-const Post = ({ posty, timey, index }) => {
+const ArtistPosts = ({ posty, timey, index }) => {
 
   const [ time, setTime ] = useState(null);
 
@@ -28,7 +28,7 @@ const Post = ({ posty, timey, index }) => {
         style={{ display: 'flex'}}
       >
         <Box
-          style={{ display: 'flex', justifyContent: 'center', textAlign: 'center'}}
+          style={{ display: 'flex', textAlign: 'center', justifyContent: 'center'}}
         >
           {index + 1}. {posty}
         </Box>
@@ -44,4 +44,5 @@ const Post = ({ posty, timey, index }) => {
   );
 };
 
-export default Post;
+export default ArtistPosts;
+

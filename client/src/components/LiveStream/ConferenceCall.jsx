@@ -7,6 +7,7 @@ import GlobalContext from '../Contexts/GlobalContext.jsx';
 import StreamChat from './StreamChat.jsx';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import Peer from 'peerjs';
 
 
 
@@ -44,13 +45,14 @@ const ConferenceCall = () => {
   const {name} = useContext(GlobalContext);
 
   const myPeer = useRef(new Peer( undefined, { //remember: npm i -g peer   \n peerjs --port 3002   running peer port on 3002
-  
     host: '/',
+    path: '/peerjs',
     port: '3002'
+    
       
   }));
 
-  //const code = useRef(useParams())
+
   const [stream, setStream ] = useState({});
   //const [peerStream, setPeerStream] = useState({});
   //get userId from the context/  then the cookies later
@@ -66,7 +68,7 @@ const ConferenceCall = () => {
   const [peers, setPeers] = useState('');
   const currentStream = useRef();
   const [peerName, setPeerName] = useState('');
-  //const peerStream = useRef();
+
   
 
   const showId = useRef(useParams().code).current;
@@ -75,7 +77,7 @@ const ConferenceCall = () => {
   useEffect(async () => {
 
     myPeer.current.on('open', (id) => {
-      //console.log('open', id);
+      console.info('open', id);
       myPeerId.current = id;
       joinShow(id);
     });
@@ -89,13 +91,13 @@ const ConferenceCall = () => {
 
     socket.on('user-connected', (data) => {
       //when user is connected then connect to thenew user (connectToNewUser() function)
-      //console.log('u connected', data);
+      console.info('u connected', data);
       setPeerName(data.name);
       connectToNewUser(data.latestUser, stream);
       setPeers(data.latestUser);
       socket.emit('peerconnected', {name: name, showId: showId, userId: myPeerId.current}); //this goes back, and signals other user that this person joined the room.  to not throw infinite loop: should probably account for to only add that peer to the state if the state is empty
       const notMe = data.allUsers.filter(uObj => uObj.peerId !== myPeerId.current);
-      //console.log('notMe', notMe);
+      // console.log('notMe', notMe);
       setAllPeers(notMe);
 
     });
@@ -141,7 +143,7 @@ const ConferenceCall = () => {
 
 
   const connectToNewUser = (userId, stream) => {
-    //console.log('connectToNewUser', userId, currentStream.current);
+    // console.log('connectToNewUser', userId, currentStream.current);
     const call = myPeer.current.call(userId, currentStream.current);
     call.on('stream', userVideoStream => {
       //setPeerStream(userVideoStream);

@@ -4,6 +4,7 @@ const path = require('path');
 require('dotenv').config();
 const {PORT} = process.env;
 const http = require('http');
+const https = require('https');
 const frontEnd = path.resolve(__dirname, '..', 'client', 'dist');
 const session = require('express-session');
 const passport = require('passport');
@@ -30,7 +31,7 @@ const cookieParser = require('cookie-parser');
 //for video streaming
 const {v4: uuidv4} = require('uuid');
 const virtualEvent = require('./routes/virtualEvent.js');
-const {ExpressPeerServer} = require('peer');
+const {PeerServer} = require('peer');
 const _ = require('underscore');
 
 
@@ -38,11 +39,16 @@ const _ = require('underscore');
 //create the server
 const server = http.createServer(app);
 
-//create peer express server
-// const peerServer = ExpressPeerServer(server, {
-//   debug: true,
-//   path: '/p2p'
-// });
+const peerServer = PeerServer({
+  port: 3002,
+  path: '/peerjs',
+  proxied: true,
+  debug: true
+});
+
+
+
+
 
 app.use(express.static(frontEnd));
 app.use(express.json());
@@ -84,7 +90,7 @@ io.on('connection', socket => {
   //when connect
   console.info(`user ${socket.id} is connected`);
 
-  //***FOR LIVE CHAT FOR ALL USERS*** when a message is sent
+  //***FOR LIVE CHAT FOR ALL USERS*** when a message is sent */
   socket.on('message', ({ name, message}) => {
     io.emit('message', {name, message});
   });
@@ -100,7 +106,7 @@ io.on('connection', socket => {
     io.emit('getUsers', users);
   });
 
-  //***PRIVATE MESSAGE****send and get a message
+  //***PRIVATE MESSAGE****send and get a message */
   //socket.on, take from the client
   socket.on('sendMessage', ({senderId, receiverId, text, name}) => {
     //find specific user to send message
@@ -128,7 +134,7 @@ io.on('connection', socket => {
     io.to(sockId).emit('notified', data);
   });
   socket.on('joinShow', ({showId, userId, name}) => {
-    //console.log('join show event, showId then userId', showId, userId);
+    console.info('join show event, showId then userId', showId, userId);
     const idObj = {socketId: socket.id, peerId: userId};
     if (liveStreamUsers[showId]) {
       liveStreamUsers[showId].push(idObj);
@@ -141,6 +147,7 @@ io.on('connection', socket => {
 
 
   socket.on('peerconnected', (data) => {
+    console.info('on peer connected', data);
     const {showId, userId, name} = data;
     const idObj = {socketId: socket.id, peerId: userId};
     if (showId && userId) {

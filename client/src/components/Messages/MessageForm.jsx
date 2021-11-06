@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Button from '@material-ui/core/Button';
 // import axios from 'axios';
 
-const MessageForm = ({handleChange, sendMessage, value}) => {
+const MessageForm = ({handleChange, sendMessage, value, chatMessageInput, chatSubmitButton}) => {
 
   // //need to hold the value of the message in state
   // const [value, setValue] = useState('');
@@ -57,24 +57,17 @@ const MessageForm = ({handleChange, sendMessage, value}) => {
   }, []);
 
   
-  const chatForm = {
-    flex: '1',
-    display: 'flex'
-  };
-  const chatInput = {
-    flex: '1',
-    borderRadius: '30px',
-    padding: '10px',
-    border: 'none'
-  };
+  
 
   return (
+    <div>
+  
+    </div>
+    // <form className="message-form">
+  // <input className="message-input" style={chatMessageInput} placeholder="Send a message..." value={value} onChange={handleChange} />
 
-    <form className="message-form" style={chatForm}>
-      <input className="message-input" placeholder="Send a message..." style={chatInput} value={value} onChange={handleChange} />
-
-      <Button className="message-button" variant="contained" style={{backgroundColor: 'blue', color: '#c3c2c5'}} onClick={ (event) => sendMessage(event)}> send </Button>
-    </form>
+  // <Button className="message-button" variant="contained" style={chatSubmitButton} onClick={ (event) => sendMessage(event)}> send </Button>
+  // </form>
 
   );
 };

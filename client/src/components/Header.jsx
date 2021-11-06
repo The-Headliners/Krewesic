@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
-import logo from './images/KrewesicCropped.png';
+import logo from './images/KrewesicLight.png';
 
 const StyledHeader = styled.div`
   .bar {
@@ -30,8 +30,11 @@ const StyledHeader = styled.div`
    
  }
  .logo {
-   height: 50px;
-   width: 50px;
+   height: 70px;
+   width: 70px;
+ }
+ .notifications {
+  background-color: ${props => props.theme.colorLight}
  }
 `;
 
@@ -77,7 +80,7 @@ const Header = (props) => {
     <StyledHeader>
       <AppBar position="static" className='bar' >
         <div className='wrapper'>
-          <div className="notifications" onClick={() => setActiveNotifications(false)} style={{backgroundColor: activeNotifications ? 'red' : 'blue'}}>{notification && notification.notification.body}</div>
+          <div className="notifications" onClick={() => setActiveNotifications(false)} >{notification && notification.notification.body}</div>
           <img src={logo} alt='logo' className='logo'/>
           {display()}
         </div>        
@@ -87,4 +90,4 @@ const Header = (props) => {
 };
 
 export default Header;
-//<Typography>Logo</Typography>
+//<Typography>Logo</Typography>style={/*{backgroundColor: activeNotifications ? 'red' : 'blue'}*/}

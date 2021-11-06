@@ -6,9 +6,10 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import PublishIcon from '@mui/icons-material/Publish';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import useGetUser from '../CustomHooks/useGetUser.jsx';
-
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import ArtistPosts from '../Profile/ArtistPosts.jsx';
 
 const VisitProfile = () => {
   const [ artistNamed, setArtistNamed ] = useState('');
@@ -85,7 +86,7 @@ const VisitProfile = () => {
     axios.get('/post/getArtistsPosts')
       .then(({ data }) => {
         const myPostArr = data.map(post => {
-          return post.text;
+          return post;
         });
         setMyPost(myPostArr);
       })
@@ -122,84 +123,96 @@ const VisitProfile = () => {
 
   return (
     <Box
-      bgcolor="primary.dark"
-      display="flex"
-      flexDirection="column"
-      alignItems="stretch"
+      style={{ display: 'flex' }}
     >
-      <br/>
-      <Box>
-        <Typography
-          align='left'
-          color='textSecondary'
-          variant='h4'
-        >
-          {profDesc}
-        </Typography>
-        <br/>
-      </Box>
-      <Box>
-        <Typography
-          align='center'
-          variant='h4'
-        >
-          { artistName || name }
-        </Typography>
-        <br/>
-        <Box
-          align='center'
-        >
-          <img
-            src={pic}
-            height="150"
-            width="150"
-          />
-          <br/>
-          <br/>
-         Bio: { bio || artistBio }
-        </Box>
-        <br/>
-        <Box
-          align='center'
-        >
-        City: { city }
-        </Box>
-        <br/>
-        <Box
-          align='center'
-        >
-          {genreDesc} { favGenre || myGenre }
-        </Box>
-        <br/>
-        <Box
-          align='center'
-        >
-          {description}  { favArtist || influences }
-        </Box>
-      </Box>
-      <br/>
       <Box
-        align='center'
+        style={{ backgroundColor: '#150050', display: 'flex', flexFlow: 'column', width: '50%' }}
       >
-        <Button
-          startIcon={<PublishIcon />}
-          onClick={followArtist}
+        <Box
+          style={{ flex: 'display' }}
         >
+          <Typography
+            align='left'
+            style={{ color: '#a2a1a7' }}
+            variant='h6'
+          >
+            {profDesc}
+          </Typography>
+          <br/>
+          <Typography
+            align='center'
+            style={{ color: '#a2a1a7' }}
+            variant='h4'
+          >
+            { artistName || name }
+          </Typography>
+          <br/>
+          <Box
+            align='center'
+          >
+            <img
+              src={pic}
+              style={{ borderRadius: '50%'}}
+              height="150"
+              width="150"
+            />
+            <br/>
+            <br/>
+         Bio: { bio || artistBio }
+          </Box>
+          <br/>
+          <Box
+            align='center'
+          >
+        City: { city }
+          </Box>
+          <br/>
+          <Box
+            align='center'
+          >
+            {genreDesc} { favGenre || myGenre }
+          </Box>
+          <br/>
+          <Box
+            align='center'
+          >
+            {description}  { favArtist || influences }
+          </Box>
+          <br/>
+          <Box
+            align='center'
+          >{
+              artistName ? (
+                <Button
+                  style={{ backgroundColor: '#610094'}}
+                  startIcon={<GroupAddIcon />}
+                  onClick={followArtist}
+                >
           Follow
-        </Button>
+                </Button>
+              ) : (
+                null
+              )
+            }
+
+          </Box>
+        </Box>
       </Box>
+      <br/>
       <Box
-        align='right'
-        marginRight='50px'
-        component="div"
-        sx={{ visibility: 'visible' }}>
+        style={{ display: 'flex', flexFlow: 'column', width: '50%', backgroundColor: '#150050', justifyContent: 'center', alignItems: 'center'}}>
         <Button
+          style={{ backgroundColor: '#610094'}}
+          startIcon={<VisibilityIcon />}
           onClick={getAllPosts}
         >See Posts</Button>
         { post.map((posty, i) => {
-          return <p
+          return <ArtistPosts
             key={i}
-          >{posty}</p>;
+            index={i}
+            posty={posty.text}
+            timey={new Date(posty.createdAt).toString().slice(16, 21)}
+          />;
         }) }
       </Box>
     </Box>

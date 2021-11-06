@@ -22,10 +22,9 @@ const SidebarRooms = ({users}) => {
   };
   
   return (
-    <div className="sidebar-rooms" style={sidebarRooms}>
+    <div className="sidebar-rooms">
       {/* <Avatar src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsu7JeOKBlgBvTEAFwdaG4259Cxzrm21Oqfg&usqp=CAU'/> */}
-      <h2 style={infoHeader}>Online:</h2>
-      <div className="sidebar-chat-info" style={sidebarInfo}>
+      <div className="sidebar-chat-info">
         {
           users.map( user => (
           

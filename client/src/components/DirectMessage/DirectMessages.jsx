@@ -222,9 +222,12 @@ const DirectMessages = () => {
     justifyContent: 'space-between'
   };
   const chatMessageInput = {
-    width: '80%',
-    height: '90px',
-    padding: '10px'
+    // width: '80%',
+    // height: '90px',
+    flex: '1',
+    borderRadius: '30px',
+    padding: '10px',
+    border: 'none'
   };
 
   const chatSubmitButton = {
@@ -296,7 +299,7 @@ const DirectMessages = () => {
                 </div>
 
                 <div className='chatBoxBottom' style={chatBoxBottom}>
-                  <textarea className='chatMessageInput' style={chatMessageInput} placeholder='write something...' value={value} onChange={(e) => setValue(e.target.value)}> </textarea>
+                  <input className='chatMessageInput' style={chatMessageInput} placeholder='write something...' value={value} onChange={(e) => setValue(e.target.value)}/>
                   <button className='chatSubmitButton' style={chatSubmitButton} onClick={handleSubmit}>Send</button>
                 </div> </> ) : (<span className="noConversation" style={noConversation}> Add a User to start Direct Messaging.</span>
 
