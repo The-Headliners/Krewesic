@@ -6,10 +6,32 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import useGetUser from '../CustomHooks/useGetUser.jsx';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ArtistPosts from '../Profile/ArtistPosts.jsx';
+import styled, {ThemeProvider} from 'styled-components';
+
+const VisitStyles = styled.div`
+
+.DivWithScroll {
+  height:200px;
+  overflow:scroll;
+  overflow-x:hidden;
+}
+
+  @media screen and (max-width: 480px) {
+    .namey {
+      font-size: 24px;
+    }
+    .profPic {
+      height: 120px;
+      width: 120px;
+    }
+  }
+
+`;
 
 const VisitProfile = () => {
   const [ artistNamed, setArtistNamed ] = useState('');
@@ -122,100 +144,117 @@ const VisitProfile = () => {
   });
 
   return (
-    <Box
-      style={{ display: 'flex' }}
-    >
-      <Box
-        style={{ backgroundColor: '#150050', display: 'flex', flexFlow: 'column', width: '50%' }}
+    <VisitStyles>
+      <Grid
+        container
+        style={{ height: '100vh'}}
       >
-        <Box
-          style={{ flex: 'display' }}
+        <Grid
+          item xs={12} md={6} sm={12} lg={6}
+          style={{ backgroundColor: '#150050' }}
         >
-          <Typography
-            align='left'
-            style={{ color: '#a2a1a7' }}
-            variant='h6'
-          >
-            {profDesc}
-          </Typography>
-          <br/>
-          <Typography
-            align='center'
-            style={{ color: '#a2a1a7' }}
-            variant='h4'
-          >
-            { artistName || name }
-          </Typography>
-          <br/>
           <Box
-            align='center'
+            className='contentDiv'
           >
-            <img
-              src={pic}
-              style={{ borderRadius: '50%'}}
-              height="150"
-              width="150"
-            />
+            <Typography
+              align='left'
+              style={{ color: '#a2a1a7' }}
+              variant='h6'
+            >
+              {profDesc}
+            </Typography>
             <br/>
+            <Typography
+              className='namey'
+              align='center'
+              style={{ color: '#a2a1a7' }}
+              variant='h4'
+            >
+              { artistName || name }
+            </Typography>
             <br/>
+            <Box
+              align='center'
+            >
+              <img
+                className='profPic'
+                src={pic}
+                style={{ borderRadius: '50%'}}
+                height="150"
+                width="150"
+              />
+              <br/>
+              <br/>
          Bio: { bio || artistBio }
-          </Box>
-          <br/>
-          <Box
-            align='center'
-          >
+            </Box>
+            <br/>
+            <Box
+              align='center'
+            >
         City: { city }
-          </Box>
-          <br/>
-          <Box
-            align='center'
-          >
-            {genreDesc} { favGenre || myGenre }
-          </Box>
-          <br/>
-          <Box
-            align='center'
-          >
-            {description}  { favArtist || influences }
-          </Box>
-          <br/>
-          <Box
-            align='center'
-          >{
-              artistName ? (
-                <Button
-                  style={{ backgroundColor: '#610094'}}
-                  startIcon={<GroupAddIcon />}
-                  onClick={followArtist}
-                >
+            </Box>
+            <br/>
+            <Box
+              align='center'
+            >
+              {genreDesc} { favGenre || myGenre }
+            </Box>
+            <br/>
+            <Box
+              align='center'
+            >
+              {description}  { favArtist || influences }
+            </Box>
+            <br/>
+            <Box
+              align='center'
+            >{
+                artistName ? (
+                  <Button
+                    style={{ backgroundColor: '#610094', marginBottom: '10px' }}
+                    startIcon={<GroupAddIcon />}
+                    onClick={followArtist}
+                  >
           Follow
-                </Button>
-              ) : (
-                null
-              )
-            }
+                  </Button>
+                ) : (
+                  null
+                )
+              }
 
+            </Box>
           </Box>
-        </Box>
-      </Box>
-      <br/>
-      <Box
-        style={{ display: 'flex', flexFlow: 'column', width: '50%', backgroundColor: '#150050', justifyContent: 'center', alignItems: 'center'}}>
-        <Button
-          style={{ backgroundColor: '#610094'}}
-          startIcon={<VisibilityIcon />}
-          onClick={getAllPosts}
-        >See Posts</Button>
-        { post.map((posty, i) => {
-          return <ArtistPosts
-            key={i}
-            index={i}
-            posty={posty.text}
-            timey={new Date(posty.createdAt).toString().slice(16, 21)}
-          />;
-        }) }
-      </Box>
-    </Box>
+        </Grid>
+        <br/>
+        <Grid
+          item xs={12} md={6} sm={12} lg={6}
+          style={{ backgroundColor: '#150050', justifyContent: 'center', alignItems: 'center'}}>
+          <Box
+            align='center'
+            style={{ alignItems: 'center', justifyContent: 'center'}}
+          >
+            <Button
+              align='center'
+              style={{ backgroundColor: '#610094', marginTop: '10px', marginBottom: '10px'}}
+              startIcon={<VisibilityIcon />}
+              onClick={getAllPosts}
+            >See Posts</Button>
+            <Box
+              className='DivWithScroll'
+            >
+              { post.map((posty, i) => {
+                return <ArtistPosts
+                  key={i}
+                  index={i}
+                  posty={posty.text}
+                  timey={new Date(posty.createdAt).toString().slice(16, 21)}
+                />;
+              }) }
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
+    </VisitStyles>
   );
 };
 

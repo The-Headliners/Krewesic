@@ -6,6 +6,9 @@ import axios from 'axios';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import logo from './images/KrewesicLight.png';
+import Grid from '@material-ui/core/Grid';
+import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const StyledHeader = styled.div`
   .bar {
@@ -14,28 +17,45 @@ const StyledHeader = styled.div`
   }
  .wrapper {
   display: flex;
- flex-direction: row;
- justify-content: space-between;
+ flex-direction: column;
+ border: 4px solid blue;
+ justify-content: center;
  }
 
  .btn {
-   margin-left: 10px;
-   background-color: #610094; 
+   float: right;
+   margin-top: 20px;
+   margin-right: 5px;
+   background-color: #610094;
    :hover {
      background-color: #3F0071;
    }
- 
+
  }
  .flexChild {
-   
+  align-items: flex-end;
+  text-align: right;
  }
  .logo {
+   margin-top: 10px;
    height: 70px;
    width: 70px;
+   text-align: left;
+   align-items: left;
+   justify-content: left;
  }
  .notifications {
-  background-color: ${props => props.theme.colorLight}
+  margin-top: 20px;
+  text-align: center;
+  justify-content: center;
+  background-color: ${props => props.theme.highlight}
  }
+
+ @media screen and (max-width: 480px) {
+  .notify {
+    font-size: 12px;
+  }
+}
 `;
 
 
@@ -45,9 +65,9 @@ const Header = (props) => {
 
   const {name, setName, type, setType, loggedIn, setLoggedIn, socket} = useContext(GlobalContext);
 
-  const [notification, setNotification] = useState(''); //for now a string but in future array and have drop down menu for all notifications 
+  const [notification, setNotification] = useState(''); //for now a string but in future array and have drop down menu for all notifications
   const [activeNotifications, setActiveNotifications] = useState(false);
- 
+
   //to logout: call the logout endpoint
   //will need additional work to redirect, after we have better idea of where to redirect to.
   const logout = async () => {
@@ -56,7 +76,7 @@ const Header = (props) => {
     setType('');
     setLoggedIn(false);
     //history pusch redirect to wherever should be redirected to
- 
+
   };
 
   useEffect(() => {
@@ -67,24 +87,35 @@ const Header = (props) => {
       //put in a redirect and description on notifications!!
     });
   }, []);
-  
-  //display: conditionally displays login button if user not logged in, or the name and type if logged in and a log out button.   resets the global state if logging out. 
+
+  //display: conditionally displays login button if user not logged in, or the name and type if logged in and a log out button.   resets the global state if logging out.
   //note: after more development, a hamburger menu shold be on the right of all this.  the logo should also be ... a logo
 
   const display = () => {
     return loggedIn
-      ? <Typography className='flexChild'>{name} type: {type} <Button className='btn' onClick={logout}>logout</Button></Typography>
-      : <div ><a href='/auth/google'><Button className='btn flexchild' >Log In</Button></a></div>;
+      ? <Grid
+        item xs={4} md={4} sm={4} lg={4}
+      ><Button className='btn flexchild' startIcon={ <LogoutIcon />} onClick={logout}>logout</Button></Grid>
+      : <Grid
+        item xs={4} md={4} sm={4} lg={4}
+      ><a href='/auth/google'><Button startIcon={ <LoginIcon />} className='btn flexchild' >Log In</Button></a></Grid>;
   };
+
+
   return (
     <StyledHeader>
-      <AppBar position="static" className='bar' >
-        <div className='wrapper'>
-          <div className="notifications" onClick={() => setActiveNotifications(false)} >{notification && notification.notification.body}</div>
+      <Grid container style={{ backgroundColor: '#150050'}}>
+        <Grid item xs={4} md={4} sm={4} lg={4}>
           <img src={logo} alt='logo' className='logo'/>
-          {display()}
-        </div>        
-      </AppBar>
+        </Grid>
+        <Grid
+
+          item xs={4} md={4} sm={4} lg={4}
+        >
+          <div className="notifications notify" onClick={() => setActiveNotifications(false)} >{notification && notification.notification.body}</div></Grid>
+
+        {display()}
+      </Grid>
     </StyledHeader>
   );
 };
