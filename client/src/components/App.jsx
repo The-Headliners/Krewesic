@@ -29,24 +29,43 @@ import VisitProfile from './Profile/VisitProfile.jsx';
 import GlobalStyle from '../components/styles/globalStyles.jsx';
 import ColorBlind from '../components/styles/colorBlind.jsx';
 import Box from '@material-ui/core/Box';
-
+import { makeStyles } from '@material-ui/core/styles';
 import VirtualEvent from './LiveStream/VirtualEvent.jsx';
 import AudioRecording from './Recording/AudioRecording.jsx';
 import VideoChats from './LiveStream/VideoChats.jsx';
 import ConferenceCall from './LiveStream/ConferenceCall.jsx';
 import MyEvents from './Events/MyEvents.jsx';
-
+import AppBar from '@material-ui/core/AppBar';
+import ToolBar from '@material-ui/core/ToolBar';
+import Hidden from '@material-ui/core/Hidden';
+import MenuIcon from '@material-ui/icons/Menu';
+import IconButton from '@material-ui/core/IconButton';
 import {MuiPickersUtilsProvider} from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
+import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import Divider from '@material-ui/core/Divider';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 
 import io from 'socket.io-client';
 const socket = io.connect('/');
+
+const useStyles = makeStyles((theme) => ({
+  link: {
+    marginRight: 20,
+    color: 'purple',
+  },
+  paper: {
+    background: '#3F0071'
+  }
+}));
 
 
 
 const AppStyles = styled.div`
 .nav {
-  background-color: yellow;
+  background-color: #3F0071;
 }
 @media screen and (max-width: 600px) {
   .naval {
@@ -64,9 +83,19 @@ const AppStyles = styled.div`
   }
 }
 
+@media screen and (min-width: 601px) {
+
+
+  .appBox {
+    display: none
+  }
+}
+
 `;
 
 const App = (props) => {
+  const styles = useStyles();
+  const [open, setOpen ] = useState(false);
   const [id, setId] = useState(0);
   const [artistBio, setMyBio] = useState('');
   const [influences, setInfluence] = useState('');
@@ -109,31 +138,94 @@ const App = (props) => {
       <GlobalContext.Provider value={value}>
         <Router>
           <ThemeProvider theme={theme}>
-            <Header />
+            <Header
+              style={{ backgroundColor: '#3F0071'}}
+            />
             <Box
-              className='mobileRender'
+              className='appBox'
+              style={{ backgroundColor: '#3F0071'}}
             >
-              <nav
-                style={{ display: 'flex'}}
+              <AppBar
+                position="sticky"
                 className='nav'
+                style={{ backgroundColor: '#3F0071'}}
               >
-                <Link className='clickableNav' to='/DiscoverArtists'> Discover Artists </Link>
 
-                <Link className='clickableNav' to='/mapevents'>Find Events</Link>
-                <Link className='clickableNav' to='/messages'>Messages</Link>
-                <Link className='clickableNav' to='/profile'>Profile</Link>
-                <Link className='clickableNav' to='/createevent'>create event</Link>
 
-                <Link className='clickableNav' to='/events'>Event Hub</Link>
-                <Link className='clickableNav' to='/myEvents'>My Events</Link>
-                <Link className='clickableNav' to='/videoChats'>Video Chats</Link>
+                <ToolBar
+                  disableGutters
+                  style={{ backgroundColor: '#3F0071'}}
+                >
+                  <Box
+                    className='mobileRender'
+                  >
+                    <Hidden
+                      xsDown
+                    >
+                      <Link className={styles.link} to='/DiscoverArtists'> Discover Artists </Link>
 
-                <Link className='clickableNav' to='/audiorecording'>Recording Studio</Link>
+                      <Link className={styles.link} to='/mapevents'>Find Events</Link>
+                      <Link className={styles.link} to='/messages'>Messages</Link>
+                      <Link className={styles.link} to='/profile'>Profile</Link>
+                      <Link className={styles.link} to='/createevent'>create event</Link>
 
-                <Link className='upload' to='/uploadMusic'>Upload Music</Link>
+                      <Link className={styles.link} to='/events'>Event Hub</Link>
+                      <Link className={styles.link}to='/myEvents'>My Events</Link>
+                      <Link className={styles.link} to='/videoChats'>Video Chats</Link>
 
-                <p style={{color: 'black'}}>Color Blind Accessibility: <props.switch checked={colorBlind} onChange={() => setColorBlind(!colorBlind)} /> </p>
-              </nav>
+                      <Link className={styles.link} to='/audiorecording'>Recording Studio</Link>
+
+                      <Link className={styles.link} to='/uploadMusic'>Upload Music</Link>
+
+                      <p style={{color: 'black'}}>Color Blind Accessibility: <props.switch checked={colorBlind} onChange={() => setColorBlind(!colorBlind)} /> </p>
+                    </Hidden>
+                  </Box>
+
+                  <Hidden>
+                    <IconButton
+                      onClick={() => setOpen(true)}
+                    >
+                      <MenuIcon/>
+                    </IconButton>
+                  </Hidden>
+
+                </ToolBar>
+                <Box
+                  style={{ backgroundColor: '#3F0071'}}
+                >
+                  <SwipeableDrawer
+                    classes={{ paper: styles.paper}}
+                    anchor='left' open={open}>
+                    <div
+                      style={{ backgroundColor: '#3F0071'}}
+                      align="right"
+                    ><IconButton
+                        onClick={() => setOpen(false)}
+                      ><ChevronLeftIcon /></IconButton></div>
+                    <Divider
+                      style={{ backgroundColor: '#3F0071'}}
+                    />
+
+                    <Link onClick={() => setOpen(false)} className='clickableNav' to='/DiscoverArtists'> Discover Artists </Link>
+
+                    <Link onClick={() => setOpen(false)} className='clickableNav' to='/mapevents'>Find Events</Link>
+                    <Link onClick={() => setOpen(false)} className='clickableNav' to='/messages'>Messages</Link>
+                    <Link onClick={() => setOpen(false)} className='clickableNav' to='/profile'>Profile</Link>
+                    <Link onClick={() => setOpen(false)} className='clickableNav' to='/createevent'>create event</Link>
+
+                    <Link onClick={() => setOpen(false)} className='clickableNav' to='/events'>Event Hub</Link>
+                    <Link onClick={() => setOpen(false)} className='clickableNav' to='/myEvents'>My Events</Link>
+                    <Link onClick={() => setOpen(false)} className='clickableNav' to='/videoChats'>Video Chats</Link>
+
+                    <Link onClick={() => setOpen(false)} className='clickableNav' to='/audiorecording'>Recording Studio</Link>
+
+                    <Link onClick={() => setOpen(false)} className='clickableNav' to='/uploadMusic'>Upload Music</Link>
+
+                    <p className='clickableNav' style={{color: 'black'}}>Color Blind Accessibility: <props.switch checked={colorBlind} onChange={() => setColorBlind(!colorBlind)} /> </p>
+
+                  </SwipeableDrawer>
+                </Box>
+              </AppBar>
             </Box>
             <Box
               className='desktopRender'
