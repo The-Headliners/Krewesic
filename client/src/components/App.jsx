@@ -36,7 +36,7 @@ import VideoChats from './LiveStream/VideoChats.jsx';
 import ConferenceCall from './LiveStream/ConferenceCall.jsx';
 import MyEvents from './Events/MyEvents.jsx';
 import AppBar from '@material-ui/core/AppBar';
-import ToolBar from '@material-ui/core/ToolBar';
+import Toolbar from '@material-ui/core/Toolbar';
 import Hidden from '@material-ui/core/Hidden';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
@@ -152,7 +152,7 @@ const App = (props) => {
               >
 
 
-                <ToolBar
+                <Toolbar
                   disableGutters
                   style={{ backgroundColor: '#3F0071'}}
                 >
@@ -189,7 +189,7 @@ const App = (props) => {
                     </IconButton>
                   </Hidden>
 
-                </ToolBar>
+                </Toolbar>
                 <Box
                   style={{ backgroundColor: '#3F0071'}}
                 >

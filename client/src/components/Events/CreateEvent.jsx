@@ -9,21 +9,25 @@ import DateTimePicker from '@mui/lab/DateTimePicker';
 import { LocalizationProvider } from '@mui/lab';
 import {makeStyles} from '@material-ui/core';
 
-const useStyles = makeStyles({
-  outlined: {
-    outline: 'white',
-    backgroundColor: 'green'
-  }
-});
+
 
 const CreateEventStyled = styled.div`
   .wrapper {
-    background-color: #c3a2e9;
+    background-color: ${props => props.theme.colorBackground};
     padding: 30px;
   }
   .createButton {
     background-color: ${props => props.theme.colorLight};
-    color: ${props => props.theme.textLight};
+    color: ${props => props.theme.textColorLight};
+    height: 50px;
+    margin-top: 30px;
+  }
+  .labels {
+    color: ${props => props.theme.textColorLight};
+  }
+
+  .liveVenues {
+    margin-left: 30px;
   }
 `;
 
@@ -65,7 +69,7 @@ const CreateEvent = () => {
 
   return (
     <CreateEventStyled>
-      <Grid container spacing={3} className='wrapper'>
+      <Grid container spacing={3} className='wrapper' alignItems='flex-start'>
         
         <Grid item lg={6}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -84,11 +88,11 @@ const CreateEvent = () => {
           </LocalizationProvider>
         </Grid>
         <Grid item lg={6}>
-          <InputLabel htmlFor='type' className='labels'>What Kind of Event?</InputLabel>
+          <InputLabel htmlFor='type' style={{width: '100%'}} className='labels'>What Kind of Event?</InputLabel>
           <TextField
             id='type'
             onChange={e => setType(e.target.value)}
-            
+            className='inputBackground'
             label="type"
             variant="outlined"
             value={type}
@@ -96,78 +100,79 @@ const CreateEvent = () => {
           />
 
         </Grid>
-        <Grid item lg={4}>
-          <InputLabel htmlFor='venueSelect' className='label'>At a venue or virtual?</InputLabel>
-          <FormControl id='venueSelect' fullWidth>
+        <Grid container direction='column' item lg={8} spacing={4}>
+          <Grid item>
+            <InputLabel className='labels' htmlFor='venueSelect' >At a venue or virtual?</InputLabel>
+            <FormControl id='venueSelect' fullWidth>
             
-            <Select
-              
-              onChange={e => setMedium(e.target.value)}
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              label="medium"
-              value={medium}
-              className='inputBackground'
-            >
-              <MenuItem value={'virtual'}>Virtual</MenuItem>
-              <MenuItem value={'venue'}>At a venue</MenuItem>
-            </Select>
+              <Select
+
+                onChange={e => setMedium(e.target.value)}
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label="medium"
+                value={medium}
+                className='inputBackground'
+              >
+                <MenuItem value={'virtual'}>Virtual</MenuItem>
+                <MenuItem value={'venue'}>At a venue</MenuItem>
+              </Select>
     
-          </FormControl>
+            </FormControl>
+          </Grid>
 
-        </Grid>
-        <Grid item lg={4}>
-          {medium === 'venue' &&
-            <div>  
-              <TextField
-                onChange={e => setAddress(e.target.value)}
-                className='inputBackground'
-                label="address"
-                variant="outlined"
-                value={address}
-                placeholder='100 rock-n-roll ave'
-              />
-              <TextField
-                onChange={e => setCity(e.target.value)}
-                className='inputBackground'
-                label="city"
-                variant="outlined"
-                value={city}
-                placeholder='city'
-              />
-            
-              <TextField
-                onChange={e => setState(e.target.value)}
-                className='inputBackground'
-                label="state"
-                variant="outlined"
-                value={state}
-                placeholder='LA'
-              />
-              <p>or</p>
-              <TextField
-                onChange={e => setVenue(e.target.value)}
-                className='inputBackground'
-                label="venue"
-                variant="outlined"
-                value={venue}
-                placeholder='venue'
-              />
-
-            </div>
-          }
+          <Grid container spacing={3} item lg={4}>
+            {medium === 'venue' &&
+            <Grid container spacing={3}>  
+              <Grid item lg={3} className='liveVenues'>
+                <TextField
+                  onChange={e => setAddress(e.target.value)}
+                  className='inputBackground'
+                  label="address"
+                  variant="outlined"
+                  value={address}
+                  placeholder='100 rock-n-roll ave'
+                />
+              </Grid>
+              <Grid item lg={3} className='liveVenues'>
+                <TextField
+                  onChange={e => setCity(e.target.value)}
+                  className='inputBackground'
+                  label="city"
+                  variant="outlined"
+                  value={city}
+                  placeholder='city'
+                />
+              </Grid>
+              <Grid item lg={3} className='liveVenues'>
+                <TextField
+                  onChange={e => setState(e.target.value)}
+                  className='inputBackground'
+                  label="state"
+                  variant="outlined"
+                  value={state}
+                  placeholder='LA'
+                />
+              </Grid>
+              <Grid item lg={3} className='liveVenues'>
+                <TextField
+                  onChange={e => setVenue(e.target.value)}
+                  className='inputBackground'
+                  label="venue"
+                  variant="outlined"
+                  value={venue}
+                  placeholder='venue'
+                />
+              </Grid>
+            </Grid>
+            }
           
+          </Grid>
+
         </Grid>
-    
-       
-   
-        
-       
-   
-   
-        <br/><br/>
-        
-        <Button className='createButton' onClick={createEvent}>create event!</Button>
+        <Grid item lg={4}>
+        <Button  align-self='center' className='createButton' onClick={createEvent}>create event!</Button>
+        </Grid>
       </Grid>
     </CreateEventStyled>
   );
