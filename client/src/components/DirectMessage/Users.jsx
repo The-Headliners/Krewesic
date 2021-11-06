@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
-import { async } from 'regenerator-runtime';
 
 const Users = ({currentUser}) => {
 
@@ -34,7 +33,7 @@ const Users = ({currentUser}) => {
     <div className='users'>
       All Users:
       {
-        users.map(user => ( <div className='user' onClick={() => createConversation(user.googleId)}>{user.name}</div>))
+        users.map(user => ( <div className='user' key={user.id} onClick={() => createConversation(user.googleId)}>{user.name}</div>))
       }
     </div>
   );

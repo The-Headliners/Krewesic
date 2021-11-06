@@ -21,17 +21,6 @@ const dbConversation = (sequelize,
     }
   });
 
-
-  // return sequelize.define('Messages', {
-  //   id: {
-  //     type: Sequelize.INTEGER,
-  //     primaryKey: true,
-  //     autoIncrement: true
-  //   },
-  //   text: {
-  //     type: Sequelize.STRING
-  //   }
-  // });
 };
 
 module.exports = { dbConversation };
