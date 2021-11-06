@@ -12,20 +12,24 @@ const { dbFollow } = require('./models/Follow.js');
 const {dbSGEvent} = require('./models/SGEvent.js');
 const { dbSGEventComment} = require('./models/SGEventComment.js');
 const dbEvent = require('./models/events.js');
+const {dbVideoChat} = require('./models/videoChat');
 
 const db = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
+  logging: false,
 });
 
 
 
 
-User = dbUser(db);
-Messages = dbMessages(db);
-Rooms = dbRooms(db);
-Conversations = dbConversation(db);
-MusicUpload = dbmusicUpload(db);
+const User = dbUser(db);
+const Messages = dbMessages(db);
+const Rooms = dbRooms(db);
+const Conversations = dbConversation(db);
+const MusicUpload = dbmusicUpload(db);
+const VideoChat = dbVideoChat(db);
+
 
 
 const Event = dbEvent(db);
@@ -61,6 +65,8 @@ User.hasMany(Follows);
 Follows.belongsTo(User, {foreignKey: 'followId'});
 Follows.belongsTo(User, {foreignKey: 'followedId'});
 
+VideoChat.belongsTo(User, {foreignKey: 'creatorId'})
+
 
 //sync the db
 db.sync()
@@ -82,4 +88,5 @@ module.exports = {
   EventComment,
   Posts,
   Follows,
+  VideoChat
 };

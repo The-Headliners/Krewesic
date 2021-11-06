@@ -10,7 +10,7 @@ import 'regenerator-runtime/runtime';
 import styled from 'styled-components';
 import keys from '../Events/keys.js';
 import Artist from './Artist.jsx';
-
+import Typography from '@material-ui/core/Typography';
 
 
 // const StyledArtistOfDay = styled.div`
@@ -23,7 +23,7 @@ const discoverArtists = () => {
   const [ userBase, setUserBase ] = useState([]);
 
   //IMPORTANT
-  const {name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn, id, setId} = useContext(GlobalContext);
+  const {name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn, id, setId, socket} = useContext(GlobalContext);
   //IMPORTANT
 
 
@@ -52,15 +52,22 @@ const discoverArtists = () => {
     setLoggedIn(true);
     setId(data.id);
     renderUsers();
+    //since the logged in redirect goes here, send this out so socket can keep track of logged in Us
+    socket.emit('loggedIn', data.id);
   }, []);
 
 
 
 
   return (
-    <div className='dayHeader'>
-      <h1>OUR ARTISTS</h1>
-      <hr/>
+    <div style={{backgroundColor: '#150050', height: '100vh'}}>
+      <Typography
+        style={{ color: '#c3c2c5' }}
+        align='center'
+        variant='h4'>Artists</Typography>
+      <hr
+        style={{border: '1px solid #610094'}}
+      />
       { userBase.map((user, i) => {
         if (user.type === 'artist') {
           return <Artist

@@ -4,6 +4,7 @@ const path = require('path');
 require('dotenv').config();
 const {PORT} = process.env;
 const http = require('http');
+const https = require('https');
 const frontEnd = path.resolve(__dirname, '..', 'client', 'dist');
 const session = require('express-session');
 const passport = require('passport');
@@ -26,21 +27,28 @@ const mailingList = require('./routes/mailingList.js');
 const kEvents = require('./routes/events/krewesicEvents.js');
 const cookieParser = require('cookie-parser');
 
+
 //for video streaming
 const {v4: uuidv4} = require('uuid');
 const virtualEvent = require('./routes/virtualEvent.js');
-const {ExpressPeerServer} = require('peer');
+const {PeerServer} = require('peer');
+const _ = require('underscore');
 
 
 
 //create the server
 const server = http.createServer(app);
 
-//create peer express server
-// const peerServer = ExpressPeerServer(server, {
-//   debug: true,
-//   path: '/p2p'
-// });
+const peerServer = PeerServer({
+  port: 3002,
+  path: '/peerjs',
+  proxied: true,
+  debug: true
+});
+
+
+
+
 
 app.use(express.static(frontEnd));
 app.use(express.json());
@@ -54,7 +62,15 @@ const io = require('socket.io')(server);
 //holds alll users that are online
 let users = [];
 
+const loggedInUsers = {}; //to keep track of logged in users.  will be in key:value pairs of userId: socketId
+
 const liveStreamUsers = {}; //this gonna hold the rooms and their arrays {roomId: [user1, user2...]}
+const removeLiveStreamUser = (socketId, showId) => {
+  for (show in liveStreamUsers) {
+    liveStreamUsers[show] = liveStreamUsers[show].filter(user => user.socketId !== socketId); 
+  }
+ 
+};
 
 //function to add user to the array
 const addUser = (userId, socketId) => {
@@ -72,9 +88,9 @@ const getUser = (userId) => {
 };
 io.on('connection', socket => {
   //when connect
-  console.log(`user ${socket.id} is connected`);
+  console.info(`user ${socket.id} is connected`);
 
-  //***FOR LIVE CHAT FOR ALL USERS*** when a message is sent
+  //***FOR LIVE CHAT FOR ALL USERS*** when a message is sent */
   socket.on('message', ({ name, message}) => {
     io.emit('message', {name, message});
   });
@@ -90,7 +106,7 @@ io.on('connection', socket => {
     io.emit('getUsers', users);
   });
 
-  //***PRIVATE MESSAGE****send and get a message
+  //***PRIVATE MESSAGE****send and get a message */
   //socket.on, take from the client
   socket.on('sendMessage', ({senderId, receiverId, text, name}) => {
     //find specific user to send message
@@ -104,34 +120,51 @@ io.on('connection', socket => {
     });
   });
 
+  /**for when a user logs in */
+  socket.on('loggedIn', async (data) => {
+    const id = data;
+    loggedInUsers[id] = socket.id;
+  });
+
   //****for streaming features */
-  socket.on('joinShow', ({showId, userId}) => {
-    console.log('join show event, showId then userId', showId, userId);
-    if(liveStreamUsers[showId]) {
-      liveStreamUsers[showId].push(userId)
+
+  socket.on('notify', (data) => {
+    const {id, notification} = data;
+    const sockId = loggedInUsers[id];
+    io.to(sockId).emit('notified', data);
+  });
+  socket.on('joinShow', ({showId, userId, name}) => {
+    console.info('join show event, showId then userId', showId, userId);
+    const idObj = {socketId: socket.id, peerId: userId};
+    if (liveStreamUsers[showId]) {
+      liveStreamUsers[showId].push(idObj);
     } else {
-      liveStreamUsers[showId] = [userId]
+      liveStreamUsers[showId] = [idObj];
     }
-   // console.log('lsusid', liveStreamUsers[showId])
     socket.join(showId);
-    socket.to(showId).emit('user-connected', {latestUser: userId, allUsers: liveStreamUsers[showId]});  /**changed this restructure the data on the front end!!!! */
+    socket.to(showId).emit('user-connected', {name: name, latestUser: userId, allUsers: liveStreamUsers[showId]}); /**changed this restructure the data on the front end!!!! */
   });
 
 
   socket.on('peerconnected', (data) => {
-    const {showId, userId} = data;
-    if(liveStreamUsers[showId] === undefined) {
-      liveStreamUsers[showId] = userId
-    } else if (!liveStreamUsers[showId].includes(userId)) {
-      liveStreamUsers[showId].push(userId)
+    console.info('on peer connected', data);
+    const {showId, userId, name} = data;
+    const idObj = {socketId: socket.id, peerId: userId};
+    if (showId && userId) {
+      if (liveStreamUsers[showId] === undefined) {
+        liveStreamUsers[showId] = idObj;
+      } else if (liveStreamUsers[showId] && !liveStreamUsers[showId].map(obj => obj.peerId).includes(userId)) {
+        liveStreamUsers[showId].push(idObj);
+      }
+      socket.to(showId).emit('anotherPeerHere', {name: name, latestUser: userId, allUsers: liveStreamUsers[showId]}); /**changed this restructure the data on the front end!!!! */
+
     }
-    socket.to(showId).emit('anotherPeerHere', userId, liveStreamUsers[showId]); /**changed this restructure the data on the front end!!!! */
+   
   });
 
   socket.on('liveStreamMessage', (messageObj) => {
     const {showId, message} = messageObj;
-    // console.log('showId', showId, 'message', message);
-    socket.to(showId).emit('receiveLiveStreamMessage', );
+    socket.to(showId).emit('receiveLiveStreamMessage', messageObj );
   });
 
 
@@ -142,23 +175,24 @@ io.on('connection', socket => {
   //When disconnect
   socket.on('disconnect', () => {
     //if there are any disconnections
-    //console.log('disconnected user', socket.id);
+    console.info('disconnected user', socket.id);
     removeUser(socket.id);
+    removeLiveStreamUser(socket.id); //this needs to account for peerId not socketId because the users are via peerId
     io.emit('getUsers', users);
   });
 });
 
 app.get('/virtualEventUsers/:showId', async (req, res) => {
   try {
-    const {showId} = req.params
-    console.log(liveStreamUsers)
-    console.log(liveStreamUsers[showId])
-    res.status(201).send(liveStreamUsers[showId])
+    const {showId} = req.params;
+    //console.log(liveStreamUsers);
+    //console.log(liveStreamUsers[showId]);
+    res.status(201).send(liveStreamUsers[showId]);
   } catch (err) {
-    console.error(err)
-    res.sendStatus(500)
+    console.warn(err);
+    res.sendStatus(500);
   }
-})
+});
 
 
 

@@ -11,7 +11,6 @@ import Peer from 'peerjs';
 
 
 
-
 const StyledEvent = styled.div`
   .wrapper {
     display: flex;
@@ -32,27 +31,28 @@ const StyledEvent = styled.div`
   }
   .lowerWrapper {
     position: absolute;
-    top: 700px;
-    left: 50px;
+    top: 250px;
+    right: 20px;
   }
 `;
 
 
 
-const VirtualEvent = () => {
-  
-  const {socket, id} = useContext(GlobalContext);
-  const params = useParams();
+const ConferenceCall = () => {
+ 
+
+  const {socket} = useContext(GlobalContext);
+  const {name} = useContext(GlobalContext);
 
   const myPeer = useRef(new Peer( undefined, { //remember: npm i -g peer   \n peerjs --port 3002   running peer port on 3002
-  
     host: '/',
     path: '/peerjs',
-    secure: true
+    port: '3002'
+    
       
   }));
 
-  //const code = useRef(useParams())
+
   const [stream, setStream ] = useState({});
   //const [peerStream, setPeerStream] = useState({});
   //get userId from the context/  then the cookies later
@@ -67,24 +67,17 @@ const VirtualEvent = () => {
   const [allPeers, setAllPeers] = useState([]);
   const [peers, setPeers] = useState('');
   const currentStream = useRef();
-  //const peerStream = useRef();
-  
-  const [myVidDisplay, setMyVidDisplay] = useState('block');
-  const [theirVidDisplay, setTheirVidDisplay] = useState('block');
-  //const myVidDisplay = useRef('block');
-  //const theirVidDisplay = useRef('block')
+  const [peerName, setPeerName] = useState('');
+
   
 
   const showId = useRef(useParams().code).current;
 
- 
-
 
   useEffect(async () => {
-    //console.log('id', id,);
-    //console.log('params', params);
+
     myPeer.current.on('open', (id) => {
-      //console.log('open', id);
+      console.info('open', id);
       myPeerId.current = id;
       joinShow(id);
     });
@@ -98,12 +91,13 @@ const VirtualEvent = () => {
 
     socket.on('user-connected', (data) => {
       //when user is connected then connect to thenew user (connectToNewUser() function)
-      //console.log('u connected', data);
+      console.info('u connected', data);
+      setPeerName(data.name);
       connectToNewUser(data.latestUser, stream);
       setPeers(data.latestUser);
-      socket.emit('peerconnected', {showId: showId, userId: myPeerId.current}); //this goes back, and signals other user that this person joined the room.  to not throw infinite loop: should probably account for to only add that peer to the state if the state is empty
+      socket.emit('peerconnected', {name: name, showId: showId, userId: myPeerId.current}); //this goes back, and signals other user that this person joined the room.  to not throw infinite loop: should probably account for to only add that peer to the state if the state is empty
       const notMe = data.allUsers.filter(uObj => uObj.peerId !== myPeerId.current);
-      //console.log('notMe', notMe);
+      // console.log('notMe', notMe);
       setAllPeers(notMe);
 
     });
@@ -111,15 +105,13 @@ const VirtualEvent = () => {
     socket.on('anotherPeerHere', (data) => {
       //when user is connected then connect to thenew user (connectToNewUser() function)
       //console.log('another peer data', data);
+      setPeerName(data.name);
       connectToNewUser(data.latestUser, stream);
       setPeers(data);
       socket.emit('peerconnected', peers); //this is the step missing-- this needs to go back, and signal other user that this person joined the room.  to not throw infinite loop: should probably account for to only add that peer to the state if the state is empty
       const notMe = data.allUsers.filter(uObj => uObj.peerId !== myPeerId.current);
-      // console.log('notMe', notMe);
+      //console.log('notMe', notMe);
       setAllPeers(notMe);
-      setMyVidDisplay('hidden');
-      myVidDisplay.current = 'hidden';
-
       
     });
 
@@ -129,14 +121,10 @@ const VirtualEvent = () => {
       call.answer(currentStream.current);
       //put this stream in the peerVideo and the peerStream
       call.on('stream', (peerStream) => {
-        // console.log('peerVideo.current', peerVideo.current);
-        //peerVideo.current.srcObject = peerStream;
+        peerVideo.current.srcObject = peerStream;
         //setPeerStream(peerStream);
 
       });
-
-    
-
      
     });
   
@@ -155,7 +143,7 @@ const VirtualEvent = () => {
 
 
   const connectToNewUser = (userId, stream) => {
-    //console.log('connectToNewUser', userId, currentStream.current);
+    // console.log('connectToNewUser', userId, currentStream.current);
     const call = myPeer.current.call(userId, currentStream.current);
     call.on('stream', userVideoStream => {
       //setPeerStream(userVideoStream);
@@ -164,7 +152,7 @@ const VirtualEvent = () => {
     
   };
   const joinShow = (x) => {
-    socket.emit('joinShow', {showId: showId, userId: x}); 
+    socket.emit('joinShow', {showId: showId, userId: x, name: name }); 
   };
 
   useEffect(() => {
@@ -183,16 +171,18 @@ const VirtualEvent = () => {
     <StyledEvent>
       <div className='wrapper'>
 
-        <h1>{params.artistName}</h1>
+      virtual 
         <div className='videoWrapper myVideoWrapper'>
-          <video playsInline style={{width: '300px', height: '300px', display: myVidDisplay}} muted ref={userVideo} autoPlay></video>
+          <video playsInline style={{width: '300px', height: '300px'}} muted ref={userVideo} autoPlay></video>
         </div>
+        
         <div className='videoWrapper peerVideoWrapper'>
-          <video playsInline muted style={{width: '400px', height: '400px', marginTop: '100px', display: theirVidDisplay }} ref={peerVideo}autoPlay></video>
+          <video playsInline muted style={{width: '400px', height: '400px', marginTop: '100px'}} ref={peerVideo}autoPlay></video>
         </div>
         
         
         <div className='lowerWrapper'>
+          <div>talking with: {peerName}</div>
           <StreamChat showId={showId} socket={socket} />
         </div>
       </div>
@@ -200,6 +190,4 @@ const VirtualEvent = () => {
   );
 };
 
-export default VirtualEvent;
-
-//display: id == params.artistId ? 'block' : 'none' 
+export default ConferenceCall;

@@ -39,6 +39,9 @@ const dbEvent = (sequelize) => {
     },
     venue: {
       type: Sequelize.STRING
+    },
+    code: {
+      type: Sequelize.STRING
     }
 
   

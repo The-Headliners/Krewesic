@@ -7,6 +7,10 @@ import styled from 'styled-components';
 import GlobalContext from '../../Contexts/GlobalContext.jsx';
 import {useHistory} from 'react-router-dom';
 import VisitProfile from '../../Profile/VisitProfile.jsx';
+import {format} from 'date-fns';
+
+
+
 
 
 const StyledLanding = styled.div`
@@ -33,11 +37,14 @@ const KreweEventLandingPage = () => {
   const [venue, setVenue] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
+  const [artistId, setArtistId] = useState('');
 
   const [interestedUsers, setInterestedUsers] = useState([]);
   const [alreadyInterested, setAlreadyInterested] = useState(false);
   const [commentText, setCommentText] = useState('');
   const [commentWall, setCommentWall] = useState([]);
+
+  const [code, setCode] = useState('');
 
 
   //const user = useGetUser();
@@ -45,12 +52,17 @@ const KreweEventLandingPage = () => {
   const getEventDeetz = async () => {
     const {data} = await axios.get(`/krewesicevents/event/${eventId}`);
     setArtist(data.User.name);
-    setDateTime(data.when);
+    //setDateTime(data.when);
     setVenue(data.venue);
     setAddress(data.address);
     setCity(data.city);
     setState(data.state);
-
+    setCode(data.code);
+    setArtistId(data.User.id);
+    const when = new Date(data.when.slice(0, -5));
+  
+    const formattedDate = format(when, 'MM.dd.yyyy h:mm aaa', { timeZone: 'America/Chicago'},);
+    setDateTime(formattedDate);
   };
 
 
@@ -99,6 +111,10 @@ const KreweEventLandingPage = () => {
     history.push(`/visitProfile/${id}`);
   };
 
+  const redirectToShow = () => {
+    history.push(`/virtualevent/${code}/${artistId}/${artist}`);
+  };
+
 
   return (
     <StyledLanding>
@@ -134,7 +150,7 @@ const KreweEventLandingPage = () => {
           </div>
 
         </div>
-
+        <Button className='landingButton' onClick={redirectToShow}>liveStream</Button>
       </div>
     </StyledLanding>
   );

@@ -1,7 +1,8 @@
 import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
+import Button from '@material-ui/core/Button';
 
-const Search = () => {
+const Search = ({createConversation}) => {
 
   const [value, setValue] = useState('');
   const [userSearched, setUserSearched] = useState([]);
@@ -20,14 +21,47 @@ const Search = () => {
       });
   };
 
+  const chatMenuInput = {
+    width: '90%',
+    padding: '10px 0',
+    border: 'none',
+    borderBottom: '1px solid grey'
+  };
+
+  const searchImg = {
+    width: '40px',
+    height: '40px',
+    borderRadius: '50%',
+    objectFit: 'cover',
+    marginRight: '20px',
+  };
+
+  const searchName = {
+    fontWeight: '500'
+  };
+
+  const userSearch = {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '10px',
+    cursor: 'pointer',
+    marginTop: '20px',
+    '&:hover': {
+      backgroundColor: 'blue'
+    }
+  };
+  const searchButton = {
+    color: '#c3c2c5',
+    backgroundColor: '#3F0071'
+  };
 
   return (
     <div className='sidebar-search'>
 
       <div className='search-section'>
         <h5>Find a user </h5>
-        <input type="text" className="search-bar"placeholder="Find a user..." value={value} onChange={(e) => changeInput(e.target.value)}/>
-        <button className="search-button" onClick={() => searchUser(value)}> Search </button>
+        <input type="text" className="chatMenuInput" style ={chatMenuInput} placeholder="Search for friends..." value={value} onChange={(e) => changeInput(e.target.value)}/>
+        <Button className="search-button" style={searchButton} onClick={() => searchUser(value)}> Search </Button>
       </div>
 
       <div className='user-preview'>
@@ -35,7 +69,10 @@ const Search = () => {
           //map over the userSearched, to render the user that was searched
           userSearched.map(user => {
             return (
-              <h1>{user.name}</h1>
+              <div className='userSearch' key={user.id} style={userSearch}>
+                <img className='searchImg' src="https://www.archiefoundationhome.org.uk/wp-content/uploads/2020/05/profile-photo-social-media.jpg" alt="" style={searchImg} /> 
+                <span className='searchName' style={searchName} onClick={() => createConversation(user)}>{user.name} </span>
+              </div>
             );
           })
         }

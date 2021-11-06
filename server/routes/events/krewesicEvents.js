@@ -162,6 +162,21 @@ kEvents.delete('/removeInterest/:eventId', async (req, res) => {
   }
 });
 
+kEvents.get('/myVirtualEvents', async(req, res) => {
+  try {
+    const {id} = req.user;
+    //retrieve the virtual events of krewesic users
+    const events = await Event.findAll({where: {medium: 'virtual', artistId: id},
+      limit: 10,
+      include: [{model: User, }]
+    });
+    res.status(201).send(events);
+
+  } catch (err) {
+    console.warn(err);
+    res.sendStatus(500);
+  }
+});
 
 
 module.exports = kEvents;

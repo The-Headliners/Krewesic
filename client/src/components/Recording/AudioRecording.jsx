@@ -1,11 +1,21 @@
 import React, {useState, useEffect, useContext, useRef } from 'react';
 import styled from 'styled-components';
+import { Button } from '@material-ui/core';
+import Card from '@mui/material/Card';
 
 const RecordStyles = styled.div`
-  background-color: green;
+  background-color: black;
   .visualizer {
     height: 200px;
     width: 200px;
+    margin-left: 50px;
+  }
+  .recordBtn {
+    background-color: pink;
+    margin: 20px;
+  }
+  .visualizerCard {
+    background-color: #150050;
   }
 `;
 
@@ -35,6 +45,8 @@ const AudioRecording = () => {
   //const canvasRef = React.createRef()
   const canvasRef = useRef(null);
   //const [canvas] = useState(canvasRef.current)
+
+  const [recordingUrls, setRecordingUrls] = useState([]);
  
 
 
@@ -73,7 +85,7 @@ const AudioRecording = () => {
 
     const width = 200;
     const height = 200;
-    const barWidth = width / height;
+    const barWidth = width / height * 10;
    
 
     const canvas = canvasRef.current;
@@ -87,13 +99,13 @@ const AudioRecording = () => {
     analyserNode.getByteFrequencyData(dataArray);
     //console.log(dataArray)
     dataArray.forEach((item, index) => {
-      const y = item / 255 * height / 2;
+      const y = item / 255 * height;
       const x = barWidth * index;
       // console.log('x', x, 'y', y)
 
       // canvasContext.rect(5,5,90,90);
       // canvasContext.fill();
-      canvasContext.fillStyle = 'black';
+      canvasContext.fillStyle = `hsl(${y / height * 250}, 100%, 50%)`;
       canvasContext.fillRect(x, height - y, barWidth, y);
       // canvasContext.fillRect = (20, 20, 10, 20)
     });
@@ -110,10 +122,12 @@ const AudioRecording = () => {
     //console.log('blob', blob)
     const audioURL = window.URL.createObjectURL(blob);
     setAudioUrl(audioURL);
+    setRecordingUrls(list => [...list, audioURL]);
     
   };
 
   const startRecording = (e) => {
+    chunks.current = [];
     mediaRecorder.current.start(10);
     osc.start(0);
     setRecording(true);
@@ -128,14 +142,14 @@ const AudioRecording = () => {
 
   const play = () => {
     //connect recorded audio to analyser nde
-    console.log('recorded audio', recordedAudio.current);
+    //console.log('recorded audio', recordedAudio.current);
     const playback = audioContext.createMediaElementSource(recordedAudio.current);
     playback.connect(audioContext.destination);
     playback.connect(analyserNode);
     analyserNode.connect(audioContext.destination);
 
-    console.log('analyser node', analyserNode);
-    playback.start(0);
+    //console.log('analyser node', analyserNode);
+    //playback.start(0);
 
 
   };
@@ -146,19 +160,20 @@ const AudioRecording = () => {
   return (
     <RecordStyles>
       <div>
-      audio recording component
 
         <audio autoPlay playsInline muted ref={userAudio} ></audio>
-        {recording ? <button onClick={stopRecording}>stop</button> : <button onClick={startRecording}>record</button>}
-        <audio controls src={audioUrl} autoPlay playsInline ref={recordedAudio.current} ></audio>
-        <button onClick={play}>play back</button>
+        {recording ? <Button onClick={stopRecording} className='recordBtn'>stop</Button> : <Button onClick={startRecording} className='recordBtn'>record</Button>}
+        {recordingUrls.map ((url, i) => <audio key={i} controls src={url} playsInline ref={recordedAudio.current} ></audio>)}
+        <Button className='recordBtn' onClick={play}>play back</Button>
       </div>
-      <div className='visualizerDiv'>
+      <Card className='visualizerCard'>
         <canvas className='visualizer' ref={canvasRef} />
-      </div>
+      </Card>
 
     </RecordStyles>
   );
 };
 
 export default AudioRecording;
+
+//<audio controls src={audioUrl} autoPlay playsInline ref={recordedAudio.current} ></audio>

@@ -1,31 +1,23 @@
 import { createGlobalStyle } from 'styled-components';
 
-//color pallete:
-/**
- *
- #000000
- #150050
- #3F0071
- #610094
-#a2a1a7
- #c3c2c5
- */
 
-const GlobalStyle = createGlobalStyle`
+//background
+
+const ColorBlind = createGlobalStyle`
 
 
   body {
-    background-color: black;
-    color: #a2a1a7;
+    background-color: #40B0A6;
+    color: #f5ebd0;
     font-family: 'Hind Madurai', sans-serif;
     line-height: 1.5;
 
   }
   h1 {
-    color: #c3c2c5;
+
   }
   nav {
-    background-color: #3F0071;
+    background-color: #FFCCD2;
     padding: 15px;
     justify-content: center;
     align-items: center;
@@ -36,11 +28,10 @@ const GlobalStyle = createGlobalStyle`
     margin-left: 15px;
     margin-right: 15px;
     text-decoration: none;
-    color: #c3c2c5;
   }
 
   .backgroundColorLight {
-    background-color: #caa8f7;
+    background-color:  #D5D5D5;
   }
 
   .clickable {
@@ -53,14 +44,14 @@ const GlobalStyle = createGlobalStyle`
   .clickableDark {
     :hover {
       cursor: pointer;
-      background-color:  #150050;
+      background-color: #18191a;
     }
   }
   .clickableLight {
     padding: 15px;
     :hover {
       cursor: pointer;
-      background-color: #610094;
+      background-color: #9c9c6e;
 
     }
   }
@@ -69,7 +60,7 @@ const GlobalStyle = createGlobalStyle`
     padding: 3px;
     :hover {
       cursor: pointer;
-      background-color: #610094;
+      background-color: #9c9c6e;
 
     }
   }
@@ -81,14 +72,9 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .btn1 {
-    background-color: #3F0071;
+    background-color: #b8a959;
   }
-
-
 
 `;
 
-export default GlobalStyle;
-
-//@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap'); 'Roboto'
-//font-family: 'Roboto', sans-serif;
+export default ColorBlind;

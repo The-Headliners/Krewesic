@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import styled, {ThemeProvider} from 'styled-components';
 
-const ProfilePostStyles = styled.div`
+const PostStyles = styled.div`
 
   @media screen and (max-width: 480px) {
 
@@ -15,7 +15,7 @@ const ProfilePostStyles = styled.div`
 
 `;
 
-const Post = ({ posty, timey, index }) => {
+const ArtistPosts = ({ posty, timey, index }) => {
 
   const [ time, setTime ] = useState(null);
 
@@ -35,7 +35,7 @@ const Post = ({ posty, timey, index }) => {
   });
 
   return (
-    <ProfilePostStyles>
+    <PostStyles>
       <Box
         className='hoverino'
       >
@@ -48,16 +48,18 @@ const Post = ({ posty, timey, index }) => {
           >
             {index + 1}. {posty}
           </Box>
+
         </Box>
         <Box
           className='timey'
-          style={{ display: 'flex', textAlign: 'center', justifyContent: 'center', marginBottom: '10px' }}
+          style={{ display: 'flex', textAlign: 'center', justifyContent: 'center', marginBottom: '10px'}}
         >
           {time}</Box>
       </Box>
-    </ProfilePostStyles>
+    </PostStyles>
 
   );
 };
 
-export default Post;
+export default ArtistPosts;
+

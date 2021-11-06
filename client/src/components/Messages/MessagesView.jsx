@@ -1,93 +1,62 @@
 import React, {useState, useEffect} from 'react';
 import {Avatar} from '@material-ui/core';
-import MessageForm from './MessageForm.jsx'; //goes towards the chat footer
+//goes towards the chat footer
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import MicIcon from '@material-ui/icons/Mic'; 
 
-const MessagesView = ({chat, handleChange, sendMessage, value}) => {
+const MessagesView = ({message, user}) => {
 
 
   //Style for MessagesView//
-  const boxStyle = {
-    flex: '0.65',
-    backgroundColor: 'lightgray',
-  };
-  const chatHeader = {
-    padding: '20px',
+  const Message = {
     display: 'flex',
-    alignItems: 'center',
-    borderBottom: '1px solid lightgray'
-  };
-  const chatMessageSender = {
-    position: 'relative',
-    fontSize: '16px',
-    padding: '10px',
-    backgroundColor: 'white',
-    borderRadius: '10px',
-    width: 'fit-content',
-    marginBottom: '30px',
-    marginLeft: 'auto',
-    color: 'black'
-  };
-  // const chatMessageRecipient = {
-  //   position: 'relative',
-  //   fontSize: '16px',
-  //   padding: '10px',
-  //   backgroundColor: 'white',
-  //   borderRadius: '10px',
-  //   width: 'fit-content',
-  // }
-  const timeStamp = {
-    marginLeft: '10px',
-    fontSize: 'xx-small'
+    flexDirection: 'column',
+    marginTop: '20px'
   };
 
-  const chatFooter = {
+  const messageImg = {
+    width: '32px',
+    height: '32px',
+    borderRadius: '50%',
+    objectFit: 'cover',
+    marginRight: '10px'
+  };
+
+  const messageText = {
+    padding: '10px',
+    borderRadius: '20px',
+    backgroundColor: '#1877f2',
+    color: 'white',
+    maxWidth: '300px',
+  };
+
+  const messageBottom = {
+    fontSize: '12px',
+    marginTop: '10px'
+  };
+
+  const ownMessage = {
     display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    minWidth: '100px',
-    height: '62px',
-    borderTop: '1px solid lightgray'
+    flexDirection: 'column',
+    marginTop: '20px',
+    alignItems: 'flex-end'
   };
 
-  const photoIcon = {
+  const ownMessageText = {
     padding: '10px',
-  // color: 'grey'
+    borderRadius: '20px',
+    backgroundColor: 'rgb(245, 241, 241)',
+    color: 'black',
+    maxWidth: '300px',
   };
-
   return (
-    <div className='chat' style={boxStyle}>
-      <div className="chat-header" style={chatHeader}>
-        <Avatar src='https://www.uidownload.com/files/790/68/996/free-set-of-material-design-avatars.png'/>
+    <div className='message' key={message.id} style={message.name === user ? ownMessage : Message}>
+      <div className="messageTop" >
+        <img className='messageImg' style={messageImg} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIbCHBytowb0SiotsKsEzRFiJ37uH8GqkA-A&usqp=CAU" alt=""/>
 
-        <div className="chat-header-info" style={{color: 'black'}}>
-          <h3>Krewesic Chat Room</h3>
-          <p>Chat along...</p>
-        </div>
-      </div>
-
-      <div className="chat-body">
-        {
-          chat.map(message => {
-            return (
-              <div>
-                <h2 style={{position: 'relative', marginLeft: 'auto', width: 'fit-content', color: 'black'}}>{message.name}</h2>
-                <p className="chat-message" style={chatMessageSender}>
-                  {message.message}
-
-                  <span className="chat-timeStamp" style={timeStamp}> 3:52pm</span>
-                </p>
-              </div>
-            );
-          })
-        }
-      </div>
-
-      <div className="chat-footer" style={chatFooter}>
-        <AddAPhotoIcon style={photoIcon}/>
-        <MessageForm handleChange={handleChange} sendMessage={sendMessage} value={value}/>
-        <MicIcon />
+        {message.name}
+        <p className="messageText" style={message.name === user ? ownMessageText : messageText}>{message.message}</p>
+        <div className='messageBottom' style={messageBottom}> 1 hour ago</div>
       </div>
     </div>
   );

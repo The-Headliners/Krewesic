@@ -7,13 +7,41 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import PublishIcon from '@mui/icons-material/Publish';
 import { DataRowMessage } from 'pg-protocol/dist/messages';
 import DiscoverArtists from '../Home/DiscoverArtists.jsx';
 import Artist from '../Home/Artist.jsx';
 import Post from '../Profile/Post.jsx';
 import Krewe from '../Profile/Krewe.jsx';
+import PeopleIcon from '@mui/icons-material/People';
+import styled from 'styled-components';
+import { wrap } from 'regenerator-runtime';
 //import { set } from 'core-js/core/dict';
+
+
+const ProfileStyles = styled.div`
+height: 100vh;
+.DivWithScroll {
+  height:200px;
+  overflow:scroll;
+  overflow-x:hidden;
+}
+
+  @media screen and (max-width: 480px) {
+    .namey {
+      font-size: 24px;
+    }
+    .profPic {
+      height: 120px;
+      width: 120px;
+    }
+  }
+
+`;
+
+
+
 const Profile = () => {
 
 
@@ -119,118 +147,117 @@ const Profile = () => {
 
 
 
+
   return (
-    <Box
-      bgcolor="primary.dark"
-      display="flex"
-      flexDirection="column"
-      alignItems="stretch"
-    >
-      <br/>
-      <Box>
-        <Typography
-          align='left'
-          color='textSecondary'
-          variant='h4'
+    <ProfileStyles>
+      <Grid
+        container
+        style={{ height: '100vh'}}
+      >
+        <Grid
+          item xs={12} md={6} sm={12} lg={6}
+          style={{backgroundColor: '#150050'}}
         >
-          My Profile
-        </Typography>
-        <br/>
-      </Box>
-      <Box>
-        <Typography
-          align='center'
-          variant='h4'
-        >
-          { artistName || name }
-        </Typography>
-        <br/>
-        <Box
-          align='center'
-        >
-          <img
-            src={pic}
-            height="150"
-            width="150"
-          />
+          <Box
+            style={{ flex: 'display', justifyContent: 'center', textAlign: 'center' }}
+          >
+            <Typography
+              style={{marginTop: '10px' }}
+              className='namey'
+              variant='h4'
+            >
+              { artistName || name }
+            </Typography>
+            <br/>
+            <img
+              className='profPic'
+              style={{borderRadius: '50%'}}
+              src={pic}
+              height="150"
+              width="150"
+            />
+          </Box>
           <br/>
-          <br/>
+          <Box
+            style={{align: 'left', color: '#a2a1a7', flex: 'display', justifyContent: 'center', textAlign: 'center' }}
+          >
          Bio: { bio || artistBio }
-        </Box>
-        <br/>
-        <Box
-          align='center'
-        >
+            <br/>
         City: { city }
-        </Box>
-        <br/>
-        <Box
-          align='center'
-        >
-          {genreDesc} { favGenre || myGenre }
-        </Box>
-        <br/>
-        <Box
-          align='center'
-        >
-          {description}  { favArtist || influences }
-        </Box>
-      </Box>
-      <br/>
-      <Box
-        align='center'
-        marginLeft="100px"
-      >
-        <TextField
-          value={text}
-          onChange={e => {
-            setMyTexts(e.target.value);
-          }}
-          multiline
-          label="Post"
-          size="small"
-          variant="outlined"
-        />
-        <Button
-          startIcon={<PublishIcon />}
-          onClick={() => handlePost()}
-        >
-          Post
-        </Button>
-      </Box>
-      <Box
-        align='right'
-        marginRight='50px'
-        component="div"
-      >
-        <h4>My Posts</h4>
-        { post.map((posty, i) => {
-          return <Post
-            key={i}
-            index={i}
-            posty={posty.text}
-            timey={new Date(posty.createdAt).toString().slice(16, 21)}
-          ></Post>;
-        }) }
-
-      </Box>
-      <Box
-      >
-        <Button
-          onClick={getFollowed}
-        >
+            <br/>
+            {genreDesc} { favGenre || myGenre }
+            <br/>
+            {description}  { favArtist || influences }
+          </Box>
+          <br/>
+          <Box
+            style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}
+          >
+            <Button
+              style={{ backgroundColor: '#610094', width: '70%', align: 'center' }}
+              startIcon={<PeopleIcon />}
+              onClick={getFollowed}
+            >
           My Krewe
-        </Button>
-        <br />
-        {myArtists.map((artist, i) => {
-          return <Krewe
+            </Button>
+            <br />
+            {myArtists.map((artist, i) => {
+              return <Krewe
 
-            key={i}
-            artist={artist}
-          ></Krewe>;
-        })}
-      </Box>
-    </Box>
+                key={i}
+                artist={artist}
+              ></Krewe>;
+            })}
+          </Box>
+
+
+        </Grid>
+        <Grid
+          item xs={12} md={6} sm={12} lg={6}
+          style={{ alignItems: 'flex-end', backgroundColor: '#150050', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}
+        >
+          <Typography
+            style={{ color: '#a2a1a7', paddingTop: '10px' }}
+            variant='h5'
+          >Posts</Typography>
+          <br/>
+          <Box
+            className='DivWithScroll'
+          >
+            { post.map((posty, i) => {
+              return <Post
+                key={i}
+                index={i}
+                posty={posty.text}
+                timey={new Date(posty.createdAt).toString().slice(16, 21)}
+              ></Post>;
+            }) }
+          </Box>
+          <Box
+            style={{ alignItems: 'center', justifyContent: 'center'}}
+          >
+            <TextField
+              value={text}
+              style={{ backgroundColor: '#a2a1a7' }}
+              onChange={e => {
+                setMyTexts(e.target.value);
+              }}
+              multiline
+              label="Post"
+              size="small"
+              variant="outlined"
+            />
+            <Button
+              style={{ backgroundColor: '#610094' }}
+              startIcon={<PublishIcon />}
+              onClick={() => handlePost()}
+            >
+          Post
+            </Button>
+          </Box>
+        </Grid>
+      </Grid>
+    </ProfileStyles>
   );
 };
 
