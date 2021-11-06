@@ -70,11 +70,6 @@ const MessagesPage = () => {
   });
 
   useEffect(() => {
-    //getMessages();
-    // socket.on('message', ({name, message}) => {
-    //   setChat([...chat, {name, message: message}]);
-    // });
-
     axios.get('/auth/cookie')
       .then(({data}) => {
         setUser(data[0].name);
@@ -93,9 +88,6 @@ const MessagesPage = () => {
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [chat]);
-
-  // console.info('ALL USERS', users);
-  console.info('current user', user);
   
   const messenger = {
     height: 'calc(100vh - 70px)',

@@ -122,7 +122,6 @@ const DirectMessages = () => {
     const getMessages = async () => {
       try {
         const messages = await axios.get(`/messages/allMessages/${currentChat?.id}`);
-        console.info('ALL MESSAGES', messages.data);
         setMessages(messages.data);
 
       } catch (err) {
@@ -180,8 +179,7 @@ const DirectMessages = () => {
     // senderId === currentUser.googleId ? name = currentUser.name : name;
     setMessages([...messages, {sender: senderId, text: text, name: name}]);
   });
-  
-  console.info('CURRENT CHAT!!:', currentChat);
+ 
 
   const messenger = {
     height: 'calc(100vh - 70px)',

@@ -58,29 +58,6 @@ const MessagesView = ({message, user}) => {
         <p className="messageText" style={message.name === user ? ownMessageText : messageText}>{message.message}</p>
         <div className='messageBottom' style={messageBottom}> 1 hour ago</div>
       </div>
-
-      {/* <div className="chat-body">
-        {
-          chat.map(message => {
-            return (
-              <div key={message.id}>
-                <h2 key={message.id} style={ message.name === user ? {position: 'relative', marginLeft: 'auto', width: 'fit-content', color: '#c3c2c5'} : {position: 'relative', width: 'fit-content', color: '#c3c2c5'}}>{message.name}</h2>
-                <p key={message.id} className="chat-message" style={message.name === user ? chatMessageSender : chatMessageRecipient}>
-                  {message.message}
-
-                  <span key={message.id} className="chat-timeStamp" style={timeStamp}> 3:52pm</span>
-                </p>
-              </div>
-            );
-          })
-        }
-      </div> */}
-
-      {/* <div className="chat-footer" style={chatFooter}>
-        <AddAPhotoIcon style={photoIcon}/>
-        <MessageForm handleChange={handleChange} sendMessage={sendMessage} value={value}/>
-        <MicIcon /> 
-      </div> */}
     </div>
   );
 };

@@ -18,7 +18,6 @@ const SidebarRooms = ({users}) => {
   };
   const sidebarInfo = {
     marginLeft: '15px',
-
   };
   
   return (

@@ -5,34 +5,6 @@ import { async } from 'regenerator-runtime';
 
 const ChatOnline = ({onlineUsers}) => {
 
-  // //hold state of user dealing with the conversation involved
-  // const [user, setUser] = useState('ben');
-
-
-  // useEffect(() => {
-  //  const getUser
-  // }, []);
-
-  // //find the other user that the current user is having a conversation with
-
-  // useEffect(() => {
-  //   let receiver;
-  //   conversation.senderId === currentUser.googleId ? receiver = conversation.receiverId : receiver = conversation.senderId;
-
-
-  //   const getUser = async() => {
-  //     try {
-  //       const res = await axios(`/directMessage//usersId/${receiver}`);
-
-  //       setUser(res.data[0]);
-  //     } catch (err) {
-  //       console.warn(err);
-  //     }
-  //   };
-
-  //   getUser();
-  // }, [conversation, currentUser]);
-
   const chatOnlineUser = {
     display: 'flex',
     alignItems: 'center',
@@ -68,7 +40,6 @@ const ChatOnline = ({onlineUsers}) => {
     <div className='chatOnline'>
       {
         onlineUsers.map( user => {
-          console.info('online user', user);
           return (
             <div className='chatOnlineUser' style={chatOnlineUser}>
         
