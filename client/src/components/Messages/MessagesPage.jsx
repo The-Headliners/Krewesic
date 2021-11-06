@@ -150,7 +150,13 @@ const MessagesPage = () => {
     overflowY: 'scroll',
     paddingRight: '10px'
   };
-
+  const noConversation = { 
+    position: 'absolute',
+    top: '10%',
+    fontSize: '50px',
+    color: 'rgb(224, 220, 220)',
+    cursor: 'default',
+  };
 
   return (
     <div className='messenger' style={messenger}>
@@ -166,13 +172,23 @@ const MessagesPage = () => {
           Live Chat
           <div className="chatBoxTop" style={chatBoxTop}>
             {
-              chat.map(message => {
-                return (
-                  <div key={message.id}>
-                    <MessagesView message={message} user={user}/>
-                  </div>
-                );
-              })
+              chat.length === 0 ? (
+                 
+                <span className="noMessage" style={noConversation}> Start Live Chating...</span>
+                  
+              )
+                :
+
+                chat.map(message => {
+  
+                  return (
+                    <div key={message.id}>
+                      <MessagesView message={message} user={user}/>
+                    </div>
+                  );
+                  
+                })
+              
             }
           </div>
           {/* <MessagesView chat={chat} handleChange={handleChange} sendMessage={sendMessage} value={value} user={user}/> */}
