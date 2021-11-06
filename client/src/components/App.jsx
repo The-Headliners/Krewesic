@@ -177,7 +177,7 @@ const App = (props) => {
 
                       <Link className={styles.link} to='/uploadMusic'>Upload Music</Link>
 
-                      <p style={{color: 'black'}}>Color Blind Accessibility: <props.switch checked={colorBlind} onChange={() => setColorBlind(!colorBlind)} /> </p>
+                      <p className='clickableNav'>Color Blind Accessibility: <props.switch checked={colorBlind} onChange={() => setColorBlind(!colorBlind)} /> </p>
                     </Hidden>
                   </Box>
 
@@ -221,7 +221,7 @@ const App = (props) => {
 
                     <Link onClick={() => setOpen(false)} className='clickableNav' to='/uploadMusic'>Upload Music</Link>
 
-                    <p className='clickableNav' style={{color: 'black'}}>Color Blind Accessibility: <props.switch checked={colorBlind} onChange={() => setColorBlind(!colorBlind)} /> </p>
+                    <p style={{color: '#c3c2c5'}} className='clickableNav'>Color Scheme: <props.switch checked={colorBlind} onChange={() => setColorBlind(!colorBlind)} /> </p>
 
                   </SwipeableDrawer>
                 </Box>
@@ -247,9 +247,9 @@ const App = (props) => {
 
                 <Link className='clickableNav' to='/audiorecording'>Recording Studio</Link>
 
-                <Link className='upload' to='/uploadMusic'>Upload Music</Link>
+                <Link className='clickableNav' to='/uploadMusic'>Upload Music</Link>
 
-                <p style={{color: 'black'}}>Color Blind Accessibility: <props.switch checked={colorBlind} onChange={() => setColorBlind(!colorBlind)} /> </p>
+                <p className='clickableNav'>Color Scheme: <props.switch checked={colorBlind} onChange={() => setColorBlind(!colorBlind)} /> </p>
               </nav>
             </Box>
 
