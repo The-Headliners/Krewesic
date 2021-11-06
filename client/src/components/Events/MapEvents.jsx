@@ -27,7 +27,6 @@ const StyledMapEvents = styled.div`
     background-color: white;
     color: grey;
   }
- 
 
   .inputField {
     background-color: white;
@@ -65,18 +64,10 @@ const MapEvents = () => {
   const [bandName, setBandName] = useState('');
   const [city, setCity] = useState('New Orleans');
   const [events, setEvents] = useState([]);
-  //const [value, setValue] = useState(DateTime.now)
   const [date1, setDate1] = useState();
   const [date2, setDate2] = useState();
 
   const [krewesicEvents, setKrewesicEvents] = useState([]);
-
-  const searchBand = async() => {
-    //send bandName to the back end
-    const {data} = await axios.get(`/events/bandSearch/${bandName}`);
-
-    //clear the input text
-  };
 
 
   const findLocalShows = async() => {
@@ -84,14 +75,10 @@ const MapEvents = () => {
     const date2String = date2.toISOString();
     const {data} = await axios.get(`/events/dateSearch/${date1String}/${date2String}/${city}`);
     setEvents(data);
-
     const kEvents = await axios.get('/krewesicevents/liveevents');
     setKrewesicEvents(kEvents.data);
 
   };
-
-
-
 
   return (
     <StyledMapEvents>

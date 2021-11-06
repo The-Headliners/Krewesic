@@ -20,11 +20,9 @@ const StyledMap = styled.div`
 `;
 
 
-
-
 const containerStyle = {
  
-  height: '80vh'
+  height: '90vh'
 };
 
 const libraries = ['places'];
@@ -40,7 +38,6 @@ const Map = ({events, kEvents, markers}) => {
 
   const [venues, setVenues] = useState([]);
   const [selected, setSelected] = useState(null);
-
   const [kVenues, setKVenues] = useState([]);
 
   const showVenues = useCallback((e) => {
@@ -68,32 +65,15 @@ const Map = ({events, kEvents, markers}) => {
     mapRef.current.setZoom(20);
   }, []);
 
-  const calcCenter = (latLongObjects) => {
-
-  };
-
- 
 
   useEffect(() => {
-    // const locations = events.map(event => {
-    //   const latLng = {};
-    //   latLng.lat = event.location.lat;
-    //   latLng.lng = event.location.lon;
-    //   return latLng
-    // })
     setVenues(events);
-    console.info('events go to venues state', events);
-
   }, [events]);
-
-
 
   useEffect(() => {
     console.info('useeffect map', events);
     if (mapRef.current) {
-      const bounds = new window.google.maps.LatLngBounds();
-      //console.log('bounds', bounds)
-      
+      const bounds = new window.google.maps.LatLngBounds();   
       events.map(event => {
         bounds.extend({
           lat: event.lat,
@@ -105,21 +85,17 @@ const Map = ({events, kEvents, markers}) => {
       setCenter(newCenter);
       mapRef.current.fitBounds(bounds);
     }
-
   }, [mapRef.current, events]);
 
   useEffect(() => {
-
     setKVenues(kEvents);
 
   }, [kEvents]);
-
 
   //return the map component
   if (isLoaded) {
     return (
       <StyledMap>
-
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={center}
@@ -127,10 +103,8 @@ const Map = ({events, kEvents, markers}) => {
           onClick={showVenues}
           onLoad={onMapLoad}
           options={{styles: mapStyles}}
-
         >
           <div>
-        
             {venues.map((venue, i) => 
               <Marker
                 key={i}
@@ -144,13 +118,8 @@ const Map = ({events, kEvents, markers}) => {
                 onClick={() => {
                   setSelected(venue);
                 }}
-      
               />
-
-            )}
-     
-          
-            
+            )}            
             {kVenues.map((kVenue, i) => (
               <Marker
                 key={i}
@@ -170,42 +139,15 @@ const Map = ({events, kEvents, markers}) => {
             </InfoWindow>)}
           </div>
         </GoogleMap>
-
       </StyledMap>
     );
 
   } else {
     return <div>else</div>;
   }
-
 };
 
 export default memo(Map);
 
 
 
-/**
- *  <MarkerClusterer>
-              {(clusterer) => (
-                venues.map((venue, i) => 
-                  <Marker
-                    key={i}
-                    position={{lat: venue.lat, lng: venue.lng}}
-                    clusterer={clusterer}
-                    icon={{
-                      url: musicNoteMarker,
-                      scaledSize: new window.google.maps.Size(100, 100),
-                      origin: new window.google.maps.Point(0, 0),
-                      anchor: new window.google.maps.Point(15, 15)}}
-                    onClick={() => {
-                      setSelected(venue);
-                    }}
-      
-                  />
-
-                ))
-              }
-            </MarkerClusterer>
- */
-
-      

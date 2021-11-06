@@ -171,7 +171,7 @@ const CreateEvent = () => {
 
         </Grid>
         <Grid item lg={4}>
-        <Button  align-self='center' className='createButton' onClick={createEvent}>create event!</Button>
+          <Button align-self='center' className='createButton' onClick={createEvent}>create event!</Button>
         </Grid>
       </Grid>
     </CreateEventStyled>
