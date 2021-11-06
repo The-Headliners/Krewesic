@@ -8,6 +8,7 @@ const KEStyled = styled.div`
  .wrapper {
   background-color: ${props => props.theme.colorDark}; 
   padding: 30px; 
+  height: 100vh;
  }
  
 `;

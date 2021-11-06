@@ -17,6 +17,7 @@ const StyledLanding = styled.div`
   h3 {
     color: ${props => props.theme.colorLight}
   }
+  
 
 `;
 
