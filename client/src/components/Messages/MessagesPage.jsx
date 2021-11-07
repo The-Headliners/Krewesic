@@ -33,7 +33,7 @@ const MessagesPage = () => {
     event.preventDefault();
     //value from state is the message we want to bring back to the socket server
     //the name will be the current user logged in
-    socket.emit('message', { name: user, message: value});
+    socket.emit('message', { name: user.name, message: value, pic: user.pic});
     setValue('');
 
     //where we need to send an axios post to create the message in the Messages db
@@ -64,15 +64,16 @@ const MessagesPage = () => {
       });
   };
 
-  socket.on('message', ({name, message}) => {
+  socket.on('message', ({name, message, pic}) => {
 
-    setChat([...chat, {name, message: message}]);
+    setChat([...chat, {name, message: message, pic: pic}]);
   });
 
   useEffect(() => {
     axios.get('/auth/cookie')
       .then(({data}) => {
-        setUser(data[0].name);
+        // console.info(data);
+        setUser(data[0]);
       });
   }, []);
 
@@ -157,12 +158,19 @@ const MessagesPage = () => {
     color: 'rgb(224, 220, 220)',
     cursor: 'default',
   };
+  const profileImg = {
+    width: '32px',
+    height: '32px',
+    borderRadius: '50%',
+    objectFit: 'cover',
+    marginRight: '10px'
+  };
 
   return (
     <div className='messenger' style={messenger}>
       <div className='chatMenu' style={chatMenu}>
         <div className='chatMenuWrapper' style={chatWrappers}>
-          <h1 style={{color: 'black'}}>{user}</h1>
+          <h1 style={{color: '#c3c2c5'}}><img className='user-image' style={profileImg} src={user.pic}/>{user.name}</h1>
           <Link to='/DirectMessage'>Direct Messaging </Link>
         </div>
       </div>
@@ -174,7 +182,7 @@ const MessagesPage = () => {
             {
               chat.length === 0 ? (
                  
-                <span className="noMessage" style={noConversation}> Start Live Chating...</span>
+                <span className="noMessage" style={noConversation}> Start Live Chatting...</span>
                   
               )
                 :

@@ -3,10 +3,6 @@ const events = Router();
 require('dotenv').config();
 const axios = require('axios');
 const {v4} = require('uuid');
-
-//const sampleData = require('./sampleData/sample.json');
-//const citySample = require('./sampleData/citySample.json');
-// const nolaweenSample = require('./sampleData/datesamplenolahalloweenwknd.json');
 const {SGEvent, SGEventComment, User, Event} = require('../../../db/index.js');
 
 const fs = require('fs');
@@ -20,9 +16,7 @@ const baseUri = 'https://api.seatgeek.com/2';
 events.get('/bandSearch/:bandName', async (req, res) => {
   try {
     const {bandName} = req.params;
-
     const {data} = await axios.get(`${baseUri}/events?client_id=${process.env.SEATGEEK_CLIENT_ID}&client_secret=${process.env.SEATGEEK_SECRET}&performers.slug=${bandName}`);
-
     res.status(201).send(data);
   } catch (err) {
     console.warn(err);
@@ -32,34 +26,17 @@ events.get('/bandSearch/:bandName', async (req, res) => {
 
 events.get('/citySearch/:city', async(req, res) => {
   try {
-
-    //const {city} = req.params;
-
-
     const {data} = await axios.get(`${baseUri}/venues?client_id=${process.env.SEATGEEK_CLIENT_ID}&client_secret=${process.env.SEATGEEK_SECRET}&city=${city}`);
-
-    // //to create sample data
-    // const jdata = JSON.stringify(data);
-    // await fs.writeFile('citySample.txt', jdata, (err) => {
-    //   console.log('err', err);
-    // });
-
     res.status(200).send(data);
-
-
-
   } catch (err) {
     console.warn(err);
     res.sendStatus(500);
   }
 });
 
-
 events.get('/dateSearch/:date1/:date2/:city', async (req, res) => {
   try {
     const {date1, date2, city} = req.params;
-
-
     const {data} = await axios.get(`${baseUri}/events?client_id=${process.env.SEATGEEK_CLIENT_ID}&client_secret=${process.env.SEATGEEK_SECRET}&datetime_local.gte=${date1}&datetime_local.lte=${date2}&venue.city=${city}`);
 
 
@@ -143,7 +120,7 @@ events.get('/interestedUsersSG/:sgId', async (req, res) => {
 events.post('/SGcomment', async(req, res) => {
   try {
    
-    const {comment, SGEventId} = req.body;
+    const {comment, SGEventId, when, performers, type, venue, city, lat, lng} = req.body;
     const {id} = req.user;
     const event = await SGEvent.findByPk(SGEventId);
     if (!event) { //if the event does not exist, create the event
@@ -199,10 +176,8 @@ events.post('/createEvent', async(req, res) => {
   try {
     const uuid = v4();
     const {performers, when, type, medium, address, city, venue, state} = req.body;
-    //console.log(req.body);
     const {id} = req.user;
     const coordinates = {};
-    //const id = 1 //hardcoded for testing --> change this back
     if (medium === 'venue') {
       const {data} = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address},
       +${city},+${state}&key=${process.env.GEOCODE_KEY}`);
@@ -225,8 +200,6 @@ events.post('/createEvent', async(req, res) => {
 
 events.get('/sampleLocalWeekend', async(req, res) => {
   try {
-
-    // console.log(nolaweenSample.events)
     const releventInfo = nolaweenSample.events.map(event => {
       const {datetime_local, type, performers, venue, id} = event;
       const sgId = 'sg-' + id.toString();

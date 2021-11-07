@@ -4,7 +4,6 @@ const path = require('path');
 require('dotenv').config();
 const {PORT} = process.env;
 const http = require('http');
-const https = require('https');
 const frontEnd = path.resolve(__dirname, '..', 'client', 'dist');
 const session = require('express-session');
 const passport = require('passport');
@@ -23,13 +22,11 @@ const post = require('./routes/Posts/ProfilePosts');
 const follow = require('./routes/Follow/Follows');
 const events = require('./routes/events/events.js');
 const artist = require('./routes/artist.js');
-const mailingList = require('./routes/mailingList.js');
 const kEvents = require('./routes/events/krewesicEvents.js');
 const cookieParser = require('cookie-parser');
 
 
 //for video streaming
-const {v4: uuidv4} = require('uuid');
 const virtualEvent = require('./routes/virtualEvent.js');
 const {PeerServer} = require('peer');
 const _ = require('underscore');
@@ -41,7 +38,7 @@ const server = http.createServer(app);
 
 const peerServer = PeerServer({
   port: 3002,
-  path: '/peerjs',
+  path: '/',
   proxied: true,
   debug: true
 });
@@ -88,11 +85,11 @@ const getUser = (userId) => {
 };
 io.on('connection', socket => {
   //when connect
-  console.info(`user ${socket.id} is connected`);
+  // console.info(`user ${socket.id} is connected`);
 
   //***FOR LIVE CHAT FOR ALL USERS*** when a message is sent */
-  socket.on('message', ({ name, message}) => {
-    io.emit('message', {name, message});
+  socket.on('message', ({ name, message, pic}) => {
+    io.emit('message', {name, message, pic});
   });
 
   //if you want to send one client
@@ -108,7 +105,7 @@ io.on('connection', socket => {
 
   //***PRIVATE MESSAGE****send and get a message */
   //socket.on, take from the client
-  socket.on('sendMessage', ({senderId, receiverId, text, name}) => {
+  socket.on('sendMessage', ({senderId, receiverId, text, name, User}) => {
     //find specific user to send message
     const user = getUser(receiverId);
 
@@ -116,7 +113,8 @@ io.on('connection', socket => {
     io.to(user.socketId).emit('getMessage', {
       senderId,
       text,
-      name
+      name,
+      User
     });
   });
 
@@ -175,7 +173,7 @@ io.on('connection', socket => {
   //When disconnect
   socket.on('disconnect', () => {
     //if there are any disconnections
-    console.info('disconnected user', socket.id);
+    // console.info('disconnected user', socket.id);
     removeUser(socket.id);
     removeLiveStreamUser(socket.id); //this needs to account for peerId not socketId because the users are via peerId
     io.emit('getUsers', users);
@@ -213,7 +211,6 @@ app.use('/chat', Conversation);
 app.use('/upload', Upload);
 app.use('/events', events);
 app.use('/artist', artist);
-app.use('/mailingList', mailingList);
 app.use('/krewesicevents', kEvents);
 app.use('/userProf', userRouter);
 app.use('/follow', follow);

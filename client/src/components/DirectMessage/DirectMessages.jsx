@@ -37,6 +37,8 @@ const DirectMessages = () => {
 
   //hold all users online
   const [onlineUsers, setOnlineUsers] = useState([]);
+  //hold all users in state
+  const [users, setUsers] = useState([]);
   //hold the arrival message in the state
   const [arrivalMessage, setArrivalMessage] = useState(null);
 
@@ -135,7 +137,7 @@ const DirectMessages = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setValue('');
-    const message = { sender: currentUser.googleId, text: value, conversationId: currentChat.id, name: currentUser.name};
+    const message = { sender: currentUser.googleId, text: value, conversationId: currentChat.id, name: currentUser.name, User: {pic: currentUser.pic}};
 
     let receiver;
     currentChat.senderId === currentUser.googleId ? receiver = currentChat.receiverId : receiver = currentChat.senderId;
@@ -145,7 +147,8 @@ const DirectMessages = () => {
       senderId: currentUser.googleId,
       receiverId: receiver,
       text: value,
-      name: currentUser.name
+      name: currentUser.name,
+      User: {pic: currentUser.pic}
     });
 
     setMessages(messages => [...messages, message]);
@@ -172,14 +175,29 @@ const DirectMessages = () => {
 
 
   //***For incoming messages from another user, coming back from the Socket Server ***/
-  socket.on('getMessage', ({senderId, text, name}) => {
+  socket.on('getMessage', ({senderId, text, name, User}) => {
    
     // let name;
     // senderId === currentUser.googleId ? name = currentUser.name : name;
-    setMessages([...messages, {sender: senderId, text: text, name: name}]);
+    setMessages([...messages, {sender: senderId, text: text, name: name, User: User}]);
   });
  
+  useEffect(() => {
+    
+    const getAllUsers = async () => {
 
+      try {
+        const res = await axios.get('/userProf/allUsers');
+        setUsers(res.data);
+      } catch (err) {
+        console.warn(err);
+      }
+     
+    };
+    
+    getAllUsers();
+  }, []);
+ 
   const messenger = {
     height: 'calc(100vh - 70px)',
     display: 'flex',
@@ -282,13 +300,13 @@ const DirectMessages = () => {
                       return (
                       
                         <div key={message.id}> 
-                          <Message message={message} owner={message.sender === currentUser.googleId} currentUser={currentUser}/>
+                          <Message message={message} owner={message.sender === currentUser.googleId} currentUser={currentUser} users={users}/>
                         </div>
                       );
                     } else {
                       return (
                         <div key={message.id}> 
-                          <Message message={message} owner={message.sender === currentUser.googleId} currentUser={currentUser}/>
+                          <Message message={message} owner={message.sender === currentUser.googleId} currentUser={currentUser} users={users}/>
                         </div>
                       );
                     }

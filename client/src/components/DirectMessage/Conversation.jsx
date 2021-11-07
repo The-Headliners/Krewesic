@@ -53,7 +53,7 @@ const Conversation = ({conversation, currentUser}) => {
   //to render the conversations
   return (
     <div className='conversation' style={Conversation}>
-      <img className='conversationImg' src="https://www.archiefoundationhome.org.uk/wp-content/uploads/2020/05/profile-photo-social-media.jpg" alt="" style={conversationImg} />
+      <img className='conversationImg' src={user.pic} alt="" style={conversationImg} />
       <span className="conversationName" style={conversationName}>{user?.name} </span>
     </div>
   );
