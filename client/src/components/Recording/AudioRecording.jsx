@@ -11,11 +11,11 @@ const RecordStyles = styled.div`
     margin-left: 50px;
   }
   .recordBtn {
-    background-color: pink;
+    background-color: ${props => props.theme.colorLight};
     margin: 20px;
   }
   .visualizerCard {
-    background-color: #150050;
+    background-color: ${props => props.theme.colorBackground};
   }
 `;
 
