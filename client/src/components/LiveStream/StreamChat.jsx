@@ -2,11 +2,31 @@ import React, {useState, useContext, useEffect} from 'react';
 import styled from 'styled-components';
 import { Button, TextField } from '@material-ui/core';
 import GlobalContext from '../Contexts/GlobalContext.jsx';
+import Grid from '@mui/material/Grid';
 
 const StyledChat = styled.div`
   .wrapper {
-    background-color: pink;
-    color: navy; 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+  .streamChatBtn {
+    background-color: ${props => props.theme.colorLight};
+    margin-left: 10px;
+  }
+  .msg {
+    background-color: ${props => props.theme.colorLight};
+    color: ${props => props.theme.textColorLight};
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 3px;
+  }
+  .messagesWrapper {
+    display: flex;
+    flex-direction: column;
+  }
+  .senderName {
+    font-size: 13px;
   }
 `;
 
@@ -49,26 +69,26 @@ const StreamChat = ({socket, showId}) => {
 
   return (
     <StyledChat>
-      <div className='wrapper'>
-      chat component goes here
-        <div>
-          {allMessages.map((message, i) => <div key={i}>{message.message} from {message.name}</div>)}
-        </div>
+      <Grid container spacing={3} >
+        <Grid item xs={12}>
+          {allMessages.map((message, i) => <div className='msg' key={i}>{message.message} from <span className='senderName'>{message.name}</span></div>)}
+        
+        </Grid>
 
-        <div>
+        <Grid item xs={12}>
           <TextField
             onChange={e => setMessage(e.target.value)}
-            className='inputBackground'
+            className='inputBackground inputStreamChat'
             id="outlined-basic"
             label="send chat message"
             variant="outlined" 
             value={message}
           />
             
-          <Button onClick={sendMessage}>send</Button>
-        </div>
+          <Button className='streamChatBtn' onClick={sendMessage}>send</Button>
+        </Grid>
       
-      </div>
+      </Grid>
     </StyledChat>
   );
 };

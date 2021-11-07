@@ -131,7 +131,7 @@ io.on('connection', socket => {
     io.to(sockId).emit('notified', data);
   });
   socket.on('joinShow', ({showId, userId, name}) => {
-    //console.info('join show event, showId then userId', showId, userId);
+    console.info('join show event, showId then userId', showId, userId);
     const idObj = {socketId: socket.id, peerId: userId};
     if (liveStreamUsers[showId]) {
       liveStreamUsers[showId].push(idObj);
@@ -144,7 +144,7 @@ io.on('connection', socket => {
 
 
   socket.on('peerconnected', (data) => {
-    //console.info('on peer connected', data);
+    console.info('on peer connected', data);
     const {showId, userId, name} = data;
     const idObj = {socketId: socket.id, peerId: userId};
     if (showId && userId) {
