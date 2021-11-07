@@ -68,9 +68,7 @@ SEATGEEK API:
 
 https://seatgeek.com/?next=%2Faccount%2Fdevelop#login
 
-## peerjs
-for the video streaming, peerjs uses a server for p2p connections.  To start the server, globally install peer: 
-npm i -g peer   then open a terminal and run:  peerjs --port 3002
+
 
 ## frontend
 In the frontend we used react routing in order to navigate between the components we utilized.

@@ -1,5 +1,6 @@
 import axios from 'axios';
-import React, {useState, useEffect, useContext, useRef} from 'react';
+import React, {useState, useEffect, useContext, useCallback} from 'react';
+import MyChats from './MyChats.jsx';
 import { async } from 'regenerator-runtime';
 import {v4} from 'uuid';
 import useGetUser from '../CustomHooks/useGetUser.jsx';
@@ -8,7 +9,6 @@ import {useHistory} from 'react-router-dom';
 import styled from 'styled-components';
 import {Button} from '@material-ui/core';
 
-const backgroundColor = '#610094';
 const StyledVideoChat = styled.div`
   .wrapper {
 
@@ -16,6 +16,8 @@ const StyledVideoChat = styled.div`
   .friend {
     padding: 20px;
     width: 350px;
+    display: flex;
+    flex-direction: row;
   }
   .chatButton {
     background-color: ${props => props.theme.colorMed};
@@ -61,14 +63,28 @@ const VideoChats = () => {
     });
   };
 
-  const goToChat = (chatObj) => {
+  const notifyOtherUser = useCallback((userId) => {
+    const uuid = v4();
+    socket.emit('notify', {
+      id: userId, 
+      notification: {
+        body: `${name} wants to video chat with you`,
+        code: uuid,
+        creator: id,
+        other: userId,
+      }
+    });
+    
+  });
+
+  const goToChat = useCallback((chatObj) => {
     const {code, creatorId, attendees} = chatObj;
     const creator = attendees[0];
     const other = attendees[1];
 
     history.push(`/conferenceCall/${code}/${creator}/${other}`);
 
-  };
+  });
 
 
   useEffect(async() => {
@@ -90,20 +106,19 @@ const VideoChats = () => {
         <div className='allUsersWrapper'>
           <h1>All Friends</h1>
           {allUsers.map((user, i) => {
+            if (user.id !== id) {
+              return <div 
+                key={i}
+              >
+                <div className='friend clickableDark' onClick={() => createVideoChat(user.id)}>{user.name} </div>
 
-            return <div 
-              key={i}
-              onClick={() => createVideoChat(user.id)}
-              className='friend clickableDark'
-            >{user.name}</div>;
+                <MyChats goToChat={goToChat} notifyOtherUser={notifyOtherUser} allMyChats={allChats} userId={user.id} />
+              </div>;
+            }
+            
           })}
         </div>
-        <div>
-          {allChats.map((chatObj, i )=> <Button className='chatButton'
-            key={i}
-            onClick={() => goToChat(chatObj)}
-          > created by: {chatObj.creator.name} roomId: {chatObj.code} </Button> )}
-        </div>
+  
       </div>
     </StyledVideoChat>
   );

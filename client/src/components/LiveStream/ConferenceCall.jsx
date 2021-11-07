@@ -8,35 +8,45 @@ import StreamChat from './StreamChat.jsx';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Peer from 'peerjs';
+import Button from '@material-ui/core/Button';
 
 
 
 const StyledEvent = styled.div`
   .wrapper {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
   }
   .videoScreen {
 
   }
+  .talkWith {
+    padding: 10px;
+  }
   .myVideoWrapper {
-    height: 50px;
-    width: 50px;
+    display: flex;
+    justify-content: flex-end
   }
   .peerVideoWrapper {
-    height: 100px;
-    width: 100px;
-    position: absolute;
-    top: 450px;
+  
   }
   .lowerWrapper {
-    position: absolute;
-    top: 250px;
-    right: 20px;
+   display: flex;
+   flex-direction: column;
+   margin-top: 100px;
+   margin-left: 70px;
   }
+  .videoWrapper {
+    display: flex;
+    flex-direction: column;
+  }
+  .tryAgainButton {
+    background-color: ${props => props.theme.colorMed};
+    width: 600px;
+    margin-left: 40px;
+  }
+ 
 `;
-
-
 
 const ConferenceCall = () => {
  
@@ -53,8 +63,6 @@ const ConferenceCall = () => {
 
 
   const [stream, setStream ] = useState({});
-  //const [peerStream, setPeerStream] = useState({});
-  //get userId from the context/  then the cookies later
   const [mySocketId, setMySocketId] = useState();
 
   const myPeerId = useRef();
@@ -63,10 +71,14 @@ const ConferenceCall = () => {
   const userVideo = useRef();
   const peerVideo = useRef();
 
+  const peerRef = useRef('');
+  const allPeersRef = useRef([]);
+
   const [allPeers, setAllPeers] = useState([]);
   const [peers, setPeers] = useState('');
   const currentStream = useRef();
   const [peerName, setPeerName] = useState('');
+  const peerNameRef = useRef('');
 
   
 
@@ -76,7 +88,7 @@ const ConferenceCall = () => {
   useEffect(async () => {
 
     myPeer.current.on('open', (id) => {
-      console.info('open', id);
+      //console.info('open', id);
       myPeerId.current = id;
       joinShow(id);
     });
@@ -90,10 +102,13 @@ const ConferenceCall = () => {
 
     socket.on('user-connected', (data) => {
       //when user is connected then connect to thenew user (connectToNewUser() function)
-      console.info('u connected', data);
+      //console.info('u connected', data);
       setPeerName(data.name);
+      //console.log('dta.name', data.name);
+      peerNameRef.current = data.name;
       connectToNewUser(data.latestUser, stream);
       setPeers(data.latestUser);
+      peerRef.current = data.latestUser;
       socket.emit('peerconnected', {name: name, showId: showId, userId: myPeerId.current}); //this goes back, and signals other user that this person joined the room.  to not throw infinite loop: should probably account for to only add that peer to the state if the state is empty
       const notMe = data.allUsers.filter(uObj => uObj.peerId !== myPeerId.current);
       // console.log('notMe', notMe);
@@ -105,6 +120,8 @@ const ConferenceCall = () => {
       //when user is connected then connect to thenew user (connectToNewUser() function)
       //console.log('another peer data', data);
       setPeerName(data.name);
+      //console.log('dta.name', data.name);
+      peerNameRef.current = data.name;
       connectToNewUser(data.latestUser, stream);
       setPeers(data);
       socket.emit('peerconnected', peers); //this is the step missing-- this needs to go back, and signal other user that this person joined the room.  to not throw infinite loop: should probably account for to only add that peer to the state if the state is empty
@@ -126,8 +143,6 @@ const ConferenceCall = () => {
       });
      
     });
-  
-  
 
     const {data} = await axios.get(`/virtualEventUsers/${showId}`);
     //console.log('data from fetch', data);
@@ -142,7 +157,7 @@ const ConferenceCall = () => {
 
 
   const connectToNewUser = (userId, stream) => {
-    // console.log('connectToNewUser', userId, currentStream.current);
+    //console.log('connectToNewUser', userId, currentStream.current);
     const call = myPeer.current.call(userId, currentStream.current);
     call.on('stream', userVideoStream => {
       //setPeerStream(userVideoStream);
@@ -154,11 +169,14 @@ const ConferenceCall = () => {
     socket.emit('joinShow', {showId: showId, userId: x, name: name }); 
   };
 
+  const take2 = () => {
+    //console.log('js', myPeerId.current);
+    joinShow(myPeerId.current);
+  };
+
   useEffect(() => {
     //console.log('allPeers change', allPeers);
     allPeers.length && connectToNewUser(allPeers[allPeers.length - 1].peerId);
-   
-  
   }, [allPeers]);
 
 
@@ -170,19 +188,22 @@ const ConferenceCall = () => {
     <StyledEvent>
       <div className='wrapper'>
 
-      virtual 
-        <div className='videoWrapper myVideoWrapper'>
-          <video playsInline style={{width: '300px', height: '300px'}} muted ref={userVideo} autoPlay></video>
-        </div>
-        
         <div className='videoWrapper peerVideoWrapper'>
-          <video playsInline muted style={{width: '400px', height: '400px', marginTop: '100px'}} ref={peerVideo}autoPlay></video>
+          <video playsInline muted style={{width: '600px', marginTop: '85px', marginLeft: '40px', position: 'relative'}} ref={peerVideo} autoPlay></video>
+          <video playsInline style={{width: '200px', height: '100px', marginTop: '35px', position: 'absolute', left: '40px', top: '300px', zIndex: 4, }} muted ref={userVideo} autoPlay></video>
+          <Button className='tryAgainButton' onClick={take2}>Reload Video</Button>
         </div>
-        
-        
+       
         <div className='lowerWrapper'>
-          <div>talking with: {peerName}</div>
+      
+          <h2 className='talkingWith'>Talking With: {peerName}</h2>
           <StreamChat showId={showId} socket={socket} />
+
+          <div className='videoWrapper myVideoWrapper'>
+         
+          </div>
+       
+         
         </div>
       </div>
     </StyledEvent>
