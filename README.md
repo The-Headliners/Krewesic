@@ -77,6 +77,7 @@ https://www.theaudiodb.com/api_guide.php
 for the video streaming, peerjs uses a server for p2p connections.  To start the server, globally install peer:
 npm i -g peer   then open a terminal and run:  peerjs --port 3002
 
+
 ## frontend
 In the frontend we used react routing in order to navigate between the components we utilized.
 The login component is the first component you encounter. After the login component, krewesic has the form component in which
