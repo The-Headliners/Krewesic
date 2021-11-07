@@ -6,7 +6,6 @@ import MicIcon from '@material-ui/icons/Mic';
 
 const MessagesView = ({message, user}) => {
 
-  console.info('Current User!!', user);
   //Style for MessagesView//
   const Message = {
     display: 'flex',
