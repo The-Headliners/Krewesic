@@ -5,6 +5,11 @@ import { createTheme, MuiThemeProvider } from '@material-ui/core/styles';
 
 const muiTheme = createMuiTheme({
   overrides: {
+    MuiPaper: {
+      root: {
+
+      }
+    },
     MuiOutlinedInput: {
       root: {
         '& $notchedOutline': {

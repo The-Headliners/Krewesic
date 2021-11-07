@@ -49,8 +49,9 @@ const CreateEvent = () => {
     //await getGeocode() 
     //right now the getGeocode fn runs on mouse over then this one on click.  need a better way to handle the asynchronous aspect of setting the state . 
     const stringWhen = when.toISOString();
+    
  
-    await axios.post('/events/createEvent', {performers, stringWhen, type, medium, address, city, state, venue});
+    await axios.post('/events/createEvent', {performers, when: stringWhen, type, medium, address, city, state, venue});
     setWhen('');
     setType('');
     setMedium('virtual');

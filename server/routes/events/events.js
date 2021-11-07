@@ -180,6 +180,7 @@ events.post('/createEvent', async(req, res) => {
     const uuid = v4();
     const {performers, when, type, medium, address, city, venue, state} = req.body;
     //console.log(req.body);
+    console.info('when', when);
     const {id} = req.user;
     const coordinates = {};
     //const id = 1 //hardcoded for testing --> change this back
