@@ -1,11 +1,11 @@
 import React, {useState, useEffect, useContext} from 'react';
 
 
-const Message = ({message, owner, currentUser}) => {
+const Message = ({message, owner, currentUser, users}) => {
 
  
 
-
+  console.info(message);
   const Message = {
     display: 'flex',
     flexDirection: 'column',
@@ -47,18 +47,27 @@ const Message = ({message, owner, currentUser}) => {
     color: 'black',
     maxWidth: '300px',
   };
+  // const user = '';
+
+  // users.forEach(u => {
+  //   console.info(u);
+  //   if(u.name === message)
+  //   // u.name === message.name ? user = u : user = currentUser;
+  // });
 
   //to render the actual message
   return (
     <div className='message' style={message.name === currentUser.name ? ownMessage : Message}>
+
       <div className='messageTop'>
-        <img className='messageImg' style={messageImg} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIbCHBytowb0SiotsKsEzRFiJ37uH8GqkA-A&usqp=CAU" alt=""/>
+        <img className='messageImg' style={messageImg} src={message.User.pic}alt=""/>
         {message.name}
         {/* <div className='username'>{message.name}</div>  */}
         <p className="messageText" style={message.name === currentUser.name ? ownMessageText : messageText}> {message.text} </p>
       </div>
-      {/* <div className="messageDate">{message.createdAt}</div> */}
+      
       <div className='messageBottom' style={messageBottom}> 1 hour ago</div>
+      
     </div>
   );
 };
