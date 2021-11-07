@@ -8,6 +8,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import DateTimePicker from '@mui/lab/DateTimePicker';
 import { LocalizationProvider } from '@mui/lab';
 import {makeStyles} from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 
 
 
@@ -34,7 +35,7 @@ const CreateEventStyled = styled.div`
 
 const CreateEvent = () => {
 
-
+  const history = useHistory();
   const performers = 'performer names'; //this is going to be an array at some pt: needs, to match the format from the external api and also so more than one artist can be added to this event.  for starting, will just be the one artist who is adding, adding others will be a later addition.  will need to be .join(',') before being passed to req.body so can be stored in the db
   const [when, setWhen] = useState('');
   const [type, setType] = useState(''); //type will be musical performance, sports, meet and greet etc
@@ -49,8 +50,9 @@ const CreateEvent = () => {
     //await getGeocode() 
     //right now the getGeocode fn runs on mouse over then this one on click.  need a better way to handle the asynchronous aspect of setting the state . 
     const stringWhen = when.toISOString();
+    
  
-    await axios.post('/events/createEvent', {performers, stringWhen, type, medium, address, city, state, venue});
+    await axios.post('/events/createEvent', {performers, when: stringWhen, type, medium, address, city, state, venue});
     setWhen('');
     setType('');
     setMedium('virtual');
@@ -58,6 +60,8 @@ const CreateEvent = () => {
     setCity('');
     setState('');
     setVenue('');
+
+    history.push('/events');
   };
 
 

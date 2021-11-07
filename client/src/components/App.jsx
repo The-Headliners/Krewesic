@@ -167,7 +167,7 @@ const App = (props) => {
                       <Link className={styles.link} to='/mapevents'>Find Events</Link>
                       <Link className={styles.link} to='/messages'>Messages</Link>
                       <Link className={styles.link} to='/profile'>Profile</Link>
-                      <Link className={styles.link} to='/createevent'>create event</Link>
+                      <Link className={styles.link} to='/createevent'>Create Event</Link>
 
                       <Link className={styles.link} to='/events'>Event Hub</Link>
                       <Link className={styles.link}to='/myEvents'>My Events</Link>
@@ -211,7 +211,7 @@ const App = (props) => {
                     <Link onClick={() => setOpen(false)} className='clickableNav' to='/mapevents'>Find Events</Link>
                     <Link onClick={() => setOpen(false)} className='clickableNav' to='/messages'>Messages</Link>
                     <Link onClick={() => setOpen(false)} className='clickableNav' to='/profile'>Profile</Link>
-                    <Link onClick={() => setOpen(false)} className='clickableNav' to='/createevent'>create event</Link>
+                    <Link onClick={() => setOpen(false)} className='clickableNav' to='/createevent'>Create Event</Link>
 
                     <Link onClick={() => setOpen(false)} className='clickableNav' to='/events'>Event Hub</Link>
                     <Link onClick={() => setOpen(false)} className='clickableNav' to='/myEvents'>My Events</Link>
@@ -239,7 +239,7 @@ const App = (props) => {
                 <Link className='clickableNav' to='/mapevents'>Find Events</Link>
                 <Link className='clickableNav' to='/messages'>Messages</Link>
                 <Link className='clickableNav' to='/profile'>Profile</Link>
-                <Link className='clickableNav' to='/createevent'>create event</Link>
+                <Link className='clickableNav' to='/createevent'>Create Event</Link>
 
                 <Link className='clickableNav' to='/events'>Event Hub</Link>
                 <Link className='clickableNav' to='/myEvents'>My Events</Link>
