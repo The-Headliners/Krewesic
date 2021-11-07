@@ -16,9 +16,7 @@ const baseUri = 'https://api.seatgeek.com/2';
 events.get('/bandSearch/:bandName', async (req, res) => {
   try {
     const {bandName} = req.params;
-
     const {data} = await axios.get(`${baseUri}/events?client_id=${process.env.SEATGEEK_CLIENT_ID}&client_secret=${process.env.SEATGEEK_SECRET}&performers.slug=${bandName}`);
-
     res.status(201).send(data);
   } catch (err) {
     console.warn(err);
@@ -29,7 +27,6 @@ events.get('/bandSearch/:bandName', async (req, res) => {
 events.get('/citySearch/:city', async(req, res) => {
   try {
     const {data} = await axios.get(`${baseUri}/venues?client_id=${process.env.SEATGEEK_CLIENT_ID}&client_secret=${process.env.SEATGEEK_SECRET}&city=${city}`);
-
     res.status(200).send(data);
   } catch (err) {
     console.warn(err);
@@ -179,11 +176,8 @@ events.post('/createEvent', async(req, res) => {
   try {
     const uuid = v4();
     const {performers, when, type, medium, address, city, venue, state} = req.body;
-    //console.log(req.body);
-    console.info('when', when);
     const {id} = req.user;
     const coordinates = {};
-    //const id = 1 //hardcoded for testing --> change this back
     if (medium === 'venue') {
       const {data} = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address},
       +${city},+${state}&key=${process.env.GEOCODE_KEY}`);

@@ -14,22 +14,15 @@ const StyledPreview = styled.div`
   .preview {
     background-color: ${props => props.theme.colorBackground};
     color: ${props => props.theme.textColorLight};
+  }
 
   .headliners {
     margin: 10px; 
     margin-left: 50px;
     color: white;
   }
-  .showType {
-    
-  }
   .date {
     margin-left: 50px;
-  }
-  .medium {
-
-  }
-
   }
 `;
 
