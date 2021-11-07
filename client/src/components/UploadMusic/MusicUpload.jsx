@@ -90,7 +90,7 @@ const MusicUpload = () => {
     marginRight: 'auto',
     marginTop: '50px',
     marginBottom: '10px',
-    color: 'blue'
+    color: '#c3c2c5'
   };
   const musicBoxWrapper = {
     display: 'flex',
@@ -110,7 +110,7 @@ const MusicUpload = () => {
         {/* video list */}
         <div className='videoPlayer' style={cardStyle}>
           {
-            musicUploads.slice(0).reverse().map(music => music.is_audio === false ? (<VideoPlayer music={music} /> ) : (<AudioPlayer music={music} />))
+            musicUploads.slice(0).reverse().map((music, i) => music.is_audio === false ? (<VideoPlayer key={music.id}music={music} /> ) : (<AudioPlayer key={music.id} music={music} />))
           }
         </div>
       </div>

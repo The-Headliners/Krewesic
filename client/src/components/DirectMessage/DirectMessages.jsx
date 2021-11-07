@@ -137,7 +137,7 @@ const DirectMessages = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setValue('');
-    const message = { sender: currentUser.googleId, text: value, conversationId: currentChat.id, name: currentUser.name};
+    const message = { sender: currentUser.googleId, text: value, conversationId: currentChat.id, name: currentUser.name, User: {pic: currentUser.pic}};
 
     let receiver;
     currentChat.senderId === currentUser.googleId ? receiver = currentChat.receiverId : receiver = currentChat.senderId;
@@ -147,7 +147,8 @@ const DirectMessages = () => {
       senderId: currentUser.googleId,
       receiverId: receiver,
       text: value,
-      name: currentUser.name
+      name: currentUser.name,
+      User: {pic: currentUser.pic}
     });
 
     setMessages(messages => [...messages, message]);
@@ -174,11 +175,11 @@ const DirectMessages = () => {
 
 
   //***For incoming messages from another user, coming back from the Socket Server ***/
-  socket.on('getMessage', ({senderId, text, name}) => {
+  socket.on('getMessage', ({senderId, text, name, User}) => {
    
     // let name;
     // senderId === currentUser.googleId ? name = currentUser.name : name;
-    setMessages([...messages, {sender: senderId, text: text, name: name}]);
+    setMessages([...messages, {sender: senderId, text: text, name: name, User: User}]);
   });
  
   useEffect(() => {

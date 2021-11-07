@@ -12,7 +12,6 @@ const AudioPlayer = ({music}) => {
 
       <ReactAudioPlayer
         src={music.fileUrl}
-        autoPlay
         width="100%" 
         height="100%"
         controls
