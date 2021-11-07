@@ -6,6 +6,7 @@ import { TextField, MenuItem, Button } from '@material-ui/core';
 import GlobalContext from '../Contexts/GlobalContext.jsx';
 import styled, {ThemeProvider} from 'styled-components';
 import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
 
 const StyledLanding = styled.div`
   .landingButton {
@@ -25,8 +26,8 @@ const StyledLanding = styled.div`
     align-items: center;
     background-color: ${props => props.theme.colorBackground};
     color: ${props => props.theme.textColorLight};
-    height: 15vh;
-    width: 40vw;
+    height: 30vh;
+    width: 45vw;
     margin: auto;
     margin-top: 50px;
     padding: 30px;
@@ -67,7 +68,7 @@ const EventLandingPage = () => {
 
 
   const comment = async () => {
-    await axios.post('/events/SGcomment', {comment: commentText, SGEventId: eventId});
+    await axios.post('/events/SGcomment', {comment: commentText, SGEventId: eventId, venue: venue, performers: performers, when: datetime, lat: lat, lng: lng, city: city, type: type});
     setCommentText('');
     getComments();
   };
@@ -83,6 +84,10 @@ const EventLandingPage = () => {
     getInterestedUsers();
   };
 
+  const visitProfile = (id) => {
+    history.push(`/visitProfile/${id}`);
+  };
+
   useEffect(() => {
     getInterestedUsers(eventId);
     getComments();
@@ -93,7 +98,7 @@ const EventLandingPage = () => {
   return (
     <StyledLanding >
       <div>
-        <Paper>
+        <Paper className='billBoard'>
           <div>{performers.split(',').map((performer, i) => <h1 key={i} >{performer}</h1>)}</div>
 
           <h2>{venue}, {city} </h2>
@@ -101,31 +106,40 @@ const EventLandingPage = () => {
           {!alreadyInterested && <Button className='landingButton' onClick={interest}>interested</Button>}
           {alreadyInterested && <Button className='landingButton' onClick={disinterest}>remove interest </Button>}
         </Paper>
+        <Grid container spacing={3} style={{margin: '30px'}}>
+          <Grid item sx={3}>
+            <div>
+              <h2 style={{display: 'flex', justifyContent: 'center'}}>Interested Fans</h2>
+              <div>
+                {interestedUsers.map((user, i) => <div 
+                  key={i}
+                  onClick={() => visitProfile(user.User.id)}
+                  className='clickableLight'
+                >{user.User.name }</div>)}
 
-        <div>
-          <h3>interested users</h3>
-          <div>
-            {interestedUsers.map((user, i) => <div key={i} >{user.User.name}</div>)}
+              </div>
+            </div>
+          </Grid>
 
-          </div>
-        </div>
+          <Grid item xs={9}>
+          
+            <h2 style={{paddingLeft: '30px'}}>Comment Wall</h2>
+          
 
-        <div>
-          <h3>comment wall</h3>
-          <TextField
-            placeholder='insightful and witty commentary'
-            className='inputBackground commentInput'
-            variant="outlined"
-            onChange={(e) => setCommentText(e.target.value)}
-            value={commentText}
-          />
-          <Button className='landingButton' onClick={comment}>send comment</Button>
+            <div>
+              {commentWall.map((comment, i) => <CommentComponent key={i} comment={comment} />)}
+            </div>
+            <TextField
+              placeholder='insightful and witty commentary'
+              className='inputBackground commentInput'
+              variant="outlined"
+              onChange={(e) => setCommentText(e.target.value)}
+              value={commentText}
+            />
+            <Button className='landingButton' onClick={comment}>send comment</Button>
 
-          <div>
-            {commentWall.map((comment, i) => <CommentComponent key={i} comment={comment} />)}
-          </div>
-
-        </div>
+          </Grid>
+        </Grid>
 
 
       </div>

@@ -17,8 +17,9 @@ const StyledComment = styled.div`
       }
   }
   .commentText {
-    font-size: 15px;
+    font-size: 18px;
     margin-right: 20px;
+    color: ${props => props.theme.textColorLight}
   }
   .posterName {
     font-size: 12px;

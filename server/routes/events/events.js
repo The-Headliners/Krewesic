@@ -120,7 +120,7 @@ events.get('/interestedUsersSG/:sgId', async (req, res) => {
 events.post('/SGcomment', async(req, res) => {
   try {
    
-    const {comment, SGEventId} = req.body;
+    const {comment, SGEventId, when, performers, type, venue, city, lat, lng} = req.body;
     const {id} = req.user;
     const event = await SGEvent.findByPk(SGEventId);
     if (!event) { //if the event does not exist, create the event
