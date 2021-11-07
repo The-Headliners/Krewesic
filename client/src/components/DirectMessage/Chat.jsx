@@ -42,7 +42,7 @@ const ChatOnline = ({onlineUsers}) => {
             <div className='chatOnlineUser' key={user.id} style={chatOnlineUser}>
         
               <div className="chatOnlineImgContainer" style={chatOnlineImgContainer}>
-                <img className="chatOnlineImg" style={chatOnlineImg} src="https://www.archiefoundationhome.org.uk/wp-content/uploads/2020/05/profile-photo-social-media.jpg" alt=""/>
+                <img className="chatOnlineImg" style={chatOnlineImg} src={user.pic} alt=""/>
                 <div className='chatOnlineBadge' style={chatOnlineBadge}></div>
               </div>
       

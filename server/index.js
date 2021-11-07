@@ -91,8 +91,8 @@ io.on('connection', socket => {
   console.info(`user ${socket.id} is connected`);
 
   //***FOR LIVE CHAT FOR ALL USERS*** when a message is sent */
-  socket.on('message', ({ name, message}) => {
-    io.emit('message', {name, message});
+  socket.on('message', ({ name, message, pic}) => {
+    io.emit('message', {name, message, pic});
   });
 
   //if you want to send one client

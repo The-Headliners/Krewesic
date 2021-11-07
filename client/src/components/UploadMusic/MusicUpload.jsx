@@ -75,6 +75,11 @@ const MusicUpload = () => {
     marginRight: 'auto',
     marginTop: '150px',
     marginBottom: '10px',
+    background: '#150050',
+    padding: '1em',
+    border: '0',
+    boxShadow: '0 0 4px #CCC',
+    marginRight: '20px'
     // backgroundColor: 'white'
   };
   const uploadStyle = {
@@ -83,7 +88,7 @@ const MusicUpload = () => {
     // width: '23%',
     marginLeft: 'auto',
     marginRight: 'auto',
-    marginTop: '150px',
+    marginTop: '50px',
     marginBottom: '10px',
     color: 'blue'
   };
@@ -102,6 +107,7 @@ const MusicUpload = () => {
         <div style={uploadStyle}>Let's Upload Your Music Here! </div>
         <UploadForm showWidget={showWidget}/>
 
+        {/* video list */}
         <div className='videoPlayer' style={cardStyle}>
           {
             musicUploads.slice(0).reverse().map(music => music.is_audio === false ? (<VideoPlayer music={music} /> ) : (<AudioPlayer music={music} />))
