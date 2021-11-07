@@ -55,9 +55,14 @@ const ConferenceCall = () => {
   const {name} = useContext(GlobalContext);
 
   const myPeer = useRef(new Peer( undefined, { //remember: npm i -g peer   \n peerjs --port 3002   running peer port on 3002
-    host: '/',
+    // host: '/',
+    // path: '/',
+    // port: '3002'
+
+    host: 'krewesic.com',
     path: '/',
-    port: '3002'
+    secure: true,       
+
     
   }));
 
