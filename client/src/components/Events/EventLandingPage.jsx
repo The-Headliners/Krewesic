@@ -5,6 +5,7 @@ import CommentComponent from './CommentComponent.jsx';
 import { TextField, MenuItem, Button } from '@material-ui/core';
 import GlobalContext from '../Contexts/GlobalContext.jsx';
 import styled, {ThemeProvider} from 'styled-components';
+import Paper from '@mui/material/Paper';
 
 const StyledLanding = styled.div`
   .landingButton {
@@ -16,6 +17,21 @@ const StyledLanding = styled.div`
   }
   h3 {
     color: ${props => props.theme.colorLight}
+  }
+  .billBoard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: ${props => props.theme.colorBackground};
+    color: ${props => props.theme.textColorLight};
+    height: 15vh;
+    width: 40vw;
+    margin: auto;
+    margin-top: 50px;
+    padding: 30px;
+    border: 1px solid white;
+   
   }
   
 
@@ -77,12 +93,14 @@ const EventLandingPage = () => {
   return (
     <StyledLanding >
       <div>
-        <div>{performers.split(',').map((performer, i) => <h1 key={i} >{performer}</h1>)}</div>
+        <Paper>
+          <div>{performers.split(',').map((performer, i) => <h1 key={i} >{performer}</h1>)}</div>
 
-        <h2>{venue}, {city} </h2>
-        <h3>{datetime} </h3>
-        {!alreadyInterested && <Button className='landingButton' onClick={interest}>interested</Button>}
-        {alreadyInterested && <Button className='landingButton' onClick={disinterest}>remove interest </Button>}
+          <h2>{venue}, {city} </h2>
+          <h3>{datetime} </h3>
+          {!alreadyInterested && <Button className='landingButton' onClick={interest}>interested</Button>}
+          {alreadyInterested && <Button className='landingButton' onClick={disinterest}>remove interest </Button>}
+        </Paper>
 
         <div>
           <h3>interested users</h3>

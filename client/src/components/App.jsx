@@ -167,7 +167,7 @@ const App = (props) => {
                       <Link className={styles.link} to='/mapevents'>Find Events</Link>
                       <Link className={styles.link} to='/messages'>Messages</Link>
                       <Link className={styles.link} to='/profile'>Profile</Link>
-                      <Link className={styles.link} to='/createevent'>create event</Link>
+                      <Link className={styles.link} to='/createevent'>Create Event</Link>
 
                       <Link className={styles.link} to='/events'>Event Hub</Link>
                       <Link className={styles.link}to='/myEvents'>My Events</Link>

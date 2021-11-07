@@ -174,7 +174,7 @@ const MessagesPage = () => {
             {
               chat.length === 0 ? (
                  
-                <span className="noMessage" style={noConversation}> Start Live Chating...</span>
+                <span className="noMessage" style={noConversation}> Start Live Chatting...</span>
                   
               )
                 :
