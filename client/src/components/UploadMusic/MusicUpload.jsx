@@ -11,7 +11,7 @@ const MusicUpload = () => {
   const [musicUploads, setMusic] = useState([]);
   //Create a state that will hold the files that is being uploaded
   const [fileSelected, setFileSelected] = useState('');
- 
+  
   const showWidget = () => {
 
     const widget = window.cloudinary.createUploadWidget({
