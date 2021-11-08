@@ -165,7 +165,6 @@ const AudioRecording = () => {
         <audio autoPlay playsInline muted ref={userAudio} ></audio>
         {recording ? <Button onClick={stopRecording} className='recordBtn'>stop</Button> : <Button onClick={startRecording} className='recordBtn'>record</Button>}
         {recordingUrls.map ((url, i) => <audio key={i} controls src={url} playsInline ref={recordedAudio.current} ></audio>)}
-        <Button className='recordBtn' onClick={play}>play back</Button>
       </div>
       <Card className='visualizerCard'>
         <canvas className='visualizer' ref={canvasRef} />
