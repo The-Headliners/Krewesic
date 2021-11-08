@@ -4,8 +4,10 @@ import {Button} from '@material-ui/core';
 import styled from 'styled-components';
 
 const StyledMyChats = styled.div`
+  padding: 5px;
     .chatButton {
     background-color: ${props => props.theme.colorMed};
+    margin-top: 6px;
   }
 `;
 
@@ -29,11 +31,12 @@ const MyChats = ({userId, allMyChats, goToChat, notifyOtherUser}) => {
 
   return (
     <StyledMyChats>
+   
       {myChats.map((chat, i) => <Button className='chatButton' onClick={() =>{ 
         notifyOtherUser(userId);
         goToChat(chat);
       }} key={i}>Chat!</Button>)}
-
+  
       
     </StyledMyChats>
   );

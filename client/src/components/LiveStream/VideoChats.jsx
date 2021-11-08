@@ -19,6 +19,10 @@ const StyledVideoChat = styled.div`
     display: flex;
     flex-direction: row;
   }
+  .friendWrapper {
+    display: flex;
+    flex-direction: row;
+  }
   .chatButton {
     background-color: ${props => props.theme.colorMed};
   }
@@ -45,6 +49,12 @@ const VideoChats = () => {
   };
 
   const createVideoChat = async (userId) => {
+    const thisUserChats = allChats.filter(chat => {
+      return chat.attendees.includes(userId.toString()) && chat.attendees.includes(id.toString());
+    });
+    if (thisUserChats.length) {
+      return;
+    }
   
     const uuid = v4();
     const chatObj = { code: uuid, attendees: [id, userId]};
@@ -109,6 +119,7 @@ const VideoChats = () => {
             if (user.id !== id) {
               return <div 
                 key={i}
+                className='friendWrapper'
               >
                 <div className='friend clickableDark' onClick={() => createVideoChat(user.id)}>{user.name} </div>
 
