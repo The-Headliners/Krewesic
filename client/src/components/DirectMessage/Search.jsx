@@ -70,7 +70,7 @@ const Search = ({createConversation}) => {
           userSearched.map(user => {
             return (
               <div className='userSearch' key={user.id} style={userSearch}>
-                <img className='searchImg' src="https://www.archiefoundationhome.org.uk/wp-content/uploads/2020/05/profile-photo-social-media.jpg" alt="" style={searchImg} /> 
+                <img className='searchImg' src={user.pic} alt="" style={searchImg} /> 
                 <span className='searchName' style={searchName} onClick={() => createConversation(user)}>{user.name} </span>
               </div>
             );
