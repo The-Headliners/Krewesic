@@ -114,7 +114,16 @@ const Header = (props) => {
     return loggedIn
       ? <Grid
         item xs={4} md={4} sm={4} lg={4}
-      ><Button className='btn flexchild' startIcon={ <LogoutIcon />} onClick={logout}>logout</Button></Grid>
+      > 
+        <div 
+          className='flexChild'
+        >{name}</div>
+        <Button 
+          className='btn flexChild' 
+          startIcon={ <LogoutIcon />} 
+          onClick={logout}
+        >logout</Button>
+      </Grid>
       : <Grid
         item xs={4} md={4} sm={4} lg={4}
       ><a href='/auth/google'><Button startIcon={ <LoginIcon />} className='btn flexchild' >Log In</Button></a></Grid>;
@@ -138,6 +147,7 @@ const Header = (props) => {
 
         {display()}
       </Grid>
+
     </StyledHeader>
   );
 };
