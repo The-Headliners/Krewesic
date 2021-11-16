@@ -36,12 +36,12 @@ const _ = require('underscore');
 //create the server
 const server = http.createServer(app);
 
-const peerServer = PeerServer({
-  port: 3002,
-  path: '/',
-  proxied: true,
-  debug: true
-});
+// const peerServer = PeerServer({
+//   port: 3002,
+//   path: '/',
+//   proxied: true,
+//   debug: true
+// });
 
 
 
@@ -85,7 +85,7 @@ const getUser = (userId) => {
 };
 io.on('connection', socket => {
   //when connect
-  // console.info(`user ${socket.id} is connected`);
+  console.info(`user ${socket.id} is connected`);
 
   //***FOR LIVE CHAT FOR ALL USERS*** when a message is sent */
   socket.on('message', ({ name, message, pic}) => {
@@ -140,7 +140,7 @@ io.on('connection', socket => {
       liveStreamUsers[showId] = [idObj];
     }
     socket.join(showId);
-    socket.to(showId).emit('user-connected', {name: name, latestUser: userId, allUsers: liveStreamUsers[showId]}); /**changed this restructure the data on the front end!!!! */
+    socket.to(showId).emit('user-connected', {name: name, latestUser: userId, allUsers: liveStreamUsers[showId]}); 
   });
 
 
@@ -173,7 +173,7 @@ io.on('connection', socket => {
   //When disconnect
   socket.on('disconnect', () => {
     //if there are any disconnections
-    // console.info('disconnected user', socket.id);
+    console.info('disconnected user', socket.id);
     removeUser(socket.id);
     removeLiveStreamUser(socket.id); //this needs to account for peerId not socketId because the users are via peerId
     io.emit('getUsers', users);

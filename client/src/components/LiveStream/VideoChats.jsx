@@ -1,13 +1,10 @@
 import axios from 'axios';
 import React, {useState, useEffect, useContext, useCallback} from 'react';
 import MyChats from './MyChats.jsx';
-import { async } from 'regenerator-runtime';
 import {v4} from 'uuid';
-import useGetUser from '../CustomHooks/useGetUser.jsx';
 import GlobalContext from '../Contexts/GlobalContext.jsx';
 import {useHistory} from 'react-router-dom';
 import styled from 'styled-components';
-import {Button} from '@material-ui/core';
 
 const StyledVideoChat = styled.div`
   .wrapper {
@@ -33,6 +30,8 @@ const StyledVideoChat = styled.div`
 
 const VideoChats = () => {
   const history = useHistory();
+
+  
   const {id, socket, name} = useContext(GlobalContext);
 
   const [allChats, setAllChats] = useState([]);
@@ -58,7 +57,6 @@ const VideoChats = () => {
   
     const uuid = v4();
     const chatObj = { code: uuid, attendees: [id, userId]};
-    //setAllChats(list => [...list, chatObj]);
     //post the video chat to db
     await axios.post('/userProf/newVideoChat', {code: uuid, includes: [id, userId], creatorId: id});
     getMyChats();
@@ -107,6 +105,7 @@ const VideoChats = () => {
     });
     const myChats = mappedChats.filter(chat => chat.attendees.includes(id.toString()));
     setAllChats(myChats);
+
 
   }, []);
 
