@@ -10,10 +10,8 @@ import { InputLabel } from '@mui/material';
 import { Select } from '@mui/material';
 import {MenuItem, makeStyles } from '@material-ui/core';
 import styled from 'styled-components';
-import Box from '@material-ui/core/Box';
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+
 
 const StyledFormArtist = styled.div`
 background-color: ${props => props.theme.colorDark};

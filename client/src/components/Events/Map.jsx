@@ -3,10 +3,11 @@ import React, {useState, memo, useEffect, useCallback, useRef} from 'react';
 import { GoogleMap, LoadScript, useLoadScript, Marker, InfoWindow, MarkerClusterer} from '@react-google-maps/api';
 import styled from 'styled-components';
 //require('dotenv').config()
-import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import InfoCard from './InfoCard.jsx';
 import mapStyles from './snazzyMaps.js';
 import musicNoteMarker from '../images/musicMarker.png';
+import KInfoCard from './KInfoCard.jsx';
+import KMusicNoteMarker from '../images/KMusicMarker.png';
 
 
 const StyledMap = styled.div`
@@ -21,7 +22,6 @@ const StyledMap = styled.div`
 
 
 const containerStyle = {
- 
   height: '90vh'
 };
 
@@ -39,16 +39,10 @@ const Map = ({events, kEvents, markers}) => {
   const [venues, setVenues] = useState([]);
   const [selected, setSelected] = useState(null);
   const [kVenues, setKVenues] = useState([]);
+  const [kSelected, setKSelected] = useState(null);
 
   const showVenues = useCallback((e) => {
     setVenues(current => [...current, {
-      lat: e.latLng.lat(),
-      lng: e.latLng.lng()
-    }]);
-  }, []);
-
-  const showKVenues = useCallback((e) => {
-    setKVenues(current => [...current, {
       lat: e.latLng.lat(),
       lng: e.latLng.lng()
     }]);
@@ -81,7 +75,6 @@ const Map = ({events, kEvents, markers}) => {
         });
       });
       const newCenter = bounds.getCenter();
-      //console.log('newCenter', newCenter)
       setCenter(newCenter);
       mapRef.current.fitBounds(bounds);
     }
@@ -89,10 +82,8 @@ const Map = ({events, kEvents, markers}) => {
 
   useEffect(() => {
     setKVenues(kEvents);
-
   }, [kEvents]);
 
-  //return the map component
   if (isLoaded) {
     return (
       <StyledMap>
@@ -114,7 +105,8 @@ const Map = ({events, kEvents, markers}) => {
                   url: musicNoteMarker,
                   scaledSize: new window.google.maps.Size(100, 100),
                   origin: new window.google.maps.Point(0, 0),
-                  anchor: new window.google.maps.Point(80, 80)}}
+                  anchor: new window.google.maps.Point(80, 80)
+                }}
                 onClick={() => {
                   setSelected(venue);
                 }}
@@ -125,7 +117,13 @@ const Map = ({events, kEvents, markers}) => {
                 key={i}
                 position={{lat: kVenue.lat, lng: kVenue.lng}}
                 onClick={() => {
-                  setSelected(kVenue);
+                  setKSelected(kVenue);
+                }}
+                icon={{
+                  url: KMusicNoteMarker,
+                  scaledSize: new window.google.maps.Size(100, 100),
+                  origin: new window.google.maps.Point(0, 0),
+                  anchor: new window.google.maps.Point(80, 80)
                 }}
               />
             ))}
@@ -136,6 +134,14 @@ const Map = ({events, kEvents, markers}) => {
               <div>info window {selected.type}
                 <InfoCard event={selected} />
               </div>
+            </InfoWindow>)}
+            {kSelected && (<InfoWindow
+              position={{lat: kSelected.lat, lng: kSelected.lng}}
+              onCloseClick={() => setKSelected(null)}
+            >
+              <div>info window
+                <KInfoCard event={kSelected} />
+              </div> 
             </InfoWindow>)}
           </div>
         </GoogleMap>

@@ -1,10 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react';
 import GlobalContext from './Contexts/GlobalContext.jsx';
-import {AppBar, Toolbar, Typography, Button} from '@material-ui/core';
+import { Button} from '@material-ui/core';
 import styled from 'styled-components';
 import axios from 'axios';
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
 import logo from './images/KrewesicLight.png';
 import Grid from '@material-ui/core/Grid';
 import LoginIcon from '@mui/icons-material/Login';
@@ -27,6 +25,7 @@ const StyledHeader = styled.div`
    float: right;
    margin-top: 20px;
    margin-right: 5px;
+   color: ${props => props.theme.textColorLight};
    background-color: #610094;
    :hover {
      background-color: #3F0071;

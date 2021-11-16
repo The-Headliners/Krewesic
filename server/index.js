@@ -166,10 +166,6 @@ io.on('connection', socket => {
   });
 
 
-
-
-  //****end events related to streaming features */
-
   //When disconnect
   socket.on('disconnect', () => {
     //if there are any disconnections
@@ -183,8 +179,6 @@ io.on('connection', socket => {
 app.get('/virtualEventUsers/:showId', async (req, res) => {
   try {
     const {showId} = req.params;
-    //console.log(liveStreamUsers);
-    //console.log(liveStreamUsers[showId]);
     res.status(201).send(liveStreamUsers[showId]);
   } catch (err) {
     console.warn(err);

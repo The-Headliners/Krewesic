@@ -45,14 +45,11 @@
     "axios": "^0.23.0",
     "babel-loader": "^8.2.2",
     "cookie-parser": "^1.4.5",
-    "core-js": "^3.18.3",
     "date-fns": "^2.25.0",
     "date-fns-tz": "^1.1.6",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "express-graphql": "^0.12.0",
     "express-session": "^1.17.2",
-    "ffmpeg": "^0.0.4",
     "file-loader": "^6.2.0",
     "flat-cache": "^3.0.4",
     "fs": "^0.0.1-security",
@@ -61,7 +58,6 @@
     "https": "^1.0.0",
     "luxon": "^1.28.0",
     "material-ui-player": "^0.2.5",
-    "moment": "^2.29.1",
     "mysql": "^2.18.1",
     "mysql2": "^2.3.2",
     "passport": "^0.5.0",
@@ -78,7 +74,6 @@
     "react-player": "^2.9.0",
     "react-router": "^5.2.1",
     "react-router-dom": "^5.3.0",
-    "regenerator-runtime": "^0.13.9",
     "sequelize": "^6.7.0",
     "socket.io": "^4.3.1",
     "socket.io-client": "^4.3.2",
@@ -103,6 +98,7 @@
     "lint-staged": "^11.2.3",
     "rimraf": "^3.0.2",
     "webpack": "^5.58.2",
+    "webpack-bundle-analyzer": "^4.5.0",
     "webpack-cli": "^4.9.1"
   }
 }

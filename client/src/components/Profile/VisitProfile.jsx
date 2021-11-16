@@ -1,10 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
-import GlobalContext from '../Contexts/GlobalContext.jsx';
 import axios from 'axios';
 import {useParams} from 'react-router-dom';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
