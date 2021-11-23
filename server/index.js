@@ -36,12 +36,12 @@ const _ = require('underscore');
 //create the server
 const server = http.createServer(app);
 
-// const peerServer = PeerServer({
-//   port: 3002,
-//   path: '/',
-//   proxied: true,
-//   debug: true
-// });
+const peerServer = PeerServer({
+  port: 3002,
+  path: '/',
+  proxied: true,
+  debug: true
+});
 
 
 

@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom';
 import Peer from 'peerjs';
 import Button from '@mui/material/Button';
 import { useHistory } from 'react-router';
+import peerObject from './peerObject.js'
 
 
 
@@ -54,18 +55,20 @@ const ConferenceCall = () => {
   const {socket} = useContext(GlobalContext);
   const {name} = useContext(GlobalContext);
 
-  const myPeer = useRef(new Peer( undefined, { //remember: npm i -g peer   \n peerjs --port 3002   running peer port on 3002
-    host: '/',
-    path: '/',
-    port: '3002'
+  const peerObj = useRef(peerObject.deployed ? peerObject.deployedPeerObj : peerObject.localPeerObj);
+
+  const myPeer = useRef(new Peer( undefined, peerObj.current //{ //remember: npm i -g peer   \n peerjs --port 3002   running peer port on 3002
+    // host: '/',
+    // path: '/',
+    // port: '3002'
 
     //for deployment below
     // host: 'krewesic.com',
     // path: '/',
     // secure: true,       
 
-    
-  }));
+  //}
+  ));
 
   const [history] = useState(useHistory());
 

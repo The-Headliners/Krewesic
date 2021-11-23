@@ -74,8 +74,7 @@ https://www.theaudiodb.com/api_guide.php
 
 
 ## peerjs
-for the video streaming, peerjs uses a server for p2p connections.  To start the server, globally install peer:
-npm i -g peer   then open a terminal and run:  peerjs --port 3002
+Peerjs runs on a separate server, set to port 3002 if running on your local machine. Make sure you are not running your application on port 3002 or there will be a conflict.  In client/src/components/LiveStream/peerObject.js: to run on local machine, make sure that deployed is equal to false.  To deploy, you will need to adjust the deployedPeerObj to match your own DNS.  
 
 
 ## frontend

@@ -1,6 +1,6 @@
 import keys from './keys.js'; //this cant be permanent
 import React, {useState, memo, useEffect, useCallback, useRef} from 'react';
-import { GoogleMap, LoadScript, useLoadScript, Marker, InfoWindow, MarkerClusterer} from '@react-google-maps/api';
+import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import styled from 'styled-components';
 //require('dotenv').config()
 import InfoCard from './InfoCard.jsx';
