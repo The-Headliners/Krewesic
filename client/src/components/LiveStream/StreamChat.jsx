@@ -1,6 +1,6 @@
 import React, {useState, useContext, useEffect} from 'react';
 import styled from 'styled-components';
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField } from '@mui/material';
 import GlobalContext from '../Contexts/GlobalContext.jsx';
 import Grid from '@mui/material/Grid';
 

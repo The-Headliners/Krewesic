@@ -1,6 +1,6 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { Box } from '@material-ui/core';
+import Box from '@mui/material/Box';
 
 
 const Krewe = ({ artist }) => {

@@ -1,11 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
 import GlobalContext from '../Contexts/GlobalContext.jsx';
 import axios from 'axios';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
 import PublishIcon from '@mui/icons-material/Publish';
 import Post from '../Profile/Post.jsx';
 import Krewe from '../Profile/Krewe.jsx';

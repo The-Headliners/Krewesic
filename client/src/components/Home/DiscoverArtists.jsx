@@ -6,7 +6,7 @@ import axios from 'axios';
 
 
 import Artist from './Artist.jsx';
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 
 
 // const StyledArtistOfDay = styled.div`

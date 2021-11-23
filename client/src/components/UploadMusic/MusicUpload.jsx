@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import { AudioCard, VideoCard } from 'material-ui-player';
 import axios from 'axios';
 import UploadForm from './UploadForm.jsx';
 import VideoPlayer from './VideoPlayer.jsx';

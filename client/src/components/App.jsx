@@ -6,7 +6,7 @@ import {
   Link
 } from 'react-router-dom';
 import styled, {ThemeProvider} from 'styled-components';
-import Grid from '@material-ui/core/Grid';
+
 import Login from './Login.jsx';
 import Profile from './Profile/Profile.jsx';
 import Form from './Profile/Form.jsx';
@@ -28,25 +28,23 @@ import KreweEventLandingPage from './Events/KrewesicArtists/KreweEventLandingPag
 import VisitProfile from './Profile/VisitProfile.jsx';
 import GlobalStyle from '../components/styles/globalStyles.jsx';
 import ColorBlind from '../components/styles/colorBlind.jsx';
-import Box from '@material-ui/core/Box';
-import { makeStyles } from '@material-ui/core/styles';
+import Box from '@mui/material/Box';
+import { makeStyles } from '@mui/styles';
 import VirtualEvent from './LiveStream/VirtualEvent.jsx';
 import AudioRecording from './Recording/AudioRecording.jsx';
 import VideoChats from './LiveStream/VideoChats.jsx';
 import ConferenceCall from './LiveStream/ConferenceCall.jsx';
 import MyEvents from './Events/MyEvents.jsx';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Hidden from '@material-ui/core/Hidden';
-import MenuIcon from '@material-ui/icons/Menu';
-import IconButton from '@material-ui/core/IconButton';
-import {MuiPickersUtilsProvider} from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import Divider from '@material-ui/core/Divider';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
+import AppBar from '@mui/material//AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Hidden from '@mui/material/Hidden';
+import MenuIcon from '@mui/icons-material/Menu';
+import IconButton from '@mui/material/IconButton';
+
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import Divider from '@mui/material/Divider';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+
 
 import io from 'socket.io-client';
 const socket = io.connect('/');
@@ -195,7 +193,11 @@ const App = (props) => {
                 >
                   <SwipeableDrawer
                     classes={{ paper: styles.paper}}
-                    anchor='left' open={open}>
+                    anchor='left' 
+                    open={open}
+                    onClose={() => {}}
+                    onOpen={() => {}}
+                  >
                     <div
                       style={{ backgroundColor: '#3F0071'}}
                       align="right"

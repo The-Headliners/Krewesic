@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useRef, useContext} from 'react';
-import Video from './Video.jsx';
 import io from 'socket.io-client';
 import styled from 'styled-components';
 //import Peer from 'peerjs';
@@ -8,7 +7,7 @@ import StreamChat from './StreamChat.jsx';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Peer from 'peerjs';
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 import { useHistory } from 'react-router';
 
 

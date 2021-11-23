@@ -1,10 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
 import GlobalContext from './Contexts/GlobalContext.jsx';
-import { Button} from '@material-ui/core';
+import Button from '@mui/material/Button';
 import styled from 'styled-components';
 import axios from 'axios';
 import logo from './images/KrewesicLight.png';
-import Grid from '@material-ui/core/Grid';
+import Grid from '@mui/material/Grid';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import {useHistory} from 'react-router-dom';

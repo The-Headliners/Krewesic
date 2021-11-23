@@ -1,15 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import axios from 'axios';
-import FormListener from './FormListener.jsx';
-import FormArtist from './FormArtist.jsx';
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 //import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components';
 // import Item from '@material-ui/core/Item'
-import HeadsetIcon from '@material-ui/icons/Headset';
-import MusicNoteIcon from '@material-ui/icons/MusicNote';
-import Typography from '@material-ui/core/Typography';
+import HeadsetIcon from '@mui/icons-material/Headset';
+import MusicNoteIcon from '@mui/icons-material/MusicNote';
+import Typography from '@mui/material/Typography';
 
 
 const Form = (props) => {

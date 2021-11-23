@@ -1,10 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import {useParams} from 'react-router-dom';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import useGetUser from '../CustomHooks/useGetUser.jsx';
 import VisibilityIcon from '@mui/icons-material/Visibility';
