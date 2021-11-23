@@ -4,6 +4,6 @@ const peerObject = {
   localPeerObj: { host: '/', path: '/', port: '3002'}
 
 
-}
+};
 
 export default peerObject;

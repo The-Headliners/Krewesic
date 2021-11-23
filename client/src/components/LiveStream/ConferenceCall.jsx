@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom';
 import Peer from 'peerjs';
 import Button from '@mui/material/Button';
 import { useHistory } from 'react-router';
-import peerObject from './peerObject.js'
+import peerObject from './peerObject.js';
 
 
 
