@@ -3,8 +3,8 @@ const { async } = require('regenerator-runtime');
 const Upload = express.Router();
 const {User, MusicUpload} = require('../../../db/index.js');
 
-Upload.post('/musicUpload/:id', async (req, res) => {
-  const { id } = req.params;
+Upload.post('/musicUpload', async (req, res) => {
+  const { id } = req.user;
   const {fileUrl, is_audio} = req.body;
   try {
 
@@ -18,8 +18,8 @@ Upload.post('/musicUpload/:id', async (req, res) => {
 });
 
 //get all music from the current user
-Upload.get('/musicUpload/:id', async (req, res) => {
-  const { id } = req.params;
+Upload.get('/musicUpload', async (req, res) => {
+  const { id } = req.user;
   try {
     const music = await User.findAll({
       where: {
