@@ -12,17 +12,6 @@ import Typography from '@mui/material/Typography';
 
 const Form = (props) => {
 
-
-
-
-
-
-
-
-
-
-
-
   //get user info
   const history = useHistory();
 

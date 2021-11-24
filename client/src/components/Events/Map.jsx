@@ -131,7 +131,7 @@ const Map = ({events, kEvents, markers}) => {
               position={{lat: selected.lat, lng: selected.lng}}
               onCloseClick={() => setSelected(null)}
             >
-              <div>info window {selected.type}
+              <div> {selected.type}
                 <InfoCard event={selected} />
               </div>
             </InfoWindow>)}

@@ -11,6 +11,8 @@ import { LocalizationProvider } from '@mui/lab';
 import Grid from '@mui/material/Grid';
 
 const StyledMapEvents = styled.div`
+  height: 70vh; 
+
   .wrapper {
     background-color: ${props => props.theme.colorBackground};
     align-items: center;

@@ -13,7 +13,6 @@ import Form from './Profile/Form.jsx';
 import FormArtist from './Profile/FormArtist.jsx';
 import FormListener from './Profile/FormListener.jsx';
 import DiscoverArtists from './Home/DiscoverArtists.jsx';
-import Artist from './Home/Artist.jsx';
 import BandsHome from './Bands/BandsHome.jsx';
 import MapEvents from './Events/MapEvents.jsx';
 import Header from './Header.jsx';
@@ -62,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 const AppStyles = styled.div`
+
 .nav {
   background-color: #3F0071;
 }
@@ -75,7 +75,7 @@ const AppStyles = styled.div`
   }
 }
 
-@media only screen and (min-width: 601px) {
+@media only screen and (max-width: 601px) {
   .mobileRender {
     display: none
   }
