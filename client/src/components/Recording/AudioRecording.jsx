@@ -1,7 +1,8 @@
 import React, {useState, useEffect, useContext, useRef } from 'react';
 import styled from 'styled-components';
-import { Button } from '@material-ui/core';
+import { Button } from '@mui/material';
 import Card from '@mui/material/Card';
+import {useHistory} from 'react-router-dom';
 
 const RecordStyles = styled.div`
   background-color: black;
@@ -22,6 +23,8 @@ const RecordStyles = styled.div`
 
 
 const AudioRecording = () => {
+
+  const [history] = useState(useHistory());
 
   const [stream, setStream] = useState({});
   const currentStream = useRef();
@@ -78,10 +81,20 @@ const AudioRecording = () => {
 
     drawVisualizer();
 
+    //this will run when leave the page
+    const stopUserMedia = () => {
+      currentStream.current.getTracks().forEach(track => {
+        track.stop();
+      });
+      
+    };
+    const unlisten = history.listen(stopUserMedia);
+    return unlisten;
+
   }, []);
 
   const drawVisualizer = () => {
-    requestAnimationFrame(drawVisualizer);
+ 
 
     const width = 200;
     const height = 200;
@@ -89,6 +102,11 @@ const AudioRecording = () => {
    
 
     const canvas = canvasRef.current;
+    if (canvas === null) {
+      //break out of this when leave the page
+      return;
+    }
+    requestAnimationFrame(drawVisualizer);
     const canvasContext = canvas.getContext('2d');
     //console.log('canvas context', canvasContext)
       

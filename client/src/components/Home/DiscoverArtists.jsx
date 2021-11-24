@@ -1,16 +1,12 @@
 /* eslint-disable brace-style */
 import React, { reactDOM, useContext, useState, useEffect} from 'react';
-import {Router, Route, Link, RouteHandler} from 'react-router';
-import { Redirect } from 'react-router';
-import { Box } from '@mui/system';
+
 import GlobalContext from '../Contexts/GlobalContext.jsx';
 import axios from 'axios';
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
-import styled from 'styled-components';
-import keys from '../Events/keys.js';
+
+
 import Artist from './Artist.jsx';
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 
 
 // const StyledArtistOfDay = styled.div`

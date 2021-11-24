@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import { AudioCard, VideoCard } from 'material-ui-player';
 import axios from 'axios';
 import UploadForm from './UploadForm.jsx';
 import VideoPlayer from './VideoPlayer.jsx';
@@ -7,6 +6,7 @@ import AudioPlayer from './AudioPlayer.jsx';
 
 const MusicUpload = () => {
 
+ 
   const [currentUser, setUser] = useState('');
   const [musicUploads, setMusic] = useState([]);
   //Create a state that will hold the files that is being uploaded
@@ -23,7 +23,7 @@ const MusicUpload = () => {
 
         setMusic(music => [...music, file]);
 
-        axios.post(`/upload/musicUpload/${currentUser.id}`, file)
+        axios.post('/upload/musicUpload', file)
           .then(results => {
             
           })
@@ -40,24 +40,15 @@ const MusicUpload = () => {
 
     const getMusic = async () => {
       try {
-        const music = await axios.get(`/upload/musicUpload/${currentUser.id}`);
+        const music = await axios.get('/upload/musicUpload');
         setMusic(music.data[0].MusicUploads);
       } catch (err) {
         console.warn(err);
       }
     };
     getMusic();
-  }, [currentUser]);
-
-  
-  
-
-  useEffect(() => {
-    axios.get('/auth/cookie')
-      .then(({data}) => {
-        setUser(data[0]);
-      });
   }, []);
+
   
   const musicPage = {
     // height: 'calc(100vh - 70px)',

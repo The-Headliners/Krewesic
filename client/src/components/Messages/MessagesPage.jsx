@@ -6,7 +6,7 @@ import MessageForm from './MessageForm.jsx';
 import io from 'socket.io-client';
 import {Link} from 'react-router-dom';
 import GlobalContext from '../Contexts/GlobalContext.jsx';
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 //need the socket to connect to the server, which is the local host
 
 

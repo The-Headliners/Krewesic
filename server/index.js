@@ -85,7 +85,7 @@ const getUser = (userId) => {
 };
 io.on('connection', socket => {
   //when connect
-  // console.info(`user ${socket.id} is connected`);
+  console.info(`user ${socket.id} is connected`);
 
   //***FOR LIVE CHAT FOR ALL USERS*** when a message is sent */
   socket.on('message', ({ name, message, pic}) => {
@@ -140,7 +140,7 @@ io.on('connection', socket => {
       liveStreamUsers[showId] = [idObj];
     }
     socket.join(showId);
-    socket.to(showId).emit('user-connected', {name: name, latestUser: userId, allUsers: liveStreamUsers[showId]}); /**changed this restructure the data on the front end!!!! */
+    socket.to(showId).emit('user-connected', {name: name, latestUser: userId, allUsers: liveStreamUsers[showId]}); 
   });
 
 
@@ -166,14 +166,10 @@ io.on('connection', socket => {
   });
 
 
-
-
-  //****end events related to streaming features */
-
   //When disconnect
   socket.on('disconnect', () => {
     //if there are any disconnections
-    // console.info('disconnected user', socket.id);
+    console.info('disconnected user', socket.id);
     removeUser(socket.id);
     removeLiveStreamUser(socket.id); //this needs to account for peerId not socketId because the users are via peerId
     io.emit('getUsers', users);
@@ -183,8 +179,6 @@ io.on('connection', socket => {
 app.get('/virtualEventUsers/:showId', async (req, res) => {
   try {
     const {showId} = req.params;
-    //console.log(liveStreamUsers);
-    //console.log(liveStreamUsers[showId]);
     res.status(201).send(liveStreamUsers[showId]);
   } catch (err) {
     console.warn(err);

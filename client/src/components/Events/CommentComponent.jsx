@@ -23,7 +23,6 @@ const StyledComment = styled.div`
   }
   .posterName {
     font-size: 12px;
-
   }
 `;
 

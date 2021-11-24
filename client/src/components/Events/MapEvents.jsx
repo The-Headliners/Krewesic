@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { Button} from '@material-ui/core/';
+import { Button} from '@mui/material';
 import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
 import axios from 'axios';
@@ -11,6 +11,8 @@ import { LocalizationProvider } from '@mui/lab';
 import Grid from '@mui/material/Grid';
 
 const StyledMapEvents = styled.div`
+  height: 70vh; 
+
   .wrapper {
     background-color: ${props => props.theme.colorBackground};
     align-items: center;

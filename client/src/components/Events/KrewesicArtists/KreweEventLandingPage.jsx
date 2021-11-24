@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {useParams} from 'react-router-dom';
 import axios from 'axios';
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Button } from '@mui/material';
 import CommentComponent from '../CommentComponent.jsx';
 import styled from 'styled-components';
 import GlobalContext from '../../Contexts/GlobalContext.jsx';
