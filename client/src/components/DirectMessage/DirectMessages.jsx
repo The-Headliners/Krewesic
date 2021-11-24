@@ -36,11 +36,9 @@ const DirectMessages = () => {
   const [value, setValue] = useState('');
 
   //hold all users online
-  const [onlineUsers, setOnlineUsers] = useState([]);
+  //const [onlineUsers, setOnlineUsers] = useState([]);
   //hold all users in state
   const [users, setUsers] = useState([]);
-  //hold the arrival message in the state
-  const [arrivalMessage, setArrivalMessage] = useState(null);
 
 
 
@@ -51,29 +49,23 @@ const DirectMessages = () => {
     socket.emit('addUser', currentUser.googleId);
     socket.on('getUsers', users => {
       //console.info('ONLINE USERS!!', users);
-      axios.get('/userProf/allUsers')
-        .then((results) => {
-          const online = [];
-          results.data.map(user => {
-            users.map(onlineUser => {
-              if (user.googleId === onlineUser.userId) {
-                online.push(user);
+      // axios.get('/userProf/allUsers')
+      //   .then((results) => {
+      //     const online = [];
+      //     results.data.map(user => {
+      //       users.map(onlineUser => {
+      //         if (user.googleId === onlineUser.userId) {
+      //           online.push(user);
                 
-              }
+      //         }
 
-              // console.info('ONLINE USERS', online);
-              setOnlineUsers(online);
-            });
-          });
-        });
+      //         // console.info('ONLINE USERS', online);
+      //         setOnlineUsers(online);
+      //       });
+      //     });
+      //   });
     });
   }, [currentUser]);
-
-
-  //Get all conversations dealing with the user logged in
-  // const getConversations = async () => {
-  //   try {
-  //     const conversations = await axios.get(`/chat/${currentUser.googleId}`);
 
 
 
@@ -111,6 +103,7 @@ const DirectMessages = () => {
     try {
       const conversation = await axios.post( '/chat/conversation', users);
       setConversations([...conversations, users]);
+      setCurrentChat(users); 
       //console.info('CONVERSATION!!:', conversation);
     } catch (err) {
       console.warn(err);
@@ -126,7 +119,7 @@ const DirectMessages = () => {
         setMessages(messages.data);
 
       } catch (err) {
-        console.warn(err);
+        console.warn('THIS IS THE ERROR', err);
       }
     };
 
@@ -325,7 +318,7 @@ const DirectMessages = () => {
       </div>
       <div className='chatOnline' style={chatOnline}>
         <div className='chatOnlineWrapper' style={chatWrappers}>
-       Online <ChatOnline onlineUsers={onlineUsers}/>
+       All Users <ChatOnline users={users} createConversation={createConversation}/>
         </div>
       </div>
     </div>

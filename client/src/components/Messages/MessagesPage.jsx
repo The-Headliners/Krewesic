@@ -212,7 +212,7 @@ const MessagesPage = () => {
       </div>
       <div className='chatOnline' style={chatOnline}> 
         <div className='chatOnlineWrapper' style={chatWrappers}> 
-           Online  <Sidebar users={users}/>
+           All Users  <Sidebar users={users}/>
         </div>
       </div>
     </div>
