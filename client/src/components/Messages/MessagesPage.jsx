@@ -7,6 +7,7 @@ import io from 'socket.io-client';
 import {Link} from 'react-router-dom';
 import GlobalContext from '../Contexts/GlobalContext.jsx';
 import Button from '@material-ui/core/Button';
+import LoginIcon from '@mui/icons-material/Login';
 //need the socket to connect to the server, which is the local host
 
 
@@ -24,7 +25,7 @@ const MessagesPage = () => {
 
 
   //get the current user's name, hold the user in the state
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState(null);
 
   const [users, setUsers] = useState([]);
 
@@ -154,7 +155,7 @@ const MessagesPage = () => {
   const noConversation = { 
     position: 'absolute',
     top: '10%',
-    fontSize: '50px',
+    fontSize: '20px',
     color: 'rgb(224, 220, 220)',
     cursor: 'default',
   };
@@ -166,57 +167,70 @@ const MessagesPage = () => {
     marginRight: '10px'
   };
 
-  return (
-    <div className='messenger' style={messenger}>
-      <div className='chatMenu' style={chatMenu}>
-        <div className='chatMenuWrapper' style={chatWrappers}>
-          <h1 style={{color: '#c3c2c5'}}><img className='user-image' style={profileImg} src={user.pic}/>{user.name}</h1>
-          <Link to='/DirectMessage'>Direct Messaging </Link>
-        </div>
-      </div>
-
-      <div className='chatBox' style={chatBox}>
-        <div className='chatBoxWrapper' style={chatBoxWrapper}>
-          Live Chat
-          <div className="chatBoxTop" style={chatBoxTop}>
-            {
-              chat.length === 0 ? (
-                 
-                <span className="noMessage" style={noConversation}> Start Live Chatting...</span>
-                  
-              )
-                :
-
-                chat.map((message, i) => {
-  
-                  return (
-                    <div key={i}>
-                      <MessagesView message={message} user={user}/>
-                    </div>
-                  );
-                  
-                })
-              
-            }
+  if (user) {
+    return (
+      <div className='messenger' style={messenger}>
+        <div className='chatMenu' style={chatMenu}>
+          <div className='chatMenuWrapper' style={chatWrappers}>
+            <h1 style={{color: '#c3c2c5'}}><img className='user-image' style={profileImg} src={user.pic}/>{user.name}</h1>
+            <Link to='/DirectMessage'>Direct Messaging </Link>
           </div>
-          {/* <MessagesView chat={chat} handleChange={handleChange} sendMessage={sendMessage} value={value} user={user}/> */}
+        </div>
+
+        <div className='chatBox' style={chatBox}>
+          <div className='chatBoxWrapper' style={chatBoxWrapper}>
+          Live Chat
+            <div className="chatBoxTop" style={chatBoxTop}>
+              {
+                chat.length === 0 ? (
+                 
+                  <span className="noMessage" style={noConversation}> Start Chatting Live...</span>
+                  
+                )
+                  :
+
+                  chat.map((message, i) => {
+  
+                    return (
+                      <div key={i}>
+                        <MessagesView message={message} user={user}/>
+                      </div>
+                    );
+                  
+                  })
+              
+              }
+            </div>
+            {/* <MessagesView chat={chat} handleChange={handleChange} sendMessage={sendMessage} value={value} user={user}/> */}
        
 
-          <div className='chatBoxBottom' style={chatBoxBottom}>
-            <input className="message-input" style={chatMessageInput} placeholder="Send a message..." value={value} onChange={handleChange} />
+            <div className='chatBoxBottom' style={chatBoxBottom}>
+              <input className="message-input" style={chatMessageInput} placeholder="Send a message..." value={value} onChange={handleChange} />
 
-            <Button className="message-button" variant="contained" style={chatSubmitButton} onClick={ (event) => sendMessage(event)}> send </Button>
-            {/* <MessageForm handleChange={handleChange} sendMessage={sendMessage} value={value} chatMessageInput={chatMessageInput} chatSubmitButton={chatSubmitButton}/> */}
+              <Button className="message-button" variant="contained" style={chatSubmitButton} onClick={ (event) => sendMessage(event)}> send </Button>
+              {/* <MessageForm handleChange={handleChange} sendMessage={sendMessage} value={value} chatMessageInput={chatMessageInput} chatSubmitButton={chatSubmitButton}/> */}
+            </div>
+          </div>
+        </div>
+        <div className='chatOnline' style={chatOnline}> 
+          <div className='chatOnlineWrapper' style={chatWrappers}> 
+           All Users  <Sidebar users={users}/>
           </div>
         </div>
       </div>
-      <div className='chatOnline' style={chatOnline}> 
-        <div className='chatOnlineWrapper' style={chatWrappers}> 
-           All Users  <Sidebar users={users}/>
-        </div>
-      </div>
-    </div>
-  );
+    ); 
+  } else {
+    return (<div
+      align='center' style={{height: '100vh', backgroundColor: '#150050', display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'}}
+    ><a href='/auth/google'><Button
+        startIcon={ <LoginIcon />}
+        style={{ backgroundColor: '#610094', marginBottom: '10px'}}
+        variant='contained'
+      >Log In</Button></a></div> );
+  }
 };
 
 export default MessagesPage;

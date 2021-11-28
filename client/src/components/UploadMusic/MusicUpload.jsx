@@ -4,10 +4,12 @@ import axios from 'axios';
 import UploadForm from './UploadForm.jsx';
 import VideoPlayer from './VideoPlayer.jsx';
 import AudioPlayer from './AudioPlayer.jsx';
+import Button from '@material-ui/core/Button';
+import LoginIcon from '@mui/icons-material/Login';
 
 const MusicUpload = () => {
 
-  const [currentUser, setUser] = useState('');
+  const [currentUser, setUser] = useState(null);
   const [musicUploads, setMusic] = useState([]);
   //Create a state that will hold the files that is being uploaded
   const [fileSelected, setFileSelected] = useState('');
@@ -36,17 +38,21 @@ const MusicUpload = () => {
     widget.open();
   };
 
-  useEffect( () => {
+  const getMusic = async () => {
+    try {
+      const music = await axios.get(`/upload/musicUpload/${currentUser.id}`);
+      setMusic(music.data[0].MusicUploads);
+    } catch (err) {
+      console.warn(err);
+    }
+  };
 
-    const getMusic = async () => {
-      try {
-        const music = await axios.get(`/upload/musicUpload/${currentUser.id}`);
-        setMusic(music.data[0].MusicUploads);
-      } catch (err) {
-        console.warn(err);
-      }
-    };
-    getMusic();
+  useEffect(() => {
+
+    if (currentUser) {
+      getMusic();
+    }
+   
   }, [currentUser]);
 
   
@@ -101,21 +107,38 @@ const MusicUpload = () => {
     height: '100%',
     backgroundColor: '#150050'
   };
-  return (
-    <div className='upload-page' style={musicPage}>
-      <div className="musicBoxWrapper" style={musicBoxWrapper} >
-        <div style={uploadStyle}>Let's Upload Your Music Here! </div>
-        <UploadForm showWidget={showWidget}/>
 
-        {/* video list */}
-        <div className='videoPlayer' style={cardStyle}>
-          {
-            musicUploads.slice(0).reverse().map((music, i) => music.is_audio === false ? (<VideoPlayer key={music.id}music={music} /> ) : (<AudioPlayer key={music.id} music={music} />))
-          }
+  if (currentUser) {
+
+    return (
+      <div className='upload-page' style={musicPage}>
+        <div className="musicBoxWrapper" style={musicBoxWrapper} >
+          <div style={uploadStyle}>Let's Upload Your Music Here! </div>
+          <UploadForm showWidget={showWidget}/>
+  
+          {/* video list */}
+          <div className='videoPlayer' style={cardStyle}>
+            {
+              musicUploads.slice(0).reverse().map((music, i) => music.is_audio === false ? (<VideoPlayer key={music.id}music={music} /> ) : (<AudioPlayer key={music.id} music={music} />))
+            }
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div
+        align='center' style={{height: '100vh', backgroundColor: '#150050', display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center'}}
+      ><a href='/auth/google'><Button
+          startIcon={ <LoginIcon />}
+          style={{ backgroundColor: '#610094', marginBottom: '10px'}}
+          variant='contained'
+        >Log In</Button></a></div>
+    );
+  }
 };
 
 export default MusicUpload;

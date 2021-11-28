@@ -1,13 +1,12 @@
 import React, {useState, useEffect, useContext, useRef} from 'react';
 import axios from 'axios';
-import io from 'socket.io-client';
+//import io from 'socket.io-client';
 import Search from './Search.jsx';
 import Message from './Message.jsx';
 import Conversation from './Conversation.jsx';
-import ChatOnline from './Chat.jsx';
-import Users from './Users.jsx';
+// import ChatOnline from './Chat.jsx';
+// import Users from './Users.jsx';
 import GlobalContext from '../Contexts/GlobalContext.jsx';
-
 
 
 //need the socket to connect to the server, which is the local host
@@ -47,24 +46,6 @@ const DirectMessages = () => {
   useEffect(() => {
     //socket.current = io('ws://localhost:1337');
     socket.emit('addUser', currentUser.googleId);
-    socket.on('getUsers', users => {
-      //console.info('ONLINE USERS!!', users);
-      // axios.get('/userProf/allUsers')
-      //   .then((results) => {
-      //     const online = [];
-      //     results.data.map(user => {
-      //       users.map(onlineUser => {
-      //         if (user.googleId === onlineUser.userId) {
-      //           online.push(user);
-                
-      //         }
-
-      //         // console.info('ONLINE USERS', online);
-      //         setOnlineUsers(online);
-      //       });
-      //     });
-      //   });
-    });
   }, [currentUser]);
 
 
@@ -104,26 +85,26 @@ const DirectMessages = () => {
       const conversation = await axios.post( '/chat/conversation', users);
       setConversations([...conversations, users]);
       setCurrentChat(users); 
-      //console.info('CONVERSATION!!:', conversation);
     } catch (err) {
       console.warn(err);
     }
   };
 
+  const getMessages = async () => {
+    try {
+      const messages = await axios.get(`/messages/allMessages/${currentChat.id}`);
+      setMessages(messages.data);
+
+    } catch (err) {
+      console.warn('THIS IS THE ERROR', err);
+    }
+  };
 
   //Doing another useEffect
   useEffect(() => {
-    const getMessages = async () => {
-      try {
-        const messages = await axios.get(`/messages/allMessages/${currentChat?.id}`);
-        setMessages(messages.data);
-
-      } catch (err) {
-        console.warn('THIS IS THE ERROR', err);
-      }
-    };
-
-    getMessages();
+    if (currentChat) {
+      getMessages();
+    }
   }, [currentChat]);
 
   //Handle submmit function to send a message
@@ -152,9 +133,6 @@ const DirectMessages = () => {
     try {
       const res = await axios.post(`/messages/sendMessage/${currentUser.id}`, message);
       
-
-      //setMessages([...messages], res.data);
-      //setValue('');
     } catch (err) {
       console.warn(err);
     }
@@ -170,8 +148,6 @@ const DirectMessages = () => {
   //***For incoming messages from another user, coming back from the Socket Server ***/
   socket.on('getMessage', ({senderId, text, name, User}) => {
    
-    // let name;
-    // senderId === currentUser.googleId ? name = currentUser.name : name;
     setMessages([...messages, {sender: senderId, text: text, name: name, User: User}]);
   });
  
@@ -255,20 +231,18 @@ const DirectMessages = () => {
   const noConversation = { 
     position: 'absolute',
     top: '10%',
-    fontSize: '50px',
+    fontSize: '20px',
     color: 'rgb(224, 220, 220)',
     cursor: 'default',
   };
+
+
+
   return (
     <div className='messenger' style={messenger}>
-      {/* <Users currentUser={currentUser}/> */}
-      {/* <div className='search-feature'>
-        <Search />
-      </div> */}
       <div className='chatMenu' style={chatMenu}>
         <div className='chatMenuWrapper' style={chatWrappers}>
-        Direct Message
-          <Search createConversation={createConversation}/>
+        Direct Messages
           {
             conversations.map(convo => (
               <div key={convo.id} onClick={() => setCurrentChat(convo)}>
@@ -287,19 +261,19 @@ const DirectMessages = () => {
             currentChat ? (
               <>
                 <div className="chatBoxTop" style={chatBoxTop}>
-                  {messages.map(message => {
+                  {messages.map((message, i) => {
                     if (message.conversationId === currentChat.id) {
 
                       return (
                       
-                        <div key={message.id}> 
-                          <Message message={message} owner={message.sender === currentUser.googleId} currentUser={currentUser} users={users}/>
+                        <div key={i}> 
+                          <Message key ={message.id} message={message} owner={message.sender === currentUser.googleId} currentUser={currentUser} users={users}/>
                         </div>
                       );
                     } else {
                       return (
-                        <div key={message.id}> 
-                          <Message message={message} owner={message.sender === currentUser.googleId} currentUser={currentUser} users={users}/>
+                        <div key={i}> 
+                          <Message key ={message.id} message={message} owner={message.sender === currentUser.googleId} currentUser={currentUser} users={users}/>
                         </div>
                       );
                     }
@@ -309,7 +283,7 @@ const DirectMessages = () => {
                 <div className='chatBoxBottom' style={chatBoxBottom}>
                   <input className='chatMessageInput' style={chatMessageInput} placeholder='write something...' value={value} onChange={(e) => setValue(e.target.value)}/>
                   <button className='chatSubmitButton' style={chatSubmitButton} onClick={handleSubmit}>Send</button>
-                </div> </> ) : (<span className="noConversation" style={noConversation}> Add a User to start Direct Messaging.</span>
+                </div> </> ) : (<span className="noConversation" style={noConversation}> Select a User to start a Direct Message.</span>
 
                 
             )
@@ -318,11 +292,12 @@ const DirectMessages = () => {
       </div>
       <div className='chatOnline' style={chatOnline}>
         <div className='chatOnlineWrapper' style={chatWrappers}>
-       All Users <ChatOnline users={users} createConversation={createConversation}/>
+          <Search users={users} createConversation={createConversation}/>
         </div>
       </div>
     </div>
-  );
+  ); 
+  
 };
 
 export default DirectMessages;

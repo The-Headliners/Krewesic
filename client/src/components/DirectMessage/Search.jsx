@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
 
-const Search = ({createConversation}) => {
+const Search = ({users, createConversation}) => {
 
   const [value, setValue] = useState('');
   const [userSearched, setUserSearched] = useState([]);
@@ -12,14 +12,14 @@ const Search = ({createConversation}) => {
     setValue(name);
   };
 
-  const searchUser = (user) => {
-    return axios.get(`/directMessage/users/${user}`)
-      .then(user => {
+  // const searchUser = (user) => {
+  //   return axios.get(`/directMessage/users/${user}`)
+  //     .then(user => {
         
-        setUserSearched(user.data);
+  //       setUserSearched(user.data);
 
-      });
-  };
+  //     });
+  // };
 
   const chatMenuInput = {
     width: '90%',
@@ -61,13 +61,19 @@ const Search = ({createConversation}) => {
       <div className='search-section'>
         <h5>Find a user </h5>
         <input type="text" className="chatMenuInput" style ={chatMenuInput} placeholder="Search for friends..." value={value} onChange={(e) => changeInput(e.target.value)}/>
-        <Button className="search-button" style={searchButton} onClick={() => searchUser(value)}> Search </Button>
+        {/* <Button className="search-button" style={searchButton} onClick={() => searchUser(value)}> Search </Button> */}
       </div>
 
       <div className='user-preview'>
         {//conversations can be displayed under search
           //map over the userSearched, to render the user that was searched
-          userSearched.map(user => {
+          value === '' ? (<div className='userSearch' style={userSearch}>
+  
+          </div> ) : users.filter(user => {
+            if (user.name.toLowerCase().includes(value.toLowerCase())) {
+              return user;
+            }
+          }).map(user => {
             return (
               <div className='userSearch' key={user.id} style={userSearch}>
                 <img className='searchImg' src={user.pic} alt="" style={searchImg} /> 

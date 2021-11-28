@@ -108,14 +108,15 @@ io.on('connection', socket => {
   socket.on('sendMessage', ({senderId, receiverId, text, name, User}) => {
     //find specific user to send message
     const user = getUser(receiverId);
-
     //send data back to certain user send to client
+    
     io.to(user.socketId).emit('getMessage', {
       senderId,
       text,
       name,
       User
-    });
+    }); 
+      
   });
 
   /**for when a user logs in */
