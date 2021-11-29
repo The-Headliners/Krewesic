@@ -9,7 +9,8 @@ const ProfilePostStyles = styled.div`
 
   }
   .hoverino:hover {
-    background-color: #D8BFD8;
+    color: 	black;
+    background-color: #BA55D3;
   }
 
 `;

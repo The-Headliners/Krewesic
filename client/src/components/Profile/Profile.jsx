@@ -188,7 +188,7 @@ const Profile = () => {
             style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}
           >
             <Button
-              style={{ backgroundColor: '#610094', width: '70%', align: 'center' }}
+              style={{ backgroundColor: '#610094', width: '70%', align: 'center', color: 'black' }}
               startIcon={<PeopleIcon />}
               onClick={getFollowed}
             >
@@ -242,7 +242,7 @@ const Profile = () => {
               variant="outlined"
             />
             <Button
-              style={{ backgroundColor: '#610094' }}
+              style={{ backgroundColor: '#610094', color: 'black' }}
               startIcon={<PublishIcon />}
               onClick={() => handlePost()}
             >
