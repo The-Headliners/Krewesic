@@ -13,7 +13,7 @@ import Button from '@mui/material/Button';
 
 
 const MessagesPage = () => {
-  const {socket} = useContext(GlobalContext);
+  const {socket, id} = useContext(GlobalContext);
 
   const scrollRef = useRef();
   //need to hold the value of the message in state
