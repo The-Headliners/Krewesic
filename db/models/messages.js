@@ -19,7 +19,7 @@ const dbMessages = (sequelize,
       type: Sequelize.INTEGER,
     },
     sender: {
-      type: Sequelize.STRING
+      type: Sequelize.INTEGER
     },
     name: {
       type: Sequelize.STRING
