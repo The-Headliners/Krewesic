@@ -126,12 +126,13 @@ io.on('connection', socket => {
 
   //for DMs
   socket.on('privateMessage', (data) => {
-    const otherSocketId = loggedInUsers[data.otherUserId]
-    if(otherSocketId) {
-      socket.to(otherSocketId).emit('receivedPrivateMessage', data)
+    const otherSocketId = loggedInUsers[data.receiver];
+    
+    if (otherSocketId) {
+      socket.to(otherSocketId).emit('receivedPrivateMessage', data);
     }
 
-  })
+  });
 
   //****for streaming features */
 

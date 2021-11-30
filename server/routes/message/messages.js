@@ -3,7 +3,7 @@ const express = require('express');
 const { async } = require('regenerator-runtime');
 const Message = express.Router();
 const {User, Messages} = require('../../../db/index.js');
-const {Op} = require('sequelize')
+const {Op} = require('sequelize');
 
 
 
@@ -17,38 +17,36 @@ Message.get('/getMessages/:otherId', async(req, res) => {
     const sentMessages = await Messages.findAll({where: {
       sender: id,
       receiver: otherId
-    }})
+    }});
     const receivedMessages = await Messages.findAll({where: {
       sender: otherId,
       receiver: id
-    }})
+    }});
     
-    const allMessages = [...sentMessages, ...receivedMessages]
+    const allMessages = [...sentMessages, ...receivedMessages];
    
-    allMessages.sort((messageA, messageB) => messageA.id - messageB.id)
+    allMessages.sort((messageA, messageB) => messageA.id - messageB.id);
     //need to sort these by message id--> that will be oldest to newest
-   // console.log('all messages', allMessages)
-    res.status(200).send(allMessages)
+    // console.log('all messages', allMessages)
+    res.status(200).send(allMessages);
 
   } catch (err) {
-    console.warn('err', err)
-    res.sendStatus(500)
+    console.warn('err', err);
+    res.sendStatus(500);
   }
-})
+});
 
 Message.post('/postMessage', async(req, res) => {
   try {
     const {id} = req.user;
-    
-    console.log('req body', req.body)
-    await Messages.create(req.body)
-    res.sendStatus(200)
+    await Messages.create(req.body);
+    res.sendStatus(200);
 
   } catch (err) {
-    console.warn(err)
-    res.sendStatus(500)
+    console.warn(err);
+    res.sendStatus(500);
   }
-})
+});
 
 //Create a message
 Message.post('/sendMessage/:id', async (req, res) => {

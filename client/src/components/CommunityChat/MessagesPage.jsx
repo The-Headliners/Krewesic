@@ -132,7 +132,7 @@ const MessagesPage = () => {
   //to be attatched as a click event for the users in the side bar.  takees in the other users Id.  this will reset the chat array to have the messages between current user and the other user. 
   const changeMessageView = (otherUserId) => {
 
-  }
+  };
 
 
 

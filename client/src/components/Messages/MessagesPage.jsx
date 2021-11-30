@@ -108,22 +108,24 @@ const MessagesPage = () => {
 
   //the other user.  
   const [otherUser, setOtherUser] = useState({});
-  const [otherUserId, setOtherUserId] = useState(1)
+  const [otherUserId, setOtherUserId] = useState(0);
+
+  const otherUserRef = useRef();
 
   const postMessage = async() => {
   
-    axios.post(`/messages/postMessage`, {message: currentMessage, sender: id, receiver: otherUserId})
-  }
+    axios.post('/messages/postMessage', {message: currentMessage, sender: id, receiver: otherUserId});
+  };
 
 
   const sendMessage = (event) => {
     event.preventDefault();
     //value from state is the message we want to bring back to the socket server
     //the name will be the current user logged in
-    postMessage()
+    postMessage();
     //add the message to chat via setChat
-    setChat(list => [...list, {message: currentMessage, name: otherUser.name, pic: otherUser.pic, sender: id, receiver: otherUserId}])
-    socket.emit('privateMessage', { name: user.name, message: currentMessage, otherUserId: otherUserId, currentUserId: id});
+    setChat(list => [...list, {message: currentMessage, name: otherUser.name, pic: otherUser.pic, sender: id, receiver: otherUserId}]);
+    socket.emit('privateMessage', { name: user.name, message: currentMessage, receiver: otherUserId, sender: id});
     setCurrentMessage('');
 
 
@@ -136,15 +138,17 @@ const MessagesPage = () => {
   //to be attatched as a click event for the users in the side bar.  takees in the other users Id.  this will reset the chat array to have the messages between current user and the other user. 
   const changeMessageView = async(otherUserId) => {
     try {
-      const oUser = await axios.get(`/userProf/user/${otherUserId}`)
-      setOtherUser(oUser.data)
-      const {data} = await axios.get(`/messages/getMessages/${otherUserId}`)
-      setOtherUserId(otherUserId)
-      setChat(data)
-    } catch(err){
-      console.warn('err', err)
+      setOtherUserId(otherUserId);
+      const oUser = await axios.get(`/userProf/user/${otherUserId}`);
+      setOtherUser(oUser.data);
+      otherUserRef.current = oUser.data;
+      const {data} = await axios.get(`/messages/getMessages/${otherUserId}`);
+     
+      setChat(data);
+    } catch (err) {
+      console.warn('err', err);
     }
-  }
+  };
 
 
 
@@ -176,9 +180,14 @@ const MessagesPage = () => {
       });
 
     socket.on('receivedPrivateMessage', (res) => {
-      setChat(list => [...list, {message: res.message, sender: res.otherUserId, receiver: id}])
 
-    })
+      if (res.sender === otherUserRef.current.id) {
+
+        setChat(list => [...list, {message: res.message, sender: res.sender, receiver: res.receiver}]);
+      }
+   
+
+    });
   }, []);
 
   useEffect(() => {

@@ -1,24 +1,17 @@
-import React, {useState, useEffect} from 'react';
+import { Global } from '@emotion/react';
+import React, {useState, useEffect, useContext} from 'react';
+import GlobalContext from '../Contexts/GlobalContext.jsx';
 
 const Sidebar = ({users, changeMessageView}) => {
 
   //hold the state of the chat rooms
   const [rooms, setRooms] = useState([]);
 
-  // const getRooms = () => {
-  //   axios.get('/roomChat/rooms')
-  //     .then((results) => {
-  //       setRooms(results.data[0]);
-  //       console.log('ROOMS:', results.data[0]);
-  //     })
-  //     .catch(err => {
-  //       console.log('ERROR:', err);
-  //     });
-  // };
+  const {id} = useContext(GlobalContext);
 
-  useEffect(() => {
-    // getRooms();
-  }, []);
+
+
+
 
   //STYLE//
   const chatOnlineUser = {
@@ -54,22 +47,25 @@ const Sidebar = ({users, changeMessageView}) => {
   return (
     <div className="chatOnline">
       {
-        users.map( user => (
+        users.map( user => {
+          if (user.id !== id) {
+            return (
           
-          <div className='chatOnlineUser' key={user.id} style={chatOnlineUser} onClick={() => changeMessageView(user.id)}>
-            <div className="chatOnlineImgContainer" style={chatOnlineImgContainer}>
-              <img className="chatOnlineImg" style={chatOnlineImg} src={user.pic} alt=""/>
-              <div className='chatOnlineBadge' style={chatOnlineBadge}>
+              <div className='chatOnlineUser' key={user.id} style={chatOnlineUser} onClick={() => changeMessageView(user.id)}>
+                <div className="chatOnlineImgContainer" style={chatOnlineImgContainer}>
+                  <img className="chatOnlineImg" style={chatOnlineImg} src={user.pic} alt=""/>
+                  <div className='chatOnlineBadge' style={chatOnlineBadge}>
+                  </div>
+                </div>
+                <div className='chatOnlineName' key={user.id}>
+                  {user.name}
+                </div>
               </div>
-            </div>
-            <div className='chatOnlineName' key={user.id}>
-              {/* <SidebarRooms className='chatOnlineName' users={users}/> */}
-              {user.name}
-            </div>
-          </div>
-              
+            );
+          }
          
-        ))
+        }
+        )
       }
      
     </div>
