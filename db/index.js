@@ -6,7 +6,7 @@ const { dbMessages } = require('./models/messages.js');
 const { dbRooms} = require('./models/chatRooms.js');
 const { dbmusicUpload} = require('./models/uploadMusic.js');
 const { dbProfilePosts } = require('./models/ProfilePost');
-const {dbConversation} = require('./models/conversation.js');
+//const {dbConversation} = require('./models/conversation.js');
 const {dbEventComment} = require('./models/eventComment.js');
 const { dbFollow } = require('./models/Follow.js');
 const {dbSGEvent} = require('./models/SGEvent.js');
@@ -26,9 +26,11 @@ const db = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 const User = dbUser(db);
 const Messages = dbMessages(db);
 const Rooms = dbRooms(db);
-const Conversations = dbConversation(db);
+//const Conversations = dbConversation(db);
 const MusicUpload = dbmusicUpload(db);
 const VideoChat = dbVideoChat(db);
+
+
 
 
 
@@ -46,8 +48,11 @@ EventComment.belongsTo(User, {foreignKey: 'userId'});
 EventComment.belongsTo(Event, {foreignKey: 'eventId'});
 
 
-User.hasMany(Messages);
-Messages.belongsTo(User);
+//User.hasMany(Messages);
+Messages.belongsTo(User, {foreignKey: 'sender', as: 'senderId'});
+Messages.belongsTo(User, {foreignKey: 'receiver', as: 'receiverId'});
+
+
 User.hasMany(MusicUpload);
 MusicUpload.belongsTo(User);
 SGEventComment.belongsTo(SGEvent, {foreignKey: 'SGEventId'});
@@ -80,7 +85,7 @@ module.exports = {
   User,
   Messages,
   Rooms,
-  Conversations,
+  //Conversations,
   MusicUpload,
   SGEvent,
   SGEventComment,

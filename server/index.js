@@ -124,6 +124,16 @@ io.on('connection', socket => {
     loggedInUsers[id] = socket.id;
   });
 
+  //for DMs
+  socket.on('privateMessage', (data) => {
+    const otherSocketId = loggedInUsers[data.receiver];
+    
+    if (otherSocketId) {
+      socket.to(otherSocketId).emit('receivedPrivateMessage', data);
+    }
+
+  });
+
   //****for streaming features */
 
   socket.on('notify', (data) => {
@@ -167,9 +177,10 @@ io.on('connection', socket => {
 
 
   //When disconnect
-  socket.on('disconnect', () => {
+  socket.on('disconnect', (reason) => {
+    
     //if there are any disconnections
-    console.info('disconnected user', socket.id);
+    console.info('disconnected user', socket.id, 'reason', reason);
     removeUser(socket.id);
     removeLiveStreamUser(socket.id); //this needs to account for peerId not socketId because the users are via peerId
     io.emit('getUsers', users);

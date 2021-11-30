@@ -1,13 +1,16 @@
 import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
+import GlobalContext from '../Contexts/GlobalContext.jsx';
 
 const Users = ({currentUser}) => {
 
   const [users, setUsers] = useState([]);
+  const {id} = useContext(GlobalContext);
 
 
   const getUser = async () => {
     const res = await axios.get('/directMessage/users');
+    //console.log('res', res);
 
     try {
       setUsers(res.data);
@@ -18,10 +21,10 @@ const Users = ({currentUser}) => {
   };
 
   //event handler to create a conversation
-  const createConversation = (id) => {
+  const createConversation = (otherId) => {
     const conversation = {
-      senderId: currentUser.googleId,
-      receiverId: id,
+      senderId: id,
+      receiverId: otherId,
     };
     axios.post('/chat/conversation', conversation);
   };
