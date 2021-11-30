@@ -1,8 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import {Avatar} from '@material-ui/core';
+
 //goes towards the chat footer
-import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
-import MicIcon from '@material-ui/icons/Mic'; 
+
 
 const MessagesView = ({message, user}) => {
 

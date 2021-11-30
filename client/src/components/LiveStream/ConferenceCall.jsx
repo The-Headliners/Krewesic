@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useRef, useContext} from 'react';
-import Video from './Video.jsx';
 import io from 'socket.io-client';
 import styled from 'styled-components';
 //import Peer from 'peerjs';
@@ -8,7 +7,9 @@ import StreamChat from './StreamChat.jsx';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Peer from 'peerjs';
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
+import { useHistory } from 'react-router';
+import peerObject from './peerObject.js';
 
 
 
@@ -54,18 +55,22 @@ const ConferenceCall = () => {
   const {socket} = useContext(GlobalContext);
   const {name} = useContext(GlobalContext);
 
-  const myPeer = useRef(new Peer( undefined, { //remember: npm i -g peer   \n peerjs --port 3002   running peer port on 3002
+  const peerObj = useRef(peerObject.deployed ? peerObject.deployedPeerObj : peerObject.localPeerObj);
+
+  const myPeer = useRef(new Peer( undefined, peerObj.current //{ //remember: npm i -g peer   \n peerjs --port 3002   running peer port on 3002
     // host: '/',
     // path: '/',
     // port: '3002'
 
-    host: 'krewesic.com',
-    path: '/',
-    secure: true,       
+    //for deployment below
+    // host: 'krewesic.com',
+    // path: '/',
+    // secure: true,       
 
-    
-  }));
+  //}
+  ));
 
+  const [history] = useState(useHistory());
 
   const [stream, setStream ] = useState({});
   const [mySocketId, setMySocketId] = useState();
@@ -156,6 +161,21 @@ const ConferenceCall = () => {
       //console.log('notMe', notMe);
       setAllPeers(notMe);
     }
+
+    //this will run when leave the page
+    const stopWebcam = () => {
+      currentStream.current.getTracks().forEach(track => {
+        track.stop();
+      });
+      //disconnect peerjs
+      myPeer.current.disconnect();
+      //leave the socket.io room
+      
+    };
+
+    const unlisten = history.listen(stopWebcam);
+
+    return unlisten;
     
 
   }, []);

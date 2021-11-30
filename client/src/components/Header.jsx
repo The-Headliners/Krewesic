@@ -1,12 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
 import GlobalContext from './Contexts/GlobalContext.jsx';
-import {AppBar, Toolbar, Typography, Button} from '@material-ui/core';
+import Button from '@mui/material/Button';
 import styled from 'styled-components';
 import axios from 'axios';
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
 import logo from './images/KrewesicLight.png';
-import Grid from '@material-ui/core/Grid';
+import Grid from '@mui/material/Grid';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import {useHistory} from 'react-router-dom';
@@ -27,6 +25,7 @@ const StyledHeader = styled.div`
    float: right;
    margin-top: 20px;
    margin-right: 5px;
+   color: ${props => props.theme.textColorLight};
    background-color: #610094;
    :hover {
      background-color: #3F0071;
@@ -114,7 +113,16 @@ const Header = (props) => {
     return loggedIn
       ? <Grid
         item xs={4} md={4} sm={4} lg={4}
-      ><Button className='btn flexchild' startIcon={ <LogoutIcon />} onClick={logout}>logout</Button></Grid>
+      > 
+        <div 
+          className='flexChild'
+        >{name}</div>
+        <Button 
+          className='btn flexChild' 
+          startIcon={ <LogoutIcon />} 
+          onClick={logout}
+        >logout</Button>
+      </Grid>
       : <Grid
         item xs={4} md={4} sm={4} lg={4}
       ><a href='/auth/google'><Button startIcon={ <LoginIcon />} className='btn flexchild' >Log In</Button></a></Grid>;
@@ -138,6 +146,7 @@ const Header = (props) => {
 
         {display()}
       </Grid>
+
     </StyledHeader>
   );
 };

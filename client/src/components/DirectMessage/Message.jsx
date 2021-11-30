@@ -3,9 +3,6 @@ import React, {useState, useEffect, useContext} from 'react';
 
 const Message = ({message, owner, currentUser, users}) => {
 
- 
-
-  console.info(message);
   const Message = {
     display: 'flex',
     flexDirection: 'column',

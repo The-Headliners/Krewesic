@@ -39,6 +39,8 @@ const DirectMessages = () => {
   //hold all users in state
   const [users, setUsers] = useState([]);
 
+  //hold the socketId in the state
+  const [socketId, setSocketId] = useState('');
 
 
   //take event from the socket server
@@ -46,6 +48,10 @@ const DirectMessages = () => {
   useEffect(() => {
     //socket.current = io('ws://localhost:1337');
     socket.emit('addUser', currentUser.googleId);
+    socket.on('getUsers', users => {
+      
+    });
+
   }, [currentUser]);
 
 
@@ -116,15 +122,36 @@ const DirectMessages = () => {
     let receiver;
     currentChat.senderId === currentUser.googleId ? receiver = currentChat.receiverId : receiver = currentChat.senderId;
     
-    //send message to the Socket server
-    await socket.emit('sendMessage', {
-      senderId: currentUser.googleId,
-      receiverId: receiver,
-      text: value,
-      name: currentUser.name,
-      User: {pic: currentUser.pic}
-    });
+    try {
+      const userSocket = await axios.get(`/userSocket/${receiver}`);
+      //console.info('USER SOCKET', userSocket.data[0].socketId);
+      socket.emit('sendMessage', {
+        senderId: currentUser.googleId,
+        receiverId: receiver,
+        text: value,
+        name: currentUser.name,
+        User: {pic: currentUser.pic},
+        socketId: userSocket.data[0].socketId
+      });
+      // setSocketId(userSocket.data[0].socketId);
+    } catch (err) {
+      console.warn('THIS IS THE ERROR', err);
+    }
 
+    //send message to the Socket server
+  
+    // socket.emit('sendMessage', {
+    //   senderId: currentUser.googleId,
+    //   receiverId: receiver,
+    //   text: value,
+    //   name: currentUser.name,
+    //   User: {pic: currentUser.pic},
+    //   socketId: socketId
+    // });
+    // socket.on('sendMessage', () => {
+    //   socket.disconnect();
+    // });
+   
     setMessages(messages => [...messages, message]);
 
 
@@ -147,8 +174,11 @@ const DirectMessages = () => {
 
   //***For incoming messages from another user, coming back from the Socket Server ***/
   socket.on('getMessage', ({senderId, text, name, User}) => {
-   
+    //console.info('TEXTING THE DATA');
+    //console.info(text, name, User);
     setMessages([...messages, {sender: senderId, text: text, name: name, User: User}]);
+
+    // socket.disconnect();
   });
  
   useEffect(() => {

@@ -3,11 +3,12 @@ import axios from 'axios';
 import MessagesView from './MessagesView.jsx';
 import Sidebar from './SidebarChat.jsx';
 import MessageForm from './MessageForm.jsx'; 
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 import {Link} from 'react-router-dom';
 import GlobalContext from '../Contexts/GlobalContext.jsx';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import LoginIcon from '@mui/icons-material/Login';
+import Button from '@mui/material/Button';
 //need the socket to connect to the server, which is the local host
 
 

@@ -13,6 +13,7 @@ const {dbSGEvent} = require('./models/SGEvent.js');
 const { dbSGEventComment} = require('./models/SGEventComment.js');
 const dbEvent = require('./models/events.js');
 const {dbVideoChat} = require('./models/videoChat');
+const {dbSocket} = require('./models/usersSocket.js');
 
 const db = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
@@ -29,6 +30,7 @@ const Rooms = dbRooms(db);
 const Conversations = dbConversation(db);
 const MusicUpload = dbmusicUpload(db);
 const VideoChat = dbVideoChat(db);
+const UsersSocket = dbSocket(db);
 
 
 
@@ -82,6 +84,7 @@ module.exports = {
   Rooms,
   Conversations,
   MusicUpload,
+  UsersSocket,
   SGEvent,
   SGEventComment,
   Event,

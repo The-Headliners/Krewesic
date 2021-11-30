@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import { AudioCard, VideoCard } from 'material-ui-player';
 import axios from 'axios';
 import UploadForm from './UploadForm.jsx';
 import VideoPlayer from './VideoPlayer.jsx';
 import AudioPlayer from './AudioPlayer.jsx';
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 import LoginIcon from '@mui/icons-material/Login';
 
 const MusicUpload = () => {
@@ -25,7 +24,7 @@ const MusicUpload = () => {
 
         setMusic(music => [...music, file]);
 
-        axios.post(`/upload/musicUpload/${currentUser.id}`, file)
+        axios.post('/upload/musicUpload', file)
           .then(results => {
             
           })
@@ -40,7 +39,7 @@ const MusicUpload = () => {
 
   const getMusic = async () => {
     try {
-      const music = await axios.get(`/upload/musicUpload/${currentUser.id}`);
+      const music = await axios.get('/upload/musicUpload');
       setMusic(music.data[0].MusicUploads);
     } catch (err) {
       console.warn(err);
@@ -58,12 +57,22 @@ const MusicUpload = () => {
   
   
 
-  useEffect(() => {
-    axios.get('/auth/cookie')
-      .then(({data}) => {
-        setUser(data[0]);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios.get('/auth/cookie')
+  //     .then(({data}) => {
+  //       setUser(data[0]);
+  //     });
+  //   const getMusic = async () => {
+  //     try {
+  //       const music = await axios.get('/upload/musicUpload');
+  //       setMusic(music.data[0].MusicUploads);
+  //     } catch (err) {
+  //       console.warn(err);
+  //     }
+  //   };
+  //   getMusic();
+  // }, []);
+
   
   const musicPage = {
     // height: 'calc(100vh - 70px)',

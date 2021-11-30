@@ -1,10 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import axios from 'axios';
-import {Avatar} from '@material-ui/core';
-import DonutLargeIcon from '@material-ui/icons/DonutLarge'; 
-import ChatIcon from '@material-ui/icons/Chat';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import SidebarRooms from './SidebarRooms.jsx';
+
 const Sidebar = ({users}) => {
 
   //hold the state of the chat rooms

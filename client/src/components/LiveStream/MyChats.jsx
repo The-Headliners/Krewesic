@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useContext} from 'react';
 import GlobalContext from '../Contexts/GlobalContext.jsx';
-import {Button} from '@material-ui/core';
+import {Button} from '@mui/material';
 import styled from 'styled-components';
 
 const StyledMyChats = styled.div`

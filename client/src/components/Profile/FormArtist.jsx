@@ -1,19 +1,18 @@
 
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
-import {Button} from '@material-ui/core';
-import {TextField} from '@material-ui/core';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import Typography from '@material-ui/core/Typography';
+import {Button} from '@mui/material';
+import {TextField} from '@mui/material';
+//import AccountCircle from '@mui/icons-material/AccountCircle';
+import Typography from '@mui/material/Typography';
 import { FormControl } from '@mui/material';
-import { InputLabel } from '@mui/material';
+import InputLabel from '@mui/material/InputLabel';
 import { Select } from '@mui/material';
-import {MenuItem, makeStyles } from '@material-ui/core';
+import {MenuItem } from '@mui/material';
+import {makeStyles} from '@mui/styles';
 import styled from 'styled-components';
-import Box from '@material-ui/core/Box';
-import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+
 
 const StyledFormArtist = styled.div`
 background-color: ${props => props.theme.colorDark};
@@ -220,7 +219,7 @@ const FormArtist = () => {
             href='/DiscoverArtists'
             style={{ backgroundColor: '#610094', marginBottom: '20px' }}
             variant="contained"
-            startIcon={ <AccountCircle/> }
+          
           > Create Profile </Button>
         </div>
       </div>

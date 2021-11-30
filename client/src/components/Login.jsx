@@ -1,7 +1,7 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 import LoginIcon from '@mui/icons-material/Login';
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 import styled from 'styled-components';
 import logo from './images/Krewesic.png';
 

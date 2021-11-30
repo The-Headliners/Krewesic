@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 
 const Search = ({users, createConversation}) => {
 

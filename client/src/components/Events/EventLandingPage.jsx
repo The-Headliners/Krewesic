@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import CommentComponent from './CommentComponent.jsx';
-import { TextField, MenuItem, Button } from '@material-ui/core';
+import { TextField, MenuItem, Button } from '@mui/material';
 import GlobalContext from '../Contexts/GlobalContext.jsx';
 import styled, {ThemeProvider} from 'styled-components';
 import Paper from '@mui/material/Paper';
