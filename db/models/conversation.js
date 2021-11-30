@@ -13,11 +13,11 @@ const dbConversation = (sequelize,
       autoIncrement: true
     },
     senderId: {
-      type: Sequelize.STRING(255)
+      type: Sequelize.INTEGER
       
     }, 
     receiverId: {
-      type: Sequelize.STRING(255),
+      type: Sequelize.INTEGER,
     }
   });
 
