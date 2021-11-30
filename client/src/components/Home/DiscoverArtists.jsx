@@ -56,7 +56,7 @@ const discoverArtists = () => {
 
 
   return (
-    <div style={{backgroundColor: '#150050', height: '100vh'}}>
+    <div style={{backgroundColor: '#150050'}}>
       <Typography
         style={{ color: '#c3c2c5' }}
         align='center'
