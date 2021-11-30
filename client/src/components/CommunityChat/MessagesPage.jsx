@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext, useRef} from 'react';
 import axios from 'axios';
 import MessagesView from './MessagesView.jsx';
-import Sidebar from './Sidebar.jsx';
+import Sidebar from './SidebarChat.jsx';
 import MessageForm from './MessageForm.jsx'; 
 import io from 'socket.io-client';
 import {Link} from 'react-router-dom';
@@ -90,11 +90,11 @@ const MessagesPage = () => {
     marginRight: '10px'
   };
 
-  const {socket, id, name} = useContext(GlobalContext);
+  const {socket, id} = useContext(GlobalContext);
 
   const scrollRef = useRef();
   //need to hold the value of the message in state
-  const [currentMessage, setCurrentMessage] = useState('');
+  const [value, setValue] = useState('');
 
   // //for live chat practice, create a chat array in state to hold the chat messages
   const [chat, setChat] = useState([]);
@@ -105,55 +105,41 @@ const MessagesPage = () => {
 
   const [users, setUsers] = useState([]);
 
+  //boolean- is true for the community chat.  when DM this turns to false
+  const [communityChat, setCommunityChat] = useState(true);
 
   //the other user.  
   const [otherUser, setOtherUser] = useState({});
-  const [otherUserId, setOtherUserId] = useState(1)
-
-  const postMessage = async() => {
-  
-    axios.post(`/messages/postMessage`, {message: currentMessage, sender: id, receiver: otherUserId})
-  }
 
 
   const sendMessage = (event) => {
     event.preventDefault();
     //value from state is the message we want to bring back to the socket server
     //the name will be the current user logged in
-    postMessage()
-    //add the message to chat via setChat
-    setChat(list => [...list, {message: currentMessage, name: otherUser.name, pic: otherUser.pic, sender: id, receiver: otherUserId}])
-    socket.emit('privateMessage', { name: user.name, message: currentMessage, otherUserId: otherUserId, currentUserId: id});
-    setCurrentMessage('');
+    socket.emit('message', { name: user.name, message: value, pic: user.pic});
+    setValue('');
 
-
+    //where we need to send an axios post to create the message in the Messages db
+    // axios.post('/messages/sendMessage', { text: value })
+    //   .then((results) => {
+    //     console.log('messageCreated:', results);
+    //   })
+    //   .catch(err => {
+    //     console.log('ERROR:', err);
+    //   });
   };
 
-
-  //   setChat([...chat, {name, message: message, pic: pic}]);
-  // });
-
   //to be attatched as a click event for the users in the side bar.  takees in the other users Id.  this will reset the chat array to have the messages between current user and the other user. 
-  const changeMessageView = async(otherUserId) => {
-    try {
-      const oUser = await axios.get(`/userProf/user/${otherUserId}`)
-      setOtherUser(oUser.data)
-      const {data} = await axios.get(`/messages/getMessages/${otherUserId}`)
-      setOtherUserId(otherUserId)
-      setChat(data)
-    } catch(err){
-      console.warn('err', err)
-    }
+  const changeMessageView = (otherUserId) => {
+
   }
 
 
 
   const handleChange = (event) => {
-    setCurrentMessage(event.target.value);
+    setValue(event.target.value);
   };
 
-
-  
 
   //**Get all messages from current User*/
   const getMessages = () => {
@@ -166,6 +152,18 @@ const MessagesPage = () => {
       });
   };
 
+  socket.on('message', ({name, message, pic}) => {
+
+    setChat([...chat, {name, message: message, pic: pic}]);
+  });
+
+  useEffect(() => {
+    axios.get('/auth/cookie')
+      .then(({data}) => {
+        // console.info(data);
+        setUser(data[0]);
+      });
+  }, []);
 
   useEffect(() => {
    
@@ -174,11 +172,6 @@ const MessagesPage = () => {
         // console.info('ALL USERS', data);
         setUsers(data);
       });
-
-    socket.on('receivedPrivateMessage', (res) => {
-      setChat(list => [...list, {message: res.message, sender: res.otherUserId, receiver: id}])
-
-    })
   }, []);
 
   useEffect(() => {
@@ -213,10 +206,10 @@ const MessagesPage = () => {
                 :
 
                 chat.map((message, i) => {
-              
+  
                   return (
                     <div key={i}>
-                      <MessagesView message={message} senderName={message.sender === id ? name : otherUser.name} self={message.sender === id} user={user}/>
+                      <MessagesView message={message} user={user}/>
                     </div>
                   );
                   
@@ -224,20 +217,20 @@ const MessagesPage = () => {
               
             }
           </div>
-      
+          {/* <MessagesView chat={chat} handleChange={handleChange} sendMessage={sendMessage} value={value} user={user}/> */}
        
 
           <div className='chatBoxBottom' style={chatBoxBottom}>
-            <input className="message-input" style={chatMessageInput} placeholder="Send a message..." value={currentMessage} onChange={handleChange} />
+            <input className="message-input" style={chatMessageInput} placeholder="Send a message..." value={value} onChange={handleChange} />
 
             <Button className="message-button" variant="contained" style={chatSubmitButton} onClick={ (event) => sendMessage(event)}> send </Button>
-        
+            {/* <MessageForm handleChange={handleChange} sendMessage={sendMessage} value={value} chatMessageInput={chatMessageInput} chatSubmitButton={chatSubmitButton}/> */}
           </div>
         </div>
       </div>
       <div className='chatOnline' style={chatOnline}> 
         <div className='chatOnlineWrapper' style={chatWrappers}> 
-           Other Users  <Sidebar changeMessageView={changeMessageView} users={users}/>
+           Online  <Sidebar users={users}/>
         </div>
       </div>
     </div>

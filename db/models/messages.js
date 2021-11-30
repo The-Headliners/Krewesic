@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const { User } = require('../index.js');
+
 
 
 const dbMessages = (sequelize,
@@ -12,18 +12,21 @@ const dbMessages = (sequelize,
       primaryKey: true,
       autoIncrement: true
     },
-    text: {
+    message: {
       type: Sequelize.STRING
     },
-    conversationId: {
-      type: Sequelize.INTEGER,
-    },
+    // conversationId: {
+    //   type: Sequelize.INTEGER,
+    // },
     sender: {
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER //forein key: id of user sending
     },
-    name: {
-      type: Sequelize.STRING
-    }
+    receiver: {
+      type: Sequelize.INTEGER //foreign key: id of user receiving 
+    },
+    // name: {
+    //   type: Sequelize.STRING
+    // }
   });
 
 
