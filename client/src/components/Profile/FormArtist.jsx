@@ -153,6 +153,7 @@ const FormArtist = () => {
               id="demo-simple-select"
               label="My Genre"
               style={{ backgroundColor: '#a2a1a7', paddingTop: 0, paddingBottom: 0 }}
+              defaultValue=''
             >
               <MenuItem
 

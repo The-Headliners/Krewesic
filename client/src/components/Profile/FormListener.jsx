@@ -128,6 +128,7 @@ const FormListener = (props) => {
             labelId="demo-simple-select-label"
             id="demo-simple-select"
             label="Favorite Genre"
+            defaultValue=''
           >
             <MenuItem value={'Rock'}>Rock</MenuItem>
             <MenuItem value={'Pop'}>Pop</MenuItem>
@@ -182,6 +183,7 @@ const FormListener = (props) => {
           style={{ backgroundColor: '#610094' }}
           variant="contained"
         
+
         > Create Profile </Button>
       </div>
       <br/><br/>
