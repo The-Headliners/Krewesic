@@ -40,6 +40,8 @@ import Hidden from '@mui/material/Hidden';
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 
+import CommunityChat from './CommunityChat/CommunityChat.jsx';
+
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Divider from '@mui/material/Divider';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -168,7 +170,7 @@ const App = (props) => {
                       <Link className={styles.link} to='/createevent'>Create Event</Link>
 
                       <Link className={styles.link} to='/events'>Event Hub</Link>
-                      <Link className={styles.link}to='/myEvents'>My Events</Link>
+                      <Link className={styles.link}to='/communityChat'>Community Chat</Link>
                       <Link className={styles.link} to='/videoChats'>Video Chats</Link>
 
                       <Link className={styles.link} to='/audiorecording'>Recording Studio</Link>
@@ -216,7 +218,7 @@ const App = (props) => {
                     <Link onClick={() => setOpen(false)} className='clickableNav' to='/createevent'>Create Event</Link>
 
                     <Link onClick={() => setOpen(false)} className='clickableNav' to='/events'>Event Hub</Link>
-                    <Link onClick={() => setOpen(false)} className='clickableNav' to='/myEvents'>My Events</Link>
+                    <Link onClick={() => setOpen(false)} className='clickableNav' to='/communityChat'>Community Chat</Link>
                     <Link onClick={() => setOpen(false)} className='clickableNav' to='/videoChats'>Video Chats</Link>
 
                     <Link onClick={() => setOpen(false)} className='clickableNav' to='/audiorecording'>Recording Studio</Link>
@@ -244,7 +246,7 @@ const App = (props) => {
                 <Link className='clickableNav' to='/createevent'>Create Event</Link>
 
                 <Link className='clickableNav' to='/events'>Event Hub</Link>
-                <Link className='clickableNav' to='/myEvents'>My Events</Link>
+                <Link className='clickableNav' to='/communityChat'>Community Chat</Link>
                 <Link className='clickableNav' to='/videoChats'>Video Chats</Link>
 
                 <Link className='clickableNav' to='/audiorecording'>Recording Studio</Link>
@@ -311,6 +313,8 @@ const App = (props) => {
               </Route>
               <Route exact path='/uploadMusic' component={MusicUpload} />
               <Route path='/messages' component={MessagesPage}>
+              </Route>
+              <Route path='/communityChat' component={CommunityChat}>
               </Route>
               <Route exact path='/DirectMessage' component={DirectMessages} />
 

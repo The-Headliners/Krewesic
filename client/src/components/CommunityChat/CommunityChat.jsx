@@ -7,13 +7,90 @@ import io from 'socket.io-client';
 import {Link} from 'react-router-dom';
 import GlobalContext from '../Contexts/GlobalContext.jsx';
 import Button from '@mui/material/Button';
+
 //need the socket to connect to the server, which is the local host
 
 
 
 
-const MessagesPage = () => {
+const CommunityChat = () => {
+  const {socket, id, name} = useContext(GlobalContext);
 
+  const scrollRef = useRef();
+  //need to hold the value of the message in state
+  const [value, setValue] = useState('');
+
+  // //for live chat practice, create a chat array in state to hold the chat messages
+  const [chat, setChat] = useState([]);
+
+
+  //get the current user's name, hold the user in the state
+  const [user, setUser] = useState('');
+
+  const [users, setUsers] = useState([]);
+
+
+  const sendMessage = (event) => {
+    event.preventDefault();
+    //value from state is the message we want to bring back to the socket server
+    //the name will be the current user logged in
+    socket.emit('message', { name: user.name, message: value, pic: user.pic});
+    setValue('');
+
+    //where we need to send an axios post to create the message in the Messages db
+    // axios.post('/messages/sendMessage', { text: value })
+    //   .then((results) => {
+    //     console.log('messageCreated:', results);
+    //   })
+    //   .catch(err => {
+    //     console.log('ERROR:', err);
+    //   });
+  };
+
+
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+
+
+  //**Get all messages from current User*/
+  // const getMessages = () => {
+  //   axios.get('/messages/sendMessage')
+  //     .then( (results) => {
+  //       // setMessages(results.data);
+  //     })
+  //     .catch( err => {
+  //       console.warn('ERROR!:', err);
+  //     });
+  // };
+
+  socket.on('message', ({name, message, pic}) => {
+
+    setChat([...chat, {name, message: message, pic: pic}]);
+  });
+
+  // useEffect(() => {
+  //   axios.get('/auth/cookie')
+  //     .then(({data}) => {
+  //       // console.info(data);
+  //       setUser(data[0]);
+  //     });
+  // }, []);
+
+  useEffect(() => {
+   
+    axios.get('/userProf/allUsers')
+      .then(({data}) => {
+        // console.info('ALL USERS', data);
+        setUsers(data);
+      });
+  }, []);
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [chat]);
+  
   const messenger = {
     height: 'calc(100vh - 70px)',
     display: 'flex',
@@ -90,106 +167,12 @@ const MessagesPage = () => {
     marginRight: '10px'
   };
 
-  const {socket, id} = useContext(GlobalContext);
-
-  const scrollRef = useRef();
-  //need to hold the value of the message in state
-  const [value, setValue] = useState('');
-
-  // //for live chat practice, create a chat array in state to hold the chat messages
-  const [chat, setChat] = useState([]);
-
-
-  //get the current user's name, hold the user in the state
-  const [user, setUser] = useState('');
-
-  const [users, setUsers] = useState([]);
-
-  //boolean- is true for the community chat.  when DM this turns to false
-  const [communityChat, setCommunityChat] = useState(true);
-
-  //the other user.  
-  const [otherUser, setOtherUser] = useState({});
-
-
-  const sendMessage = (event) => {
-    event.preventDefault();
-    //value from state is the message we want to bring back to the socket server
-    //the name will be the current user logged in
-    socket.emit('message', { name: user.name, message: value, pic: user.pic});
-    setValue('');
-
-    //where we need to send an axios post to create the message in the Messages db
-    // axios.post('/messages/sendMessage', { text: value })
-    //   .then((results) => {
-    //     console.log('messageCreated:', results);
-    //   })
-    //   .catch(err => {
-    //     console.log('ERROR:', err);
-    //   });
-  };
-
-  //to be attatched as a click event for the users in the side bar.  takees in the other users Id.  this will reset the chat array to have the messages between current user and the other user. 
-  const changeMessageView = (otherUserId) => {
-
-  };
-
-
-
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
-
-
-  //**Get all messages from current User*/
-  const getMessages = () => {
-    axios.get('/messages/sendMessage')
-      .then( (results) => {
-        // setMessages(results.data);
-      })
-      .catch( err => {
-        console.warn('ERROR!:', err);
-      });
-  };
-
-  socket.on('message', ({name, message, pic}) => {
-
-    setChat([...chat, {name, message: message, pic: pic}]);
-  });
-
-  useEffect(() => {
-    axios.get('/auth/cookie')
-      .then(({data}) => {
-        // console.info(data);
-        setUser(data[0]);
-      });
-  }, []);
-
-  useEffect(() => {
-   
-    axios.get('/userProf/allUsers')
-      .then(({data}) => {
-        // console.info('ALL USERS', data);
-        setUsers(data);
-      });
-  }, []);
-
-  useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [chat]);
-  
-
-
-  
-
-
-
   return (
     <div className='messenger' style={messenger}>
       <div className='chatMenu' style={chatMenu}>
         <div className='chatMenuWrapper' style={chatWrappers}>
           <h1 style={{color: '#c3c2c5'}}><img className='user-image' style={profileImg} src={user.pic}/>{user.name}</h1>
-          <Link to='/DirectMessage'>Direct Messaging </Link>
+          <Link to='/messages'>Direct Messaging</Link>
         </div>
       </div>
 
@@ -237,4 +220,4 @@ const MessagesPage = () => {
   );
 };
 
-export default MessagesPage;
+export default CommunityChat;

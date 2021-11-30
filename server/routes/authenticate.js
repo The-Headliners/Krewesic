@@ -48,7 +48,7 @@ auth.get('/cookie', async (req, res) => {
       where: {
         name: user,
       },
-      include: [{model: Messages}]
+      //include: [{model: Messages}]
     });
     res.json(userInfo);
   } catch (err) {

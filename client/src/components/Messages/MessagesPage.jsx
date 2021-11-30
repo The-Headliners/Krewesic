@@ -132,8 +132,6 @@ const MessagesPage = () => {
   };
 
 
-  //   setChat([...chat, {name, message: message, pic: pic}]);
-  // });
 
   //to be attatched as a click event for the users in the side bar.  takees in the other users Id.  this will reset the chat array to have the messages between current user and the other user. 
   const changeMessageView = async(otherUserId) => {
@@ -157,19 +155,6 @@ const MessagesPage = () => {
   };
 
 
-  
-
-  //**Get all messages from current User*/
-  const getMessages = () => {
-    axios.get('/messages/sendMessage')
-      .then( (results) => {
-        // setMessages(results.data);
-      })
-      .catch( err => {
-        console.warn('ERROR!:', err);
-      });
-  };
-
 
   useEffect(() => {
    
@@ -182,7 +167,6 @@ const MessagesPage = () => {
     socket.on('receivedPrivateMessage', (res) => {
 
       if (res.sender === otherUserRef.current.id) {
-
         setChat(list => [...list, {message: res.message, sender: res.sender, receiver: res.receiver}]);
       }
    
@@ -205,13 +189,13 @@ const MessagesPage = () => {
       <div className='chatMenu' style={chatMenu}>
         <div className='chatMenuWrapper' style={chatWrappers}>
           <h1 style={{color: '#c3c2c5'}}><img className='user-image' style={profileImg} src={user.pic}/>{user.name}</h1>
-          <Link to='/DirectMessage'>Direct Messaging </Link>
+          <Link to='/communityChat'>Community Chat </Link>
         </div>
       </div>
 
       <div className='chatBox' style={chatBox}>
         <div className='chatBoxWrapper' style={chatBoxWrapper}>
-          Live Chat
+          Live Chat with {otherUser.name}
           <div className="chatBoxTop" style={chatBoxTop}>
             {
               chat.length === 0 ? (
@@ -235,13 +219,15 @@ const MessagesPage = () => {
           </div>
       
        
+          {otherUserId === 0 ? <div>select a user</div> : (
+            <div className='chatBoxBottom' style={chatBoxBottom}>
+              <input className="message-input" style={chatMessageInput} placeholder="Send a message..." value={currentMessage} onChange={handleChange} />
 
-          <div className='chatBoxBottom' style={chatBoxBottom}>
-            <input className="message-input" style={chatMessageInput} placeholder="Send a message..." value={currentMessage} onChange={handleChange} />
-
-            <Button className="message-button" variant="contained" style={chatSubmitButton} onClick={ (event) => sendMessage(event)}> send </Button>
+              <Button className="message-button" variant="contained" style={chatSubmitButton} onClick={ (event) => sendMessage(event)}> send </Button>
         
-          </div>
+            </div>
+          )}
+          
         </div>
       </div>
       <div className='chatOnline' style={chatOnline}> 
