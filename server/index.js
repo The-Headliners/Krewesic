@@ -88,7 +88,12 @@ const getUser = (userId) => {
 io.on('connection', socket => {
   //when connect
   console.info(`user ${socket.id} is connected`);
-  console.info(socket.handshake.query);
+  // console.info(socket.handshake.query);
+  // const {query} = socket.handshake;
+  // if(query.userId !== '0') {
+  //   loggedInUsers[query.userId] = socket.id
+  //   console.log('loggedInUsers', loggedInUsers)
+  // }
 
   //***FOR LIVE CHAT FOR ALL USERS*** when a message is sent */
   socket.on('message', ({ name, message, pic}) => {
@@ -136,8 +141,10 @@ io.on('connection', socket => {
 
   } );
   socket.on('privateMessage', (data) => {
-    const otherSocketId = loggedInUsers[data.receiver];
-    //const otherSocketId = messageFeatureUsers[data.receiver];
+    //const otherSocketId = loggedInUsers[data.receiver];
+    const otherSocketId = messageFeatureUsers[data.receiver];
+    //console.log('pm data', data);
+    //console.log('logged in u', loggedInUsers, 'otherid', otherSocketId, 'my id', socket.id);
     
     if (otherSocketId) {
       socket.to(otherSocketId).emit('receivedPrivateMessage', data);

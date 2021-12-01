@@ -192,7 +192,7 @@ const CommunityChat = () => {
   
                   return (
                     <div key={i}>
-                      <MessagesView message={message} user={user}/>
+                      <MessagesView message={message} user={user} myMessage={message.name === name}/>
                     </div>
                   );
                   

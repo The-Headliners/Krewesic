@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 //goes towards the chat footer
 
 
-const MessagesView = ({message, user}) => {
+const MessagesView = ({message, user, myMessage}) => {
 
   //Style for MessagesView//
   const Message = {
