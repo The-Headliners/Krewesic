@@ -50,15 +50,20 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import io from 'socket.io-client';
 const socket = io.connect('/');
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
+  root: {
+    backgroundColor: '#3f0071'
+  },
   link: {
     marginRight: 20,
     color: 'purple',
   },
   paper: {
+    backgroundColor: '#3F0071',
     background: '#3F0071'
+
   }
-}));
+});
 
 
 
@@ -94,7 +99,7 @@ const AppStyles = styled.div`
 `;
 
 const App = (props) => {
-  const styles = useStyles();
+  const classes = useStyles();
   const [open, setOpen ] = useState(false);
   const [id, setId] = useState(0);
   const [artistBio, setMyBio] = useState('');
@@ -162,20 +167,20 @@ const App = (props) => {
                     <Hidden
                       xsDown
                     >
-                      <Link className={styles.link} to='/DiscoverArtists'> Discover Artists </Link>
+                      <Link className={classes.link} to='/DiscoverArtists'> Discover Artists </Link>
 
-                      <Link className={styles.link} to='/mapevents'>Find Events</Link>
-                      <Link className={styles.link} to='/messages'>Messages</Link>
-                      <Link className={styles.link} to='/profile'>Profile</Link>
-                      <Link className={styles.link} to='/createevent'>Create Event</Link>
+                      <Link className={classes.link} to='/mapevents'>Find Events</Link>
+                      <Link className={classes.link} to='/messages'>Messages</Link>
+                      <Link className={classes.link} to='/profile'>Profile</Link>
+                      <Link className={classes.link} to='/createevent'>Create Event</Link>
 
-                      <Link className={styles.link} to='/events'>Event Hub</Link>
-                      <Link className={styles.link}to='/communityChat'>Community Chat</Link>
-                      <Link className={styles.link} to='/videoChats'>Video Chats</Link>
+                      <Link className={classes.link} to='/events'>Event Hub</Link>
+                      <Link className={classes.link}to='/communityChat'>Community Chat</Link>
+                      <Link className={classes.link} to='/videoChats'>Video Chats</Link>
 
-                      <Link className={styles.link} to='/audiorecording'>Recording Studio</Link>
+                      <Link className={classes.link} to='/audiorecording'>Recording Studio</Link>
 
-                      <Link className={styles.link} to='/uploadMusic'>Upload Music</Link>
+                      <Link className={classes.link} to='/uploadMusic'>Upload Music</Link>
 
                       <p className='clickableNav'>Color Blind Accessibility: <props.switch checked={colorBlind} onChange={() => setColorBlind(!colorBlind)} /> </p>
                     </Hidden>
@@ -194,8 +199,8 @@ const App = (props) => {
                   style={{ backgroundColor: '#3F0071'}}
                 >
                   <SwipeableDrawer
-                    classes={{ paper: styles.paper}}
-                    anchor='left' 
+                    classes={{ paper: classes.paper }}
+                    anchor='left'
                     open={open}
                     onClose={() => {}}
                     onOpen={() => {}}
