@@ -148,7 +148,7 @@ io.on('connection', socket => {
     
     // console.info('TO USER', socketId);
     // console.info('MESSAGE', text, 'NAME:', name, 'User:', User);
-    io.to(socketId).emit('getMessage', {
+    io.to(receiverId).emit('getMessage', {
       senderId,
       text,
       name,

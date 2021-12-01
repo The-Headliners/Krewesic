@@ -40,6 +40,7 @@ const MusicUpload = () => {
   const getMusic = async () => {
     try {
       const music = await axios.get('/upload/musicUpload');
+      console.info('Music??');
       setMusic(music.data[0].MusicUploads);
     } catch (err) {
       console.warn(err);
@@ -57,21 +58,12 @@ const MusicUpload = () => {
   
   
 
-  // useEffect(() => {
-  //   axios.get('/auth/cookie')
-  //     .then(({data}) => {
-  //       setUser(data[0]);
-  //     });
-  //   const getMusic = async () => {
-  //     try {
-  //       const music = await axios.get('/upload/musicUpload');
-  //       setMusic(music.data[0].MusicUploads);
-  //     } catch (err) {
-  //       console.warn(err);
-  //     }
-  //   };
-  //   getMusic();
-  // }, []);
+  useEffect(() => {
+    axios.get('/auth/cookie')
+      .then(({data}) => {
+        setUser(data[0]);
+      });
+  }, []);
 
   
   const musicPage = {
