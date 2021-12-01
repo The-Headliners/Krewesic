@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useRef } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -48,7 +48,8 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 
 import io from 'socket.io-client';
-const socket = io.connect('/');
+//const socket = io.connect('/');
+
 
 const useStyles = makeStyles({
   root: {
@@ -118,7 +119,8 @@ const App = (props) => {
   const [colorBlind, setColorBlind] = useState(false);
 
 
-  //const [socket] = useState(io.connect('/'));
+
+  const socket = useRef(io('/', {query: {userId: id}})).current;
 
 
   const value = { id, setId, name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn, city, setCity, bio, setBio, favArtist, setArtist, favGenre, setGenre, artistBio, setMyBio, artistName, setMyName, pic, setPic, myGenre, setMyGenre, influences, setInfluence, socket };
