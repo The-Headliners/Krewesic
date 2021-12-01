@@ -34,7 +34,7 @@ const CommunityChat = () => {
     event.preventDefault();
     //value from state is the message we want to bring back to the socket server
     //the name will be the current user logged in
-    socket.emit('message', { name: user.name, message: value, pic: user.pic});
+    socket.emit('message', { name: name, message: value, /*pic: user.pic*/});
     setValue('');
 
     //where we need to send an axios post to create the message in the Messages db
