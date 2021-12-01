@@ -53,7 +53,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 //Socket io  getting started//
-const io = require('socket.io')(server);
+const io = require('socket.io')(server, {'pingTimeout': 180000, 'pingInterval': 25000});
 
 //Socket server
 //holds alll users that are online
@@ -68,6 +68,8 @@ const removeLiveStreamUser = (socketId, showId) => {
   }
  
 };
+
+const messageFeatureUsers = {}; //keep track of user id and their corresponding socket ids as k/v pairs as a user goes to the messags component
 
 //function to add user to the array
 const addUser = (userId, socketId) => {
@@ -86,6 +88,7 @@ const getUser = (userId) => {
 io.on('connection', socket => {
   //when connect
   console.info(`user ${socket.id} is connected`);
+  console.info(socket.handshake.query);
 
   //***FOR LIVE CHAT FOR ALL USERS*** when a message is sent */
   socket.on('message', ({ name, message, pic}) => {
@@ -125,8 +128,16 @@ io.on('connection', socket => {
   });
 
   //for DMs
+
+  socket.on('usingMessagingFeature', (res) => {
+
+    messageFeatureUsers[res.userId] = socket.id;
+
+
+  } );
   socket.on('privateMessage', (data) => {
     const otherSocketId = loggedInUsers[data.receiver];
+    //const otherSocketId = messageFeatureUsers[data.receiver];
     
     if (otherSocketId) {
       socket.to(otherSocketId).emit('receivedPrivateMessage', data);

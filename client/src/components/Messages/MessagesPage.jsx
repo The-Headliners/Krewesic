@@ -164,25 +164,34 @@ const MessagesPage = () => {
         setUsers(data);
       });
 
+    socket.emit('usingMessagingFeature', { //wrap this in a set interval!
+      userId: id
+    });
+
     socket.on('receivedPrivateMessage', (res) => {
 
       if (res.sender === otherUserRef.current.id) {
         setChat(list => [...list, {message: res.message, sender: res.sender, receiver: res.receiver}]);
       }
-   
-
     });
+    // socket.on('disconnect', (r) => console.log('disconnect'))
+    // socket.on('reconnect', () => {
+    //      console.log('reconnect')
+    //      socket.emit('usingMessagingFeature', {userId: id})
+    //  })
+        
+    //see below comment
+ 
+
   }, []);
+
+  //a use effect for [socket] to refire the emit? so will fire if socekt changes and is reconnected?  
+  //useref in app.jsx might also be good- maybe can return to just getting socket ids from logged in users
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [chat]);
   
-
-
-  
-
-
 
   return (
     <div className='messenger' style={messenger}>
