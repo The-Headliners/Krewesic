@@ -54,7 +54,7 @@ const MessagesView = ({message, user, myMessage}) => {
 
         {message.name}
         <p className="messageText" style={myMessage ? ownMessageText : messageText}>{message.message}</p>
-        <div className='messageBottom' style={messageBottom}> 1 hour ago</div>
+
       </div>
     </div>
   );
