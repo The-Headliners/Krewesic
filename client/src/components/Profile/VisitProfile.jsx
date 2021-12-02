@@ -172,14 +172,16 @@ const VisitProfile = () => {
             </Typography>
             <br/>
             <Box
+              style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}
               align='center'
             >
               <img
                 className='profPic'
                 src={pic}
-                style={{ borderRadius: '50%'}}
+                style={{ borderRadius: '50%', align: 'center'}}
                 height="150"
                 width="150"
+                align='center'
               />
               <br/>
               <br/>
@@ -187,29 +189,29 @@ const VisitProfile = () => {
             </Box>
             <br/>
             <Box
-              align='center'
+              style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}
             >
         City: { city }
             </Box>
             <br/>
             <Box
-              align='center'
+              style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}
             >
               {genreDesc} { favGenre || myGenre }
             </Box>
             <br/>
             <Box
-              align='center'
+              style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}
             >
               {description}  { favArtist || influences }
             </Box>
             <br/>
             <Box
-              align='center'
+              style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}
             >{
                 artistName ? (
                   <Button
-                    style={{ backgroundColor: '#610094', marginBottom: '10px' }}
+                    style={{ backgroundColor: '#610094', marginBottom: '10px', color: 'black' }}
                     startIcon={<GroupAddIcon />}
                     onClick={followArtist}
                   >
@@ -231,12 +233,15 @@ const VisitProfile = () => {
             align='center'
             style={{ alignItems: 'center', justifyContent: 'center'}}
           >
-            <Button
-              align='center'
-              style={{ backgroundColor: '#610094', marginTop: '10px', marginBottom: '10px'}}
-              startIcon={<VisibilityIcon />}
-              onClick={getAllPosts}
-            >See Posts</Button>
+            <Box
+              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}
+            >
+              <Button
+                style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: '#610094', marginTop: '10px', marginBottom: '10px', color: 'black' }}
+                startIcon={<VisibilityIcon />}
+                onClick={getAllPosts}
+              >See Posts</Button>
+            </Box>
             <Box
               className='DivWithScroll'
             >

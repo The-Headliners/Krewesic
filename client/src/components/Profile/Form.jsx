@@ -10,6 +10,20 @@ import MusicNoteIcon from '@mui/icons-material/MusicNote';
 import Typography from '@mui/material/Typography';
 
 
+const FormStyles = styled.div`
+background-color: ${props => props.theme.colorBackground};
+box-sizing: border-box;
+.row {
+  display: flex;
+}
+.column {
+  text-align: center;
+  flex: 50%;
+  padding: 10px;
+  height: 300px;
+}
+`;
+
 const Form = (props) => {
 
   //get user info
@@ -49,19 +63,7 @@ const Form = (props) => {
 
 
 
-  const FormStyles = styled.div`
-  background-color: ${props => props.theme.colorBackground};
-  box-sizing: border-box;
-  .row {
-    display: flex;
-  }
-  .column {
-    text-align: center;
-    flex: 50%;
-    padding: 10px;
-    height: 300px;
-  }
-`;
+
 
 
   return (

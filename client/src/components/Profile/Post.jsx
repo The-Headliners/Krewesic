@@ -9,7 +9,40 @@ const ProfilePostStyles = styled.div`
 
   }
   .hoverino:hover {
-    background-color: #D8BFD8;
+    color: 	white;
+    background-color: black;
+    font-weight: bold;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    .wrapper {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      overflow: hidden;
+    }
+
+    .box {
+      padding-top: 5px;
+      padding-bottom: 5px;
+      animation: grow-and-shrink 4000ms;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out;
+    }
+
+    @keyframes grow-and-shrink {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.25);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
   }
 
 `;
@@ -36,23 +69,28 @@ const Post = ({ posty, timey, index }) => {
   return (
     <ProfilePostStyles>
       <Box
-        className='hoverino'
+        className='hoverino wrapper'
       >
         <Box
-          className='posty'
-          style={{ justifyContent: 'center'}}
+          className='box'
         >
           <Box
-            style={{ display: 'flex', justifyContent: 'center', textAlign: 'center'}}
+            className='posty'
+            style={{ justifyContent: 'center'}}
           >
-            {index + 1}. {posty}
+            <Box
+
+              style={{ display: 'flex', justifyContent: 'center', textAlign: 'center'}}
+            >
+              {index + 1}. {posty}
+            </Box>
           </Box>
+          <Box
+            className='timey'
+            style={{ display: 'flex', textAlign: 'center', justifyContent: 'center', marginBottom: '10px' }}
+          >
+            {time}</Box>
         </Box>
-        <Box
-          className='timey'
-          style={{ display: 'flex', textAlign: 'center', justifyContent: 'center', marginBottom: '10px' }}
-        >
-          {time}</Box>
       </Box>
     </ProfilePostStyles>
 

@@ -153,6 +153,7 @@ const FormArtist = () => {
               id="demo-simple-select"
               label="My Genre"
               style={{ backgroundColor: '#a2a1a7', paddingTop: 0, paddingBottom: 0 }}
+              defaultValue=''
             >
               <MenuItem
 
@@ -219,7 +220,7 @@ const FormArtist = () => {
             href='/DiscoverArtists'
             style={{ backgroundColor: '#610094', marginBottom: '20px' }}
             variant="contained"
-          
+
           > Create Profile </Button>
         </div>
       </div>
