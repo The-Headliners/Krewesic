@@ -75,6 +75,9 @@ const VisitProfile = () => {
   };
 
 
+  
+
+
 
 
   const profDescription = () => {
@@ -103,7 +106,7 @@ const VisitProfile = () => {
 
 
   const getAllPosts = () => {
-    axios.get('/post/getArtistsPosts')
+    axios.get(`/post/getArtistsPosts/${id}`)
       .then(({ data }) => {
         const myPostArr = data.map(post => {
           return post;
