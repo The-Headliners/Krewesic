@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 //goes towards the chat footer
 
 
-const MessagesView = ({message, user}) => {
+const MessagesView = ({message, user, myMessage}) => {
 
   //Style for MessagesView//
   const Message = {
@@ -48,13 +48,13 @@ const MessagesView = ({message, user}) => {
     maxWidth: '300px',
   };
   return (
-    <div className='message' key={message.id} style={message.name === user.name ? ownMessage : Message}>
+    <div className='message' key={message.id} style={myMessage ? ownMessage : Message}>
       <div className="messageTop" >
         <img className='messageImg' style={messageImg} src={message.pic} alt=""/>
 
         {message.name}
-        <p className="messageText" style={message.name === user.name ? ownMessageText : messageText}>{message.message}</p>
-        <div className='messageBottom' style={messageBottom}> 1 hour ago</div>
+        <p className="messageText" style={myMessage ? ownMessageText : messageText}>{message.message}</p>
+
       </div>
     </div>
   );

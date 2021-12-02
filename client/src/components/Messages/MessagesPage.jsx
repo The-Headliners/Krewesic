@@ -2,8 +2,6 @@ import React, {useState, useEffect, useContext, useRef} from 'react';
 import axios from 'axios';
 import MessagesView from './MessagesView.jsx';
 import Sidebar from './Sidebar.jsx';
-import MessageForm from './MessageForm.jsx'; 
-import io from 'socket.io-client';
 import {Link} from 'react-router-dom';
 import GlobalContext from '../Contexts/GlobalContext.jsx';
 import Button from '@mui/material/Button';
@@ -154,6 +152,12 @@ const MessagesPage = () => {
     setCurrentMessage(event.target.value);
   };
 
+  const refresh = () => {
+
+    socket.emit('usingMessagingFeature', { 
+      userId: id
+    });
+  };
 
 
   useEffect(() => {
@@ -164,7 +168,7 @@ const MessagesPage = () => {
         setUsers(data);
       });
 
-    socket.emit('usingMessagingFeature', { //wrap this in a set interval!
+    socket.emit('usingMessagingFeature', { 
       userId: id
     });
 
@@ -199,6 +203,7 @@ const MessagesPage = () => {
         <div className='chatMenuWrapper' style={chatWrappers}>
           <h1 style={{color: '#c3c2c5'}}><img className='user-image' style={profileImg} src={user.pic}/>{user.name}</h1>
           <Link to='/communityChat'>Community Chat </Link>
+          <Button>Refresh</Button>
         </div>
       </div>
 

@@ -48,7 +48,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 
 import io from 'socket.io-client';
-//const socket = io.connect('/');
+const socket = io.connect('/');
 
 
 const useStyles = makeStyles({
@@ -120,7 +120,7 @@ const App = (props) => {
 
 
 
-  const socket = useRef(io('/', {query: {userId: id}})).current;
+  //const socket = useRef(io('/', {query: {userId: id}})).current;
 
 
   const value = { id, setId, name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn, city, setCity, bio, setBio, favArtist, setArtist, favGenre, setGenre, artistBio, setMyBio, artistName, setMyName, pic, setPic, myGenre, setMyGenre, influences, setInfluence, socket };
