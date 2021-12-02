@@ -75,6 +75,10 @@ const ColorBlind = createGlobalStyle`
     background-color: #b8a959;
   }
 
+  .colorScheme {
+    color: purple;
+  }
+
 `;
 
 export default ColorBlind;

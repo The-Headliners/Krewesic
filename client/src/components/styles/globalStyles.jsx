@@ -84,7 +84,9 @@ const GlobalStyle = createGlobalStyle`
     background-color: #3F0071;
   }
 
-
+  .colorScheme {
+    color: white;
+  }
 
 `;
 
