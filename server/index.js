@@ -135,7 +135,7 @@ io.on('connection', socket => {
   //for DMs
 
   socket.on('usingMessagingFeature', (res) => {
-
+    console.info('using messaging feature', messageFeatureUsers)
     messageFeatureUsers[res.userId] = socket.id;
 
 
