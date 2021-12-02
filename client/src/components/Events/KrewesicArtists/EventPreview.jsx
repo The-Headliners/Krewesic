@@ -56,7 +56,7 @@ const EventPreview = ({eventDetails}) => {
               <h4 className='showType'>{type}</h4>
             </Grid>
             <Grid item lg={4}>
-              <h5 className='date'>{formattedDate}</h5>
+              <h5 className='date'>{formattedDate}   </h5>
             </Grid>
             <Grid item lg={8}>
               <h6 className='medium'>{medium === 'virtual' ? 'On Krewesic!' : venue}</h6>
