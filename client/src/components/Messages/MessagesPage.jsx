@@ -88,7 +88,8 @@ const MessagesPage = () => {
     marginRight: '10px'
   };
 
-  const {socket, id, name} = useContext(GlobalContext);
+  const {socket, id, name, pic, picture} = useContext(GlobalContext);
+
 
   const scrollRef = useRef();
   //need to hold the value of the message in state
@@ -178,6 +179,17 @@ const MessagesPage = () => {
         setChat(list => [...list, {message: res.message, sender: res.sender, receiver: res.receiver}]);
       }
     });
+
+    socket.on('newConnect', (res) => {
+      console.info('newConnect');
+      refresh();
+      socket.emit('returnNewConnect', res);
+    });
+
+    socket.on('refresh', (res) => {
+      console.info('refresh');
+      refresh();
+    });
     // socket.on('disconnect', (r) => console.log('disconnect'))
     // socket.on('reconnect', () => {
     //      console.log('reconnect')
@@ -202,8 +214,12 @@ const MessagesPage = () => {
       <div className='chatMenu' style={chatMenu}>
         <div className='chatMenuWrapper' style={chatWrappers}>
           <h1 style={{color: '#c3c2c5'}}><img className='user-image' style={profileImg} src={user.pic}/>{user.name}</h1>
-          <Link to='/communityChat'>Community Chat </Link>
-          <Button onClick={refresh}>Refresh</Button>
+          <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'flex-start'}}>
+            <Link to='/communityChat'>Community Chat </Link>
+            <Button onClick={refresh} style={{marginTop: '20px', marginLeft: '10px'}}>Refresh</Button>
+          </div>
+
+          
         </div>
       </div>
 
@@ -214,16 +230,16 @@ const MessagesPage = () => {
             {
               chat.length === 0 ? (
                  
-                <span className="noMessage" style={noConversation}> Start Live Chatting...</span>
+                <span className="noMessage" style={noConversation}> Select a User to Chat With..</span>
                   
               )
                 :
 
                 chat.map((message, i) => {
-              
+                  
                   return (
                     <div key={i}>
-                      <MessagesView message={message} senderName={message.sender === id ? name : otherUser.name} self={message.sender === id} user={user}/>
+                      <MessagesView message={message} senderName={message.sender === id ? name : otherUser.name} senderPic={message.sender === id ? pic : otherUser.pic} self={message.sender === id} user={user}/>
                     </div>
                   );
                   

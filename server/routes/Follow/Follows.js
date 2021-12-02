@@ -46,7 +46,7 @@ follow.get('/getFollows', async (req, res) => {
   }
 });
 
-follow.post('/myFavArtists', async(req, res) => {
+follow.post('/myFavArtists/:artistId', async(req, res) => {
   try {
     const { artist } = req.body;
     //const { followId, followedId } = req.params;

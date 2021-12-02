@@ -75,6 +75,9 @@ const VisitProfile = () => {
   };
 
 
+  
+
+
 
 
   const profDescription = () => {
@@ -103,7 +106,7 @@ const VisitProfile = () => {
 
 
   const getAllPosts = () => {
-    axios.get('/post/getArtistsPosts')
+    axios.get(`/post/getArtistsPosts/${id}`)
       .then(({ data }) => {
         const myPostArr = data.map(post => {
           return post;
@@ -127,7 +130,7 @@ const VisitProfile = () => {
           artist: artistName,
           followedId: id,
         };
-        axios.post('/follow/myFavArtists', data).then(res => {
+        axios.post(`/follow/myFavArtists/${id}`, data).then(res => {
           setData(res.data);
           setArtistNamed('');
           setArtistId('');

@@ -100,7 +100,7 @@ const Profile = () => {
       senderId: senderId,
       profileId: profileId,
     };
-    axios.post(`/post/profilePost/${profileId}`, data).then(res => {
+    axios.post('/post/profilePost', data).then(res => {
       setData(res.data);
       setMyTexts('');
       setMySend('');

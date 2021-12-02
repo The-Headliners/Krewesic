@@ -5,12 +5,11 @@ const { Posts, User } = require('../../../db/index.js');
 
 
 
-post.post('/profilePost/:profileId', async(req, res) => {
+post.post('/profilePost', async(req, res) => {
   try {
     const { text } = req.body;
-    const { profileId, senderId } = req.params;
     const {id} = req.user;
-    //const id = 1;
+
 
     await Posts.create({
       text: text,
@@ -43,12 +42,15 @@ post.get('/getProfilePost', async (req, res) => {
   }
 });
 
-post.get('/getArtistsPosts', async (req, res) => {
+post.get('/getArtistsPosts/:id', async (req, res) => {
   try {
     //change when done testing and doing frontend
     //const { profileId, senderId, id } = req.params;
-    const {id} = req.user;
-    //const id = 2;
+    //const {id} = req.user;
+
+    const {id} = req.params;
+
+ 
     const posties = await Posts.findAll({
       where: {profileId: id},
       include: [{model: User, attributes: ['name']}]
