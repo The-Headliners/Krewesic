@@ -261,7 +261,7 @@ const App = (props) => {
 
                 <Link className='clickableNav' to='/uploadMusic'>Upload Music</Link>
 
-                <p className='clickableNav'>Color Scheme: <props.switch checked={colorBlind} onChange={() => setColorBlind(!colorBlind)} /> </p>
+                <p className='colorScheme'>Color Scheme: <props.switch checked={colorBlind} onChange={() => setColorBlind(!colorBlind)} /> </p>
               </nav>
             </Box>
 
