@@ -74,7 +74,9 @@ const ColorBlind = createGlobalStyle`
   .btn1 {
     background-color: #b8a959;
   }
-
+ .colorScheme {
+   color: purple;
+ }
 `;
 
 export default ColorBlind;

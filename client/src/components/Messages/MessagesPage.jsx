@@ -76,7 +76,7 @@ const MessagesPage = () => {
   const noConversation = { 
     position: 'absolute',
     top: '10%',
-    fontSize: '50px',
+    fontSize: '20px',
     color: 'rgb(224, 220, 220)',
     cursor: 'default',
   };
