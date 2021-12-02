@@ -47,7 +47,7 @@ const MessagesView = ({message, user, myMessage}) => {
     color: 'black',
     maxWidth: '300px',
   };
-  console.info();
+  
   return (
     <div className='message' key={message.id} style={myMessage ? ownMessage : Message}>
       <div className="messageTop" >
