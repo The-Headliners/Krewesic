@@ -130,7 +130,7 @@ const VisitProfile = () => {
           artist: artistName,
           followedId: id,
         };
-        axios.post('/follow/myFavArtists', data).then(res => {
+        axios.post(`/follow/myFavArtists/${id}`, data).then(res => {
           setData(res.data);
           setArtistNamed('');
           setArtistId('');
