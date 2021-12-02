@@ -2,8 +2,6 @@ import React, {useState, useEffect, useContext, useRef} from 'react';
 import axios from 'axios';
 import MessagesView from './MessagesView.jsx';
 import Sidebar from './Sidebar.jsx';
-import MessageForm from './MessageForm.jsx'; 
-// import io from 'socket.io-client';
 import {Link} from 'react-router-dom';
 import GlobalContext from '../Contexts/GlobalContext.jsx';
 // import Button from '@material-ui/core/Button';
@@ -103,7 +101,7 @@ const MessagesPage = () => {
 
 
   //get the current user's name, hold the user in the state
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState(null);
 
   const [users, setUsers] = useState([]);
 
@@ -156,6 +154,12 @@ const MessagesPage = () => {
     setCurrentMessage(event.target.value);
   };
 
+  const refresh = () => {
+
+    socket.emit('usingMessagingFeature', { 
+      userId: id
+    });
+  };
 
 
   useEffect(() => {
@@ -166,7 +170,7 @@ const MessagesPage = () => {
         setUsers(data);
       });
 
-    socket.emit('usingMessagingFeature', { //wrap this in a set interval!
+    socket.emit('usingMessagingFeature', { 
       userId: id
     });
 
@@ -194,60 +198,83 @@ const MessagesPage = () => {
     scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [chat]);
   
+  useEffect(() => {
+    axios.get('/auth/cookie')
+      .then(({data}) => {
+        // console.info(data);
+        setUser(data[0]);
+      });
+  }, []);
 
-  return (
-    <div className='messenger' style={messenger}>
-      <div className='chatMenu' style={chatMenu}>
-        <div className='chatMenuWrapper' style={chatWrappers}>
-          <h1 style={{color: '#c3c2c5'}}><img className='user-image' style={profileImg} src={user.pic}/>{user.name}</h1>
-          <Link to='/communityChat'>Community Chat </Link>
-        </div>
-      </div>
-      
-      <div className='chatBox' style={chatBox}>
-        <div className='chatBoxWrapper' style={chatBoxWrapper}>
-          Live Chat with {otherUser.name}
-          <div className="chatBoxTop" style={chatBoxTop}>
-            {
-              chat.length === 0 ? (
-                 
-                <span className="noMessage" style={noConversation}> Start Chatting Live...</span>
-                  
-              )
-                :
-
-                chat.map((message, i) => {
-              
-                  return (
-                    <div key={i}>
-                      <MessagesView message={message} senderName={message.sender === id ? name : otherUser.name} self={message.sender === id} user={user}/>
-                    </div>
-                  );
-                  
-                })
-              
-            }
+  if (user) {
+    return (
+      <div className='messenger' style={messenger}>
+        <div className='chatMenu' style={chatMenu}>
+          <div className='chatMenuWrapper' style={chatWrappers}>
+            <h1 style={{color: '#c3c2c5'}}><img className='user-image' style={profileImg} src={user.pic}/>{user.name}</h1>
+            <Link to='/communityChat'>Community Chat </Link>
+            <Button>Refresh</Button>
           </div>
+        </div>
+
+        <div className='chatBox' style={chatBox}>
+          <div className='chatBoxWrapper' style={chatBoxWrapper}>
+          Live Chat with {otherUser.name}
+            <div className="chatBoxTop" style={chatBoxTop}>
+              {
+                chat.length === 0 ? (
+                 
+                  <span className="noMessage" style={noConversation}> Start Chatting Live...</span>
+                  
+                )
+                  :
+
+                  chat.map((message, i) => {
+              
+                    return (
+                      <div key={i}>
+                        <MessagesView message={message} senderName={message.sender === id ? name : otherUser.name} self={message.sender === id} user={user}/>
+                      </div>
+                    );
+                  
+                  })
+              
+              }
+            </div>
       
        
-          {otherUserId === 0 ? <div>select a user</div> : (
-            <div className='chatBoxBottom' style={chatBoxBottom}>
-              <input className="message-input" style={chatMessageInput} placeholder="Send a message..." value={currentMessage} onChange={handleChange} />
+            {otherUserId === 0 ? <div>select a user</div> : (
+              <div className='chatBoxBottom' style={chatBoxBottom}>
+                <input className="message-input" style={chatMessageInput} placeholder="Send a message..." value={currentMessage} onChange={handleChange} />
 
-              <Button className="message-button" variant="contained" style={chatSubmitButton} onClick={ (event) => sendMessage(event)}> send </Button>
+                <Button className="message-button" variant="contained" style={chatSubmitButton} onClick={ (event) => sendMessage(event)}> send </Button>
         
-            </div>
-          )}
+              </div>
+            )}
           
+          </div>
         </div>
-      </div>
-      <div className='chatOnline' style={chatOnline}> 
-        <div className='chatOnlineWrapper' style={chatWrappers}> 
+        <div className='chatOnline' style={chatOnline}> 
+          <div className='chatOnlineWrapper' style={chatWrappers}> 
            Other Users  <Sidebar changeMessageView={changeMessageView} users={users}/>
+          </div>
         </div>
       </div>
-    </div>
-  ); 
+    ); 
+  } else {
+    return (
+      <div
+        align='center' style={{height: '100vh', backgroundColor: '#150050', display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center'}}
+      ><a href='/auth/google'><Button
+          startIcon={ <LoginIcon />}
+          style={{ backgroundColor: '#610094', marginBottom: '10px'}}
+          variant='contained'
+        >Log In</Button></a></div>
+    );
+  }
   
 };
 
