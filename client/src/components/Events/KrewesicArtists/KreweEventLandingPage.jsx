@@ -51,6 +51,12 @@ const StyledLanding = styled.div`
   .dateTime {
     margin-top: 30px;
   }
+  .headline {
+    :hover {
+      background-color: ${props => props.theme.colorLight};
+      cursor: pointer;
+    }
+  }
 `;
 
 const KreweEventLandingPage = () => {
@@ -158,7 +164,7 @@ const KreweEventLandingPage = () => {
       <div style={{marginLeft: '50px'}}>
         <div >
           <Paper className='billBoard'>
-            <h2>{artistName ? artistName : artist}</h2>
+            <h2 className='headline' onClick={() => visitProfile(artistId)}>{artistName ? artistName : artist}</h2>
             <Avatar style={{width: '70px', height: '40px'}} alt='artist image' src={artistPic} />
             <div className='description dateTime'>{dateTime}</div>
             <div className='description'>{address}</div>
