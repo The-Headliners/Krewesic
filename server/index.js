@@ -62,6 +62,9 @@ let users = [];
 const loggedInUsers = {}; //to keep track of logged in users.  will be in key:value pairs of userId: socketId
 
 const liveStreamUsers = {}; //this gonna hold the rooms and their arrays {roomId: [user1, user2...]}
+
+
+
 const removeLiveStreamUser = (socketId, showId) => {
   for (show in liveStreamUsers) {
     liveStreamUsers[show] = liveStreamUsers[show].filter(user => user.socketId !== socketId); 
@@ -70,6 +73,8 @@ const removeLiveStreamUser = (socketId, showId) => {
 };
 
 const messageFeatureUsers = {}; //keep track of user id and their corresponding socket ids as k/v pairs as a user goes to the messags component
+
+const communityChatUsers = {}; 
 
 //function to add user to the array
 const addUser = (userId, socketId) => {
@@ -88,12 +93,7 @@ const getUser = (userId) => {
 io.on('connection', socket => {
   //when connect
   console.info(`user ${socket.id} is connected`);
-  // console.info(socket.handshake.query);
-  // const {query} = socket.handshake;
-  // if(query.userId !== '0') {
-  //   loggedInUsers[query.userId] = socket.id
-  //   console.log('loggedInUsers', loggedInUsers)
-  // }
+ 
 
   socket.broadcast.emit('newConnect', socket.id);
   socket.on('returnNewConnect', (res) => {
@@ -102,9 +102,19 @@ io.on('connection', socket => {
   } );
 
   //***FOR LIVE CHAT FOR ALL USERS*** when a message is sent */
+
+  // socket.on('joinCommChat', (res) => {
+  //   communityChatUsers[res] = socket.id;
+  //   console.log('comm chat users', communityChatUsers)
+  //   socket.join('communityChat')
+  //   io.to('communityChat').emit('onlineUsers', communityChatUsers)
+  // })
   socket.on('message', ({ name, message, pic}) => {
     io.emit('message', {name, message, pic});
   });
+  // socket.on('newChatUser', () => {
+  //   socket.to('communityChat').emit('onlineUsers', communityChatUsers)
+  // })
 
   //if you want to send one client
   //use: io.to(socketID).emit
@@ -157,6 +167,8 @@ io.on('connection', socket => {
     }
 
   });
+
+
 
   //****for streaming features */
 

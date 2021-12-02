@@ -13,7 +13,7 @@ import Button from '@mui/material/Button';
 
 
 const CommunityChat = () => {
-  const {socket, id, name} = useContext(GlobalContext);
+  const {socket, id, name, pic} = useContext(GlobalContext);
 
   const scrollRef = useRef();
   //need to hold the value of the message in state
@@ -33,7 +33,7 @@ const CommunityChat = () => {
     event.preventDefault();
     //value from state is the message we want to bring back to the socket server
     //the name will be the current user logged in
-    socket.emit('message', { name: name, message: value, /*pic: user.pic*/});
+    socket.emit('message', { name: name, message: value, pic: pic});
     setValue('');
 
     //where we need to send an axios post to create the message in the Messages db
@@ -65,7 +65,6 @@ const CommunityChat = () => {
   // };
 
   socket.on('message', ({name, message, pic}) => {
-
     setChat([...chat, {name, message: message, pic: pic}]);
   });
 
@@ -154,7 +153,7 @@ const CommunityChat = () => {
   const noConversation = { 
     position: 'absolute',
     top: '10%',
-    fontSize: '50px',
+    fontSize: '20px',
     color: 'rgb(224, 220, 220)',
     cursor: 'default',
   };
