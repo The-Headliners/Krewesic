@@ -95,6 +95,12 @@ io.on('connection', socket => {
   //   console.log('loggedInUsers', loggedInUsers)
   // }
 
+  socket.broadcast.emit('newConnect', socket.id);
+  socket.on('returnNewConnect', (res) => {
+    console.info('res id', res);
+    socket.to(res).emit('refresh', (res));
+  } );
+
   //***FOR LIVE CHAT FOR ALL USERS*** when a message is sent */
   socket.on('message', ({ name, message, pic}) => {
     io.emit('message', {name, message, pic});

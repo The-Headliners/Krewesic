@@ -66,6 +66,7 @@ const Posts = dbProfilePosts(db);
 
 
 User.hasMany(Posts);
+
 Posts.belongsTo(User, {foreignKey: 'senderId'});
 Posts.belongsTo(User, {foreignKey: 'profileId'});
 
