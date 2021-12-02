@@ -22,6 +22,7 @@ const StyledVideoChat = styled.div`
   }
   .chatButton {
     background-color: ${props => props.theme.colorMed};
+    color: ${props => props.theme.textColorLight}
   }
 `;
 
