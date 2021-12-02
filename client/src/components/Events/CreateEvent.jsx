@@ -85,7 +85,7 @@ const CreateEvent = () => {
           </LocalizationProvider>
         </Grid>
         <Grid item lg={6}>
-          <InputLabel htmlFor='type' style={{width: '100%'}} className='labels'>What Kind of Event?</InputLabel>
+          <InputLabel htmlFor='type' style={{width: '100%'}} className='labels'>Description of Event</InputLabel>
           <TextField
             id='type'
             onChange={e => setType(e.target.value)}

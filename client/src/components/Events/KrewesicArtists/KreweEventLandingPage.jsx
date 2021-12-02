@@ -22,7 +22,8 @@ const StyledLanding = styled.div`
   }
   .landingButton {
     background-color: ${props => props.theme.colorLight};
-    color: ${props => props.theme.textLight}
+    color: ${props => props.theme.textLight};
+    
   }
   .commentInput {
     width: 600px;
@@ -68,11 +69,13 @@ const KreweEventLandingPage = () => {
   const [state, setState] = useState('');
   const [artistId, setArtistId] = useState('');
   const [artistPic, setArtistPic] = useState('');
+  const [artistName, setArtistName] = useState('');
 
   const [interestedUsers, setInterestedUsers] = useState([]);
   const [alreadyInterested, setAlreadyInterested] = useState(false);
   const [commentText, setCommentText] = useState('');
   const [commentWall, setCommentWall] = useState([]);
+  
 
 
   const [code, setCode] = useState('');
@@ -82,7 +85,9 @@ const KreweEventLandingPage = () => {
   //do get request for the event info
   const getEventDeetz = async () => {
     const {data} = await axios.get(`/krewesicevents/event/${eventId}`);
+    //console.log('data dot user', data.User)
     setArtist(data.User.name);
+    setArtistName(data.User.artistName);
     //setDateTime(data.when);
     setVenue(data.venue);
     setAddress(data.address);
@@ -153,13 +158,13 @@ const KreweEventLandingPage = () => {
       <div style={{marginLeft: '50px'}}>
         <div >
           <Paper className='billBoard'>
-            <h1>{artist}</h1>
-            <Avatar style={{width: '150px', height: '150px'}} alt='artist image' src={artistPic} />
+            <h2>{artistName ? artistName : artist}</h2>
+            <Avatar style={{width: '70px', height: '40px'}} alt='artist image' src={artistPic} />
             <div className='description dateTime'>{dateTime}</div>
             <div className='description'>{address}</div>
             <div className='description'>{city} {state}</div>
             <div className='description'>{venue}</div>
-            { alreadyInterested ? <Button className='landingButton' onClick={disinterest}>Disinterested </Button> : <Button className='landingButton' onClick={postInterest}>Interested</Button>}
+            { alreadyInterested ? <Button className='landingButton' style={{color: '#c3c2c5' }} onClick={disinterest}>Disinterested </Button> : <Button className='landingButton' style={{color: '#c3c2c5' }} onClick={postInterest}>Interested</Button>}
           </Paper>
         </div>
        
@@ -181,7 +186,7 @@ const KreweEventLandingPage = () => {
                 onChange={(e) => setCommentText(e.target.value)}
                 value={commentText}
               />
-              <Button className='landingButton' onClick={postComment}>send comment</Button>
+              <Button className='landingButton' style={{color: '#c3c2c5' }} onClick={postComment}>send comment</Button>
             </div>
             <div>
               {commentWall.map((comment, i) => <CommentComponent key={i} comment={comment} />)}
@@ -193,7 +198,7 @@ const KreweEventLandingPage = () => {
 
          
       
-          <Button className='landingButton' onClick={redirectToShow}>liveStream</Button>
+     
         </Grid>
       </div>
     </StyledLanding>
