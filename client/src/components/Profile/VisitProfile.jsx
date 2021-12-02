@@ -211,7 +211,7 @@ const VisitProfile = () => {
             >{
                 artistName ? (
                   <Button
-                    style={{ backgroundColor: '#610094', marginBottom: '10px', color: 'black' }}
+                    style={{ backgroundColor: '#610094', marginBottom: '10px', color: '#a2a1a7' }}
                     startIcon={<GroupAddIcon />}
                     onClick={followArtist}
                   >
@@ -237,7 +237,7 @@ const VisitProfile = () => {
               style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}
             >
               <Button
-                style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: '#610094', marginTop: '10px', marginBottom: '10px', color: 'black' }}
+                style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: '#610094', marginTop: '10px', marginBottom: '10px', color: '#a2a1a7' }}
                 startIcon={<VisibilityIcon />}
                 onClick={getAllPosts}
               >See Posts</Button>

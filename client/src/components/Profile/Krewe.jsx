@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Box from '@mui/material/Box';
+import styled, {ThemeProvider} from 'styled-components';
 
+const KreweStyles = styled.div`
+  .hoverino:hover {
+    cursor: pointer;
+  }
+
+`;
 
 const Krewe = ({ artist }) => {
   const [ artistAlbum, setArtistAlbum] = useState('');
@@ -28,7 +35,11 @@ const Krewe = ({ artist }) => {
           .then(() => randomAlbum())
         }
       >
-        <li> {artist} </li>
+        <KreweStyles>
+          <li
+            className='hoverino'
+          > {artist} </li>
+        </KreweStyles>
       </Box>
       <Box
         style={{ display: 'flex', justifyContent: 'center', alignItems: 'center'}}
