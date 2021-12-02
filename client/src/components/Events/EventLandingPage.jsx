@@ -43,6 +43,8 @@ const EventLandingPage = () => {
   const {eventId, venue, city, performers, datetime, lat, lng, type: type } = useParams();
   const {id} = useContext(GlobalContext);
 
+  const history = useHistory();
+
   //this should be displaying: performers, datetime, city, venue name, lat lng, users who are interested, comments about this event, link to the ticket sales to satisfy TOS
 
   const [interestedUsers, setInterestedUsers] = useState([]);

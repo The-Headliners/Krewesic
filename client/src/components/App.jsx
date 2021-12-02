@@ -190,6 +190,7 @@ const App = (props) => {
 
                   <Hidden>
                     <IconButton
+                      style={{display: loggedIn ? 'block' : 'none'}}
                       onClick={() => setOpen(true)}
                     >
                       <MenuIcon/>
@@ -242,7 +243,7 @@ const App = (props) => {
               className='desktopRender'
             >
               <nav
-                style={{ display: 'flex'}}
+                style={{ display: loggedIn ? 'flex' : 'none'}}
                 className='naval'
               >
                 <Link className='clickableNav' to='/DiscoverArtists'> Discover Artists </Link>

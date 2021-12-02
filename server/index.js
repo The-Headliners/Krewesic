@@ -182,7 +182,7 @@ io.on('connection', socket => {
     //const otherSocketId = loggedInUsers[data.receiver];
     const otherSocketId = messageFeatureUsers[data.receiver];
     //console.log('pm data', data);
-    //console.log('logged in u', loggedInUsers, 'otherid', otherSocketId, 'my id', socket.id);
+    console.info('messagefeatureusers', messageFeatureUsers, 'otherid', otherSocketId, 'my id', socket.id);
     
     if (otherSocketId) {
       socket.to(otherSocketId).emit('receivedPrivateMessage', data);
