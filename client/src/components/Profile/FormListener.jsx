@@ -49,7 +49,7 @@ const FormListener = (props) => {
       pic: pic
     };
     if (data.pic === '') {
-      data.pic = 'https://cdn4.iconfinder.com/data/icons/staff-management-vol-1/72/38-512.png';
+      data.pic = 'https://cdn1.iconfinder.com/data/icons/it-communication-season-ii/2000/2867.S3_-_Call_Center_Agent-512.png';
     }
     axios.put('/form/createListener', data).then(res => {
       setData(res.data);

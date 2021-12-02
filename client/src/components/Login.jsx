@@ -12,34 +12,34 @@ const LoginStyles = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 90vh;
   }
   .logo {
     width: 200px;
-    margin-bottom: 20px;
   }
 `;
 
 const Login = () => (
   <LoginStyles>
-    <div className='wrapper' >
 
+
+    <div
+      style={{ height: '100vh' }}
+      align='center'
+    >
+      <img src={logo} className='logo' alt='logo' />
+      <h1 >Find Your Krewe And Music To March To</h1>
+
+      <br/>
       <div
         align='center'
-      >
-        <img src={logo} className='logo' alt='logo' />
-        <h1 >Find Your Krewe And Music To March To</h1>
-
-        <br/>
-        <div
-          align='center'
-        ><a href='/auth/google'><Button
-            startIcon={ <LoginIcon />}
-            style={{ backgroundColor: '#610094', marginBottom: '10px'}}
-            variant='contained'
-          >Log In</Button></a></div>
-      </div>
+      ><a href='/auth/google'><Button
+          startIcon={ <LoginIcon />}
+          style={{ backgroundColor: '#610094', marginBottom: '10px'}}
+          variant='contained'
+        >Log In</Button></a></div>
     </div>
+
   </LoginStyles>
 );
 
