@@ -2,8 +2,6 @@ import React, {useState, useEffect, useContext, useRef} from 'react';
 import axios from 'axios';
 import MessagesView from './MessagesView.jsx';
 import Sidebar from './Sidebar.jsx';
-import MessageForm from './MessageForm.jsx'; 
-import io from 'socket.io-client';
 import {Link} from 'react-router-dom';
 import GlobalContext from '../Contexts/GlobalContext.jsx';
 import Button from '@mui/material/Button';
@@ -159,7 +157,7 @@ const MessagesPage = () => {
     socket.emit('usingMessagingFeature', { 
       userId: id
     });
-  }
+  };
 
 
   useEffect(() => {

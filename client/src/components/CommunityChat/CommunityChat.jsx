@@ -2,8 +2,7 @@ import React, {useState, useEffect, useContext, useRef} from 'react';
 import axios from 'axios';
 import MessagesView from './MessagesView.jsx';
 import Sidebar from './SidebarChat.jsx';
-import MessageForm from './MessageForm.jsx'; 
-import io from 'socket.io-client';
+
 import {Link} from 'react-router-dom';
 import GlobalContext from '../Contexts/GlobalContext.jsx';
 import Button from '@mui/material/Button';
@@ -189,7 +188,6 @@ const CommunityChat = () => {
                 :
 
                 chat.map((message, i) => {
-  
                   return (
                     <div key={i}>
                       <MessagesView message={message} user={user} myMessage={message.name === name}/>
