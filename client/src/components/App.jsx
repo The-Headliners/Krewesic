@@ -319,7 +319,7 @@ const App = (props) => {
               <Route path='/visitProfile/:id' >
                 <VisitProfile />
               </Route>
-              <Route exact path='/uploadMusic' component={MusicUpload} />
+              <Route path='/uploadMusic' component={MusicUpload} />
               <Route path='/messages' component={MessagesPage}>
               </Route>
               <Route path='/communityChat' component={CommunityChat}>
