@@ -81,7 +81,7 @@ const Header = (props) => {
     setType('');
     setLoggedIn(false);
     //history pusch redirect to wherever should be redirected to
-    history.push('/')
+    history.push('/');
 
   };
 
