@@ -62,8 +62,9 @@ const MapEvents = () => {
   const [bandName, setBandName] = useState('');
   const [city, setCity] = useState('New Orleans');
   const [events, setEvents] = useState([]);
-  const [date1, setDate1] = useState();
-  const [date2, setDate2] = useState();
+  const [date1, setDate1] = useState(new Date());
+  const [today] = useState(new Date());
+  const [date2, setDate2] = useState(new Date(today.getFullYear(), today.getMonth(), today.getDate() + 7) );
 
   const [krewesicEvents, setKrewesicEvents] = useState([]);
 

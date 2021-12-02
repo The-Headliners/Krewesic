@@ -29,7 +29,7 @@ const StyledPreview = styled.div`
 const EventPreview = ({eventDetails}) => {
   const history = useHistory();
   const {performers, id, User, when, venue, medium, type} = eventDetails;
-  const {name, pic} = User;
+  const {name, pic, artistName} = User;
   const [formattedDate] = useState(format(new Date(when), 'MM.dd.yyyy h:mm aaa', {timeZone: 'America/Chicago'} ));
 
   return (
@@ -50,13 +50,13 @@ const EventPreview = ({eventDetails}) => {
             alignItems='center'
             className='wordsWrapper'>
             <Grid item lg={4}>
-              <h3 className='headliners'>{name}</h3>
+              <h3 className='headliners'>{artistName ? artistName : name}</h3>
             </Grid>
             <Grid item lg={8}>
               <h4 className='showType'>{type}</h4>
             </Grid>
             <Grid item lg={4}>
-              <h5 className='date'>{formattedDate}</h5>
+              <h5 className='date'>{formattedDate}   </h5>
             </Grid>
             <Grid item lg={8}>
               <h6 className='medium'>{medium === 'virtual' ? 'On Krewesic!' : venue}</h6>
