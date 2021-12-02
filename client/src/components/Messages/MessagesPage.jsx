@@ -203,7 +203,7 @@ const MessagesPage = () => {
         <div className='chatMenuWrapper' style={chatWrappers}>
           <h1 style={{color: '#c3c2c5'}}><img className='user-image' style={profileImg} src={user.pic}/>{user.name}</h1>
           <Link to='/communityChat'>Community Chat </Link>
-          <Button>Refresh</Button>
+          <Button onClick={refresh}>Refresh</Button>
         </div>
       </div>
 

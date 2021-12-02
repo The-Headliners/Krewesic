@@ -53,6 +53,8 @@ Messages.belongsTo(User, {foreignKey: 'sender', as: 'senderId'});
 Messages.belongsTo(User, {foreignKey: 'receiver', as: 'receiverId'});
 
 
+
+
 User.hasMany(MusicUpload);
 MusicUpload.belongsTo(User);
 SGEventComment.belongsTo(SGEvent, {foreignKey: 'SGEventId'});
@@ -61,6 +63,8 @@ SGEventComment.belongsTo(User, {foreignKey: 'userId'});
 /* eslint-disable */
 const Posts = dbProfilePosts(db);
 //senderId foreignKey cause we want both types of users to be able to post
+
+
 User.hasMany(Posts);
 Posts.belongsTo(User, {foreignKey: 'senderId'});
 Posts.belongsTo(User, {foreignKey: 'profileId'});
