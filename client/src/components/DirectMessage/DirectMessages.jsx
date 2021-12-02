@@ -20,7 +20,7 @@ import GlobalContext from '../Contexts/GlobalContext.jsx';
 
 const DirectMessages = () => {
   //const socket = useRef();
-  const {socket} = useContext(GlobalContext);
+  const {socket, id} = useContext(GlobalContext);
   const scrollRef = useRef();
 
   //get the current user's name, hold the user in the state

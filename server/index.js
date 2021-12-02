@@ -53,7 +53,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 //Socket io  getting started//
-const io = require('socket.io')(server);
+const io = require('socket.io')(server, {'pingTimeout': 180000, 'pingInterval': 25000});
 
 //Socket server
 //holds alll users that are online
@@ -68,6 +68,8 @@ const removeLiveStreamUser = (socketId, showId) => {
   }
  
 };
+
+const messageFeatureUsers = {}; //keep track of user id and their corresponding socket ids as k/v pairs as a user goes to the messags component
 
 //function to add user to the array
 const addUser = (userId, socketId) => {
@@ -122,6 +124,7 @@ app.get('/userSocket/:id', async (req, res) => {
 io.on('connection', socket => {
   //when connect
   console.info(`user ${socket.id} is connected`);
+  console.info(socket.handshake.query);
 
   //***FOR LIVE CHAT FOR ALL USERS*** when a message is sent */
   socket.on('message', ({ name, message, pic}) => {
@@ -160,6 +163,24 @@ io.on('connection', socket => {
   socket.on('loggedIn', async (data) => {
     const id = data;
     loggedInUsers[id] = socket.id;
+  });
+
+  //for DMs
+
+  socket.on('usingMessagingFeature', (res) => {
+
+    messageFeatureUsers[res.userId] = socket.id;
+
+
+  } );
+  socket.on('privateMessage', (data) => {
+    const otherSocketId = loggedInUsers[data.receiver];
+    //const otherSocketId = messageFeatureUsers[data.receiver];
+    
+    if (otherSocketId) {
+      socket.to(otherSocketId).emit('receivedPrivateMessage', data);
+    }
+
   });
 
   //****for streaming features */
@@ -205,9 +226,10 @@ io.on('connection', socket => {
 
 
   //When disconnect
-  socket.on('disconnect', () => {
+  socket.on('disconnect', (reason) => {
+    
     //if there are any disconnections
-    console.info('disconnected user', socket.id);
+    console.info('disconnected user', socket.id, 'reason', reason);
     removeUser(socket.id);
     removeLiveStreamUser(socket.id); //this needs to account for peerId not socketId because the users are via peerId
     // io.emit('getUsers', users);

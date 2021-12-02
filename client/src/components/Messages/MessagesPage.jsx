@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext, useRef} from 'react';
 import axios from 'axios';
 import MessagesView from './MessagesView.jsx';
-import Sidebar from './SidebarChat.jsx';
+import Sidebar from './Sidebar.jsx';
 import MessageForm from './MessageForm.jsx'; 
 // import io from 'socket.io-client';
 import {Link} from 'react-router-dom';
@@ -15,83 +15,7 @@ import Button from '@mui/material/Button';
 
 
 const MessagesPage = () => {
-  const {socket} = useContext(GlobalContext);
 
-  const scrollRef = useRef();
-  //need to hold the value of the message in state
-  const [value, setValue] = useState('');
-
-  // //for live chat practice, create a chat array in state to hold the chat messages
-  const [chat, setChat] = useState([]);
-
-
-  //get the current user's name, hold the user in the state
-  const [user, setUser] = useState(null);
-
-  const [users, setUsers] = useState([]);
-
-
-  const sendMessage = (event) => {
-    event.preventDefault();
-    //value from state is the message we want to bring back to the socket server
-    //the name will be the current user logged in
-    socket.emit('message', { name: user.name, message: value, pic: user.pic});
-    setValue('');
-
-    //where we need to send an axios post to create the message in the Messages db
-    // axios.post('/messages/sendMessage', { text: value })
-    //   .then((results) => {
-    //     console.log('messageCreated:', results);
-    //   })
-    //   .catch(err => {
-    //     console.log('ERROR:', err);
-    //   });
-  };
-
-
-
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
-
-
-  //**Get all messages from current User*/
-  const getMessages = () => {
-    axios.get('/messages/sendMessage')
-      .then( (results) => {
-        // setMessages(results.data);
-      })
-      .catch( err => {
-        console.warn('ERROR!:', err);
-      });
-  };
-
-  socket.on('message', ({name, message, pic}) => {
-
-    setChat([...chat, {name, message: message, pic: pic}]);
-  });
-
-  useEffect(() => {
-    axios.get('/auth/cookie')
-      .then(({data}) => {
-        // console.info(data);
-        setUser(data[0]);
-      });
-  }, []);
-
-  useEffect(() => {
-   
-    axios.get('/userProf/allUsers')
-      .then(({data}) => {
-        // console.info('ALL USERS', data);
-        setUsers(data);
-      });
-  }, []);
-
-  useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [chat]);
-  
   const messenger = {
     height: 'calc(100vh - 70px)',
     display: 'flex',
@@ -168,70 +92,163 @@ const MessagesPage = () => {
     marginRight: '10px'
   };
 
-  if (user) {
-    return (
-      <div className='messenger' style={messenger}>
-        <div className='chatMenu' style={chatMenu}>
-          <div className='chatMenuWrapper' style={chatWrappers}>
-            <h1 style={{color: '#c3c2c5'}}><img className='user-image' style={profileImg} src={user.pic}/>{user.name}</h1>
-            <Link to='/DirectMessage'>Direct Messaging </Link>
-          </div>
-        </div>
+  const {socket, id, name} = useContext(GlobalContext);
 
-        <div className='chatBox' style={chatBox}>
-          <div className='chatBoxWrapper' style={chatBoxWrapper}>
-          Live Chat
-            <div className="chatBoxTop" style={chatBoxTop}>
-              {
-                chat.length === 0 ? (
-                 
-                  <span className="noMessage" style={noConversation}> Start Chatting Live...</span>
-                  
-                )
-                  :
+  const scrollRef = useRef();
+  //need to hold the value of the message in state
+  const [currentMessage, setCurrentMessage] = useState('');
 
-                  chat.map((message, i) => {
+  // //for live chat practice, create a chat array in state to hold the chat messages
+  const [chat, setChat] = useState([]);
+
+
+  //get the current user's name, hold the user in the state
+  const [user, setUser] = useState('');
+
+  const [users, setUsers] = useState([]);
+
+
+  //the other user.  
+  const [otherUser, setOtherUser] = useState({});
+  const [otherUserId, setOtherUserId] = useState(0);
+
+  const otherUserRef = useRef();
+
+  const postMessage = async() => {
   
-                    return (
-                      <div key={i}>
-                        <MessagesView message={message} user={user}/>
-                      </div>
-                    );
-                  
-                  })
-              
-              }
-            </div>
-            {/* <MessagesView chat={chat} handleChange={handleChange} sendMessage={sendMessage} value={value} user={user}/> */}
-       
+    axios.post('/messages/postMessage', {message: currentMessage, sender: id, receiver: otherUserId});
+  };
 
-            <div className='chatBoxBottom' style={chatBoxBottom}>
-              <input className="message-input" style={chatMessageInput} placeholder="Send a message..." value={value} onChange={handleChange} />
 
-              <Button className="message-button" variant="contained" style={chatSubmitButton} onClick={ (event) => sendMessage(event)}> send </Button>
-              {/* <MessageForm handleChange={handleChange} sendMessage={sendMessage} value={value} chatMessageInput={chatMessageInput} chatSubmitButton={chatSubmitButton}/> */}
-            </div>
-          </div>
-        </div>
-        <div className='chatOnline' style={chatOnline}> 
-          <div className='chatOnlineWrapper' style={chatWrappers}> 
-           All Users  <Sidebar users={users}/>
-          </div>
+  const sendMessage = (event) => {
+    event.preventDefault();
+    //value from state is the message we want to bring back to the socket server
+    //the name will be the current user logged in
+    postMessage();
+    //add the message to chat via setChat
+    setChat(list => [...list, {message: currentMessage, name: otherUser.name, pic: otherUser.pic, sender: id, receiver: otherUserId}]);
+    socket.emit('privateMessage', { name: user.name, message: currentMessage, receiver: otherUserId, sender: id});
+    setCurrentMessage('');
+
+
+  };
+
+
+
+  //to be attatched as a click event for the users in the side bar.  takees in the other users Id.  this will reset the chat array to have the messages between current user and the other user. 
+  const changeMessageView = async(otherUserId) => {
+    try {
+      setOtherUserId(otherUserId);
+      const oUser = await axios.get(`/userProf/user/${otherUserId}`);
+      setOtherUser(oUser.data);
+      otherUserRef.current = oUser.data;
+      const {data} = await axios.get(`/messages/getMessages/${otherUserId}`);
+     
+      setChat(data);
+    } catch (err) {
+      console.warn('err', err);
+    }
+  };
+
+
+
+  const handleChange = (event) => {
+    setCurrentMessage(event.target.value);
+  };
+
+
+
+  useEffect(() => {
+   
+    axios.get('/userProf/allUsers')
+      .then(({data}) => {
+        // console.info('ALL USERS', data);
+        setUsers(data);
+      });
+
+    socket.emit('usingMessagingFeature', { //wrap this in a set interval!
+      userId: id
+    });
+
+    socket.on('receivedPrivateMessage', (res) => {
+
+      if (res.sender === otherUserRef.current.id) {
+        setChat(list => [...list, {message: res.message, sender: res.sender, receiver: res.receiver}]);
+      }
+    });
+    // socket.on('disconnect', (r) => console.log('disconnect'))
+    // socket.on('reconnect', () => {
+    //      console.log('reconnect')
+    //      socket.emit('usingMessagingFeature', {userId: id})
+    //  })
+        
+    //see below comment
+ 
+
+  }, []);
+
+  //a use effect for [socket] to refire the emit? so will fire if socekt changes and is reconnected?  
+  //useref in app.jsx might also be good- maybe can return to just getting socket ids from logged in users
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [chat]);
+  
+
+  return (
+    <div className='messenger' style={messenger}>
+      <div className='chatMenu' style={chatMenu}>
+        <div className='chatMenuWrapper' style={chatWrappers}>
+          <h1 style={{color: '#c3c2c5'}}><img className='user-image' style={profileImg} src={user.pic}/>{user.name}</h1>
+          <Link to='/communityChat'>Community Chat </Link>
         </div>
       </div>
-    ); 
-  } else {
-    return (<div
-      align='center' style={{height: '100vh', backgroundColor: '#150050', display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center'}}
-    ><a href='/auth/google'><Button
-        startIcon={ <LoginIcon />}
-        style={{ backgroundColor: '#610094', marginBottom: '10px'}}
-        variant='contained'
-      >Log In</Button></a></div> );
-  }
+      
+      <div className='chatBox' style={chatBox}>
+        <div className='chatBoxWrapper' style={chatBoxWrapper}>
+          Live Chat with {otherUser.name}
+          <div className="chatBoxTop" style={chatBoxTop}>
+            {
+              chat.length === 0 ? (
+                 
+                <span className="noMessage" style={noConversation}> Start Chatting Live...</span>
+                  
+              )
+                :
+
+                chat.map((message, i) => {
+              
+                  return (
+                    <div key={i}>
+                      <MessagesView message={message} senderName={message.sender === id ? name : otherUser.name} self={message.sender === id} user={user}/>
+                    </div>
+                  );
+                  
+                })
+              
+            }
+          </div>
+      
+       
+          {otherUserId === 0 ? <div>select a user</div> : (
+            <div className='chatBoxBottom' style={chatBoxBottom}>
+              <input className="message-input" style={chatMessageInput} placeholder="Send a message..." value={currentMessage} onChange={handleChange} />
+
+              <Button className="message-button" variant="contained" style={chatSubmitButton} onClick={ (event) => sendMessage(event)}> send </Button>
+        
+            </div>
+          )}
+          
+        </div>
+      </div>
+      <div className='chatOnline' style={chatOnline}> 
+        <div className='chatOnlineWrapper' style={chatWrappers}> 
+           Other Users  <Sidebar changeMessageView={changeMessageView} users={users}/>
+        </div>
+      </div>
+    </div>
+  ); 
+  
 };
 
 export default MessagesPage;

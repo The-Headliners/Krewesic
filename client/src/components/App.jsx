@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useRef } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -40,23 +40,31 @@ import Hidden from '@mui/material/Hidden';
 import MenuIcon from '@mui/icons-material/Menu';
 import IconButton from '@mui/material/IconButton';
 
+import CommunityChat from './CommunityChat/CommunityChat.jsx';
+
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Divider from '@mui/material/Divider';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
 
 import io from 'socket.io-client';
-const socket = io.connect('/');
+//const socket = io.connect('/');
 
-const useStyles = makeStyles((theme) => ({
+
+const useStyles = makeStyles({
+  root: {
+    backgroundColor: '#3f0071'
+  },
   link: {
     marginRight: 20,
     color: 'purple',
   },
   paper: {
+    backgroundColor: '#3F0071',
     background: '#3F0071'
+
   }
-}));
+});
 
 
 
@@ -92,7 +100,7 @@ const AppStyles = styled.div`
 `;
 
 const App = (props) => {
-  const styles = useStyles();
+  const classes = useStyles();
   const [open, setOpen ] = useState(false);
   const [id, setId] = useState(0);
   const [artistBio, setMyBio] = useState('');
@@ -111,7 +119,8 @@ const App = (props) => {
   const [colorBlind, setColorBlind] = useState(false);
 
 
-  //const [socket] = useState(io.connect('/'));
+
+  const socket = useRef(io('/', {query: {userId: id}})).current;
 
 
   const value = { id, setId, name, setName, picture, setPicture, type, setType, loggedIn, setLoggedIn, city, setCity, bio, setBio, favArtist, setArtist, favGenre, setGenre, artistBio, setMyBio, artistName, setMyName, pic, setPic, myGenre, setMyGenre, influences, setInfluence, socket };
@@ -160,20 +169,20 @@ const App = (props) => {
                     <Hidden
                       xsDown
                     >
-                      <Link className={styles.link} to='/DiscoverArtists'> Discover Artists </Link>
+                      <Link className={classes.link} to='/DiscoverArtists'> Discover Artists </Link>
 
-                      <Link className={styles.link} to='/mapevents'>Find Events</Link>
-                      <Link className={styles.link} to='/messages'>Messages</Link>
-                      <Link className={styles.link} to='/profile'>Profile</Link>
-                      <Link className={styles.link} to='/createevent'>Create Event</Link>
+                      <Link className={classes.link} to='/mapevents'>Find Events</Link>
+                      <Link className={classes.link} to='/messages'>Messages</Link>
+                      <Link className={classes.link} to='/profile'>Profile</Link>
+                      <Link className={classes.link} to='/createevent'>Create Event</Link>
 
-                      <Link className={styles.link} to='/events'>Event Hub</Link>
-                      <Link className={styles.link}to='/myEvents'>My Events</Link>
-                      <Link className={styles.link} to='/videoChats'>Video Chats</Link>
+                      <Link className={classes.link} to='/events'>Event Hub</Link>
+                      <Link className={classes.link}to='/communityChat'>Community Chat</Link>
+                      <Link className={classes.link} to='/videoChats'>Video Chats</Link>
 
-                      <Link className={styles.link} to='/audiorecording'>Recording Studio</Link>
+                      <Link className={classes.link} to='/audiorecording'>Recording Studio</Link>
 
-                      <Link className={styles.link} to='/uploadMusic'>Upload Music</Link>
+                      <Link className={classes.link} to='/uploadMusic'>Upload Music</Link>
 
                       <p className='clickableNav'>Color Blind Accessibility: <props.switch checked={colorBlind} onChange={() => setColorBlind(!colorBlind)} /> </p>
                     </Hidden>
@@ -192,8 +201,8 @@ const App = (props) => {
                   style={{ backgroundColor: '#3F0071'}}
                 >
                   <SwipeableDrawer
-                    classes={{ paper: styles.paper}}
-                    anchor='left' 
+                    classes={{ paper: classes.paper }}
+                    anchor='left'
                     open={open}
                     onClose={() => {}}
                     onOpen={() => {}}
@@ -216,7 +225,7 @@ const App = (props) => {
                     <Link onClick={() => setOpen(false)} className='clickableNav' to='/createevent'>Create Event</Link>
 
                     <Link onClick={() => setOpen(false)} className='clickableNav' to='/events'>Event Hub</Link>
-                    <Link onClick={() => setOpen(false)} className='clickableNav' to='/myEvents'>My Events</Link>
+                    <Link onClick={() => setOpen(false)} className='clickableNav' to='/communityChat'>Community Chat</Link>
                     <Link onClick={() => setOpen(false)} className='clickableNav' to='/videoChats'>Video Chats</Link>
 
                     <Link onClick={() => setOpen(false)} className='clickableNav' to='/audiorecording'>Recording Studio</Link>
@@ -244,7 +253,7 @@ const App = (props) => {
                 <Link className='clickableNav' to='/createevent'>Create Event</Link>
 
                 <Link className='clickableNav' to='/events'>Event Hub</Link>
-                <Link className='clickableNav' to='/myEvents'>My Events</Link>
+                <Link className='clickableNav' to='/communityChat'>Community Chat</Link>
                 <Link className='clickableNav' to='/videoChats'>Video Chats</Link>
 
                 <Link className='clickableNav' to='/audiorecording'>Recording Studio</Link>
@@ -311,6 +320,8 @@ const App = (props) => {
               </Route>
               <Route exact path='/uploadMusic' component={MusicUpload} />
               <Route path='/messages' component={MessagesPage}>
+              </Route>
+              <Route path='/communityChat' component={CommunityChat}>
               </Route>
               <Route exact path='/DirectMessage' component={DirectMessages} />
 
