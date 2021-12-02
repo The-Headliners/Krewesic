@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const { User } = require('../index.js');
+
 
 
 const dbFollow = (sequelize) => {
@@ -16,18 +16,18 @@ const dbFollow = (sequelize) => {
     },
     followId: {
       type: Sequelize.INTEGER,
-      references: {
-        model: User,
-        key: 'id'
-      }
+      // references: {
+      //   model: User,
+      //   key: 'id'
+      // }
 
     },
     followedId: {
       type: Sequelize.INTEGER,
-      references: {
-        model: User,
-        key: 'id'
-      }
+      // references: {
+      //   model: User,
+      //   key: 'id'
+      // }
     }
 
 
